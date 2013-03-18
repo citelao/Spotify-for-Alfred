@@ -62,9 +62,10 @@ end alfred_script</string>
 				<key>keyword</key>
 				<string>spot</string>
 				<key>runningsubtext</key>
-				<string>Reticulating splines…</string>
+				<string>Reticulating splines… (Spotify's API is terrible with spaces)</string>
 				<key>script</key>
-				<string>php -f search.php -- "{query}"</string>
+				<string>$show_images = 'yes' # 'yes' or 'no'
+php -f search.php -- "$show_images" "{query}"</string>
 				<key>subtext</key>
 				<string>Search for artists, tracks, or albums</string>
 				<key>title</key>
