@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>connections</key>
+	<dict>
+		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CE15C6A4-6F49-488D-A80D-23AC1DAB3519</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Ben Stolovitz</string>
+	<key>description</key>
+	<string>A better Spotify search</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Spotify Redux</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>(* Thank you Jeff Johns &lt;http://phpfunk.me/&gt; *)
+
+on alfred_script(q)
+	tell application "Spotify"
+		activate
+	end tell
+
+	tell application "Spotify"
+		open location q
+	end tell
+
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>CE15C6A4-6F49-488D-A80D-23AC1DAB3519</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
+				<string>spot</string>
+				<key>runningsubtext</key>
+				<string>Reticulating splines…</string>
+				<key>script</key>
+				<string>php -f search.php -- "{query}"</string>
+				<key>subtext</key>
+				<string>Search for artists, tracks, or albums</string>
+				<key>title</key>
+				<string>Search Spotify for '{query}'</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>CE15C6A4-6F49-488D-A80D-23AC1DAB3519</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
