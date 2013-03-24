@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once('include/functions.php');
 
 $query = $argv[2];
@@ -11,7 +11,7 @@ if (strlen($query) < 3)
 	exit(1);
 
 foreach (array('track','artist','album') as $type) {
-	$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . rawurlencode($query));
+	$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . str_replace("%3A", ":", urlencode($query)));
 	
 	if(empty($json))
 		continue;
@@ -23,13 +23,26 @@ foreach (array('track','artist','album') as $type) {
 		if($currentResultNumber > $maxResults / 3)
 			continue;
 		
+		// Figure out search rank
+		$popularity = $value->popularity;
+		
+		if($type == 'artist') {
+			$popularity+= .5;
+		}
+		
+		// Convert popularity to stars
+		$stars = floor($popularity * 5);
+		$starString = str_repeat("⭑", $stars) . str_repeat("⭒", 5 - $stars);
+			
 		if($type == 'track') {
 			$subtitle = $value->album->name . " by " . $value->artists[0]->name;
 		} elseif($type == 'album') {
-			$subtitle = $value->artist->name;
+			$subtitle = "Album by " . $value->artists[0]->name;
 		} else {
 			$subtitle = ucfirst($type);
 		}
+		
+		$subtitle = "$starString $subtitle";
 		
 		// Thanks Jeff Johns <http://phpfunk.me/> and Robin Enhorn <https://github.com/enhorn/>
 		if ($show_images) {
@@ -47,11 +60,13 @@ foreach (array('track','artist','album') as $type) {
 			$icon = (!file_exists($thumb_path)) ? 'icon.png' : $thumb_path;
 		}
 		
-		$currentResult[type] = $type;
-		$currentResult[href] = $value->href;
+		$currentResult[uid] = "bs-spotify-$query-$type";
+		$currentResult[arg] = $value->href;
 		$currentResult[title] = $value->name;
 		$currentResult[subtitle] = $subtitle;
-		$currentResult[icon] = ($show_images) ? $icon : 'icon.png';
+		$currentResult[popularity] = $popularity;
+		if($show_images)
+			$currentResult[icon] = $icon;
 		
 		$results[] = $currentResult;
 		
@@ -59,20 +74,9 @@ foreach (array('track','artist','album') as $type) {
 	}
 }
 
-if(empty($results))
-	exit(1);
+if(!empty($results))
+	usort($results, "popularitySort");
 
-print "<?xml version='1.0'?><items>";
-
-foreach($results as $result) {
-	print "<item uid='$result[type]' arg='$result[href]'>
-	<title>$result[title]</title>
-	<subtitle>$result[subtitle]</subtitle>
-	<icon>$result[icon]</icon>
-	</item>
-	 ";
-}
-	
-print "</items>";
+alfredify($results);
 
 ?>

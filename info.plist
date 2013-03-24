@@ -17,6 +17,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Ben Stolovitz</string>
@@ -28,6 +39,34 @@
 	<string>Spotify Redux</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
+				<string>spot</string>
+				<key>runningsubtext</key>
+				<string>Harnessing Spotify's terrible API...</string>
+				<key>script</key>
+				<string>$show_images = 'yes' # 'yes' or 'no'
+php -f search.php -- "$show_images" "{query}"</string>
+				<key>subtext</key>
+				<string>Search for artists, tracks, or albums</string>
+				<key>title</key>
+				<string>Search Spotify for tracks, artists, and albums</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -55,30 +94,25 @@ end alfred_script</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
+				<key>action</key>
 				<integer>0</integer>
-				<key>escaping</key>
-				<integer>63</integer>
-				<key>keyword</key>
-				<string>spot</string>
-				<key>runningsubtext</key>
-				<string>Reticulating splines… (Spotify's API is terrible with spaces)</string>
-				<key>script</key>
-				<string>$show_images = 'yes' # 'yes' or 'no'
-php -f search.php -- "$show_images" "{query}"</string>
-				<key>subtext</key>
-				<string>Search for artists, tracks, or albums</string>
-				<key>title</key>
-				<string>Search Spotify for '{query}'</string>
-				<key>type</key>
+				<key>argument</key>
 				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
+				<key>hotkey</key>
+				<integer>36</integer>
+				<key>hotmod</key>
+				<integer>1310720</integer>
+				<key>hotstring</key>
+				<string>↩</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
+			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+			<string>AE6160D1-56EA-4416-991E-CF12B874FFD3</string>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -86,6 +120,11 @@ php -f search.php -- "$show_images" "{query}"</string>
 	<key>uidata</key>
 	<dict>
 		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
