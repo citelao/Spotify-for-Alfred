@@ -1,4 +1,5 @@
 <?php
+include_once('include/globals.php');
 
 function alfredify($results) {
 	print "<?xml version='1.0'?>\r\n<items>";
@@ -13,21 +14,45 @@ function alfredify($results) {
 		if(!$result[title])
 			$result[title] = 'null';
 			
-		if(!$result[subtitle])
-			$result[subtitle] = 'null';
-			
 		if(!$result[icon])
 			$result[icon] = 'icon.png';
 		
+		if(!$result[valid])
+			$result[valid] = 'yes';
+			
 		print "\r\n\r\n";
-		print "	<item uid='$result[uid]' arg='$result[arg]'>\r\n";
-		print "		<title>$result[title]</title>\r\n";
-		print "		<subtitle>$result[subtitle]</subtitle>\r\n";
-		print "		<icon>$result[icon]</icon>\r\n";
+		print "	<item uid='" . addSlashesForQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . addSlashesForQuery($result[valid]) . "' autocomplete='" . addSlashesForQuery($result[autocomplete]) . "'>\r\n";
+		print "		<title>" . addSlashesForQuery($result[title]) . "</title>\r\n";
+		print "		<subtitle>" . addSlashesForQuery($result[subtitle]) . "</subtitle>\r\n";
+		print "		<icon>" . addSlashesForQuery($result[icon]) . "</icon>\r\n";
 		print "	</item>\r\n";
 	}
 	
 	print "</items>";
+}
+
+function addSlashesForQuery($text) {
+	return str_replace("'", "’", str_replace('"', '\"', str_replace(" '", " ‘", $text)));
+}
+
+function debugAlfredify($text) {
+	$results[0][title] = $text;
+	
+	alfredify($results);
+}
+
+function spotifyQuery() {
+	$args = func_get_args();
+	
+	$script = "osascript -e 'tell application \"Spotify\"'";
+	
+	for ($i = 0; $i < func_num_args(); $i++) {
+		$script .= " -e '" . escapeshellcmd($args[$i]) . "'";
+	}
+	
+	$script .= " -e 'end tell'";
+	
+	return exec($script);
 }
 
 function popularitySort($a, $b) {
@@ -40,6 +65,7 @@ function popularitySort($a, $b) {
 // Thanks Jeff Johns <http://phpfunk.me/> and Robin Enhorn <https://github.com/enhorn/>
 function fetch($url)
 {
+	// TODO Add timeout
 	 $ch = curl_init($url);
 	 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -50,7 +76,37 @@ function fetch($url)
 	 return ($info['http_code'] == '200') ? $page : null;
 }
 
-function getTrackArtwork($type, $id)
+function getTrackArtwork($spotifyURL) {
+	$hrefs = explode(':', $spotifyURL);
+	$currentArtwork = "artwork/$hrefs[2].png";
+	
+	if (!file_exists($currentArtwork)) {
+		$artwork = getTrackArtworkURL($hrefs[1], $hrefs[2]);
+		
+		if (!empty($artwork)) {
+			shell_exec('curl -s ' . $artwork . ' -o ' . $currentArtwork);
+		}
+	}
+	
+	return $currentArtwork;
+}
+
+function getArtistArtwork($artist) {
+	$parsedArtist = urlencode($artist);
+	$currentArtwork = "artwork/$parsedArtist.png";
+	
+	if (!file_exists($currentArtwork)) {
+		$artwork = getArtistArtworkURL($artist);
+		
+		if (!empty($artwork)) {
+			shell_exec('curl -s ' . $artwork . ' -o ' . $currentArtwork);
+		}
+	}
+	
+	return $currentArtwork;
+}
+
+function getTrackArtworkURL($type, $id)
 {
 	$html = fetch("http://open.spotify.com/$type/$id");
 	
@@ -60,6 +116,15 @@ function getTrackArtwork($type, $id)
 	}
 	
 	return 0;
+}
+
+function getArtistArtworkURL($artist) {
+	$parsedArtist = urlencode($artist);
+	
+	$html = fetch("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&api_key=49d58890a60114e8fdfc63cbcf75d6c5&artist=$parsedArtist&format=json");
+	$json = json_decode($html, true);
+	
+	return $json[artist][image][1]['#text'];
 }
 
 ?>

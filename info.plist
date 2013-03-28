@@ -10,7 +10,26 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>CE15C6A4-6F49-488D-A80D-23AC1DAB3519</string>
+				<string>F645DB23-219F-437C-9989-97555478C768</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>AA78A4FC-41C4-4F58-953A-F9E9EBD2B91B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F645DB23-219F-437C-9989-97555478C768</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -42,38 +61,10 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>escaping</key>
-				<integer>63</integer>
-				<key>keyword</key>
-				<string>spot</string>
-				<key>runningsubtext</key>
-				<string>Harnessing Spotify's terrible API...</string>
-				<key>script</key>
-				<string>$show_images = 'yes' # 'yes' or 'no'
-php -f search.php -- "$show_images" "{query}"</string>
-				<key>subtext</key>
-				<string>Search for artists, tracks, or albums</string>
-				<key>title</key>
-				<string>Search Spotify for tracks, artists, and albums</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>applescript</key>
-				<string>(* Thank you Jeff Johns &lt;http://phpfunk.me/&gt; *)
-
+				<string>
 on alfred_script(q)
+(* Thank you Jeff Johns &lt;http://phpfunk.me/&gt; 
 	tell application "Spotify"
 		activate
 	end tell
@@ -81,8 +72,12 @@ on alfred_script(q)
 	tell application "Spotify"
 		open location q
 	end tell
+*)
 
-end alfred_script</string>
+	tell application "Spotify"		run script "activate (open location \"spotify:track:6hFsKBAALndrC45M4WBgYU\")"	end tell
+end alfred_script
+
+</string>
 				<key>cachescript</key>
 				<false/>
 			</dict>
@@ -90,6 +85,22 @@ end alfred_script</string>
 			<string>alfred.workflow.action.applescript</string>
 			<key>uid</key>
 			<string>CE15C6A4-6F49-488D-A80D-23AC1DAB3519</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>50</integer>
+				<key>script</key>
+				<string>tell application "Spotify"	run script {query}end tell
+</string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -114,6 +125,74 @@ end alfred_script</string>
 			<key>uid</key>
 			<string>AE6160D1-56EA-4416-991E-CF12B874FFD3</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
+				<string>spot</string>
+				<key>runningsubtext</key>
+				<string>Harnessing Spotify's terrible API...</string>
+				<key>script</key>
+				<string>$show_images = 'yes' # 'yes' or 'no'
+php -f main.php -- "$show_images" "{query}"</string>
+				<key>subtext</key>
+				<string>Search for artists, tracks, or albums</string>
+				<key>title</key>
+				<string>Search Spotify for tracks, artists, and albums</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Test</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>F645DB23-219F-437C-9989-97555478C768</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>59</integer>
+				<key>script</key>
+				<string>// include_once('include/functions.php');
+
+// spotifyQuery('{query}');</string>
+				<key>type</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>AA78A4FC-41C4-4F58-953A-F9E9EBD2B91B</string>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -124,12 +203,27 @@ end alfred_script</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>AA78A4FC-41C4-4F58-953A-F9E9EBD2B91B</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
 		<key>CE15C6A4-6F49-488D-A80D-23AC1DAB3519</key>
+		<dict>
+			<key>ypos</key>
+			<real>260</real>
+		</dict>
+		<key>E16D7A45-5212-4A70-AE85-36C6BF0450E7</key>
+		<dict>
+			<key>ypos</key>
+			<real>490</real>
+		</dict>
+		<key>F645DB23-219F-437C-9989-97555478C768</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
