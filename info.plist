@@ -17,6 +17,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>26447A5D-A2C6-4DD3-9467-8A7C9422E330</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<array>
 			<dict>
@@ -54,6 +65,25 @@
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>spot cleanup</string>
+				<key>subtext</key>
+				<string>Clear cached artwork</string>
+				<key>text</key>
+				<string>Cleanup Spotifious</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -106,6 +136,21 @@ php -f main.php -- "$show_images" "{query}"</string>
 			<key>uid</key>
 			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>php -f clear.php</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>26447A5D-A2C6-4DD3-9467-8A7C9422E330</string>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -115,6 +160,16 @@ php -f main.php -- "$show_images" "{query}"</string>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
+		</dict>
+		<key>26447A5D-A2C6-4DD3-9467-8A7C9422E330</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
 		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
