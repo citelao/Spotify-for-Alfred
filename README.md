@@ -9,11 +9,11 @@ It's built off a lot of other people's work— [PHPFunk](https://github.com/phpf
 
 ## Download & Install ##
 
-1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)[^1] this repository.
-2. Open `spotifyredux.alfredworkflow` by double-clicking it or dragging it into Alfred.
-3. Continue on with your merry day.
+Current version: v0.5
 
-[^1]: Current version v0.5
+1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) this repository.
+2. Open `spotifious.alfredworkflow` by double-clicking it or dragging it into Alfred.
+3. Continue on with your merry day.
 
 ## How to Use ##
 

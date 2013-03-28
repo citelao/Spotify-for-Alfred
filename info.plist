@@ -32,11 +32,11 @@
 	<key>createdby</key>
 	<string>Ben Stolovitz</string>
 	<key>description</key>
-	<string>A better Spotify search</string>
+	<string>Play Your Perfect Picks Quick</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Spotify Redux</string>
+	<string>Spotifious</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -128,6 +128,6 @@ php -f main.php -- "$show_images" "{query}"</string>
 		</dict>
 	</dict>
 	<key>webaddress</key>
-	<string></string>
+	<string>https://github.com/citelao/Spotify-for-Alfred</string>
 </dict>
 </plist>
