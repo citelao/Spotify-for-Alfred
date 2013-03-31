@@ -9,7 +9,7 @@ It's built off a lot of other people's work— [PHPFunk](https://github.com/phpf
 
 ## Download & Install ##
 
-Current version: v0.5a
+Current version: v0.6a
 
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) this repository.
 2. Open `spotifious.alfredworkflow` by double-clicking it or dragging it into Alfred.
@@ -34,5 +34,6 @@ You can action the song title (press `enter`) to play or pause the song, action 
 
 ## Changelog ##
 
+- v0.6: Added Alleyoop support
 - v0.5: Added a menu system
 - v0.1: Inital search system
