@@ -120,8 +120,8 @@
 				<key>runningsubtext</key>
 				<string>Harnessing Spotify's terrible API...</string>
 				<key>script</key>
-				<string>$show_images = 'yes' # 'yes' or 'no'
-php -f main.php -- "$show_images" "{query}"</string>
+				<string>SHOWIMAGES="yes" # 'yes' or 'no'
+php -f main.php -- $SHOWIMAGES "{query}"</string>
 				<key>subtext</key>
 				<string>Search for artists, tracks, or albums</string>
 				<key>title</key>

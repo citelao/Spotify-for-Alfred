@@ -1,5 +1,5 @@
 <?php
-include_once('include/globals.php');
+$results = array();
 
 function alfredify($results) {
 	print "<?xml version='1.0'?>\r\n<items>";
@@ -21,7 +21,7 @@ function alfredify($results) {
 			$result[valid] = 'yes';
 			
 		print "\r\n\r\n";
-		print "	<item uid='" . addSlashesForQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . addSlashesForQuery($result[valid]) . "' autocomplete='" . addSlashesForQuery($result[autocomplete]) . "'>\r\n";
+		print "	<item uid='" . addSlashesForQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . addSlashesForQuery($result[valid]) . "' autocomplete='" . $result[autocomplete] . "'>\r\n";
 		print "		<title>" . addSlashesForQuery($result[title]) . "</title>\r\n";
 		print "		<subtitle>" . addSlashesForQuery($result[subtitle]) . "</subtitle>\r\n";
 		print "		<icon>" . addSlashesForQuery($result[icon]) . "</icon>\r\n";

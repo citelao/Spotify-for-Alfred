@@ -1,93 +1,100 @@
 <?php
-include_once('include/globals.php');
-include_once('include/functions.php');
+include_once('include/helper.php');
+mb_internal_encoding("UTF-8");
 
-/*
- * How it should work:
- *
- * Ctrl-cmd-enter:
- *	|| Crooked Teeth
- 		Plans by Death Cab for Cutie ⭑⭑⭑⭒⭒
- 	Plans
- 		More from this album
- 	Death Cab for Cutie
- 		More by this artist
- 	Search for music
- 		Search Spotify by artist, album, or track
- 		
- * Ctrl-cmd-enter, some chars / "artist" "album" "track":
- 	Search for artist '{query}'...
- 		Narrow this search to artists
- 	Search for album '{query}'...
- 		Narrow this search to albums
- 	Search for track '{query}'...
- 		Narrow this search to tracks
- 	Continue typing to search...
- 		Search artists, albums, and tracks combined
- 		
- * Ctrl-cmd-enter, type 3 letters:
- 	Begin searching
- 	
- 	Action an artist: search for that artist
- 	Action an album: search for that album
- 	
- 	Command action: open in Spotify
- 	
- * spot artist ♩
- * spot album ♩
- * spot track ♩
- */
+/**
+ * Spotifious (v0.7)
+ * 	a natural Spotify controller for Alfred <https://github.com/citelao/Spotify-for-Alfred/>
+ * 	an Alfred extension by Ben Stolovitz <http://github.com/citelao/>
+ **/
 
-//if(strlen($query) == 0) { // TODO
-if(strlen($query) < 3) {	
+/* Parse the query. */
+$showImages = ($argv[1] == 'yes') ? true : false;
+$rawQuery   = $argv[2];
+$queryBits  = str_replace("►", "", explode(" ► ", $rawQuery));
 
-	$currentTrack = spotifyQuery("name of current track");
-	$currentStatus = (spotifyQuery("player state") == 'playing') ? '►' : '❙❙';
-	$currentAlbum = spotifyQuery("album of current track");
-	$currentArtist = spotifyQuery("artist of current track");
-	$currentArtistArtwork = getArtistArtwork($currentArtist);
-	$currentURL = spotifyQuery("spotify url of current track");
-	$currentArtwork = getTrackArtwork($currentURL);
+$maxResults = ($showImages) ? 6 : 15;
+
+if(strlen($rawQuery) < 3) { 
+	// if the query is tiny, show the main menu.
 	
-	$results[0][title] = "$currentStatus $currentTrack";
-	$results[0][subtitle] = "$currentAlbum by $currentArtist";
-	$results[0][arg] = "playpause";
+	// get now-playing info
+	$currentTrack             = spotifyQuery("name of current track");
+	$currentAlbum             = spotifyQuery("album of current track");
+	$currentArtist            = spotifyQuery("artist of current track");
+	$currentURL               = spotifyQuery("spotify url of current track");
+	$currentStatus            = (spotifyQuery("player state") == 'playing') ? '►' : '❙❙';
 	
-	$results[1][title] = "$currentAlbum";
-	$results[1][subtitle] = "More from this album...";
-	$results[1][autocomplete] = "$currentAlbum";
-	$results[1][valid] = "no";
-	$results[1][icon] = (!file_exists($currentArtwork)) ? 'icon.png' : $currentArtwork;
+	if($showImages) {
+		$currentArtistArtwork = getArtistArtwork($currentArtist);
+		$currentAlbumArtwork  = getTrackArtwork($currentURL);
+	}
 	
-	$results[2][title] = $currentArtist;
-	$results[2][subtitle] = "More by this artist...";
-	$results[2][autocomplete] = "$currentArtist";
-	$results[2][valid] = "no";
-	$results[2][icon] = (!file_exists($currentArtistArtwork)) ? 'icon.png' : $currentArtistArtwork;
+	// output now-playing info
+	$results[0][title]        = "$currentStatus $currentTrack";
+	$results[0][subtitle]     = "$currentAlbum by $currentArtist";
+	$results[0][arg]          = "playpause";
 	
-	$results[3][title] = "Search for music...";
-	$results[3][subtitle] = "Begin typing to search";
-	$results[3][valid] = 'no';
-// TODO
-// } elseif(strlen($query) <= 3 && strlen($query) >= 1) {
-// 	$results[0][title] = "Search for artists...";
-// 	$results[0][subtitle] = "Narrow this search to artists";
-// 	$results[0][valid] = 'no';
-// 	
-// 	$results[1][title] = "Search for albums...";
-// 	$results[1][subtitle] = "Narrow this search to albums";
-// 	$results[1][valid] = 'no';
-// 	
-// 	$results[2][title] = "Search for tracks...";
-// 	$results[2][subtitle] = "Narrow this search to tracks";
-// 	$results[2][valid] = 'no';
-// 	
-// 	$results[3][title] = "Continue typing to search all...";
-// 	$results[3][subtitle] = "Search artists, albums, and tracks combined";
-// 	$results[3][valid] = 'no';
-} else {
+	$results[1][title]        = "$currentAlbum";
+	$results[1][subtitle]     = "More from this album...";
+	$results[1][autocomplete] = "$currentAlbum"; // TODO change to show albumdetail
+	$results[1][valid]        = "no";
+	$results[1][icon]         = (!file_exists($currentAlbumArtwork)) ? 'icon.png' : $currentAlbumArtwork;
+	
+	$results[2][title]        = $currentArtist;
+	$results[2][subtitle]     = "More by this artist...";
+	$results[2][autocomplete] = "$currentArtist"; // TODO change to show albumdetail
+	$results[2][valid]        = "no";
+	$results[2][icon]         = (!file_exists($currentArtistArtwork)) ? 'icon.png' : $currentArtistArtwork;
+	
+	$results[3][title]        = "Search for music...";
+	$results[3][subtitle]     = "Begin typing to search";
+	$results[3][valid]        = 'no';
+} elseif(mb_substr($rawQuery, -1, 1) == "►") { 
+	// if the query is an unmodified machine-generated one, generate a detail menu.
+	
+	// if the query is two levels deep, generate the detail menu of the second
+	// URL. Otherwise generate a detail menu based on the first (or only) URL.
+	
+	// $results[0][subtitle]        = mb_detect_encoding($rawQuery) . mb_detect_encoding("►") . "h"; //todo debug
+	
+	$detailURL  = ($rawQuery[strlen($rawQuery)-2] == "►") ? $queryBits[1] : $queryBits[0];
+	$query      = $queryBits[count($queryBits)-1];
+	$detailBits = explode(":", $detailURL);
+	$type       = $detailBits[1];
+	$provided   = ($detailBits[1] == "artist") ? "album" : "track";
+	
+	// fetch and parse the details
+	$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$detailURL&extras=" . $provided);
+	
+	if(empty($json))
+		return; // TODO find better error
+	
+	$json = json_decode($json);
+	
+	// organize the details
+	$results[0][title]        = $json->$type->name;
+	$results[0][subtitle]     = "View $type in Spotify";
+	$results[0][arg]          = 'activate (open location "' . $detailURL . '")';
+	
+	$currentResultNumber = 6;
+	foreach ($json->$type->{$provided . "s"} as $key => $value) {
+		if($currentResultNumber > $maxResults)
+			continue;
+		
+		$value = $value->$provided;
+		
+		$currentResult[title] = $value->name;
+		$currentResult[subtitle] = "Open this album...";
+		
+		$results[] = $currentResult;
+		$currentResultNumber++;
+	}
+	
+} else { 
+	// if the query is completely user-generated, or the user has modified it, show the search menu.
 	foreach (array('track','artist','album') as $type) {
-		$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . str_replace("%3A", ":", urlencode($query)));
+		$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . str_replace("%3A", ":", urlencode($rawQuery)));
 		
 		if(empty($json))
 			continue;
@@ -108,7 +115,7 @@ if(strlen($query) < 3) {
 			
 			// Convert popularity to stars
 			$stars = floor($popularity * 5);
-			$starString = str_repeat("⭑", $stars) . str_repeat("⭒", 5 - $stars);
+			$starString = str_repeat("★", $stars) . str_repeat("☆", 5 - $stars);
 				
 			if($type == 'track') {
 				$subtitle = $value->album->name . " by " . $value->artists[0]->name;
@@ -121,7 +128,9 @@ if(strlen($query) < 3) {
 			$subtitle = "$starString $subtitle";
 						
 			$currentResult[uid] = "bs-spotify-$query-$type";
-			$currentResult[arg] = 'activate (open location "' . $value->href . '")';
+			$currentResult[arg] = ($type == 'track') ? 'open location "' . $value->href . '"' : 'activate (open location "' . $value->href . '")';
+			$currentResult[valid] = ($type == 'track') ? 'yes' : 'no';
+			$currentResult[autocomplete] = $value->href . " ► $rawQuery ►"; //todo replace `rawQuery`
 			$currentResult[title] = $value->name;
 			$currentResult[subtitle] = $subtitle;
 			$currentResult[popularity] = $popularity;
@@ -136,6 +145,8 @@ if(strlen($query) < 3) {
 	
 	if(!empty($results))
 		usort($results, "popularitySort");
+		
+		$results[0][subtitle]        = mb_detect_encoding($rawQuery) . mb_detect_encoding("►"); //todo debug
 }
 
 alfredify($results);
