@@ -1,5 +1,9 @@
 <?php
-$results = array();
+
+function trim_value(&$value) 
+{ 
+	$value = trim($value); 
+}
 
 function alfredify($results) {
 	print "<?xml version='1.0'?>\r\n<items>";

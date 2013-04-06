@@ -9,11 +9,13 @@ mb_internal_encoding("UTF-8");
  **/
 
 /* Parse the query. */
+$results = array();
 $showImages = ($argv[1] == 'yes') ? true : false;
 $rawQuery   = $argv[2];
-$queryBits  = str_replace("►", "", explode(" ► ", $rawQuery));
-
 $maxResults = ($showImages) ? 6 : 15;
+
+$queryBits  = str_replace("►", "", explode("►", $rawQuery));
+array_walk($queryBits, 'trim_value');
 
 if(strlen($rawQuery) < 3) { 
 	// if the query is tiny, show the main menu.
@@ -56,20 +58,18 @@ if(strlen($rawQuery) < 3) {
 	// if the query is two levels deep, generate the detail menu of the second
 	// URL. Otherwise generate a detail menu based on the first (or only) URL.
 	
-	// $results[0][subtitle]        = mb_detect_encoding($rawQuery) . mb_detect_encoding("►") . "h"; //todo debug
-	
-	$detailURL  = ($rawQuery[strlen($rawQuery)-2] == "►") ? $queryBits[1] : $queryBits[0];
-	$query      = $queryBits[count($queryBits)-1];
+	$detailURL  = (mb_substr($rawQuery, -2, 1) == "►") ? $queryBits[1] : $queryBits[0];
+	$query      = $queryBits[count($queryBits)-2];
 	$detailBits = explode(":", $detailURL);
 	$type       = $detailBits[1];
 	$provided   = ($detailBits[1] == "artist") ? "album" : "track";
-	
+		
 	// fetch and parse the details
 	$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$detailURL&extras=" . $provided);
 	
 	if(empty($json))
-		return; // TODO find better error
-	
+		alfredify(array(array('title' => $rawQuery, 'valid' => 'no', 'autocomplete' => $queryBits[0]))); // TODO better thing
+		
 	$json = json_decode($json);
 	
 	// organize the details
@@ -86,6 +86,8 @@ if(strlen($rawQuery) < 3) {
 		
 		$currentResult[title] = $value->name;
 		$currentResult[subtitle] = "Open this album...";
+		$currentResult[valid] = "no";
+		$currentResult[autocomplete] = "$detailURL ► $value->href ► $query ►►";
 		
 		$results[] = $currentResult;
 		$currentResultNumber++;
@@ -145,8 +147,6 @@ if(strlen($rawQuery) < 3) {
 	
 	if(!empty($results))
 		usort($results, "popularitySort");
-		
-		$results[0][subtitle]        = mb_detect_encoding($rawQuery) . mb_detect_encoding("►"); //todo debug
 }
 
 alfredify($results);
