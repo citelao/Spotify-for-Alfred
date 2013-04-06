@@ -78,21 +78,34 @@ if(strlen($rawQuery) < 3) {
 	$results[0][subtitle]     = "View $type in Spotify";
 	$results[0][arg]          = 'activate (open location "' . $detailURL . '")';
 	
-	$currentResultNumber = 6;
-	foreach ($json->$type->{$provided . "s"} as $key => $value) {
-		if($currentResultNumber > $maxResults)
-			continue;
-		
-		$value = $value->$provided;
-		
-		$currentResult[title] = $value->name;
-		$currentResult[subtitle] = "Open this album...";
-		$currentResult[valid] = "no";
-		$currentResult[autocomplete] = "$detailURL ► $value->href ► $query ►►";
-		
-		$results[] = $currentResult;
-		$currentResultNumber++;
+	if($provided == "album") {
+		$currentResultNumber = 1;
+		foreach ($json->$type->{$provided . "s"} as $key => $value) {
+			if($currentResultNumber > $maxResults)
+				continue; // Change to skip album art
+				
+			$value = $value->$provided;
+			
+			$currentResult[title] = $value->name;
+			$currentResult[subtitle] = "Open this $provided...";
+			$currentResult[valid] = "no";
+			$currentResult[autocomplete] = "$detailURL ► $value->href ► $query ►►";
+			
+			$results[] = $currentResult;
+			$currentResultNumber++;
+		}	
+	} else {
+		$currentResultNumber = 1;
+		foreach ($json->$type->{$provided . "s"} as $key => $value) {	
+			$currentResult[title] = "$currentResultNumber. $value->name";
+			$currentResult[subtitle] = "Play this $provided...";
+			$currentResult[arg] = 'open location "' . $value->href . '"';
+			
+			$results[] = $currentResult;
+			$currentResultNumber++;
+		}	
 	}
+	
 	
 } else { 
 	// if the query is completely user-generated, or the user has modified it, show the search menu.
