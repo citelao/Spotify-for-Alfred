@@ -16,6 +16,7 @@ $maxResults = ($showImages) ? 6 : 15;
 
 $queryBits  = str_replace("►", "", explode("►", $rawQuery));
 array_walk($queryBits, 'trim_value');
+$query      = $queryBits[count($queryBits)-1];
 
 if(strlen($rawQuery) < 3) { 
 	// if the query is tiny, show the main menu.
@@ -59,11 +60,11 @@ if(strlen($rawQuery) < 3) {
 	// URL. Otherwise generate a detail menu based on the first (or only) URL.
 	
 	$detailURL  = (mb_substr($rawQuery, -2, 1) == "►") ? $queryBits[1] : $queryBits[0];
-	$query      = $queryBits[count($queryBits)-2];
 	$detailBits = explode(":", $detailURL);
 	$type       = $detailBits[1];
 	$provided   = ($detailBits[1] == "artist") ? "album" : "track";
-		
+	$query      = $queryBits[count($queryBits)-2];
+	
 	// fetch and parse the details
 	$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$detailURL&extras=" . $provided);
 	
@@ -96,7 +97,7 @@ if(strlen($rawQuery) < 3) {
 } else { 
 	// if the query is completely user-generated, or the user has modified it, show the search menu.
 	foreach (array('track','artist','album') as $type) {
-		$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . str_replace("%3A", ":", urlencode($rawQuery)));
+		$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . str_replace("%3A", ":", urlencode($queryBits[count($queryBits)-1])));
 		
 		if(empty($json))
 			continue;
@@ -132,7 +133,7 @@ if(strlen($rawQuery) < 3) {
 			$currentResult[uid] = "bs-spotify-$query-$type";
 			$currentResult[arg] = ($type == 'track') ? 'open location "' . $value->href . '"' : 'activate (open location "' . $value->href . '")';
 			$currentResult[valid] = ($type == 'track') ? 'yes' : 'no';
-			$currentResult[autocomplete] = $value->href . " ► $rawQuery ►"; //todo replace `rawQuery`
+			$currentResult[autocomplete] = $value->href . " ► " . $query . " ►"; //todo replace `rawQuery`
 			$currentResult[title] = $value->name;
 			$currentResult[subtitle] = $subtitle;
 			$currentResult[popularity] = $popularity;
