@@ -25,7 +25,7 @@ function alfredify($results) {
 			$result[valid] = 'yes';
 			
 		print "\r\n\r\n";
-		print "	<item uid='" . addSlashesForQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . addSlashesForQuery($result[valid]) . "' autocomplete='" . $result[autocomplete] . "'>\r\n";
+		print "	<item uid='" . addSlashesForQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . addSlashesForQuery($result[valid]) . "' autocomplete='" . addSlashesForQuery($result[autocomplete]) . "'>\r\n";
 		print "		<title>" . addSlashesForQuery($result[title]) . "</title>\r\n";
 		print "		<subtitle>" . addSlashesForQuery($result[subtitle]) . "</subtitle>\r\n";
 		print "		<icon>" . addSlashesForQuery($result[icon]) . "</icon>\r\n";
@@ -37,12 +37,6 @@ function alfredify($results) {
 
 function addSlashesForQuery($text) {
 	return str_replace("'", "’", str_replace('"', '\"', str_replace(" '", " ‘", $text)));
-}
-
-function debugAlfredify($text) {
-	$results[0][title] = $text;
-	
-	alfredify($results);
 }
 
 function spotifyQuery() {
@@ -69,7 +63,6 @@ function popularitySort($a, $b) {
 // Thanks Jeff Johns <http://phpfunk.me/> and Robin Enhorn <https://github.com/enhorn/>
 function fetch($url)
 {
-	// TODO Add timeout
 	 $ch = curl_init($url);
 	 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -129,6 +122,11 @@ function getArtistArtworkURL($artist) {
 	$json = json_decode($html, true);
 	
 	return $json[artist][image][1]['#text'];
+}
+
+function floatToStars($decimal) {
+	$stars = ($decimal < 1) ? floor($decimal * 5) : 5;
+	return str_repeat("★", $stars) . str_repeat("☆", 5 - $stars);
 }
 
 ?>
