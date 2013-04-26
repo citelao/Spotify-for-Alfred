@@ -129,4 +129,10 @@ function floatToStars($decimal) {
 	return str_repeat("★", $stars) . str_repeat("☆", 5 - $stars);
 }
 
+function beautifyTime($seconds) {
+	$m = floor($seconds / 60);
+	$s = $seconds % 60;
+	return  "$m:$s";
+}
+
 ?>

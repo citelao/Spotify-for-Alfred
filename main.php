@@ -111,7 +111,7 @@ if(strlen($rawQuery) < 3) {
 			$starString = floatToStars($value->popularity);
 			
 			$currentResult[title] = "$currentResultNumber. $value->name";
-			$currentResult[subtitle] = "$starString hi";
+			$currentResult[subtitle] = "$starString " . beautifyTime($value->length);
 			$currentResult[arg] = 'open location "' . $value->href . '"';
 			
 			$results[] = $currentResult;
