@@ -9,7 +9,7 @@ It's built off a lot of other people's work— [PHPFunk](https://github.com/phpf
 
 ## Download & Install ##
 
-Current version: v0.6a
+Current version: v0.61
 
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) this repository.
 2. Open `spotifious.alfredworkflow` by double-clicking it or dragging it into Alfred.
