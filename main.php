@@ -38,8 +38,12 @@ include_once('include/functions.php');
  * spot track ♩
  */
 
+# thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result
+$query = iconv("UTF-8-MAC", "UTF-8", $query);
+mb_internal_encoding("UTF-8");
+
 //if(strlen($query) == 0) { // TODO
-if(strlen($query) < 3) {	
+if(mb_strlen($query) < 3) {	
 
 	$currentTrack = spotifyQuery("name of current track");
 	$currentStatus = (spotifyQuery("player state") == 'playing') ? '►' : '❙❙';
