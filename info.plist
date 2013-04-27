@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string></string>
+	<string>com.citelao.spotifious</string>
 	<key>connections</key>
 	<dict>
 		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
@@ -69,25 +69,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>spot cleanup</string>
-				<key>subtext</key>
-				<string>Clear cached artwork</string>
-				<key>text</key>
-				<string>Cleanup Spotifious</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -135,6 +116,25 @@ php -f main.php -- $SHOWIMAGES "{query}"</string>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>spot cleanup</string>
+				<key>subtext</key>
+				<string>Clear cached artwork</string>
+				<key>text</key>
+				<string>Cleanup Spotifious</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</string>
 		</dict>
 		<dict>
 			<key>config</key>

@@ -11,7 +11,7 @@ mb_internal_encoding("UTF-8");
 /* Parse the query. */
 $results     = array();
 $showImages  = ($argv[1] == 'yes') ? true : false;
-$rawQuery    = $argv[2];
+$rawQuery    = iconv("UTF-8-MAC", "UTF-8", $argv[2]); # thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result
 $imgdResults = 6; // TODO do I want to keep this?
 $maxResults  = 15;
 
@@ -19,7 +19,7 @@ $queryBits   = str_replace("►", "", explode("►", $rawQuery));
                array_walk($queryBits, 'trim_value');
 $query       = $queryBits[count($queryBits)-1];
 
-if(strlen($rawQuery) < 3) { 
+if(mb_strlen($rawQuery) < 3) { 
 	// If the query is tiny, show the main menu.
 	
 	/* Get now-playing info. */
