@@ -25,18 +25,32 @@ function alfredify($results) {
 			$result[valid] = 'yes';
 			
 		print "\r\n\r\n";
-		print "	<item uid='" . addSlashesForQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . addSlashesForQuery($result[valid]) . "' autocomplete='" . addSlashesForQuery($result[autocomplete]) . "'>\r\n";
-		print "		<title>" . addSlashesForQuery($result[title]) . "</title>\r\n";
-		print "		<subtitle>" . addSlashesForQuery($result[subtitle]) . "</subtitle>\r\n";
-		print "		<icon>" . addSlashesForQuery($result[icon]) . "</icon>\r\n";
+		print "	<item uid='" . escapeQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . escapeQuery($result[valid]) . "' autocomplete='" . escapeQuery($result[autocomplete]) . "'>\r\n";
+		print "		<title>" . escapeQuery($result[title]) . "</title>\r\n";
+		print "		<subtitle>" . escapeQuery($result[subtitle]) . "</subtitle>\r\n";
+		print "		<icon>" . escapeQuery($result[icon]) . "</icon>\r\n";
 		print "	</item>\r\n";
 	}
 	
 	print "</items>";
 }
 
-function addSlashesForQuery($text) {
-	return str_replace("'", "’", str_replace('"', '\"', str_replace(" '", " ‘", $text)));
+function debug($text) {
+	$results[0][title] = $text;
+
+	alfredify($results);
+}
+
+function normalize($text) {
+	return exec('./include/normalize "' . $text . '"');
+}
+
+function escapeQuery($text) {
+	$text = str_replace("'", "’", $text);
+	$text = str_replace('"', '\"', $text);
+	$text = str_replace("&", "&amp;", $text);
+	
+	return $text;
 }
 
 function spotifyQuery() {
@@ -50,7 +64,7 @@ function spotifyQuery() {
 	
 	$script .= " -e 'end tell'";
 	
-	return exec($script);
+	return normalize(exec($script));
 }
 
 function popularitySort($a, $b) {
@@ -132,6 +146,7 @@ function floatToStars($decimal) {
 function beautifyTime($seconds) {
 	$m = floor($seconds / 60);
 	$s = $seconds % 60;
+	$s = ($s < 10) ? "0$s" : "$s";
 	return  "$m:$s";
 }
 

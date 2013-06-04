@@ -1,6 +1,7 @@
 <?php
-include_once('include/helper.php');
+// thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result
 mb_internal_encoding("UTF-8");
+include_once('include/helper.php');
 
 /**
  * Spotifious (v0.7)
@@ -11,7 +12,8 @@ mb_internal_encoding("UTF-8");
 /* Parse the query. */
 $results     = array();
 $showImages  = ($argv[1] == 'yes') ? true : false;
-$rawQuery    = iconv("UTF-8-MAC", "UTF-8", $argv[2]); # thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result
+// $rawQuery    = iconv("UTF-8-MAC", "UTF-8", $argv[2]);
+$rawQuery    = normalize($argv[2]);
 $imgdResults = 6; // TODO do I want to keep this?
 $maxResults  = 15;
 
@@ -19,7 +21,7 @@ $queryBits   = str_replace("►", "", explode("►", $rawQuery));
                array_walk($queryBits, 'trim_value');
 $query       = $queryBits[count($queryBits)-1];
 
-if(mb_strlen($rawQuery) < 3) { 
+if(mb_strlen($rawQuery) < 3) {
 	// If the query is tiny, show the main menu.
 	
 	/* Get now-playing info. */
@@ -85,11 +87,15 @@ if(mb_strlen($rawQuery) < 3) {
 	
 	if($provided == "album") {
 		$currentResultNumber = 1;
+		$albums = array();
 		foreach ($json->$type->{$provided . "s"} as $key => $value) {
 			if($currentResultNumber > $maxResults)
 				continue;
 				
 			$value = $value->$provided;
+			
+			if(in_array($value->name, $albums))
+				continue;
 			
 			$currentResult[title] = $value->name;
 			$currentResult[subtitle] = "Open this $provided...";
@@ -103,11 +109,12 @@ if(mb_strlen($rawQuery) < 3) {
 			}
 			
 			$results[] = $currentResult;
+			$albums[] = "$value->name";
 			$currentResultNumber++;
 		}	
 	} else {
 		$currentResultNumber = 1;
-		foreach ($json->$type->{$provided . "s"} as $key => $value) {	
+		foreach ($json->$type->{$provided . "s"} as $key => $value) {
 			$starString = floatToStars($value->popularity);
 			
 			$currentResult[title] = "$currentResultNumber. $value->name";
@@ -116,7 +123,7 @@ if(mb_strlen($rawQuery) < 3) {
 			
 			$results[] = $currentResult;
 			$currentResultNumber++;
-		}	
+		}
 	}
 	
 	
