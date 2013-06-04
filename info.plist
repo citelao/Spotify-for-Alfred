@@ -43,7 +43,7 @@
 	<key>createdby</key>
 	<string>Ben Stolovitz</string>
 	<key>description</key>
-	<string>Play Your Perfect Picks Quick</string>
+	<string>A natural Spotify controller for Alfred</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -56,7 +56,9 @@
 				<key>escaping</key>
 				<integer>50</integer>
 				<key>script</key>
-				<string>tell application "Spotify"	run script {query}end tell
+				<string>tell application &quot;Spotify&quot;
+	run script {query}
+end tell
 </string>
 				<key>type</key>
 				<integer>6</integer>
@@ -103,10 +105,10 @@
 				<key>keyword</key>
 				<string>spot</string>
 				<key>runningsubtext</key>
-				<string>Harnessing Spotify's terrible API...</string>
+				<string>Harnessing Spotify&apos;s terrible API...</string>
 				<key>script</key>
-				<string>SHOWIMAGES="no" # 'yes' or 'no'
-php -f main.php -- $SHOWIMAGES "{query}"</string>
+				<string>SHOWIMAGES=&quot;no&quot; # &apos;yes&apos; or &apos;no&apos;
+php -f main.php -- $SHOWIMAGES &quot;{query}&quot;</string>
 				<key>subtext</key>
 				<string>Search for artists, tracks, or albums</string>
 				<key>title</key>
