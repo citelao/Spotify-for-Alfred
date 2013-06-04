@@ -65,6 +65,8 @@
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -88,6 +90,8 @@
 			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
 			<string>AE6160D1-56EA-4416-991E-CF12B874FFD3</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -101,7 +105,7 @@
 				<key>runningsubtext</key>
 				<string>Harnessing Spotify's terrible API...</string>
 				<key>script</key>
-				<string>SHOWIMAGES="yes" # 'yes' or 'no'
+				<string>SHOWIMAGES="no" # 'yes' or 'no'
 php -f main.php -- $SHOWIMAGES "{query}"</string>
 				<key>subtext</key>
 				<string>Search for artists, tracks, or albums</string>
@@ -116,6 +120,8 @@ php -f main.php -- $SHOWIMAGES "{query}"</string>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -135,6 +141,8 @@ php -f main.php -- $SHOWIMAGES "{query}"</string>
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -150,6 +158,8 @@ php -f main.php -- $SHOWIMAGES "{query}"</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>26447A5D-A2C6-4DD3-9467-8A7C9422E330</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 	</array>
 	<key>readme</key>

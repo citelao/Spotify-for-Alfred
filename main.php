@@ -29,7 +29,7 @@ if(mb_strlen($rawQuery) < 3) {
 	$currentAlbum             = spotifyQuery("album of current track");
 	$currentArtist            = spotifyQuery("artist of current track");
 	$currentURL               = spotifyQuery("spotify url of current track");
-	$currentStatus            = (spotifyQuery("player state") == 'playing') ? '►' : '❙❙';
+	$currentStatus            = (spotifyQuery("player state") == 'playing') ? "include/images/playing.png" : "include/images/paused.png";
 	
 	if($showImages) {
 		$currentArtistArtwork = getArtistArtwork($currentArtist); // TODO use API to query artist URL? or just use plaintext from now on?
@@ -37,25 +37,27 @@ if(mb_strlen($rawQuery) < 3) {
 	}
 	
 	/* Output now-playing info. */
-	$results[0][title]        = "$currentStatus $currentTrack";
+	$results[0][title]        = "$currentTrack";
 	$results[0][subtitle]     = "$currentAlbum by $currentArtist";
 	$results[0][arg]          = "playpause";
+	$results[0][icon]         = $currentStatus;
 	
 	$results[1][title]        = "$currentAlbum";
 	$results[1][subtitle]     = "More from this album...";
 	$results[1][autocomplete] = "$currentAlbum"; // TODO change to show albumdetail
 	$results[1][valid]        = "no";
-	$results[1][icon]         = (!file_exists($currentAlbumArtwork)) ? 'icon.png' : $currentAlbumArtwork;
+	$results[1][icon]         = (!file_exists($currentAlbumArtwork)) ? 'include/images/album.png' : $currentAlbumArtwork;
 	
 	$results[2][title]        = "$currentArtist";
 	$results[2][subtitle]     = "More by this artist...";
 	$results[2][autocomplete] = $currentArtist; // TODO change to show artistdetail
 	$results[2][valid]        = "no";
-	$results[2][icon]         = (!file_exists($currentArtistArtwork)) ? 'icon.png' : $currentArtistArtwork;
+	$results[2][icon]         = (!file_exists($currentArtistArtwork)) ? 'include/images/artist.png' : $currentArtistArtwork;
 	
 	$results[3][title]        = "Search for music...";
 	$results[3][subtitle]     = "Begin typing to search";
-	$results[3][valid]        = 'no';
+	$results[3][valid]        = "no";
+	$results[3][icon]         = "include/images/search.png";
 } elseif(mb_substr($rawQuery, -1, 1) == "►") { 
 	// if the query is an unmodified machine-generated one, generate a detail menu.
 	
@@ -82,8 +84,11 @@ if(mb_strlen($rawQuery) < 3) {
 	$results[0][subtitle]     = "View $type in Spotify";
 	$results[0][arg]          = 'activate (open location "' . $detailURL . '")';
 	
-	if($showImages)
+	if($showImages) {
 		$results[0][icon]     = getTrackArtwork($detailURL);
+	} else {
+		$results[0][icon]     = "include/images/$type.png";
+	}
 	
 	if($provided == "album") {
 		$currentResultNumber = 1;
@@ -105,7 +110,7 @@ if(mb_strlen($rawQuery) < 3) {
 			if($showImages && $currentResultNumber <= $imgdResults) {
 				$currentResult[icon] = getTrackArtwork($value->href);
 			} else {
-				$currentResult[icon] = "";
+				$currentResult[icon] = "include/images/album.png";
 			}
 			
 			$results[] = $currentResult;
@@ -120,6 +125,7 @@ if(mb_strlen($rawQuery) < 3) {
 			$currentResult[title] = "$currentResultNumber. $value->name";
 			$currentResult[subtitle] = "$starString " . beautifyTime($value->length);
 			$currentResult[arg] = 'open location "' . $value->href . '"';
+			$currentResult[icon] = "include/images/track.png";
 			
 			$results[] = $currentResult;
 			$currentResultNumber++;
@@ -159,10 +165,13 @@ if(mb_strlen($rawQuery) < 3) {
 			
 			if($type == 'track') {
 				$subtitle = "$starString " . $value->album->name . " by " . $value->artists[0]->name;
+				$genericResultArtwork = "include/images/track.png";
 			} elseif($type == 'album') {
 				$subtitle = "$starString Album by " . $value->artists[0]->name;
+				$genericResultArtwork = "include/images/album.png";
 			} else {
 				$subtitle = "$starString " . ucfirst($type);
+				$genericResultArtwork = "include/images/artist.png";
 			}
 			
 			$currentResult[title]        = $value->name;
@@ -181,7 +190,7 @@ if(mb_strlen($rawQuery) < 3) {
 			if($showImages && $currentResultNumber <= $imgdResults / 3) {
 				$currentResult[icon] = getTrackArtwork($value->href);
 			} else {
-				$currentResult[icon] = "";
+				$currentResult[icon] = $genericResultArtwork;
 			}
 			
 			$results[] = $currentResult;
