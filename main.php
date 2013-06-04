@@ -9,12 +9,12 @@ include_once('include/helper.php');
  * 	an Alfred extension by Ben Stolovitz <http://github.com/citelao/>
  **/
 
+
 /* Parse the query. */
 $results     = array();
 $showImages  = ($argv[1] == 'yes') ? true : false;
-// $rawQuery    = iconv("UTF-8-MAC", "UTF-8", $argv[2]);
 $rawQuery    = normalize($argv[2]);
-$imgdResults = 6; // TODO do I want to keep this?
+$imgdResults = 6;
 $maxResults  = 15;
 
 $queryBits   = str_replace("►", "", explode("►", $rawQuery));
@@ -22,7 +22,7 @@ $queryBits   = str_replace("►", "", explode("►", $rawQuery));
 $query       = $queryBits[count($queryBits)-1];
 
 if(mb_strlen($rawQuery) < 3) {
-	// If the query is tiny, show the main menu.
+	/* If the query is tiny, show the main menu. */
 	
 	/* Get now-playing info. */
 	$currentTrack             = spotifyQuery("name of current track");
@@ -44,13 +44,13 @@ if(mb_strlen($rawQuery) < 3) {
 	
 	$results[1][title]        = "$currentAlbum";
 	$results[1][subtitle]     = "More from this album...";
-	$results[1][autocomplete] = "$currentAlbum"; // TODO change to show albumdetail
+	$results[1][autocomplete] = "$currentAlbum"; // TODO change to albumdetail
 	$results[1][valid]        = "no";
 	$results[1][icon]         = (!file_exists($currentAlbumArtwork)) ? 'include/images/album.png' : $currentAlbumArtwork;
 	
 	$results[2][title]        = "$currentArtist";
 	$results[2][subtitle]     = "More by this artist...";
-	$results[2][autocomplete] = $currentArtist; // TODO change to show artistdetail
+	$results[2][autocomplete] = $currentArtist; // TODO change to artistdetail
 	$results[2][valid]        = "no";
 	$results[2][icon]         = (!file_exists($currentArtistArtwork)) ? 'include/images/artist.png' : $currentArtistArtwork;
 	
@@ -59,9 +59,9 @@ if(mb_strlen($rawQuery) < 3) {
 	$results[3][valid]        = "no";
 	$results[3][icon]         = "include/images/search.png";
 } elseif(mb_substr($rawQuery, -1, 1) == "►") { 
-	// if the query is an unmodified machine-generated one, generate a detail menu.
+	// If the query is an unmodified machine-generated one, generate a detail menu.
 	
-	// if the query is two levels deep, generate the detail menu of the second
+	// If the query is two levels deep, generate the detail menu of the second
 	// URL. Otherwise generate a detail menu based on the first (or only) URL.
 	
 	/* Do additional query-parsing. */
@@ -75,7 +75,7 @@ if(mb_strlen($rawQuery) < 3) {
 	$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$detailURL&extras=$provided" . "detail");
 	
 	if(empty($json))
-		alfredify(array(array('title' => 'Sorry, there was an error', 'subtitle' => 'Please try again'))); // TODO better thing
+		alfredify(array(array('title' => 'Sorry, there was an error', 'subtitle' => 'Please try again'))); // TODO better error
 		
 	$json = json_decode($json);
 	
@@ -131,8 +131,8 @@ if(mb_strlen($rawQuery) < 3) {
 			$currentResultNumber++;
 		}
 	}
-	
-	
+
+
 } else { 
 	// If the query is completely user-generated, or the user has modified it, show the search menu.
 	
@@ -184,8 +184,8 @@ if(mb_strlen($rawQuery) < 3) {
 			// only used if item is not valid. Tracks run an action, everything
 			// else autocompletes.
 			$currentResult[valid]        = ($type == 'track') ? 'yes' : 'no';
-			$currentResult[arg]          = 'open location "' . $value->href . '"';
-			$currentResult[autocomplete] = $value->href . " ► " . $query . " ►";
+			$currentResult[arg]          = "open location \"$value->href\"";
+			$currentResult[autocomplete] = "$value->href ► $query ►";
 			
 			if($showImages && $currentResultNumber <= $imgdResults / 3) {
 				$currentResult[icon] = getTrackArtwork($value->href);
