@@ -1,5 +1,9 @@
 <?php
-include_once('include/globals.php');
+
+function trim_value(&$value) 
+{ 
+	$value = trim($value); 
+}
 
 function alfredify($results) {
 	print "<?xml version='1.0'?>\r\n<items>";
@@ -21,24 +25,32 @@ function alfredify($results) {
 			$result[valid] = 'yes';
 			
 		print "\r\n\r\n";
-		print "	<item uid='" . addSlashesForQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . addSlashesForQuery($result[valid]) . "' autocomplete='" . addSlashesForQuery($result[autocomplete]) . "'>\r\n";
-		print "		<title>" . addSlashesForQuery($result[title]) . "</title>\r\n";
-		print "		<subtitle>" . addSlashesForQuery($result[subtitle]) . "</subtitle>\r\n";
-		print "		<icon>" . addSlashesForQuery($result[icon]) . "</icon>\r\n";
+		print "	<item uid='" . escapeQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . escapeQuery($result[valid]) . "' autocomplete='" . escapeQuery($result[autocomplete]) . "'>\r\n";
+		print "		<title>" . escapeQuery($result[title]) . "</title>\r\n";
+		print "		<subtitle>" . escapeQuery($result[subtitle]) . "</subtitle>\r\n";
+		print "		<icon>" . escapeQuery($result[icon]) . "</icon>\r\n";
 		print "	</item>\r\n";
 	}
 	
 	print "</items>";
 }
 
-function addSlashesForQuery($text) {
-	return str_replace("'", "’", str_replace('"', '\"', str_replace(" '", " ‘", $text)));
+function debug($text) {
+	$results[0][title] = $text;
+
+	alfredify($results);
 }
 
-function debugAlfredify($text) {
-	$results[0][title] = $text;
+function normalize($text) {
+	return exec('./include/normalize "' . $text . '"');
+}
+
+function escapeQuery($text) {
+	$text = str_replace("'", "’", $text);
+	$text = str_replace('"', '\"', $text);
+	$text = str_replace("&", "&amp;", $text);
 	
-	alfredify($results);
+	return $text;
 }
 
 function spotifyQuery() {
@@ -52,7 +64,7 @@ function spotifyQuery() {
 	
 	$script .= " -e 'end tell'";
 	
-	return exec($script);
+	return normalize(exec($script));
 }
 
 function popularitySort($a, $b) {
@@ -65,7 +77,6 @@ function popularitySort($a, $b) {
 // Thanks Jeff Johns <http://phpfunk.me/> and Robin Enhorn <https://github.com/enhorn/>
 function fetch($url)
 {
-	// TODO Add timeout
 	 $ch = curl_init($url);
 	 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -125,6 +136,18 @@ function getArtistArtworkURL($artist) {
 	$json = json_decode($html, true);
 	
 	return $json[artist][image][1]['#text'];
+}
+
+function floatToStars($decimal) {
+	$stars = ($decimal < 1) ? floor($decimal * 5) : 5;
+	return str_repeat("★", $stars) . str_repeat("☆", 5 - $stars);
+}
+
+function beautifyTime($seconds) {
+	$m = floor($seconds / 60);
+	$s = $seconds % 60;
+	$s = ($s < 10) ? "0$s" : "$s";
+	return  "$m:$s";
 }
 
 ?>

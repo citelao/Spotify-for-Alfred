@@ -1,4 +1,4 @@
 {
-	"version": 0.61,
-	"remote_json": "https://raw.github.com/citelao/Spotify-for-Alfred/master/remote.json"
+  "version":0.8,
+  "remote_json":"https://raw.github.com/citelao/Spotify-for-Alfred/master/remote.json"
 }
