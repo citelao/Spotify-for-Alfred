@@ -36,7 +36,7 @@ start it*. It also got a perfect score on its SATs.
 
 ## Download & Install ##
 
-Current version: v0.8
+Current version: v0.81
 
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)
 this repository.
