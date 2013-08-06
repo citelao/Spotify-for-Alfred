@@ -59,12 +59,18 @@ function spotifyQuery() {
 	$script = "osascript -e 'tell application \"Spotify\"'";
 	
 	for ($i = 0; $i < func_num_args(); $i++) {
-		$script .= " -e '" . escapeshellcmd($args[$i]) . "'";
+		$script .= " -e '" . $args[$i] . "'";
 	}
 	
 	$script .= " -e 'end tell'";
 	
 	return normalize(exec($script));
+}
+
+function now() {
+	$data = spotifyQuery('return name of current track & "✂" & album of current track & "✂" & artist of current track & "✂" & spotify url of current track & "✂" & player state');
+	
+	return split("✂", $data);
 }
 
 function popularitySort($a, $b) {

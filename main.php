@@ -25,11 +25,12 @@ if(mb_strlen($rawQuery) < 3) {
 	/* If the query is tiny, show the main menu. */
 	
 	/* Get now-playing info. */
-	$currentTrack             = spotifyQuery("name of current track");
-	$currentAlbum             = spotifyQuery("album of current track");
-	$currentArtist            = spotifyQuery("artist of current track");
-	$currentURL               = spotifyQuery("spotify url of current track");
-	$currentStatus            = (spotifyQuery("player state") == 'playing') ? "include/images/paused.png" : "include/images/playing.png";
+	$current = now();
+	$currentTrack             = $current[0];
+	$currentAlbum             = $current[1];
+	$currentArtist            = $current[2];
+	$currentURL               = $current[3];
+	$currentStatus            = ($current[4] == 'playing') ? "include/images/paused.png" : "include/images/playing.png";
 	
 	if($showImages) {
 		$currentArtistArtwork = getArtistArtwork($currentArtist); // TODO use API to query artist URL? or just use plaintext from now on?
