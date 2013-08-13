@@ -4,23 +4,35 @@ class Alfredify
 	end
 	
 	def add(item = {})
-		# TODO test only subtitle
-		item[:title] = "null" if item[:title].nil?
+		warn "must have title or subtitle" if item[:title].nil? && item[:subtitle].nil?
 		
-		raise "invalid argument for 'valid'" unless item[:valid].nil? || item[:valid].is_vague_boolean?
+		warn "invalid argument for 'valid'" unless item[:valid].nil? || item[:valid].is_vague_boolean?
 		
-		raise "'autocomplete' is required when 'valid' is 'no'" if item[:valid] == "no" && item[:autocomplete].nil?
+		warn "'autocomplete' is required when 'valid' is 'no'" if item[:valid] == "no" && item[:autocomplete].nil?
 	
 		@items.push item
 	end
 	
-	def output!
-		raise "no items" if @items.to_a.empty?
+	def throw!(error)
+		self.output!([
+			{
+				:title => "ERROR: #{error}", 
+				:subtitle => "See the log file below for debug info."
+			},
+			{
+				:title => ".log",
+				:subtitle => ".laosd"
+			}
+		])
+	end
+	
+	def output!(items = @items)
+		warn "no items to output" if items.to_a.empty?
 		
 		out = '<?xml version="1.0"?>\r\n'
 		out += '\t<items>\r\n'
 		
-		@items.each do |item| 
+		items.each do |item| 
 			out += "\t\t<item"
 			out += " uid='#{item[:uid]}'" unless item[:uid].nil?
 			out += " arg='#{item[:arg]}'" unless item[:arg].nil?
