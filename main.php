@@ -21,7 +21,7 @@ $queryBits   = str_replace("►", "", explode("►", $rawQuery));
                array_walk($queryBits, 'trim_value');
 $query       = $queryBits[count($queryBits)-1];
 
-if(mb_strlen($rawQuery) < 3) {
+if(mb_strlen($rawQuery) < 3 && substr($query, 0, 1) != "c") {
 	/* If the query is tiny, show the main menu. */
 	
 	/* Get now-playing info. */
@@ -59,6 +59,32 @@ if(mb_strlen($rawQuery) < 3) {
 	$results[3][subtitle]     = "Begin typing to search";
 	$results[3][valid]        = "no";
 	$results[3][icon]         = "include/images/search.png";
+} elseif(mb_strlen($rawQuery) < 3 && substr($query, 0, 1) == "c") {
+	/* If the query wants the control panel, give the control panel. */
+
+	$results[0][title] = "play pause";
+	$results[0][arg] = "playpause";
+
+	$results[1][title] = "previous";
+
+	$results[2][title] = "next";
+
+	$results[3][title] = "star";
+
+	$results[4][title] = "shuffle";
+	$results[4][arg] = "set shuffling to not shuffling";
+
+	$results[5][title] = "repeat";
+
+	$results[6][title] = "volup";
+
+	$results[7][title] = "voldown";
+
+	/* Do basic filtering on the query to sort the options */
+	$rest = substr($query, 1);
+	
+
+
 } elseif(mb_substr($rawQuery, -1, 1) == "►") { 
 	// If the query is an unmodified machine-generated one, generate a detail menu.
 	
@@ -125,7 +151,7 @@ if(mb_strlen($rawQuery) < 3) {
 			
 			$currentResult[title] = "$currentResultNumber. $value->name";
 			$currentResult[subtitle] = "$starString " . beautifyTime($value->length);
-			$currentResult[arg] = 'open location "' . $value->href . '"';
+			$currentResult[arg] = 'play track "' . $value->href . '" in context "' . $detailURL . '"';
 			$currentResult[icon] = "include/images/track.png";
 			
 			$results[] = $currentResult;
@@ -185,7 +211,7 @@ if(mb_strlen($rawQuery) < 3) {
 			// only used if item is not valid. Tracks run an action, everything
 			// else autocompletes.
 			$currentResult[valid]        = ($type == 'track') ? 'yes' : 'no';
-			$currentResult[arg]          = "open location \"$value->href\"";
+			$currentResult[arg]          = "play track \"$value->href\"";
 			$currentResult[autocomplete] = "$value->href ► $query ►";
 			
 			if($showImages && $currentResultNumber <= $imgdResults / 3) {

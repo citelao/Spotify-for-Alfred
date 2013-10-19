@@ -1,0 +1,27 @@
+{
+	"AppName": {
+		"en": "Spotifious Helper"
+	},
+	"AppDescription": {
+		"en": "Helper application for Spotifious"
+	},
+	"AppIcon": {
+		"18x18": "changeme.png"
+	},
+	"BundleIdentifier": "spotifious",
+	"BundleType": "Application",
+	"BundleVersion": "0.1",
+	"Dependencies": {
+		"api": "0.2.3",
+		"util": "0.1.0",
+		"resources": "0.2.2"
+	},
+	"RequiredInterface": 1,
+	"SupportedDeviceClasses": [
+		"Desktop"
+	],
+	"SupportedLanguages": [
+		"en"
+	],
+	"VendorIdentifier": "com.citelao"
+}
