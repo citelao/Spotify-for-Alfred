@@ -21,70 +21,69 @@ $queryBits   = str_replace("►", "", explode("►", $rawQuery));
                array_walk($queryBits, 'trim_value');
 $query       = $queryBits[count($queryBits)-1];
 
-if(mb_strlen($rawQuery) < 3 && substr($query, 0, 1) != "c") {
+if(mb_strlen($rawQuery) < 4) {
 	/* If the query is tiny, show the main menu. */
 	
-	/* Get now-playing info. */
-	$current = now();
-	$currentTrack             = $current[0];
-	$currentAlbum             = $current[1];
-	$currentArtist            = $current[2];
-	$currentURL               = $current[3];
-	$currentStatus            = ($current[4] == 'playing') ? "include/images/paused.png" : "include/images/playing.png";
-	
-	if($showImages) {
-		$currentArtistArtwork = getArtistArtwork($currentArtist); // TODO use API to query artist URL? or just use plaintext from now on?
-		$currentAlbumArtwork  = getTrackArtwork($currentURL);
+	/* If we want the control panel, show the control panel */
+	if(substr($query, 0, 1) == "c") {
+		$results[0][title] = "play pause";
+		$results[0][arg] = "playpause";
+
+		$results[1][title] = "previous";
+
+		$results[2][title] = "next";
+
+		$results[3][title] = "star";
+
+		$results[4][title] = "shuffle";
+		$results[4][arg] = "set shuffling to not shuffling";
+
+		$results[5][title] = "repeat";
+
+		$results[6][title] = "volup";
+
+		$results[7][title] = "voldown";
+
+		/* Do basic filtering on the query to sort the options */
+		$rest = substr($query, 1);
+
+	} else {
+		/* Get now-playing info. */
+		$current = now();
+		$currentTrack             = $current[0];
+		$currentAlbum             = $current[1];
+		$currentArtist            = $current[2];
+		$currentURL               = $current[3];
+		$currentStatus            = ($current[4] == 'playing') ? "include/images/alfred/paused.png" : "include/images/alfred/playing.png";
+		
+		if($showImages) {
+			$currentArtistArtwork = getArtistArtwork($currentArtist); // TODO use API to query artist URL? or just use plaintext from now on?
+			$currentAlbumArtwork  = getTrackArtwork($currentURL);
+		}
+		
+		/* Output now-playing info. */
+		$results[0][title]        = "$currentTrack";
+		$results[0][subtitle]     = "$currentAlbum by $currentArtist";
+		$results[0][arg]          = "playpause";
+		$results[0][icon]         = $currentStatus;
+		
+		$results[1][title]        = "$currentAlbum";
+		$results[1][subtitle]     = "More from this album...";
+		$results[1][autocomplete] = "$currentAlbum"; // TODO change to albumdetail
+		$results[1][valid]        = "no";
+		$results[1][icon]         = (!file_exists($currentAlbumArtwork)) ? 'include/images/alfred/album.png' : $currentAlbumArtwork;
+		
+		$results[2][title]        = "$currentArtist";
+		$results[2][subtitle]     = "More by this artist...";
+		$results[2][autocomplete] = $currentArtist; // TODO change to artistdetail
+		$results[2][valid]        = "no";
+		$results[2][icon]         = (!file_exists($currentArtistArtwork)) ? 'include/images/alfred/artist.png' : $currentArtistArtwork;
+		
+		$results[3][title]        = "Search for music...";
+		$results[3][subtitle]     = "Begin typing to search";
+		$results[3][valid]        = "no";
+		$results[3][icon]         = "include/images/alfred/search.png";
 	}
-	
-	/* Output now-playing info. */
-	$results[0][title]        = "$currentTrack";
-	$results[0][subtitle]     = "$currentAlbum by $currentArtist";
-	$results[0][arg]          = "playpause";
-	$results[0][icon]         = $currentStatus;
-	
-	$results[1][title]        = "$currentAlbum";
-	$results[1][subtitle]     = "More from this album...";
-	$results[1][autocomplete] = "$currentAlbum"; // TODO change to albumdetail
-	$results[1][valid]        = "no";
-	$results[1][icon]         = (!file_exists($currentAlbumArtwork)) ? 'include/images/album.png' : $currentAlbumArtwork;
-	
-	$results[2][title]        = "$currentArtist";
-	$results[2][subtitle]     = "More by this artist...";
-	$results[2][autocomplete] = $currentArtist; // TODO change to artistdetail
-	$results[2][valid]        = "no";
-	$results[2][icon]         = (!file_exists($currentArtistArtwork)) ? 'include/images/artist.png' : $currentArtistArtwork;
-	
-	$results[3][title]        = "Search for music...";
-	$results[3][subtitle]     = "Begin typing to search";
-	$results[3][valid]        = "no";
-	$results[3][icon]         = "include/images/search.png";
-} elseif(mb_strlen($rawQuery) < 3 && substr($query, 0, 1) == "c") {
-	/* If the query wants the control panel, give the control panel. */
-
-	$results[0][title] = "play pause";
-	$results[0][arg] = "playpause";
-
-	$results[1][title] = "previous";
-
-	$results[2][title] = "next";
-
-	$results[3][title] = "star";
-
-	$results[4][title] = "shuffle";
-	$results[4][arg] = "set shuffling to not shuffling";
-
-	$results[5][title] = "repeat";
-
-	$results[6][title] = "volup";
-
-	$results[7][title] = "voldown";
-
-	/* Do basic filtering on the query to sort the options */
-	$rest = substr($query, 1);
-	
-
-
 } elseif(mb_substr($rawQuery, -1, 1) == "►") { 
 	// If the query is an unmodified machine-generated one, generate a detail menu.
 	
@@ -114,7 +113,7 @@ if(mb_strlen($rawQuery) < 3 && substr($query, 0, 1) != "c") {
 	if($showImages) {
 		$results[0][icon]     = getTrackArtwork($detailURL);
 	} else {
-		$results[0][icon]     = "include/images/$type.png";
+		$results[0][icon]     = "include/images/alfred/$type.png";
 	}
 	
 	if($provided == "album") {
@@ -137,7 +136,7 @@ if(mb_strlen($rawQuery) < 3 && substr($query, 0, 1) != "c") {
 			if($showImages && $currentResultNumber <= $imgdResults) {
 				$currentResult[icon] = getTrackArtwork($value->href);
 			} else {
-				$currentResult[icon] = "include/images/album.png";
+				$currentResult[icon] = "include/images/alfred/album.png";
 			}
 			
 			$results[] = $currentResult;
@@ -150,9 +149,9 @@ if(mb_strlen($rawQuery) < 3 && substr($query, 0, 1) != "c") {
 			$starString = floatToStars($value->popularity);
 			
 			$currentResult[title] = "$currentResultNumber. $value->name";
-			$currentResult[subtitle] = "$starString " . beautifyTime($value->length);
+			$currentResult[subtitle] = "$starString "  . beautifyTime($value->length);
 			$currentResult[arg] = 'play track "' . $value->href . '" in context "' . $detailURL . '"';
-			$currentResult[icon] = "include/images/track.png";
+			$currentResult[icon] = "include/images/alfred/track.png";
 			
 			$results[] = $currentResult;
 			$currentResultNumber++;
@@ -192,13 +191,13 @@ if(mb_strlen($rawQuery) < 3 && substr($query, 0, 1) != "c") {
 			
 			if($type == 'track') {
 				$subtitle = "$starString " . $value->album->name . " by " . $value->artists[0]->name;
-				$genericResultArtwork = "include/images/track.png";
+				$genericResultArtwork = "include/images/alfred/track.png";
 			} elseif($type == 'album') {
 				$subtitle = "$starString Album by " . $value->artists[0]->name;
-				$genericResultArtwork = "include/images/album.png";
+				$genericResultArtwork = "include/images/alfred/album.png";
 			} else {
 				$subtitle = "$starString " . ucfirst($type);
-				$genericResultArtwork = "include/images/artist.png";
+				$genericResultArtwork = "include/images/alfred/artist.png";
 			}
 			
 			$currentResult[title]        = $value->name;

@@ -144,6 +144,10 @@ function getArtistArtworkURL($artist) {
 	return $json[artist][image][1]['#text'];
 }
 
+function controlPanelFilter($item) {
+	
+}
+
 function floatToStars($decimal) {
 	$stars = ($decimal < 1) ? floor($decimal * 5) : 5;
 	return str_repeat("★", $stars) . str_repeat("☆", 5 - $stars);

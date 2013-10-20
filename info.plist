@@ -16,12 +16,55 @@
 				<key>modifiersubtext</key>
 				<string></string>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>E5DE67FB-EEC7-4489-BAFC-5CD549A308A1</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Queue this</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>2718D6D2-D931-48D8-93FC-9BE73F1DA401</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Open in Spotify</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>C9149B42-C302-4B85-9FE1-644AB54249EF</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
+				<key>modifiersubtext</key>
+				<string>Search in Spotify</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>405C281F-68E7-49E0-A417-61F1D3B51429</string>
+				<key>modifiers</key>
+				<integer>131072</integer>
+				<key>modifiersubtext</key>
+				<string>Star this</string>
+			</dict>
 		</array>
-		<key>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</key>
+		<key>3E523778-76AD-4CD0-ADA1-1DDAD3767866</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>26447A5D-A2C6-4DD3-9467-8A7C9422E330</string>
+				<string>768E8F4D-68EB-44E9-85F0-7B67748C46D7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>A03EC08A-349D-406A-B4D2-E40796B68CAD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>F0304935-C17F-4251-A640-79D6D2E60789</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -33,6 +76,30 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>E16D7A45-5212-4A70-AE85-36C6BF0450E7</key>
+		<array/>
+		<key>F0304935-C17F-4251-A640-79D6D2E60789</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B72CF8BE-C4D3-4ACC-98AC-8AE349A4114C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>FBBEAB8F-B11E-4D92-9049-E21EAD35D223</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A7421BB1-9B71-4369-92AB-64AF0EA7A9AE</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -58,8 +125,7 @@
 				<key>script</key>
 				<string>tell application "Spotify"
 	run script {query}
-end tell
-</string>
+end tell</string>
 				<key>type</key>
 				<integer>6</integer>
 			</dict>
@@ -67,31 +133,6 @@ end tell
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>hotkey</key>
-				<integer>36</integer>
-				<key>hotmod</key>
-				<integer>1310720</integer>
-				<key>hotstring</key>
-				<string>↩</string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>AE6160D1-56EA-4416-991E-CF12B874FFD3</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -128,21 +169,25 @@ php -f main.php -- $SHOWIMAGES "{query}"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>spot cleanup</string>
-				<key>subtext</key>
-				<string>Clear cached artwork</string>
-				<key>text</key>
-				<string>Cleanup Spotifious</string>
-				<key>withspace</key>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>36</integer>
+				<key>hotmod</key>
+				<integer>1310720</integer>
+				<key>hotstring</key>
+				<string>↩</string>
+				<key>leftcursor</key>
 				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</string>
+			<string>AE6160D1-56EA-4416-991E-CF12B874FFD3</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -150,16 +195,302 @@ php -f main.php -- $SHOWIMAGES "{query}"</string>
 			<key>config</key>
 			<dict>
 				<key>escaping</key>
-				<integer>63</integer>
+				<integer>127</integer>
 				<key>script</key>
-				<string>php -f clear.php</string>
+				<string></string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>26447A5D-A2C6-4DD3-9467-8A7C9422E330</string>
+			<string>E5DE67FB-EEC7-4489-BAFC-5CD549A308A1</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>2718D6D2-D931-48D8-93FC-9BE73F1DA401</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>C9149B42-C302-4B85-9FE1-644AB54249EF</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>405C281F-68E7-49E0-A417-61F1D3B51429</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>49</integer>
+				<key>hotmod</key>
+				<integer>1310720</integer>
+				<key>hotstring</key>
+				<string>Space</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>A03EC08A-349D-406A-B4D2-E40796B68CAD</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>/Users/citelao/Library/Developer/Xcode/DerivedData/prevnext-gyqnwyspzlgnqmaxbsbvqanicfjc/Build/Products/Debug/prevnext.app/Contents/MacOS/prevnext {query}</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.script</string>
+			<key>uid</key>
+			<string>B72CF8BE-C4D3-4ACC-98AC-8AE349A4114C</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>tell application "Spotify"
+	playpause
+
+	if (player state is playing) then		"playing"	else		"paused"	end if
+end tell</string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>F0304935-C17F-4251-A640-79D6D2E60789</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>tell application "Spotify"
+	previous track
+end tell</string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>768E8F4D-68EB-44E9-85F0-7B67748C46D7</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>123</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>←</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>3E523778-76AD-4CD0-ADA1-1DDAD3767866</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>tell application "Spotify"
+	next track
+end tell</string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A7421BB1-9B71-4369-92AB-64AF0EA7A9AE</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>124</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>→</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>FBBEAB8F-B11E-4D92-9049-E21EAD35D223</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>8EE54596-B161-4A0A-AAFF-01FB8D016CE5</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>126</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>↑</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>8F56ADB1-748F-4574-8650-266DAE6C54BF</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>125</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>↓</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>4E2CAD16-5D05-444B-922F-CE5CD7C7C238</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>BF1F0016-A2CC-4A82-B937-0575496A141A</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -173,25 +504,90 @@ php -f main.php -- $SHOWIMAGES "{query}"</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>26447A5D-A2C6-4DD3-9467-8A7C9422E330</key>
+		<key>2718D6D2-D931-48D8-93FC-9BE73F1DA401</key>
 		<dict>
 			<key>ypos</key>
-			<real>370</real>
+			<real>230</real>
 		</dict>
-		<key>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</key>
+		<key>3E523778-76AD-4CD0-ADA1-1DDAD3767866</key>
 		<dict>
 			<key>ypos</key>
-			<real>370</real>
+			<real>690</real>
+		</dict>
+		<key>405C281F-68E7-49E0-A417-61F1D3B51429</key>
+		<dict>
+			<key>ypos</key>
+			<real>450</real>
+		</dict>
+		<key>4E2CAD16-5D05-444B-922F-CE5CD7C7C238</key>
+		<dict>
+			<key>ypos</key>
+			<real>1050</real>
+		</dict>
+		<key>768E8F4D-68EB-44E9-85F0-7B67748C46D7</key>
+		<dict>
+			<key>ypos</key>
+			<real>690</real>
+		</dict>
+		<key>8EE54596-B161-4A0A-AAFF-01FB8D016CE5</key>
+		<dict>
+			<key>ypos</key>
+			<real>930</real>
+		</dict>
+		<key>8F56ADB1-748F-4574-8650-266DAE6C54BF</key>
+		<dict>
+			<key>ypos</key>
+			<real>930</real>
+		</dict>
+		<key>A03EC08A-349D-406A-B4D2-E40796B68CAD</key>
+		<dict>
+			<key>ypos</key>
+			<real>570</real>
+		</dict>
+		<key>A7421BB1-9B71-4369-92AB-64AF0EA7A9AE</key>
+		<dict>
+			<key>ypos</key>
+			<real>810</real>
 		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>B72CF8BE-C4D3-4ACC-98AC-8AE349A4114C</key>
+		<dict>
+			<key>ypos</key>
+			<real>570</real>
+		</dict>
+		<key>BF1F0016-A2CC-4A82-B937-0575496A141A</key>
+		<dict>
+			<key>ypos</key>
+			<real>1050</real>
+		</dict>
+		<key>C9149B42-C302-4B85-9FE1-644AB54249EF</key>
+		<dict>
+			<key>ypos</key>
+			<real>340</real>
+		</dict>
 		<key>E16D7A45-5212-4A70-AE85-36C6BF0450E7</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
+		</dict>
+		<key>E5DE67FB-EEC7-4489-BAFC-5CD549A308A1</key>
+		<dict>
+			<key>ypos</key>
+			<real>120</real>
+		</dict>
+		<key>F0304935-C17F-4251-A640-79D6D2E60789</key>
+		<dict>
+			<key>ypos</key>
+			<real>570</real>
+		</dict>
+		<key>FBBEAB8F-B11E-4D92-9049-E21EAD35D223</key>
+		<dict>
+			<key>ypos</key>
+			<real>810</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>
