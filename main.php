@@ -9,6 +9,7 @@ include_once('include/helper.php');
  * 	an Alfred extension by Ben Stolovitz <http://github.com/citelao/>
  **/
 
+// TODO timeouts
 
 /* Parse the query. */
 $results     = array();
@@ -26,23 +27,34 @@ if(mb_strlen($rawQuery) < 4) {
 	
 	/* If we want the control panel, show the control panel */
 	if(substr($query, 0, 1) == "c") {
-		$results[0][title] = "play pause";
-		$results[0][arg] = "playpause";
+		// TODO
+		$results[] = [
+			title => "play pause",
+			arg => "playpause"];
 
-		$results[1][title] = "previous";
+		$results[] = [
+			title => "previous",
+			arg => "previous track"];
 
-		$results[2][title] = "next";
+		$results[] = [
+			title => "next",
+			arg => "next track"];
 
-		$results[3][title] = "star";
+		$results[] = [
+			title => "star"];
 
-		$results[4][title] = "shuffle";
-		$results[4][arg] = "set shuffling to not shuffling";
+		$results[] = [
+			title => "shuffle",
+			arg => "set shuffling to not shuffling"];
 
-		$results[5][title] = "repeat";
+		$results[] = [
+			title => "repeat"];
 
-		$results[6][title] = "volup";
+		$results[] = [
+			title => "volup"];
 
-		$results[7][title] = "voldown";
+		$results[] = [
+			title => "voldown"];
 
 		/* Do basic filtering on the query to sort the options */
 		$rest = substr($query, 1);
@@ -107,7 +119,7 @@ if(mb_strlen($rawQuery) < 4) {
 	
 	/* Output the details. */
 	$results[0][title]        = $json->$type->name;
-	$results[0][subtitle]     = "View $type in Spotify";
+	$results[0][subtitle]     = "Play $type";
 	$results[0][arg]          = 'activate (open location "' . $detailURL . '")';
 	
 	if($showImages) {
@@ -129,7 +141,7 @@ if(mb_strlen($rawQuery) < 4) {
 				continue;
 			
 			$currentResult[title] = $value->name;
-			$currentResult[subtitle] = "Open this $provided...";
+			$currentResult[subtitle] = "Browse this $provided...";
 			$currentResult[valid] = "no";
 			$currentResult[autocomplete] = "$detailURL ► $value->href ► $query ►►";
 			

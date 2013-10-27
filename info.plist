@@ -30,7 +30,7 @@
 				<key>modifiers</key>
 				<integer>524288</integer>
 				<key>modifiersubtext</key>
-				<string>Open in Spotify</string>
+				<string>Preview this</string>
 			</dict>
 			<dict>
 				<key>destinationuid</key>
@@ -38,7 +38,7 @@
 				<key>modifiers</key>
 				<integer>262144</integer>
 				<key>modifiersubtext</key>
-				<string>Search in Spotify</string>
+				<string>Open this in Spotify</string>
 			</dict>
 			<dict>
 				<key>destinationuid</key>
@@ -54,6 +54,41 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>768E8F4D-68EB-44E9-85F0-7B67748C46D7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>4E2CAD16-5D05-444B-922F-CE5CD7C7C238</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BF1F0016-A2CC-4A82-B937-0575496A141A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>768E8F4D-68EB-44E9-85F0-7B67748C46D7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>90720DB4-4411-4139-A095-2207998E23BD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>8EE54596-B161-4A0A-AAFF-01FB8D016CE5</key>
+		<array/>
+		<key>8F56ADB1-748F-4574-8650-266DAE6C54BF</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8EE54596-B161-4A0A-AAFF-01FB8D016CE5</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -262,31 +297,6 @@ php -f main.php -- $SHOWIMAGES "{query}"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>hotkey</key>
-				<integer>49</integer>
-				<key>hotmod</key>
-				<integer>1310720</integer>
-				<key>hotstring</key>
-				<string>Space</string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>A03EC08A-349D-406A-B4D2-E40796B68CAD</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -325,11 +335,38 @@ end tell</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>49</integer>
+				<key>hotmod</key>
+				<integer>1310720</integer>
+				<key>hotstring</key>
+				<string>Space</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>A03EC08A-349D-406A-B4D2-E40796B68CAD</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
 				<string>tell application "Spotify"
-	previous track
+	-- previous track
+	
+	return name of current track &amp; "✂" &amp; album of current track &amp; " by " &amp; artist of current track &amp; "✂"
 end tell</string>
 				<key>type</key>
 				<integer>6</integer>
@@ -338,6 +375,23 @@ end tell</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>768E8F4D-68EB-44E9-85F0-7B67748C46D7</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>126</integer>
+				<key>script</key>
+				<string>open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.script</string>
+			<key>uid</key>
+			<string>90720DB4-4411-4139-A095-2207998E23BD</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -374,6 +428,8 @@ end tell</string>
 				<key>script</key>
 				<string>tell application "Spotify"
 	next track
+
+	return name of current track &amp; "✂" &amp; album of current track &amp; " by " &amp; artist of current track &amp; "✂...✂"
 end tell</string>
 				<key>type</key>
 				<integer>6</integer>
@@ -416,9 +472,11 @@ end tell</string>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
-				<string></string>
+				<string>tell application "Spotify"
+		set sound volume to sound volume + 10
+end tell</string>
 				<key>type</key>
-				<integer>0</integer>
+				<integer>6</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
@@ -483,14 +541,31 @@ end tell</string>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
-				<string></string>
+				<string>tell application "Spotify"
+	set sound volume to sound volume - 10
+end tell</string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>BF1F0016-A2CC-4A82-B937-0575496A141A</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>BF1F0016-A2CC-4A82-B937-0575496A141A</string>
+			<string>EB66E092-900D-4D68-B4AD-CDAAA68161E5</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -539,6 +614,11 @@ end tell</string>
 			<key>ypos</key>
 			<real>930</real>
 		</dict>
+		<key>90720DB4-4411-4139-A095-2207998E23BD</key>
+		<dict>
+			<key>ypos</key>
+			<real>690</real>
+		</dict>
 		<key>A03EC08A-349D-406A-B4D2-E40796B68CAD</key>
 		<dict>
 			<key>ypos</key>
@@ -578,6 +658,11 @@ end tell</string>
 		<dict>
 			<key>ypos</key>
 			<real>120</real>
+		</dict>
+		<key>EB66E092-900D-4D68-B4AD-CDAAA68161E5</key>
+		<dict>
+			<key>ypos</key>
+			<real>1170</real>
 		</dict>
 		<key>F0304935-C17F-4251-A640-79D6D2E60789</key>
 		<dict>
