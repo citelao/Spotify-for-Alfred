@@ -95,6 +95,7 @@ Once you've searched for something, you can continue to browse albums and arists
 - Prevent Last.FM redundant artist downloads.
 - Provide settings menu in-app.
 - Make main menu links go directly to menus.
+- Allow Growl as well as Notification Center
 
 ## Changelog ##
 

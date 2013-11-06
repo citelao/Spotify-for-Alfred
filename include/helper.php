@@ -35,6 +35,34 @@ function alfredify($results) {
 	print "</items>";
 }
 
+function errorify($error) {
+	// TODO pleasant icons
+
+	$results = [
+		[
+			title => "Aw, jeez!",
+			subtitle => "Something went haywire. You can continue using Spotifious.",
+			void => "yes"
+		],
+
+		[
+			title => $error->getMessage(),
+			subtitle => "Line " . $error->getLine() . ", " . $error->getFile(),
+			void => "yes"
+		],
+
+		[
+			title => "Send output to file",
+			subtitle => "..." // TODO
+		]
+	];
+
+	alfredify($results);
+	exit();
+}
+
+set_exception_handler('errorify');
+
 function debug($text) {
 	$results[0][title] = $text;
 
@@ -90,62 +118,12 @@ function fetch($url)
 	 $page    = curl_exec($ch);
 	 $info    = curl_getinfo($ch);
 	 curl_close($ch);
+
+	 if($info['http_code'] != '200')
+	 	throw new Exception("fetch() failed; error code: " . $info['http_code']);
+	 	
+
 	 return ($info['http_code'] == '200') ? $page : null;
-}
-
-function getTrackArtwork($spotifyURL) {
-	$hrefs = explode(':', $spotifyURL);
-	$currentArtwork = "artwork/$hrefs[2].png";
-	
-	if (!file_exists($currentArtwork)) {
-		$artwork = getTrackArtworkURL($hrefs[1], $hrefs[2]);
-		
-		if (!empty($artwork)) {
-			shell_exec('curl -s ' . $artwork . ' -o ' . $currentArtwork);
-		}
-	}
-	
-	return $currentArtwork;
-}
-
-function getArtistArtwork($artist) {
-	$parsedArtist = urlencode($artist);
-	$currentArtwork = "artwork/$parsedArtist.png";
-	
-	if (!file_exists($currentArtwork)) {
-		$artwork = getArtistArtworkURL($artist);
-		
-		if (!empty($artwork)) {
-			shell_exec('curl -s ' . $artwork . ' -o ' . $currentArtwork);
-		}
-	}
-	
-	return $currentArtwork;
-}
-
-function getTrackArtworkURL($type, $id)
-{
-	$html = fetch("http://open.spotify.com/$type/$id");
-	
-	if (!empty($html)) {
-	 	preg_match_all('/.*?og:image.*?content="(.*?)">.*?/is', $html, $m);
-	 	return (isset($m[1][0])) ? $m[1][0] : 0;
-	}
-	
-	return 0;
-}
-
-function getArtistArtworkURL($artist) {
-	$parsedArtist = urlencode($artist);
-	
-	$html = fetch("http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&api_key=49d58890a60114e8fdfc63cbcf75d6c5&artist=$parsedArtist&format=json");
-	$json = json_decode($html, true);
-	
-	return $json[artist][image][1]['#text'];
-}
-
-function controlPanelFilter($item) {
-	
 }
 
 function floatToStars($decimal) {

@@ -1,31 +1,27 @@
 <?php
-
-/*
-
-tell application "Spotify"
-	run script {query}
-end tell
-
-	play track # in context #
-
-	activate (open location #)
-
-	open location spotify:app:spotifious:star:#
-
-	open location spotify:app:spotifious:queue:#
-
-	open  
-
-	playpause
-*/
-
 /* 
 
-	run discrete applescript actions
+	Action.php must:
 
-	play
-	queue
-	preview
-	search
-	star
+	run
+		discrete applescript actions
+			playpause
+			next
+			previous
+		play
+			play track # in context #
+		queue
+			open location spotify:app:spotifious:queue:#
+		preview
+			open location spotify:app:spotifious:preview:#
+		search/open in
+			activate (open location #)
+		star
+			open location spotify:app:spotifious:star:#
+
+	output
+		notification center (or growl if requested)
+
+		("cannot star artists" "cannot star albums")
+	
 */

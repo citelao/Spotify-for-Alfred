@@ -1,8 +1,9 @@
 # How Spotifious should work #
 
-There are three specific types of output:
+There are four specific types of output:
 
 1. Main Menu — first activation
+2. Control Panel — `c` and control code
 2. Search Menu — user typing
 3. Detail Menu — autocompleted text with Spotify URL
 

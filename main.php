@@ -9,16 +9,12 @@ include_once('include/helper.php');
  * 	an Alfred extension by Ben Stolovitz <http://github.com/citelao/>
  **/
 
-// TODO timeouts
-
 /* Parse the query. */
 $results     = array();
-$showImages  = ($argv[1] == 'yes') ? true : false;
 $rawQuery    = normalize($argv[2]);
-$imgdResults = 6;
 $maxResults  = 15;
 
-$queryBits   = str_replace("►", "", explode("►", $rawQuery));
+$queryBits   = str_replace("⟩", "", explode("⟩", $rawQuery));
                array_walk($queryBits, 'trim_value');
 $query       = $queryBits[count($queryBits)-1];
 
@@ -58,7 +54,7 @@ if(mb_strlen($rawQuery) < 4) {
 
 		/* Do basic filtering on the query to sort the options */
 		$rest = substr($query, 1);
-
+		// TODO
 	} else {
 		/* Get now-playing info. */
 		$current = now();
@@ -66,12 +62,9 @@ if(mb_strlen($rawQuery) < 4) {
 		$currentAlbum             = $current[1];
 		$currentArtist            = $current[2];
 		$currentURL               = $current[3];
-		$currentStatus            = ($current[4] == 'playing') ? "include/images/alfred/paused.png" : "include/images/alfred/playing.png";
-		
-		if($showImages) {
-			$currentArtistArtwork = getArtistArtwork($currentArtist); // TODO use API to query artist URL? or just use plaintext from now on?
-			$currentAlbumArtwork  = getTrackArtwork($currentURL);
-		}
+		$currentStatus            = ($current[4] == 'playing') ?
+									"include/images/alfred/paused.png" :
+									"include/images/alfred/playing.png";
 		
 		/* Output now-playing info. */
 		$results[0][title]        = "$currentTrack";
@@ -83,27 +76,32 @@ if(mb_strlen($rawQuery) < 4) {
 		$results[1][subtitle]     = "More from this album...";
 		$results[1][autocomplete] = "$currentAlbum"; // TODO change to albumdetail
 		$results[1][valid]        = "no";
-		$results[1][icon]         = (!file_exists($currentAlbumArtwork)) ? 'include/images/alfred/album.png' : $currentAlbumArtwork;
+		$results[1][icon]         = 'include/images/alfred/album.png';
 		
 		$results[2][title]        = "$currentArtist";
 		$results[2][subtitle]     = "More by this artist...";
 		$results[2][autocomplete] = $currentArtist; // TODO change to artistdetail
 		$results[2][valid]        = "no";
-		$results[2][icon]         = (!file_exists($currentArtistArtwork)) ? 'include/images/alfred/artist.png' : $currentArtistArtwork;
+		$results[2][icon]         = 'include/images/alfred/artist.png';
 		
 		$results[3][title]        = "Search for music...";
 		$results[3][subtitle]     = "Begin typing to search";
 		$results[3][valid]        = "no";
 		$results[3][icon]         = "include/images/alfred/search.png";
 	}
-} elseif(mb_substr($rawQuery, -1, 1) == "►") { 
+// TODO if spotify URL/URI
+} elseif(mb_substr($rawQuery, -1, 1) == "⟩") { 
 	// If the query is an unmodified machine-generated one, generate a detail menu.
 	
 	// If the query is two levels deep, generate the detail menu of the second
 	// URL. Otherwise generate a detail menu based on the first (or only) URL.
 	
+	// spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ Transatlanticism ⟩
+	// spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ Death Cab for Cutie ⟩
+	// spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩⟩
+
 	/* Do additional query-parsing. */
-	$detailURL  = (mb_substr($rawQuery, -2, 1) == "►") ? $queryBits[1] : $queryBits[0];
+	$detailURL  = (mb_substr($rawQuery, -2, 1) == "⟩") ? $queryBits[1] : $queryBits[0];
 	$detailBits = explode(":", $detailURL);
 	$type       = $detailBits[1];
 	$provided   = ($detailBits[1] == "artist") ? "album" : "track";
@@ -113,7 +111,7 @@ if(mb_strlen($rawQuery) < 4) {
 	$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$detailURL&extras=$provided" . "detail");
 	
 	if(empty($json))
-		alfredify(array(array('title' => 'Sorry, there was an error', 'subtitle' => 'Please try again'))); // TODO better error
+		throw new Exception("No JSON returned from Spotify web lookup");
 		
 	$json = json_decode($json);
 	
@@ -121,12 +119,7 @@ if(mb_strlen($rawQuery) < 4) {
 	$results[0][title]        = $json->$type->name;
 	$results[0][subtitle]     = "Play $type";
 	$results[0][arg]          = 'activate (open location "' . $detailURL . '")';
-	
-	if($showImages) {
-		$results[0][icon]     = getTrackArtwork($detailURL);
-	} else {
-		$results[0][icon]     = "include/images/alfred/$type.png";
-	}
+	$results[0][icon]         = "include/images/alfred/$type.png";
 	
 	if($provided == "album") {
 		$currentResultNumber = 1;
@@ -143,13 +136,8 @@ if(mb_strlen($rawQuery) < 4) {
 			$currentResult[title] = $value->name;
 			$currentResult[subtitle] = "Browse this $provided...";
 			$currentResult[valid] = "no";
-			$currentResult[autocomplete] = "$detailURL ► $value->href ► $query ►►";
-			
-			if($showImages && $currentResultNumber <= $imgdResults) {
-				$currentResult[icon] = getTrackArtwork($value->href);
-			} else {
-				$currentResult[icon] = "include/images/alfred/album.png";
-			}
+			$currentResult[autocomplete] = "$detailURL ⟩ $value->href ⟩ $query ⟩⟩";
+			$currentResult[icon] = "include/images/alfred/album.png";
 			
 			$results[] = $currentResult;
 			$albums[] = "$value->name";
@@ -169,18 +157,16 @@ if(mb_strlen($rawQuery) < 4) {
 			$currentResultNumber++;
 		}
 	}
-
-
 } else { 
 	// If the query is completely user-generated, or the user has modified it, show the search menu.
-	
+
 	// Run the search using all three types of API queries
 	foreach (array('artist','album','track') as $type) {
 		/* Fetch and parse the search results. */
 		$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . str_replace("%3A", ":", urlencode($queryBits[count($queryBits)-1])));
-		
+
 		if(empty($json))
-			continue; // TODO output a better error.
+			throw new Exception("No JSON returned from Spotify web search");
 		
 		$json = json_decode($json);
 		
@@ -223,13 +209,8 @@ if(mb_strlen($rawQuery) < 4) {
 			// else autocompletes.
 			$currentResult[valid]        = ($type == 'track') ? 'yes' : 'no';
 			$currentResult[arg]          = "play track \"$value->href\"";
-			$currentResult[autocomplete] = "$value->href ► $query ►";
-			
-			if($showImages && $currentResultNumber <= $imgdResults / 3) {
-				$currentResult[icon] = getTrackArtwork($value->href);
-			} else {
-				$currentResult[icon] = $genericResultArtwork;
-			}
+			$currentResult[autocomplete] = "$value->href ⟩ $query ⟩";
+			$currentResult[icon] = "include/images/alfred/$type.png";
 			
 			$results[] = $currentResult;
 			$currentResultNumber++;
@@ -239,6 +220,14 @@ if(mb_strlen($rawQuery) < 4) {
 	/* Sort results by popularity. */
 	if(!empty($results))
 		usort($results, "popularitySort");
+
+	/* Give the option to continue searching in Spotify because even I know my limits. */
+	$results[] = [
+		'title' => "Search for $query",
+		'subtitle' => "Continue this search in Spotify...",
+		'arg' => 'moo' // TODO, obviously
+						// TODO icon too
+	];
 }
 
 alfredify($results);
