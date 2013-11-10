@@ -23,30 +23,27 @@ $query   = normalize($argv[1]);
  *   1. First letter is 'c': show the control panel
  *   2. Otherwise:           show the main menu
  *
- *  Now deal with our detail menus.
- *   URL:   no spaces
- *           http://open.spotify.com/artist/5lsC3H1vh9YSRQckyGv0Up
- *   URI:   no spaces
- *           spotify:artist:7lqaPghwYv2mE9baz5XQmL
- *   Query: # of ⟩ == # of URIs
- *           spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ Transatlanticism ⟩
- *           spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩⟩
- *           spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩
+ *  Deal with our detail menus.
+ *   # of ⟩ >= # of URIs
+ *    spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ Transatlanticism ⟩
+ *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩⟩
+ *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩
+ *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩ Transatlanticism ⟩
  *
  *  Also our filter searches:
- *   URL:   contain spaces
- *           http://open.spotify.com/artist/0YrtvWJMgSdVrk3SfNjTbx Transatlanticism
- *   URI:   contain spaces
- *           spotify:artist:7lqaPghwYv2mE9baz5XQmL You & Me
- *   Query: # of ⟩ > # of URIs
- *           spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ Transatlanticism ⟩ Lightness
- *           spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩⟩ Expo '86
- *           spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩ Transatlanticism
+ *   # of ⟩ > # of URIs
+ *    spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ Transatlanticism ⟩ Lightness
+ *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩⟩ Expo '86
+ *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩ Transatlanticism
+ *
+ *  Now handle URLS & URIs
+ *   URL: http://open.spotify.com/artist/5lsC3H1vh9YSRQckyGv0Up
+ *   URI: spotify:artist:7lqaPghwYv2mE9baz5XQmL
  *
  *  Then our searches containing Spotifious-generated information:
- *   Query: 0 < # of ⟩ <= # of URIs
- *           spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ The Shins
- *           spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Tally Hall
+ *   0 < # of ⟩ <= # of URIs
+ *    spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ The Shins
+ *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Tally Hall
  *
  *  Everything else is a search.
  */
@@ -86,23 +83,22 @@ if (mb_strlen($query) <= 3) {
 	$trimmedQuery = preg_replace('/http:\/\/[^\/]+\/|\//', ' ', $query);
 	$splitQuery = explode(' ', $trimmedQuery); // TODO replace with preg_match
 
-	// Craft a URI from the URL and grab the remaining args (if any)
+	// Craft a URI from the URL.
 	$URI = 'spotify:' . $splitQuery[1] . ':' . $splitQuery[2];
-	$args = implode(' ', array_slice($splitQuery, 3));
 
-	$results = Spotifious::detail(array($URI), $args);
+	$results = Spotifious::convertableInfo($URI);
 
 } elseif(contains($query, 'spotify:')) {
 	// Based off https://github.com/felixtriller/spotify-embed/blob/master/spotify-embed.php
 	// TODO: "app:" URLS
-	$parts = preg_contains($query, '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)(?: )+([^\n]*)$/x');
+	$parts = array_filter(preg_contains($query, '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)(?: )+([^\n]*)$/x'));
 
 	if($parts === false) throw new Exception("Invalid Spotify URI");
 
 	$URI  = $parts[1];
 	$args = $parts[2];
 
-	$results = Spotifious::detail(array($URI), $args);
+	$results = Spotifious::convertableInfo($URI);
 
 } else {
 	$results = Spotifious::search($query);

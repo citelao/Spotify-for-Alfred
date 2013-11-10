@@ -185,9 +185,6 @@ class Spotifious {
 			$currentResultNumber = 1;
 			$albums = array();
 			foreach ($json->$type->{$provided . "s"} as $key => $value) {
-				if($currentResultNumber > $maxResults)
-					continue;
-					
 				$value = $value->$provided;
 				
 				if(in_array($value->name, $albums))
@@ -225,8 +222,98 @@ class Spotifious {
 
 	public function filteredSearch($URIs, $args)
 	{
-		throw new Exception("Error Processing Request", 1);
-		
+		throw new Exception("Filtered search not implemented 😔");
+		// TODO
+		return $results;
+	}
+
+	public function convertableInfo($URI)
+	{
+		/* Do additional query-parsing. */
+		$explodedURI = explode(":", $URI);
+		$type       = $explodedURI[1];
+		$detail   = ($type == "artist") ? "album" : "track";
+		$detailNeeded = ($type != "track");
+
+		/* Fetch and parse the details. */
+		$URL = "http://ws.spotify.com/lookup/1/.json?uri=$URI";
+		if($detailNeeded)
+			$URL .= "&extras=$detail" . "detail";
+
+		$json = fetch($URL);
+
+		if(empty($json))
+			throw new Exception("No JSON returned from Spotify web lookup");
+
+		$json = json_decode($json);
+
+		/* Output the details. */
+		switch ($type) { // This could SO be DRY-er TODO.
+			case 'track':
+				$results = [
+					[
+						title => $json->$type->name,
+						subtitle => "todo", //TODO
+						arg => '', // TODO
+						icon => "include/images/alfred/$type.png"
+					],
+					[
+						title => $json->$type->album->name,
+						subtitle => "More from this album...",
+						valid => "no",
+						autocomplete => $json->$type->album->href . " ⟩ ⟩",
+						icon => "include/images/alfred/album.png"
+					],
+					[
+						title => $json->$type->artists[0]->name,
+						subtitle => "More by this artist...",
+						valid => "no",
+						autocomplete => $json->$type->artists[0]->href . " ⟩ ⟩",
+						icon => "include/images/alfred/artist.png"
+					]
+				];
+				break;
+			case 'album':
+				$results = [
+					[
+						title => $json->$type->name,
+						subtitle => "Browse this $type...",
+						valid => "no",
+						autocomplete => $URI . " ⟩ ⟩",
+						icon => "include/images/alfred/$type.png"
+					],
+					[
+						title => $json->$type->artist,
+						subtitle => "More by this artist...",
+						valid => "no",
+						autocomplete => $json->$type->{'artist-id'} . " ⟩ ⟩",
+						icon => "include/images/alfred/artist.png"
+					]
+				];
+				break;
+			case 'artist':
+				$results = [
+					[
+						title => $json->$type->name,
+						subtitle => "Browse this $type...",
+						valid => "no",
+						autocomplete => $URI . " ⟩ ⟩",
+						icon => "include/images/alfred/$type.png"
+					]
+				];
+				break;
+			default:
+				throw new Exception("Unknown item type $type", 1);
+				break;
+		}
+
+		$results[] = [
+			title => $json->$type->name,
+			subtitle => "Open this $type in Spotify",
+			arg => 'activate (open location "' . $URI . '")',
+			// TODO icon
+		];
+
 		return $results;
 	}
 }
