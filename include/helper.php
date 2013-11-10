@@ -48,18 +48,20 @@ function alfredify($results) {
 }
 
 function errorify($error) {
+	$titles = ['Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!'];
+
 	$results = [
 		[
-			title => "Aw, jeez!",
+			title => $titles[array_rand($titles)],
 			subtitle => "Something went haywire. You can continue using Spotifious.",
-			void => "yes",
+			valid => "no",
 			icon => 'include/images/alfred/error.png'
 		],
 
 		[
 			title => $error->getMessage(),
 			subtitle => "Line " . $error->getLine() . ", " . $error->getFile(),
-			void => "yes",
+			valid => "no",
 			icon => 'include/images/alfred/info.png'
 		],
 

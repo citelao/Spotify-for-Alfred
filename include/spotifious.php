@@ -235,6 +235,12 @@ class Spotifious {
 		$detail   = ($type == "artist") ? "album" : "track";
 		$detailNeeded = ($type != "track");
 
+		if($type == "app")
+			throw new Exception("Spotifious cannot handle app URLs (yet)"); // TODO
+
+		if(contains($URI,"playlist"))
+			throw new Exception("Spotifious cannot handle playlist URLs (yet)"); // TODO
+
 		/* Fetch and parse the details. */
 		$URL = "http://ws.spotify.com/lookup/1/.json?uri=$URI";
 		if($detailNeeded)
