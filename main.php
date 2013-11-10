@@ -11,6 +11,90 @@ include_once('include/spotifious.php');
  * 	an Alfred extension by Ben Stolovitz <http://github.com/citelao/>
  **/
 
+/* If Spotifious isn't configured yet, show the checklist. */
+if(!hotkeys_configured() || !helper_app_configured() || !country_code_configured()) { // todo
+	$results[] = [
+		'title' => 'Welcome to Spotifious!',
+		'subtitle' => 'You need to configure a few more things before you can use Spotifious.',
+		'icon' => 'include/images/alfred/configuration.png',
+		'valid' => 'no'
+	];
+
+	if(hotkeys_configured()) {
+		$results[] = [
+			'title' => '1. Bind your hotkeys',
+			'subtitle' => 'Action this to bind automatically, or set them yourself in Alfred preferences.',
+			'icon' => 'include/images/alfred/checked.png',
+			'valid' => 'no'
+		];
+	} else {
+		$results[] = [
+			'title' => '1. Bind your hotkeys',
+			'subtitle' => 'Action this to bind automatically, or set them yourself in Alfred preferences.',
+			'icon' => 'include/images/alfred/unchecked.png'
+		];
+	}
+
+	if(helper_app_configured()) {
+		$results[] =[
+			'title' => '2. Install the helper app in Spotify',
+			'subtitle' => 'This will open your web browser so you can activate Spotify developer mode.',
+			'icon' => 'include/images/alfred/checked.png',
+			'valid' => 'no'
+		];
+	} else {
+		$results[] =[
+			'title' => '2. Install the helper app in Spotify',
+			'subtitle' => 'This will open your web browser so you can activate Spotify developer mode.',
+			'icon' => 'include/images/alfred/unchecked.png'
+		];
+	}
+	
+	if(country_code_configured()) {
+		$results[] = [
+			'title' => '3. Find your country code',
+			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
+			'icon' => 'include/images/alfred/checked.png',
+			'valid' => 'no'
+		];
+	} else {
+		$results[] = [
+			'title' => '3. Find your country code',
+			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
+			'icon' => 'include/images/alfred/unchecked.png'
+		];
+	}
+
+	$results[] = [
+		'title' => 'You can access settings easily',
+		'subtitle' => 'Type `s` from the main menu',
+		'icon' => 'include/images/alfred/info.png'
+	];
+
+	alfredify($results);
+}
+
+function hotkeys_configured()
+{
+	// Check .plist for binds on `spot`
+	return false;
+}
+
+function helper_app_configured()
+{
+	if(is_link("/Users/citelao/Spotify/spotifious-helper") || file_exists("/Users/citelao/Spotify/spotifious-helper"))
+		return true;
+
+	return false;
+}
+
+function country_code_configured()
+{
+	// Check file storage location for country code.
+
+	return false;
+}
+
 /* Parse the query. */
 $results = array();
 $query   = normalize($argv[1]);
