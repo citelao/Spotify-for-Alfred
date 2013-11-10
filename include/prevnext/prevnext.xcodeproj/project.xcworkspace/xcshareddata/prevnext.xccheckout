@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D86ECD6B-7DFA-4AB4-8B9D-C1DF8B5DBA73</string>
+	<key>IDESourceControlProjectName</key>
+	<string>prevnext</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D048DA69-1E2E-42A0-996D-96C785EB41F5</key>
+		<string>ssh://github.com/citelao/Spotify-for-Alfred.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>include/prevnext/prevnext.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D048DA69-1E2E-42A0-996D-96C785EB41F5</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/citelao/Spotify-for-Alfred.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D048DA69-1E2E-42A0-996D-96C785EB41F5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D048DA69-1E2E-42A0-996D-96C785EB41F5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>spotifious</string>
+		</dict>
+	</array>
+</dict>
+</plist>

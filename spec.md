@@ -1,54 +1,53 @@
-# How Spotifious should work #
+# How Spotifious v1.0 should work #
 
-There are four specific types of output:
+## Goals ##
 
-1. Main Menu — first activation
-2. Control Panel — `c` and control code
-2. Search Menu — user typing
-3. Detail Menu — autocompleted text with Spotify URL
+Spotifious should be a powerful and fast way of controlling Spotify from Alfred, rather than directly in-app.
 
-## Main Menu ##
+I should want to use Spotifious over Spotify to queue music I like.
 
-`^⌘⏎` should show the main menu.
+## Overview ##
 
-1. ► Crooked Teeth ⏎ `playpause`
-	- ???
-2. Plans ⏎ album detail
-	- More from this album...
-3. Death Cab  for Cutie ⏎ artist detail
-	- More from this artist...
-4. Search for music...
-	- Begin typing to search
+Spotifious can be used via its hotkeys or it's main interface. 
 
-## Search Menu ##
+Hotkeys can play, pause, change tracks, or modify volume. They can also star & unstar tracks, and even toggle shuffling and looping (?). 
 
-After activation, any typing at all should show the search menu, unless the query requires a detail menu (see below). The results should be weighted so artists>albums>songs— but only if the query is completely contained by the result. `Lady Danv` should return Lady Danville, then Lady Danville EP, then songs. Otherwise sort by popularity; use a unique id for each query so popular searches follow Alfred's smart order.
+Spotifious's main selling point, though, is it's main interface, which functions like the iTunes controller — searching, starring, queuing, previewing, it does it all.
 
-1. Lady Danville ⏎ artist detail
-	- ★★★★☆ Artist
-2. Lady Danville EP ⏎ album detail
-	- ★★★☆☆ Album by Lady Danville
-3. Love to Love ⏎ `open location &lt;song>`
-	- ★★☆☆☆ Lady Danville EP by Lady Danville
+I considered also scripting a background service that notifies on song changes, but I'm hesitant to do that for overhead reasons.
 
-## Detail Menu ##
+## Hotkeys in depth ##
 
-I want to maintain easily navigable menus, but need to provide the Spotify URL in order to perform an artist or album lookup. To that end, the detail menu uses the syntax `spotify URL ► inital search request ►`. The script should use its smartness to detect a backspace (ie if the final triangle is missing) and provide a search menu with the initial search request. That way, a user can easily back up a level.
+Spotifious should provide bindable hotkeys (and a nice tutorial on first load of the main interface on binding) for any action I regularly do, like playing, skipping, changing volume, etc. If it's possible to subset, maybe even liking radio songs can be possible.
 
-**Note**: Transferring from an artist detail menu to an album detail menu should add an additional spotify URL and an extra `►`; ie `artist URL ► album URL ► initial search request ►►`. 
+So here's what it can do:
 
-### Artist Detail ###
+- Play*/Pause
+- Previous Track*
+- Next track*
+- Volume Up (in increments of 10%)
+- Volume Down (in increments of 10%)
+- Star*/Unstar\*
+- Toggle shuffle* (?)
+- Toggle looping* (?)
 
-1. Jonathan Coulton ⏎ view in Spotify
-	- View artist in Spotify
-2. One Christmas at a Time ⏎ album detail
-	- Open this album...
-3. ...
+*: displays notification. This can be an NC or Growl popup _and_ a HUD-style popover.
 
-### Album Detail ###
+?: ... maybe.
 
-1. Artificial Heart ⏎ view in Spotify
-	- View album in Spotify
-2. 1. Sticking it to Myself ⏎ `open location &lt;song>`
-	- Jonathan Coulton 2:20 ★★★☆☆
-3. ...
+Due to Alfred's method of implementing extensions, all shortcuts are wiped on fresh install. Spotifious should account for this and provide a tutorial on binding if it notices it is unbound.
+
+## Interface in depth ##
+
+Spotifious's interface is quite powerful.
+
+Upon launch, it gives a quick and informative overview of your current spotify status. It also allows quick and powerful music browsing— search artists, albums, and tracks (and playlists?) and queue, preview, star, or view them in Spotify.
+
+--
+users should be able to switch between growl and nc and nothing
+
+"before you start using Spotifious, make sure you set this up..."
+	"binding hotkeys"
+	"installing the helper app"
+	"configuring country"
+	"how to access settings"
