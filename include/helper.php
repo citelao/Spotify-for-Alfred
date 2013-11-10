@@ -5,6 +5,18 @@ function trim_value(&$value)
 	$value = trim($value); 
 }
 
+function contains($stack, $needle) {
+	return (strpos($stack, $needle) !== false);
+}
+
+function preg_contains($stack, $regex) {
+	$matches = array();
+
+	preg_match($regex, $stack, $matches);
+
+	return (count($matches) == 0) ? false : $matches;
+}
+
 function alfredify($results) {
 	print "<?xml version='1.0'?>\r\n<items>";
 	
@@ -36,24 +48,25 @@ function alfredify($results) {
 }
 
 function errorify($error) {
-	// TODO pleasant icons
-
 	$results = [
 		[
 			title => "Aw, jeez!",
 			subtitle => "Something went haywire. You can continue using Spotifious.",
-			void => "yes"
+			void => "yes",
+			icon => 'include/images/alfred/error.png'
 		],
 
 		[
 			title => $error->getMessage(),
 			subtitle => "Line " . $error->getLine() . ", " . $error->getFile(),
-			void => "yes"
+			void => "yes",
+			icon => 'include/images/alfred/info.png'
 		],
 
 		[
 			title => "Send output to file",
-			subtitle => "..." // TODO
+			subtitle => "Not implemented", // TODO
+			icon => 'include/images/alfred/folder.png'
 		]
 	];
 
@@ -137,5 +150,3 @@ function beautifyTime($seconds) {
 	$s = ($s < 10) ? "0$s" : "$s";
 	return  "$m:$s";
 }
-
-?>

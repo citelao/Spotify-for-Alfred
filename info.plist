@@ -183,7 +183,7 @@ end tell</string>
 				<key>runningsubtext</key>
 				<string>Harnessing Spotify's terrible API...</string>
 				<key>script</key>
-				<string>php -f main.php -- 'no' "{query}"</string>
+				<string>php -f main.php -- "{query}"</string>
 				<key>title</key>
 				<string>Show Spotifious Mini Player</string>
 				<key>type</key>
