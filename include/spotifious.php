@@ -16,27 +16,27 @@ class Spotifious {
 									"include/images/alfred/playing.png";
 		
 		/* Output now-playing info. */
-		$results[0][title]        = "$currentTrack";
-		$results[0][subtitle]     = "$currentAlbum by $currentArtist";
-		$results[0][arg]          = "playpause";
-		$results[0][icon]         = $currentStatus;
+		$results[0]['title']        = "$currentTrack";
+		$results[0]['subtitle']     = "$currentAlbum by $currentArtist";
+		$results[0]['arg']          = "playpause";
+		$results[0]['icon']         = $currentStatus;
 		
-		$results[1][title]        = "$currentAlbum";
-		$results[1][subtitle]     = "More from this album...";
-		$results[1][autocomplete] = "$currentAlbum"; // TODO change to albumdetail
-		$results[1][valid]        = "no";
-		$results[1][icon]         = 'include/images/alfred/album.png';
+		$results[1]['title']        = "$currentAlbum";
+		$results[1]['subtitle']     = "More from this album...";
+		$results[1]['autocomplete'] = "$currentAlbum"; // TODO change to albumdetail
+		$results[1]['valid']        = "no";
+		$results[1]['icon']         = 'include/images/alfred/album.png';
 		
-		$results[2][title]        = "$currentArtist";
-		$results[2][subtitle]     = "More by this artist...";
-		$results[2][autocomplete] = $currentArtist; // TODO change to artistdetail
-		$results[2][valid]        = "no";
-		$results[2][icon]         = 'include/images/alfred/artist.png';
+		$results[2]['title']        = "$currentArtist";
+		$results[2]['subtitle']     = "More by this artist...";
+		$results[2]['autocomplete'] = $currentArtist; // TODO change to artistdetail
+		$results[2]['valid']        = "no";
+		$results[2]['icon']         = 'include/images/alfred/artist.png';
 		
-		$results[3][title]        = "Search for music...";
-		$results[3][subtitle]     = "Begin typing to search";
-		$results[3][valid]        = "no";
-		$results[3][icon]         = "include/images/alfred/search.png";
+		$results[3]['title']        = "Search for music...";
+		$results[3]['subtitle']     = "Begin typing to search";
+		$results[3]['valid']        = "no";
+		$results[3]['icon']         = "include/images/alfred/search.png";
 
 		return $results;
 	}
@@ -44,32 +44,32 @@ class Spotifious {
 	public function controlPanel()
 	{
 		$results[] = [
-			title => "play pause",
-			arg => "playpause"];
+			'title' => "play pause",
+			'arg' => "playpause"];
 
 		$results[] = [
-			title => "previous",
-			arg => "previous track"];
+			'title' => "previous",
+			'arg' => "previous track"];
 
 		$results[] = [
-			title => "next",
-			arg => "next track"];
+			'title' => "next",
+			'arg' => "next track"];
 
 		$results[] = [
-			title => "star"];
+			'title' => "star"];
 
 		$results[] = [
-			title => "shuffle",
-			arg => "set shuffling to not shuffling"];
+			'title' => "shuffle",
+			'arg' => "set shuffling to not shuffling"];
 
 		$results[] = [
-			title => "repeat"];
+			'title' => "repeat"];
 
 		$results[] = [
-			title => "volup"];
+			'title' => "volup"];
 
 		$results[] = [
-			title => "voldown"];
+			'title' => "voldown"];
 
 		/* Do basic filtering on the query to sort the options */
 		// TODO
@@ -115,19 +115,19 @@ class Spotifious {
 					$genericResultArtwork = "include/images/alfred/artist.png";
 				}
 				
-				$currentResult[title]        = $value->name;
-				$currentResult[subtitle]     = $subtitle;
+				$currentResult['title']        = $value->name;
+				$currentResult['subtitle']     = $subtitle;
 				
-				$currentResult[uid]          = "bs-spotify-$query-$type";
-				$currentResult[popularity]   = $popularity;
+				$currentResult['uid']          = "bs-spotify-$query-$type";
+				$currentResult['popularity']   = $popularity;
 				
 				// `arg` is only used if item is valid, likewise `autocomplete` is
 				// only used if item is not valid. Tracks run an action, everything
 				// else autocompletes.
-				$currentResult[valid]        = ($type == 'track') ? 'yes' : 'no';
-				$currentResult[arg]          = "play track \"$value->href\"";
-				$currentResult[autocomplete] = "$value->href ⟩ $query ⟩";
-				$currentResult[icon] = "include/images/alfred/$type.png";
+				$currentResult['valid']        = ($type == 'track') ? 'yes' : 'no';
+				$currentResult['arg']          = "play track \"$value->href\"";
+				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩";
+				$currentResult['icon'] = "include/images/alfred/$type.png";
 				
 				$results[] = $currentResult;
 				$currentResultNumber++;
@@ -174,10 +174,10 @@ class Spotifious {
 		$json = json_decode($json);
 		
 		/* Output the details. */
-		$results[0][title]        = $json->$type->name;
-		$results[0][subtitle]     = "Play $type";
-		$results[0][arg]          = 'activate (open location "' . $URIs[0] . '")';
-		$results[0][icon]         = "include/images/alfred/$type.png";
+		$results[0]['title']        = $json->$type->name;
+		$results[0]['subtitle']     = "Play $type";
+		$results[0]['arg']          = 'activate (open location "' . $URIs[0] . '")';
+		$results[0]['icon']         = "include/images/alfred/$type.png";
 		
 		// TODO top tracks?
 
@@ -190,11 +190,11 @@ class Spotifious {
 				if(in_array($value->name, $albums))
 					continue;
 				
-				$currentResult[title] = $value->name;
-				$currentResult[subtitle] = "Browse this $provided...";
-				$currentResult[valid] = "no";
-				$currentResult[autocomplete] = "$detailURL ⟩ $value->href ⟩ $query ⟩⟩";
-				$currentResult[icon] = "include/images/alfred/album.png";
+				$currentResult['title'] = $value->name;
+				$currentResult['subtitle'] = "Browse this $provided...";
+				$currentResult['valid'] = "no";
+				$currentResult['autocomplete'] = "$detailURL ⟩ $value->href ⟩ $query ⟩⟩";
+				$currentResult['icon'] = "include/images/alfred/album.png";
 				
 				$results[] = $currentResult;
 				$albums[] = "$value->name";
@@ -207,10 +207,10 @@ class Spotifious {
 				
 				// TODO show artist if not all tracks from same artist
 
-				$currentResult[title] = "$currentResultNumber. $value->name";
-				$currentResult[subtitle] = "$starString "  . beautifyTime($value->length);
-				$currentResult[arg] = 'play track "' . $value->href . '" in context "' . $detailURL . '"';
-				$currentResult[icon] = "include/images/alfred/track.png";
+				$currentResult['title'] = "$currentResultNumber. $value->name";
+				$currentResult['subtitle'] = "$starString "  . beautifyTime($value->length);
+				$currentResult['arg'] = 'play track "' . $value->href . '" in context "' . $detailURL . '"';
+				$currentResult['icon'] = "include/images/alfred/track.png";
 				
 				$results[] = $currentResult;
 				$currentResultNumber++;
@@ -258,53 +258,53 @@ class Spotifious {
 			case 'track':
 				$results = [
 					[
-						title => $json->$type->name,
-						subtitle => "todo", //TODO
-						arg => '', // TODO
-						icon => "include/images/alfred/$type.png"
+						'title' => $json->$type->name,
+						'subtitle' => "todo", //TODO
+						'arg' => '', // TODO
+						'icon' => "include/images/alfred/$type.png"
 					],
 					[
-						title => $json->$type->album->name,
-						subtitle => "More from this album...",
-						valid => "no",
-						autocomplete => $json->$type->album->href . " ⟩ ⟩",
-						icon => "include/images/alfred/album.png"
+						'title' => $json->$type->album->name,
+						'subtitle' => "More from this album...",
+						'valid' => "no",
+						'autocomplete' => $json->$type->album->href . " ⟩ ⟩",
+						'icon' => "include/images/alfred/album.png"
 					],
 					[
-						title => $json->$type->artists[0]->name,
-						subtitle => "More by this artist...",
-						valid => "no",
-						autocomplete => $json->$type->artists[0]->href . " ⟩ ⟩",
-						icon => "include/images/alfred/artist.png"
+						'title' => $json->$type->artists[0]->name,
+						'subtitle' => "More by this artist...",
+						'valid' => "no",
+						'autocomplete' => $json->$type->artists[0]->href . " ⟩ ⟩",
+						'icon' => "include/images/alfred/artist.png"
 					]
 				];
 				break;
 			case 'album':
 				$results = [
 					[
-						title => $json->$type->name,
-						subtitle => "Browse this $type...",
-						valid => "no",
-						autocomplete => $URI . " ⟩ ⟩",
-						icon => "include/images/alfred/$type.png"
+						'title' => $json->$type->name,
+						'subtitle' => "Browse this $type...",
+						'valid' => "no",
+						'autocomplete' => $URI . " ⟩ ⟩",
+						'icon' => "include/images/alfred/$type.png"
 					],
 					[
-						title => $json->$type->artist,
-						subtitle => "More by this artist...",
-						valid => "no",
-						autocomplete => $json->$type->{'artist-id'} . " ⟩ ⟩",
-						icon => "include/images/alfred/artist.png"
+						'title' => $json->$type->artist,
+						'subtitle' => "More by this artist...",
+						'valid' => "no",
+						'autocomplete' => $json->$type->{'artist-id'} . " ⟩ ⟩",
+						'icon' => "include/images/alfred/artist.png"
 					]
 				];
 				break;
 			case 'artist':
 				$results = [
 					[
-						title => $json->$type->name,
-						subtitle => "Browse this $type...",
-						valid => "no",
-						autocomplete => $URI . " ⟩ ⟩",
-						icon => "include/images/alfred/$type.png"
+						'title' => $json->$type->name,
+						'subtitle' => "Browse this $type...",
+						'valid' => "no",
+						'autocomplete' => $URI . " ⟩ ⟩",
+						'icon' => "include/images/alfred/$type.png"
 					]
 				];
 				break;
@@ -314,9 +314,9 @@ class Spotifious {
 		}
 
 		$results[] = [
-			title => $json->$type->name,
-			subtitle => "Open this $type in Spotify",
-			arg => 'activate (open location "' . $URI . '")',
+			'title' => $json->$type->name,
+			'subtitle' => "Open this $type in Spotify",
+			'arg' => 'activate (open location "' . $URI . '")',
 			// TODO icon
 		];
 

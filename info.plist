@@ -566,6 +566,31 @@ end tell</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>hotstring</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>BA4778DB-E8C1-4C72-B11C-9E45ED25C27C</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -635,6 +660,11 @@ end tell</string>
 		<dict>
 			<key>ypos</key>
 			<real>570</real>
+		</dict>
+		<key>BA4778DB-E8C1-4C72-B11C-9E45ED25C27C</key>
+		<dict>
+			<key>ypos</key>
+			<real>1170</real>
 		</dict>
 		<key>BF1F0016-A2CC-4A82-B937-0575496A141A</key>
 		<dict>

@@ -21,26 +21,29 @@ function alfredify($results) {
 	print "<?xml version='1.0'?>\r\n<items>";
 	
 	foreach($results as $result) {
-		if(!$result[uid])
-			$result[uid] = 'null';
+		if(!isset($result['arg']))
+			$result['arg'] = 'null';
 		
-		if(!$result[arg])
-			$result[arg] = 'null';
-		
-		if(!$result[title])
-			$result[title] = 'null';
+		if(!isset($result['title']))
+			$result['title'] = 'null';
 			
-		if(!$result[icon])
-			$result[icon] = 'icon.png';
+		if(!isset($result['icon']))
+			$result['icon'] = 'icon.png';
 		
-		if(!$result[valid])
-			$result[valid] = 'yes';
+		if(!isset($result['valid']))
+			$result['valid'] = 'yes';
+
+		if(!isset($result['uid']))
+			$result['uid'] = time() . "-" . $result['title'];
+
+		if(!isset($result['autocomplete']))
+			$result['autocomplete'] = '';
 			
 		print "\r\n\r\n";
-		print "	<item uid='" . escapeQuery($result[uid]) . "' arg='" . $result[arg] . "' valid='" . escapeQuery($result[valid]) . "' autocomplete='" . escapeQuery($result[autocomplete]) . "'>\r\n";
-		print "		<title>" . escapeQuery($result[title]) . "</title>\r\n";
-		print "		<subtitle>" . escapeQuery($result[subtitle]) . "</subtitle>\r\n";
-		print "		<icon>" . escapeQuery($result[icon]) . "</icon>\r\n";
+		print "	<item uid='" . escapeQuery($result['uid']) . "' arg='" . $result['arg'] . "' valid='" . escapeQuery($result['valid']) . "' autocomplete='" . escapeQuery($result['autocomplete']) . "'>\r\n";
+		print "		<title>" . escapeQuery($result['title']) . "</title>\r\n";
+		print "		<subtitle>" . escapeQuery($result['subtitle']) . "</subtitle>\r\n";
+		print "		<icon>" . escapeQuery($result['icon']) . "</icon>\r\n";
 		print "	</item>\r\n";
 	}
 	
@@ -52,23 +55,23 @@ function errorify($error) {
 
 	$results = [
 		[
-			title => $titles[array_rand($titles)],
-			subtitle => "Something went haywire. You can continue using Spotifious.",
-			valid => "no",
-			icon => 'include/images/alfred/error.png'
+			'title' => $titles[array_rand($titles)],
+			'subtitle' => "Something went haywire. You can continue using Spotifious.",
+			'valid' => "no",
+			'icon' => 'include/images/alfred/error.png'
 		],
 
 		[
-			title => $error->getMessage(),
-			subtitle => "Line " . $error->getLine() . ", " . $error->getFile(),
-			valid => "no",
-			icon => 'include/images/alfred/info.png'
+			'title' => $error->getMessage(),
+			'subtitle' => "Line " . $error->getLine() . ", " . $error->getFile(),
+			'valid' => "no",
+			'icon' => 'include/images/alfred/info.png'
 		],
 
 		[
-			title => "Send output to file",
-			subtitle => "Not implemented", // TODO
-			icon => 'include/images/alfred/folder.png'
+			'title' => "Send output to file",
+			'subtitle' => "Not implemented", // TODO
+			'icon' => 'include/images/alfred/folder.png'
 		]
 	];
 
@@ -79,7 +82,7 @@ function errorify($error) {
 set_exception_handler('errorify');
 
 function debug($text) {
-	$results[0][title] = $text;
+	$results[0]['title'] = $text;
 
 	alfredify($results);
 }

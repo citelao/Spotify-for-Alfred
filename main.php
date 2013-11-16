@@ -72,12 +72,14 @@ if(!hotkeys_configured() || !helper_app_configured() || !country_code_configured
 	];
 
 	alfredify($results);
+	return;
 }
 
 function hotkeys_configured()
 {
 	// Check .plist for binds on `spot`
-	return false;
+	// TODO
+	return true;
 }
 
 function helper_app_configured()
@@ -91,8 +93,8 @@ function helper_app_configured()
 function country_code_configured()
 {
 	// Check file storage location for country code.
-
-	return false;
+	// TODO
+	return true;
 }
 
 /* Parse the query. */
@@ -145,9 +147,11 @@ if (mb_strlen($query) <= 3) {
 	$URIs = array($splitQuery[0]);
 
 	if(preg_contains($splitQuery[1], '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x'))
-			array_push($URIs, $splitQuery[1]);
+		array_push($URIs, $splitQuery[1]);
 
 	$args = array_filter(array_slice($splitQuery, count($URIs)));
+
+
 
 	// TODO wut
 	if (mb_substr_count($query, "⟩") == count($URIs) * 2) {
@@ -177,7 +181,7 @@ if (mb_strlen($query) <= 3) {
 } elseif(contains($query, 'spotify:')) {
 	// Based off https://github.com/felixtriller/spotify-embed/blob/master/spotify-embed.php
 	// TODO: "app:" URLS
-	$parts = array_filter(preg_contains($query, '/^(spotify:(?:album|artist|app|track|user:[^:]+:playlist):[a-zA-Z0-9]+)(?: )+([^\n]*)$/x'));
+	$parts = preg_contains($query, '/^(spotify:(?:album|artist|app|track|user:[^:]+:playlist):[a-zA-Z0-9]+)(?: )+([^\n]*)$/x');
 
 	if($parts === false) throw new Exception("Invalid Spotify URI");
 
