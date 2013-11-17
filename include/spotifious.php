@@ -153,7 +153,7 @@ class Spotifious {
 
 	public function detail($URIs, $args = null)
 	{
-		if (count($args) == 0)
+		if (count($args) <= 1)
 			return Spotifious::vanillaDetail($URIs);
 
 		return Spotifious::filteredSearch($URIs, $args);
@@ -223,7 +223,7 @@ class Spotifious {
 
 	public function filteredSearch($URIs, $args)
 	{
-		throw new AlfredableException("Filtered search not implemented 😓");
+		throw new AlfredableException("Filtered search not implemented 😓", get_defined_vars());
 		// TODO
 		return $results;
 	}

@@ -102,6 +102,8 @@ function country_code_configured()
 $results = array();
 $query   = normalize($argv[1]);
 
+$URIregex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x'; // TODO use more
+
 /**
  * Determine screen to show
  *  So I figure this could do with some outlining.
@@ -147,7 +149,7 @@ if (mb_strlen($query) <= 3) {
 
 	$URIs = array($splitQuery[0]);
 
-	if(preg_contains($splitQuery[1], '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x'))
+	if(preg_contains($splitQuery[1], $URIregex))
 		array_push($URIs, $splitQuery[1]);
 
 	$args = array_filter(array_slice($splitQuery, count($URIs)));
