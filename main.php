@@ -84,6 +84,7 @@ function hotkeys_configured()
 
 function helper_app_configured()
 {
+	// TODO genericize
 	if(is_link("/Users/citelao/Spotify/spotifious-helper") || file_exists("/Users/citelao/Spotify/spotifious-helper"))
 		return true;
 
@@ -183,7 +184,7 @@ if (mb_strlen($query) <= 3) {
 	// TODO: "app:" URLS
 	$parts = preg_contains($query, '/^(spotify:(?:album|artist|app|track|user:[^:]+:playlist):[a-zA-Z0-9]+)(?: )+([^\n]*)$/x');
 
-	if($parts === false) throw new Exception("Invalid Spotify URI");
+	if($parts === false) throw new AlfredableException("Invalid Spotify URI", get_defined_vars());
 
 	$URI = $parts[1];
 

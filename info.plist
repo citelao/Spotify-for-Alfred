@@ -48,6 +48,14 @@
 				<key>modifiersubtext</key>
 				<string>Star this</string>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>0D5606BC-5963-45FC-9003-6B48E88F2077</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
 		</array>
 		<key>3E523778-76AD-4CD0-ADA1-1DDAD3767866</key>
 		<array>
@@ -288,6 +296,14 @@ end tell</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>405C281F-68E7-49E0-A417-61F1D3B51429</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.action.revealfile</string>
+			<key>uid</key>
+			<string>0D5606BC-5963-45FC-9003-6B48E88F2077</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -596,6 +612,11 @@ end tell</string>
 	<string></string>
 	<key>uidata</key>
 	<dict>
+		<key>0D5606BC-5963-45FC-9003-6B48E88F2077</key>
+		<dict>
+			<key>ypos</key>
+			<real>500</real>
+		</dict>
 		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
 		<dict>
 			<key>ypos</key>

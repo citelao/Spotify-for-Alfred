@@ -12,27 +12,27 @@ class Spotifious {
 		$currentArtist            = ($current[2] == null) ? "No Artist" : $current[2];
 		$currentURL               = $current[3];
 		$currentStatus            = ($current[4] == 'playing') ?
-									"include/images/alfred/paused.png" :
-									"include/images/alfred/playing.png";
-		
+			"include/images/alfred/paused.png" :
+			"include/images/alfred/playing.png";
+
 		/* Output now-playing info. */
 		$results[0]['title']        = "$currentTrack";
 		$results[0]['subtitle']     = "$currentAlbum by $currentArtist";
 		$results[0]['arg']          = "playpause";
 		$results[0]['icon']         = $currentStatus;
-		
+
 		$results[1]['title']        = "$currentAlbum";
 		$results[1]['subtitle']     = "More from this album...";
 		$results[1]['autocomplete'] = "$currentAlbum"; // TODO change to albumdetail
 		$results[1]['valid']        = "no";
 		$results[1]['icon']         = 'include/images/alfred/album.png';
-		
+
 		$results[2]['title']        = "$currentArtist";
 		$results[2]['subtitle']     = "More by this artist...";
 		$results[2]['autocomplete'] = $currentArtist; // TODO change to artistdetail
 		$results[2]['valid']        = "no";
 		$results[2]['icon']         = 'include/images/alfred/artist.png';
-		
+
 		$results[3]['title']        = "Search for music...";
 		$results[3]['subtitle']     = "Begin typing to search";
 		$results[3]['valid']        = "no";
@@ -86,24 +86,25 @@ class Spotifious {
 			$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . $urlQuery);
 
 			if(empty($json))
-				throw new Exception("No JSON returned from Spotify web search");
-			
+				throw new AlfredableException("No JSON returned from Spotify web search");
+
 			$json = json_decode($json);
-			
+
 			/* Output the results. */
 			$currentResultNumber = 1;
 			foreach ($json->{$type . "s"} as $key => $value) {
 				/* Weight popularity. */
 				$popularity = $value->popularity;
-				
+
 				if($type == 'artist')
 					$popularity += .5;
+
 				if($type == 'album')
 					$popularity += .15;
-				
+
 				/* Convert popularity to stars. */
-				$starString = floatToStars($popularity);
-				
+				$starString = floatToBars($popularity);
+
 				if($type == 'track') {
 					$subtitle = "$starString " . $value->album->name . " by " . $value->artists[0]->name;
 					$genericResultArtwork = "include/images/alfred/track.png";
@@ -114,13 +115,13 @@ class Spotifious {
 					$subtitle = "$starString " . ucfirst($type);
 					$genericResultArtwork = "include/images/alfred/artist.png";
 				}
-				
+
 				$currentResult['title']        = $value->name;
 				$currentResult['subtitle']     = $subtitle;
-				
+
 				$currentResult['uid']          = "bs-spotify-$query-$type";
 				$currentResult['popularity']   = $popularity;
-				
+
 				// `arg` is only used if item is valid, likewise `autocomplete` is
 				// only used if item is not valid. Tracks run an action, everything
 				// else autocompletes.
@@ -128,7 +129,7 @@ class Spotifious {
 				$currentResult['arg']          = "play track \"$value->href\"";
 				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩";
 				$currentResult['icon'] = "include/images/alfred/$type.png";
-				
+
 				$results[] = $currentResult;
 				$currentResultNumber++;
 			}
@@ -143,8 +144,8 @@ class Spotifious {
 			'title' => "Search for $query",
 			'subtitle' => "Continue this search in Spotify...",
 			'uid' => "bs-spotify-$query-more",
-			'arg' => 'moo' // TODO, obviously
-							// TODO icon too
+			'arg' => 'activate (open location "spotify:search:' . $query . '")'
+			// TODO icon too
 		];
 
 		return $results;
@@ -158,27 +159,27 @@ class Spotifious {
 		return Spotifious::filteredSearch($URIs, $args);
 	}
 
-	public function vanillaDetail($URIs) 
+	public function vanillaDetail($URIs)
 	{
 		/* Do additional query-parsing. */
 		$explodedURI = explode(":", $URIs[0]);
 		$type       = $explodedURI[1];
-		$provided   = ($type == "artist") ? "album" : "track"; 
+		$provided   = ($type == "artist") ? "album" : "track";
 
 		/* Fetch and parse the details. */
 		$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$URIs[0]&extras=$provided" . "detail");
 
 		if(empty($json))
-			throw new Exception("No JSON returned from Spotify web lookup");
+			throw new AlfredableException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
-		
+
 		/* Output the details. */
 		$results[0]['title']        = $json->$type->name;
 		$results[0]['subtitle']     = "Play $type";
 		$results[0]['arg']          = 'activate (open location "' . $URIs[0] . '")';
 		$results[0]['icon']         = "include/images/alfred/$type.png";
-		
+
 		// TODO top tracks?
 
 		if($provided == "album") {
@@ -186,32 +187,32 @@ class Spotifious {
 			$albums = array();
 			foreach ($json->$type->{$provided . "s"} as $key => $value) {
 				$value = $value->$provided;
-				
-				if(in_array($value->name, $albums))
-					continue;
-				
+
+			if(in_array($value->name, $albums))
+				continue;
+
 				$currentResult['title'] = $value->name;
 				$currentResult['subtitle'] = "Browse this $provided...";
 				$currentResult['valid'] = "no";
 				$currentResult['autocomplete'] = "$detailURL ⟩ $value->href ⟩ $query ⟩⟩";
 				$currentResult['icon'] = "include/images/alfred/album.png";
-				
+
 				$results[] = $currentResult;
 				$albums[] = "$value->name";
 				$currentResultNumber++;
-			}	
+			}
 		} else {
 			$currentResultNumber = 1;
 			foreach ($json->$type->{$provided . "s"} as $key => $value) {
-				$starString = floatToStars($value->popularity);
-				
+				$starString = floatToBars($value->popularity);
+
 				// TODO show artist if not all tracks from same artist
 
 				$currentResult['title'] = "$currentResultNumber. $value->name";
 				$currentResult['subtitle'] = "$starString "  . beautifyTime($value->length);
 				$currentResult['arg'] = 'play track "' . $value->href . '" in context "' . $detailURL . '"';
 				$currentResult['icon'] = "include/images/alfred/track.png";
-				
+
 				$results[] = $currentResult;
 				$currentResultNumber++;
 			}
@@ -222,7 +223,7 @@ class Spotifious {
 
 	public function filteredSearch($URIs, $args)
 	{
-		throw new Exception("Filtered search not implemented 😔");
+		throw new AlfredableException("Filtered search not implemented 😓");
 		// TODO
 		return $results;
 	}
@@ -236,10 +237,10 @@ class Spotifious {
 		$detailNeeded = ($type != "track");
 
 		if($type == "app")
-			throw new Exception("Spotifious cannot handle app URLs (yet)"); // TODO
+			throw new AlfredableException("Spotifious cannot handle app URLs (yet)"); // TODO
 
 		if(contains($URI,"playlist"))
-			throw new Exception("Spotifious cannot handle playlist URLs (yet)"); // TODO
+			throw new AlfredableException("Spotifious cannot handle playlist URLs (yet)"); // TODO
 
 		/* Fetch and parse the details. */
 		$URL = "http://ws.spotify.com/lookup/1/.json?uri=$URI";
@@ -249,7 +250,7 @@ class Spotifious {
 		$json = fetch($URL);
 
 		if(empty($json))
-			throw new Exception("No JSON returned from Spotify web lookup");
+			throw new AlfredableException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
 
@@ -309,7 +310,7 @@ class Spotifious {
 				];
 				break;
 			default:
-				throw new Exception("Unknown item type $type", 1);
+				throw new AlfredableException("Unknown item type $type", 1);
 				break;
 		}
 

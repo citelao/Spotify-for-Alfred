@@ -53,6 +53,32 @@ function alfredify($results) {
 function errorify($error) {
 	$titles = ['Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!'];
 
+	// Make a .log file
+	$errordir = "/Users/citelao/Desktop/"; // TODO genericize
+	$fname = date('Y-m-d h-m-s') . " Spotifious.log";
+	$fdir = $errordir . $fname;
+	$fcontents  = "# Error Log # \n";
+
+	$fcontents .= "## Error Info ## \n";
+	$fcontents .= $error->getMessage() . "\n";
+	$fcontents .= "Line " . $error->getLine() . ", " . $error->getFile() . "\n\n";
+
+	$fcontents .= "## Symbols ## \n";
+	// TODO
+	if(!is_a($error, "AlfredableException")) {
+		$fcontents .= "This is not an Alfred-parsable exception.";
+	} else {
+		$fcontents .= print_r($error->getState(), true) . "\n";
+	}
+	$fcontents .= "\n\n";
+	
+	$fcontents .= "## Stack Trace ## \n";
+	$fcontents .= print_r($error->getTrace(), true) . "\n";
+
+	$log = fopen($fdir, "w");
+	fwrite($log, $fcontents);
+	fclose($log);
+
 	$results = [
 		[
 			'title' => $titles[array_rand($titles)],
@@ -69,9 +95,10 @@ function errorify($error) {
 		],
 
 		[
-			'title' => "Send output to file",
-			'subtitle' => "Not implemented", // TODO
-			'icon' => 'include/images/alfred/folder.png'
+			'title' => "View log",
+			'subtitle' => "Open new Finder window with .log file.",
+			'icon' => 'include/images/alfred/folder.png',
+			'arg' => $fdir
 		]
 	];
 
@@ -80,6 +107,39 @@ function errorify($error) {
 }
 
 set_exception_handler('errorify');
+
+// Stack return!
+// http://stackoverflow.com/questions/1809404/get-exception-context-in-php
+class AlfredableException extends Exception implements IStatefullException  {
+    protected $throwState;
+
+    private $forbidden = array("_POST", "_SERVER", "_GET", "_FILES", "_COOKIE");
+
+    function __construct($message, $vars = '')   {
+    	if($vars == '') {
+	        $this->throwState = get_defined_vars();
+	    } else {
+	    	$vars = array_diff_key($vars, array_flip($this->forbidden));
+	    	$this->throwState = $vars;
+	    }
+
+        parent::__construct($message);
+    }
+
+    function getState() {
+        return $this->throwState;
+    }
+
+    function setState(array $state) {
+        $this->throwState = $state;
+        return $this;
+    }
+}
+
+interface  IStatefullException { 
+	function getState(); 
+    function setState(array $state);
+}
 
 function debug($text) {
 	$results[0]['title'] = $text;
@@ -138,15 +198,15 @@ function fetch($url)
 	 curl_close($ch);
 
 	 if($info['http_code'] != '200')
-	 	throw new Exception("fetch() failed; error code: " . $info['http_code']);
+	 	throw new AlfredableException("fetch() failed; error code: " . $info['http_code']);
 	 	
 
 	 return ($info['http_code'] == '200') ? $page : null;
 }
 
-function floatToStars($decimal) {
-	$stars = ($decimal < 1) ? floor($decimal * 5) : 5;
-	return str_repeat("★", $stars) . str_repeat("☆", 5 - $stars);
+function floatToBars($decimal) {
+	$line = ($decimal < 1) ? floor($decimal * 12) : 12;
+	return str_repeat("𝗹", $line) . str_repeat("𝗅", 12 - $line);
 }
 
 function beautifyTime($seconds) {
