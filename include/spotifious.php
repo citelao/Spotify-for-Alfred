@@ -144,8 +144,8 @@ class Spotifious {
 			'title' => "Search for $query",
 			'subtitle' => "Continue this search in Spotify...",
 			'uid' => "bs-spotify-$query-more",
-			'arg' => 'activate (open location "spotify:search:' . $query . '")'
-			// TODO icon too
+			'arg' => 'activate (open location "spotify:search:' . $query . '")',
+			'icon' => 'include/images/alfred/search.png'
 		];
 
 		return $results;
