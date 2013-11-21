@@ -207,7 +207,7 @@ class Spotifious {
 
 				$currentResult['title'] = "$currentResultNumber. $value->name";
 				$currentResult['subtitle'] = "$starString "  . beautifyTime($value->length);
-				$currentResult['arg'] = 'play track "' . $value->href . '" in context "' . $detailURL . '"';
+				$currentResult['arg'] = 'play track "' . $value->href . '" in context "' . $currentURI . '"';
 				$currentResult['icon'] = "include/images/alfred/track.png";
 
 				$results[] = $currentResult;

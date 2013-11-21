@@ -1,5 +1,15 @@
 <?php
 
+// http://dferg.us/workflows-class/
+$home = exec('printf "$HOME"');
+$cache = $home . '/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/com.citelao.spotifious/';
+
+// debug($cache);
+
+if (!file_exists($cache)) {
+	mkdir($cache);
+}
+
 function trim_value(&$value) 
 { 
 	$value = trim($value);
@@ -44,6 +54,9 @@ function alfredify($results) {
 
 		if(!isset($result['autocomplete']))
 			$result['autocomplete'] = '';
+
+		if(!isset($result['subtitle']))
+			$result['subtitle'] = '';
 			
 		print "\r\n\r\n";
 		print "	<item uid='" . escapeQuery($result['uid']) . "' arg='" . $result['arg'] . "' valid='" . escapeQuery($result['valid']) . "' autocomplete='" . escapeQuery($result['autocomplete']) . "'>\r\n";
@@ -57,10 +70,12 @@ function alfredify($results) {
 }
 
 function errorify($error) {
+	global $cache;
+
 	$titles = ['Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!'];
 
 	// Make a .log file
-	$errordir = "/Users/citelao/Desktop/"; // TODO genericize
+	$errordir = $cache;
 	$fname = date('Y-m-d h-m-s') . " Spotifious.log";
 	$fdir = $errordir . $fname;
 	$fcontents  = "# Error Log # \n";
@@ -70,7 +85,6 @@ function errorify($error) {
 	$fcontents .= "Line " . $error->getLine() . ", " . $error->getFile() . "\n\n";
 
 	$fcontents .= "## Symbols ## \n";
-	// TODO
 	if(!is_a($error, "AlfredableException")) {
 		$fcontents .= "This is not an Alfred-parsable exception.";
 	} else {
@@ -151,6 +165,7 @@ function debug($text) {
 	$results[0]['title'] = $text;
 
 	alfredify($results);
+	exit();
 }
 
 function normalize($text) {
