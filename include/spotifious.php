@@ -77,6 +77,11 @@ class Spotifious {
 		return $results;
 	}
 
+	public function settings()
+	{
+		// TODO implement
+	}
+
 	public function search($query)
 	{
 		// Run the search using all three types of API queries
@@ -151,23 +156,16 @@ class Spotifious {
 		return $results;
 	}
 
-	public function detail($URIs, $args = null)
+	public function detail($URIs, $args, $depth)
 	{
-		if (count($args) <= 1)
-			return Spotifious::vanillaDetail($URIs);
-
-		return Spotifious::filteredSearch($URIs, $args);
-	}
-
-	public function vanillaDetail($URIs)
-	{
-		/* Do additional query-parsing. */
-		$explodedURI = explode(":", $URIs[0]);
+		/* Parse the searched URI */
+		$currentURI = $URIs[$depth - 1];
+		$explodedURI = explode(":", $currentURI);
 		$type       = $explodedURI[1];
-		$provided   = ($type == "artist") ? "album" : "track";
+		$detail   = ($type == "artist") ? "album" : "track";
 
 		/* Fetch and parse the details. */
-		$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$URIs[0]&extras=$provided" . "detail");
+		$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$currentURI&extras=$detail" . "detail");
 
 		if(empty($json))
 			throw new AlfredableException("No JSON returned from Spotify web lookup");
@@ -177,33 +175,32 @@ class Spotifious {
 		/* Output the details. */
 		$results[0]['title']        = $json->$type->name;
 		$results[0]['subtitle']     = "Play $type";
-		$results[0]['arg']          = 'activate (open location "' . $URIs[0] . '")';
+		$results[0]['arg']          = 'play track "' . $currentURI . '"';
 		$results[0]['icon']         = "include/images/alfred/$type.png";
 
 		// TODO top tracks?
 
-		if($provided == "album") {
-			$currentResultNumber = 1;
+		if($detail == "album") {
 			$albums = array();
-			foreach ($json->$type->{$provided . "s"} as $key => $value) {
-				$value = $value->$provided;
+			$query = implode(" ⟩ ", $args);
+			foreach ($json->$type->{$detail . "s"} as $key => $value) {
+				$value = $value->$detail;
 
-			if(in_array($value->name, $albums))
-				continue;
+				if(in_array($value->name, $albums))
+					continue;
 
 				$currentResult['title'] = $value->name;
-				$currentResult['subtitle'] = "Browse this $provided...";
+				$currentResult['subtitle'] = "Browse this $detail...";
 				$currentResult['valid'] = "no";
-				$currentResult['autocomplete'] = "$detailURL ⟩ $value->href ⟩ $query ⟩⟩";
+				$currentResult['autocomplete'] = "$currentURI ⟩ $value->href ⟩ $query ⟩⟩";
 				$currentResult['icon'] = "include/images/alfred/album.png";
 
 				$results[] = $currentResult;
 				$albums[] = "$value->name";
-				$currentResultNumber++;
 			}
 		} else {
 			$currentResultNumber = 1;
-			foreach ($json->$type->{$provided . "s"} as $key => $value) {
+			foreach ($json->$type->{$detail . "s"} as $key => $value) {
 				$starString = floatToBars($value->popularity);
 
 				// TODO show artist if not all tracks from same artist

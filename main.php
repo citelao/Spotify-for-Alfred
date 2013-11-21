@@ -67,7 +67,7 @@ if(!hotkeys_configured() || !helper_app_configured() || !country_code_configured
 
 	$results[] = [
 		'title' => 'You can access settings easily',
-		'subtitle' => 'Type `s` from the main menu',
+		'subtitle' => 'Type `s` from the main menu', // TODO implement settings
 		'icon' => 'include/images/alfred/info.png'
 	];
 
@@ -113,7 +113,7 @@ $URIregex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)
  *   2. Otherwise:           show the main menu
  *
  *  Deal with our detail menus.
- *   # of ⟩ >= # of URIs
+ *   Last char is ⟩
  *    spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ Transatlanticism ⟩
  *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩⟩
  *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩
@@ -142,31 +142,32 @@ if (mb_strlen($query) <= 3) {
 	} else {
 		$results = Spotifious::mainMenu();
 	}
-
 } elseif(contains($query, '⟩')) {
-	$splitQuery  = str_replace("⟩", "", explode("⟩", $query));
+	// if the query contains any machine-generated text 
+	// (the unicode ⟩ is untypeable so we check for it)
+	// we need to parse the query and extract the URLs.
+	
+	// So split based on the delimeter "⟩" and excise the delimeter and blanks.
+	$splitQuery  = array_filter(str_replace("⟩", "", explode("⟩", $query)));
 	               array_walk($splitQuery, 'trim_value');
 
-	$URIs = array($splitQuery[0]);
+	$URIs = array_filter($splitQuery, 'is_spotify_uri');
+	$args = array_diff($splitQuery, $URIs);
 
-	if(preg_contains($splitQuery[1], $URIregex))
-		array_push($URIs, $splitQuery[1]);
+	// Find which URI to use (by count, not by array index).
+	// Arrows should be twice the number of URIs for the last URI.
+	// For every one arrow fewer, traverse one URI backwards. 
+	$arrows = mb_substr_count($query, "⟩");
+	$depth = count($URIs) - (2 * count($URIs) - $arrows); // equiv to $arrows - count($URIs).
 
-	$args = array_filter(array_slice($splitQuery, count($URIs)));
-
-
-
-	// TODO wut
-	if (mb_substr_count($query, "⟩") == count($URIs) * 2) {
-		// deepest
-		$results = Spotifious::detail($URIs, $args);
-	} elseif(mb_substr_count($query, "⟩") > count($URIs)) {
-		// less deep
-		$results = Spotifious::detail(array($URIs[0]), $args);
+	if (mb_substr($query, -1) == "⟩") { // Machine-generated
+		$results = Spotifious::detail($URIs, $args, $depth);
+	} elseif($depth > 0) {
+		$search = array_pop($args);
+		$results = Spotifious::filteredSearch($URIs, $args, $depth, $search);
 	} else {
-		$results = Spotifious::search($splitQuery[count($splitQuery)-1]);
+		$results = Spotifious::search(end($args));
 	}
-
 } elseif (contains($query, 'http://')) {
 	// Explode the URL and arguments into bits for harvesting.
 

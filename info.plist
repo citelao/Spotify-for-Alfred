@@ -305,9 +305,9 @@ end tell</string>
 			<key>config</key>
 			<dict>
 				<key>escaping</key>
-				<integer>127</integer>
+				<integer>123</integer>
 				<key>script</key>
-				<string>php -f action.php -- “open” “{query}”</string>
+				<string>php -f action.php -- ctrl {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>

@@ -1,5 +1,6 @@
 <?php
 mb_internal_encoding("UTF-8");
+include('include/helper.php');
 /* 
 
 	Action.php must:
@@ -27,6 +28,7 @@ mb_internal_encoding("UTF-8");
 
 	Method:
 
+		php -f action.php -- key default_action cmd_action shift_action alt_action ctrl_action
 		php -f action.php -- "discrete" "action"
 							"play" "track" "context (optional)"
 							"queue" "track/album/artist"
@@ -37,6 +39,33 @@ mb_internal_encoding("UTF-8");
 							...: growl error!
 */
 
-exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
+// exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
 
-print_r($argv);
+$args = array_map('normalize', $argv);
+
+print_r($args);
+
+// TODO
+switch ($args[1]) {
+	case "ctrl":
+		$action = 'playpause';
+		break;
+	
+	case 'alt':
+		$action = $args[5];
+		break;
+
+	case 'shift':
+		$action = $args[4];
+		break;
+
+	case 'cmd':
+		$action = $args[3];
+		break;
+
+	default:
+		$action = $args[2];
+		break;
+}
+
+exec("osascript -e 'tell application \"Spotify\"' -e 'run script $action' -e 'end tell'");

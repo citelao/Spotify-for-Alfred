@@ -2,7 +2,7 @@
 
 function trim_value(&$value) 
 { 
-	$value = trim($value); 
+	$value = trim($value);
 }
 
 function contains($stack, $needle) {
@@ -15,6 +15,12 @@ function preg_contains($stack, $regex) {
 	preg_match($regex, $stack, $matches);
 
 	return (count($matches) == 0) ? false : $matches;
+}
+
+function is_spotify_uri($item) {
+	$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
+
+	return preg_match($regex, $item);
 }
 
 function alfredify($results) {
