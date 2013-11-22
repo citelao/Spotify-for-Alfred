@@ -19,10 +19,12 @@
 		7E6F28D8181473F000EE17AF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7E6F28D6181473F000EE17AF /* InfoPlist.strings */; };
 		7E6F28DA181473F000EE17AF /* prevnextTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6F28D9181473F000EE17AF /* prevnextTests.m */; };
 		7E6F28E41814747900EE17AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6F28E31814747900EE17AF /* main.m */; };
-		7E6F28EC181480DE00EE17AF /* MDBorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6F28E9181480DE00EE17AF /* MDBorderlessWindow.m */; };
-		7E6F28ED181480DE00EE17AF /* MDBlackTransparentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6F28EB181480DE00EE17AF /* MDBlackTransparentView.m */; };
 		7ED266BA18149EF80008A403 /* paused.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 7ED266B818149EF80008A403 /* paused.pdf */; };
 		7ED266BB18149EF80008A403 /* playing.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 7ED266B918149EF80008A403 /* playing.pdf */; };
+		7EDD8007183DC48F00AC4533 /* MDBlackTransparentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDD8004183DC48F00AC4533 /* MDBlackTransparentView.m */; };
+		7EDD8008183DC48F00AC4533 /* MDBorderlessWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDD8006183DC48F00AC4533 /* MDBorderlessWindow.m */; };
+		7EDD800A183DD08100AC4533 /* prevnext.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 7EDD8009183DD08100AC4533 /* prevnext.sdef */; };
+		7EDD800D183DD17D00AC4533 /* BSPopCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDD800C183DD17D00AC4533 /* BSPopCommand.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,12 +58,15 @@
 		7E6F28D7181473F000EE17AF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7E6F28D9181473F000EE17AF /* prevnextTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = prevnextTests.m; sourceTree = "<group>"; };
 		7E6F28E31814747900EE17AF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		7E6F28E8181480DE00EE17AF /* MDBorderlessWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDBorderlessWindow.h; path = "../../../../Downloads/BlackBorderlessWindow-master/MDBorderlessWindow.h"; sourceTree = "<group>"; };
-		7E6F28E9181480DE00EE17AF /* MDBorderlessWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDBorderlessWindow.m; path = "../../../../Downloads/BlackBorderlessWindow-master/MDBorderlessWindow.m"; sourceTree = "<group>"; };
-		7E6F28EA181480DE00EE17AF /* MDBlackTransparentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDBlackTransparentView.h; path = "../../../../Downloads/BlackBorderlessWindow-master/MDBlackTransparentView.h"; sourceTree = "<group>"; };
-		7E6F28EB181480DE00EE17AF /* MDBlackTransparentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDBlackTransparentView.m; path = "../../../../Downloads/BlackBorderlessWindow-master/MDBlackTransparentView.m"; sourceTree = "<group>"; };
 		7ED266B818149EF80008A403 /* paused.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = paused.pdf; sourceTree = "<group>"; };
 		7ED266B918149EF80008A403 /* playing.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = playing.pdf; sourceTree = "<group>"; };
+		7EDD8003183DC48F00AC4533 /* MDBlackTransparentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDBlackTransparentView.h; sourceTree = "<group>"; };
+		7EDD8004183DC48F00AC4533 /* MDBlackTransparentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDBlackTransparentView.m; sourceTree = "<group>"; };
+		7EDD8005183DC48F00AC4533 /* MDBorderlessWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDBorderlessWindow.h; sourceTree = "<group>"; };
+		7EDD8006183DC48F00AC4533 /* MDBorderlessWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDBorderlessWindow.m; sourceTree = "<group>"; };
+		7EDD8009183DD08100AC4533 /* prevnext.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = prevnext.sdef; sourceTree = "<group>"; };
+		7EDD800B183DD17D00AC4533 /* BSPopCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSPopCommand.h; sourceTree = "<group>"; };
+		7EDD800C183DD17D00AC4533 /* BSPopCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSPopCommand.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +137,7 @@
 				7E6F28C2181473F000EE17AF /* AppDelegate.m */,
 				7E6F28C4181473F000EE17AF /* MainMenu.xib */,
 				7E6F28C7181473F000EE17AF /* Images.xcassets */,
+				7EDD8002183DC48F00AC4533 /* Supporting Classes */,
 				7E6F28B6181473F000EE17AF /* Supporting Files */,
 			);
 			path = prevnext;
@@ -142,11 +148,8 @@
 			children = (
 				7ED266B818149EF80008A403 /* paused.pdf */,
 				7ED266B918149EF80008A403 /* playing.pdf */,
-				7E6F28E8181480DE00EE17AF /* MDBorderlessWindow.h */,
-				7E6F28E9181480DE00EE17AF /* MDBorderlessWindow.m */,
-				7E6F28EA181480DE00EE17AF /* MDBlackTransparentView.h */,
-				7E6F28EB181480DE00EE17AF /* MDBlackTransparentView.m */,
 				7E6F28B7181473F000EE17AF /* prevnext-Info.plist */,
+				7EDD8009183DD08100AC4533 /* prevnext.sdef */,
 				7E6F28B8181473F000EE17AF /* InfoPlist.strings */,
 				7E6F28BB181473F000EE17AF /* main.m */,
 				7E6F28BD181473F000EE17AF /* prevnext-Prefix.pch */,
@@ -171,6 +174,19 @@
 				7E6F28D6181473F000EE17AF /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7EDD8002183DC48F00AC4533 /* Supporting Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7EDD8003183DC48F00AC4533 /* MDBlackTransparentView.h */,
+				7EDD8004183DC48F00AC4533 /* MDBlackTransparentView.m */,
+				7EDD8005183DC48F00AC4533 /* MDBorderlessWindow.h */,
+				7EDD8006183DC48F00AC4533 /* MDBorderlessWindow.m */,
+				7EDD800B183DD17D00AC4533 /* BSPopCommand.h */,
+				7EDD800C183DD17D00AC4533 /* BSPopCommand.m */,
+			);
+			path = "Supporting Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -254,6 +270,7 @@
 				7E6F28C8181473F000EE17AF /* Images.xcassets in Resources */,
 				7ED266BB18149EF80008A403 /* playing.pdf in Resources */,
 				7E6F28C0181473F000EE17AF /* Credits.rtf in Resources */,
+				7EDD800A183DD08100AC4533 /* prevnext.sdef in Resources */,
 				7E6F28C6181473F000EE17AF /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,10 +290,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E6F28ED181480DE00EE17AF /* MDBlackTransparentView.m in Sources */,
+				7EDD800D183DD17D00AC4533 /* BSPopCommand.m in Sources */,
 				7E6F28C3181473F000EE17AF /* AppDelegate.m in Sources */,
-				7E6F28EC181480DE00EE17AF /* MDBorderlessWindow.m in Sources */,
 				7E6F28E41814747900EE17AF /* main.m in Sources */,
+				7EDD8008183DC48F00AC4533 /* MDBorderlessWindow.m in Sources */,
+				7EDD8007183DC48F00AC4533 /* MDBlackTransparentView.m in Sources */,
 				7E6F28BC181473F000EE17AF /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

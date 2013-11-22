@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+
+<dictionary title="prevnext">
+    <suite name="PrevNext Suite" code="bspn" description="PrevNext trigger scripts">
+        <command name="show hud" code="bspnshud" description="Pop up an image">
+            <cocoa class="BSPopCommand"/>
+            <direct-parameter description="The path to popup.">
+                <type type="file"/>
+            </direct-parameter>
+        </command>
+    </suite>
+</dictionary>

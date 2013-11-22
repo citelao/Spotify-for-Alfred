@@ -18,9 +18,14 @@
     
     NSString *action = [args objectAtIndex:1];
     
+            [_image setImage: [NSImage imageNamed:@"playing"]];
+    
     if ([action isEqualToString: @"paused"]) {
         [_image setImage: [NSImage imageNamed:@"paused"]];
     } else if([action isEqualToString: @"playing"]) {
+        [_image setImage: [NSImage imageNamed:@"playing"]];
+    } else {
+        // Temp
         [_image setImage: [NSImage imageNamed:@"playing"]];
     }
 }

@@ -349,7 +349,7 @@ end tell</string>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
-				<string>/Users/citelao/Library/Developer/Xcode/DerivedData/prevnext-gyqnwyspzlgnqmaxbsbvqanicfjc/Build/Products/Debug/prevnext.app/Contents/MacOS/prevnext {query}</string>
+				<string>open /Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/include/prevnext/build/prevnext.app --args {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
