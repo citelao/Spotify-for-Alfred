@@ -2,6 +2,7 @@
 // thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result
 mb_internal_encoding("UTF-8");
 include_once('include/helper.php');
+include_once('include/OhAlfred.php');
 include_once('include/spotifious.php');
 
 /**
@@ -10,6 +11,10 @@ include_once('include/spotifious.php');
  *  <https://github.com/citelao/Spotify-for-Alfred/>
  * 	an Alfred extension by Ben Stolovitz <http://github.com/citelao/>
  **/
+
+/* Oh, Alfred! */
+$alfred = new OhAlfred();
+set_exception_handler(array($alfred, 'errorify'));
 
 /* If Spotifious isn't configured yet, show the checklist. */
 if(!hotkeys_configured() || !helper_app_configured() || !country_code_configured()) { // todo
@@ -94,13 +99,14 @@ function helper_app_configured()
 function country_code_configured()
 {
 	// Check file storage location for country code.
-	// TODO
+	// TODO $storage
+	// https://raw.github.com/johannesl/Internationalization/master/countrycodes.json
 	return true;
 }
 
 /* Parse the query. */
 $results = array();
-$query   = normalize($argv[1]);
+$query   = OhAlfred::normalize($argv[1]);
 
 $URIregex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x'; // TODO use more
 
@@ -198,4 +204,4 @@ if (mb_strlen($query) <= 3) {
 
 }
 
-alfredify($results);
+OhAlfred::alfredify($results);

@@ -88,7 +88,7 @@ class Spotifious {
 		foreach (array('artist','album','track') as $type) {
 			/* Fetch and parse the search results. */
 			$urlQuery = str_replace("%3A", ":", urlencode($query));
-			$json = fetch("http://ws.spotify.com/search/1/$type.json?q=" . $urlQuery);
+			$json = OhAlfred::fetch("http://ws.spotify.com/search/1/$type.json?q=" . $urlQuery);
 
 			if(empty($json))
 				throw new AlfredableException("No JSON returned from Spotify web search");
@@ -96,7 +96,6 @@ class Spotifious {
 			$json = json_decode($json);
 
 			/* Output the results. */
-			$currentResultNumber = 1;
 			foreach ($json->{$type . "s"} as $key => $value) {
 				/* Weight popularity. */
 				$popularity = $value->popularity;
@@ -136,7 +135,6 @@ class Spotifious {
 				$currentResult['icon'] = "include/images/alfred/$type.png";
 
 				$results[] = $currentResult;
-				$currentResultNumber++;
 			}
 		}
 
@@ -165,7 +163,7 @@ class Spotifious {
 		$detail   = ($type == "artist") ? "album" : "track";
 
 		/* Fetch and parse the details. */
-		$json = fetch("http://ws.spotify.com/lookup/1/.json?uri=$currentURI&extras=$detail" . "detail");
+		$json = OhAlfred::fetch("http://ws.spotify.com/lookup/1/.json?uri=$currentURI&extras=$detail" . "detail");
 
 		if(empty($json))
 			throw new AlfredableException("No JSON returned from Spotify web lookup");
@@ -199,19 +197,17 @@ class Spotifious {
 				$albums[] = "$value->name";
 			}
 		} else {
-			$currentResultNumber = 1;
 			foreach ($json->$type->{$detail . "s"} as $key => $value) {
-				$starString = floatToBars($value->popularity);
+				$popularityString = floatToBars($value->popularity);
 
 				// TODO show artist if not all tracks from same artist
 
-				$currentResult['title'] = "$currentResultNumber. $value->name";
-				$currentResult['subtitle'] = "$starString "  . beautifyTime($value->length);
+				$currentResult['title'] = $value->{'track-number'} . ". $value->name";
+				$currentResult['subtitle'] = "$popularityString "  . beautifyTime($value->length);
 				$currentResult['arg'] = 'play track "' . $value->href . '" in context "' . $currentURI . '"';
 				$currentResult['icon'] = "include/images/alfred/track.png";
 
 				$results[] = $currentResult;
-				$currentResultNumber++;
 			}
 		}
 
@@ -244,7 +240,7 @@ class Spotifious {
 		if($detailNeeded)
 			$URL .= "&extras=$detail" . "detail";
 
-		$json = fetch($URL);
+		$json = OhAlfred::fetch($URL);
 
 		if(empty($json))
 			throw new AlfredableException("No JSON returned from Spotify web lookup");

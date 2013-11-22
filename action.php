@@ -1,6 +1,8 @@
 <?php
 mb_internal_encoding("UTF-8");
 include('include/helper.php');
+include('include/OhAlfred.php');
+
 /* 
 
 	Action.php must:
@@ -41,7 +43,7 @@ include('include/helper.php');
 
 // exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
 
-$args = array_map('normalize', $argv);
+$args = array_map(array('OhAlfred', 'normalize'), $argv);
 
 print_r($args);
 
