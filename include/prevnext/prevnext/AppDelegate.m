@@ -14,29 +14,39 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(popEventHandler:) name:@"ApplicationShouldDisplayImage" object:nil];
+    
     NSArray *args = [[NSProcessInfo processInfo] arguments];
+    NSString *hasImage = [args objectAtIndex:1];
     
-    NSString *action = [args objectAtIndex:1];
-    
-            [_image setImage: [NSImage imageNamed:@"playing"]];
-    
-    if ([action isEqualToString: @"paused"]) {
-        [_image setImage: [NSImage imageNamed:@"paused"]];
-    } else if([action isEqualToString: @"playing"]) {
-        [_image setImage: [NSImage imageNamed:@"playing"]];
-    } else {
-        // Temp
-        [_image setImage: [NSImage imageNamed:@"playing"]];
+    if([hasImage  isEqual: @"-image"]) {
+        NSString *image = [args objectAtIndex:2];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ApplicationShouldDisplayImage" object:image];
     }
 }
 
--  (void)applicationDidFinishLaunching:(NSNotification *)notification
+- (void)popEventHandler:(NSNotification *)note
 {
-    [NSThread sleepForTimeInterval:2.0];
+    NSString *image = [note object];
+
+    [_image setImage: [NSImage imageNamed:image]];
+    
+    // http://stackoverflow.com/questions/1449035/how-do-i-use-nstimer
+    [NSTimer scheduledTimerWithTimeInterval:2.0
+                                     target:self
+                                   selector:@selector(shouldFadeOutHandler:)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)shouldFadeOutHandler:(NSTimer *)timer
+{
+    [timer invalidate];
     [NSApp terminate:self];
 }
 
-- (void)fadeOutWindow:(NSWindow*)window{
+- (void)fadeOutWindow:(NSWindow*)window
+{
     float alpha = [window alphaValue];
     [window makeKeyAndOrderFront:self];
     while (alpha > 0) {

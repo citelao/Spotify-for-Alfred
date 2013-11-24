@@ -217,7 +217,7 @@ end tell</string>
 				<key>keyword</key>
 				<string>spotifious</string>
 				<key>runningsubtext</key>
-				<string>Harnessing Spotify's terrible API...</string>
+				<string>Harnessing Spotify APIs...</string>
 				<key>script</key>
 				<string>php -f main.php -- "{query}"</string>
 				<key>title</key>

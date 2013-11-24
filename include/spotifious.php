@@ -95,6 +95,9 @@ class Spotifious {
 
 			$json = json_decode($json);
 
+			if($json == null)
+				throw new AlfredableException("JSON error: " . json_last_error());
+
 			/* Output the results. */
 			foreach ($json->{$type . "s"} as $key => $value) {
 				/* Weight popularity. */
@@ -169,6 +172,9 @@ class Spotifious {
 			throw new AlfredableException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
+
+		if($json == null)
+			throw new AlfredableException("JSON error: " . json_last_error());
 
 		/* Output the details. */
 		$results[0]['title']        = $json->$type->name;
@@ -247,6 +253,9 @@ class Spotifious {
 
 		$json = json_decode($json);
 
+		if($json == null)
+			throw new AlfredableException("JSON error: " . json_last_error());
+			
 		/* Output the details. */
 		switch ($type) { // This could SO be DRY-er TODO.
 			case 'track':

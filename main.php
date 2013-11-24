@@ -76,7 +76,7 @@ if(!hotkeys_configured() || !helper_app_configured() || !country_code_configured
 		'icon' => 'include/images/alfred/info.png'
 	];
 
-	alfredify($results);
+	OhAlfred::alfredify($results);
 	return;
 }
 

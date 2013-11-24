@@ -11,6 +11,9 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
+- (void)popEventHandler:(NSNotification *)note;
+- (void)shouldFadeOutHandler:(NSTimer *)timer;
+
 @property (assign) IBOutlet MDBorderlessWindow *window;
 @property (assign) IBOutlet NSImageView *image;
 
