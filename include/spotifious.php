@@ -17,6 +17,7 @@ class Spotifious {
 			"include/images/alfred/playing.png";
 
 		/* Output now-playing info. */
+		// TODO use sockets to get more album data.
 		$results[0]['title']        = "$currentTrack";
 		$results[0]['subtitle']     = "$currentAlbum by $currentArtist";
 		$results[0]['arg']          = OhAlfred::actionify(array("discrete", "playpause"));
@@ -135,7 +136,12 @@ class Spotifious {
 				// only used if item is not valid. Tracks run an action, everything
 				// else autocompletes.
 				$currentResult['valid']        = ($type == 'track') ? 'yes' : 'no';
-				$currentResult['arg']          = OhAlfred::actionify(array("play", $value->href));
+				$currentResult['arg']          = OhAlfred::actionify(
+													array("play", $value->href),
+													"null",
+													"null",
+													"null",
+													array("open", $value->album->href));
 				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩";
 				$currentResult['icon'] = "include/images/alfred/$type.png";
 
@@ -152,7 +158,7 @@ class Spotifious {
 			'title' => "Search for $query",
 			'subtitle' => "Continue this search in Spotify...",
 			'uid' => "bs-spotify-$query-more",
-			'arg' => 'activate (open location "spotify:search:' . $query . '")',
+			'arg' => OhAlfred::actionify(array("search", $query)),
 			'icon' => 'include/images/alfred/search.png'
 		];
 
@@ -181,7 +187,12 @@ class Spotifious {
 		/* Output the details. */
 		$results[0]['title']        = $json->$type->name;
 		$results[0]['subtitle']     = "Play $type";
-		$results[0]['arg']          = 'play track "' . $currentURI . '"';
+		$results[0]['arg']          = OhAlfred::actionify(
+										array("play", $currentURI),
+										"null",
+										"null",
+										"null",
+										array("open", $currentURI));
 		$results[0]['icon']         = "include/images/alfred/$type.png";
 
 		// TODO top tracks?
@@ -212,7 +223,12 @@ class Spotifious {
 
 				$currentResult['title'] = $value->{'track-number'} . ". $value->name";
 				$currentResult['subtitle'] = "$popularityString "  . beautifyTime($value->length);
-				$currentResult['arg'] = OhAlfred::actionify(array("play", $value->href, $currentURI));
+				$currentResult['arg'] = OhAlfred::actionify(
+										array("play", $value->href, $currentURI),
+										"null",
+										"null",
+										"null",
+										array("open", $currentURI));
 				$currentResult['icon'] = "include/images/alfred/track.png";
 
 				$results[] = $currentResult;
@@ -321,7 +337,7 @@ class Spotifious {
 		$results[] = [
 			'title' => $json->$type->name,
 			'subtitle' => "Open this $type in Spotify",
-			'arg' => 'activate (open location "' . $URI . '")',
+			'arg' => 'activate (open location "' . $URI . '")', // TODO actionify
 			// TODO icon
 		];
 

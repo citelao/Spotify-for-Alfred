@@ -211,7 +211,7 @@
 				<key>runningsubtext</key>
 				<string>Harnessing Spotify APIs...</string>
 				<key>script</key>
-				<string>php -f main.php -- "{query}"</string>
+				<string>php -f main.php -- "{query}" </string>
 				<key>title</key>
 				<string>Show Spotifious Mini Player</string>
 				<key>type</key>
@@ -257,7 +257,7 @@
 				<key>escaping</key>
 				<integer>123</integer>
 				<key>script</key>
-				<string>php -f action.php -- none ⧙ {query}</string>
+				<string>php -f action.php -- none ⧙ {query} &gt; ~/Desktop/test.txt</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -316,7 +316,7 @@
 				<key>escaping</key>
 				<integer>123</integer>
 				<key>script</key>
-				<string>php -f action.php -- none ⧙ discrete ⦔ {query}</string>
+				<string>php -f action.php -- ctrl ⧙ {query} &gt; ~/Desktop/test.txt</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>

@@ -47,10 +47,10 @@ $alfred = new OhAlfred();
 
 // exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
 
-$args = array_map(array('OhAlfred', 'normalize'), $argv);
+$args = array_map(array($alfred, 'normalize'), $argv);
 array_shift($args);
 
-$actions = explode("⧙", implode("", $args));
+$actions = explode(" ⧙ ", implode(" ", $args));
 
 switch ($args[0]) {
 	case 'none':
@@ -78,7 +78,11 @@ switch ($args[0]) {
 		break;
 }
 
-$command = explode("⦔", $action);
+$command = explode(" ⦔ ", $action);
+
+print_r($argv);	
+print_r($actions);	
+print_r($command);
 
 // TODO write last command to debug log.
 switch ($command[0]) {
@@ -87,23 +91,21 @@ switch ($command[0]) {
 		break;
 
 	case 'open':
-		spotifyQuery('open location "' . $command[1] . '" (activate)');
+		spotifyQuery('activate (open location "' . $command[1] . '")');
+		break; 
 	
 	case 'play':
 		$query = 'play track "' . $command[1] . '"';
 
-		// TODO fix addition of newline. Prob mb strings
 		if(isset($command[2]) && $command[2] != '')
 			$query .= ' in context "' . $command[2] . '"';
-
-		print_r($query);
-
+		
 		spotifyQuery($query);
 		break;
 
 	case 'search':
 		//this way is shitty
-		spotifyQuery('open location "spotify:search:' . $command[1] . '"');
+		spotifyQuery('activate (open location "spotify:search:' . $command[1] . '")');
 
 	case 'null':
 		// Execute nothing without throwing an error.

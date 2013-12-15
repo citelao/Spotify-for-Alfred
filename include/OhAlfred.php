@@ -69,19 +69,19 @@ final class OhAlfred {
 		// Fast is_array comparison, might as well use it.
 		// http://www.php.net/is_array#98156
 		if((array) $default_action === $default_action)
-			$default_action = implode("⦔", $default_action);
+			$default_action = implode(" ⦔ ", $default_action);
 
 		if((array) $cmd_action === $cmd_action)
-			$cmd_action = implode("⦔", $cmd_action);
+			$cmd_action = implode(" ⦔ ", $cmd_action);
 
 		if((array) $shift_action === $shift_action)
-			$shift_action = implode("⦔", $shift_action);
+			$shift_action = implode(" ⦔ ", $shift_action);
 
 		if((array) $alt_action === $alt_action)
-			$alt_action = implode("⦔", $alt_action);
+			$alt_action = implode(" ⦔ ", $alt_action);
 
 		if((array) $ctrl_action === $ctrl_action)
-			$ctrl_action = implode("⦔", $ctrl_action);
+			$ctrl_action = implode(" ⦔ ", $ctrl_action);
 
 		return "$default_action ⧙ $cmd_action ⧙ $shift_action ⧙ $alt_action ⧙ $ctrl_action";
 	}
