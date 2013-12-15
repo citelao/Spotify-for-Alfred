@@ -10,7 +10,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
+				<string>96FF1F9F-42BA-45EA-8743-09A940B5F2DF</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -107,6 +107,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>96FF1F9F-42BA-45EA-8743-09A940B5F2DF</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>66DB4B28-A929-4E34-9BAB-368CF11210A6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>A03EC08A-349D-406A-B4D2-E40796B68CAD</key>
 		<array>
 			<dict>
@@ -191,25 +202,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>escaping</key>
-				<integer>50</integer>
-				<key>script</key>
-				<string>tell application "Spotify"
-	run script {query}
-end tell</string>
-				<key>type</key>
-				<integer>6</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -263,6 +255,23 @@ end tell</string>
 			<key>config</key>
 			<dict>
 				<key>escaping</key>
+				<integer>123</integer>
+				<key>script</key>
+				<string>php -f action.php -- none ⧙ {query}</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>96FF1F9F-42BA-45EA-8743-09A940B5F2DF</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
 				<string></string>
@@ -307,7 +316,7 @@ end tell</string>
 				<key>escaping</key>
 				<integer>123</integer>
 				<key>script</key>
-				<string>php -f action.php -- ctrl {query}</string>
+				<string>php -f action.php -- none ⧙ discrete ⦔ {query}</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -452,11 +461,11 @@ end tell</string>
 				<key>argument</key>
 				<integer>0</integer>
 				<key>hotkey</key>
-				<integer>123</integer>
+				<integer>0</integer>
 				<key>hotmod</key>
-				<integer>11796480</integer>
+				<integer>0</integer>
 				<key>hotstring</key>
-				<string>←</string>
+				<string></string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -498,11 +507,11 @@ end tell</string>
 				<key>argument</key>
 				<integer>0</integer>
 				<key>hotkey</key>
-				<integer>124</integer>
+				<integer>0</integer>
 				<key>hotmod</key>
-				<integer>11796480</integer>
+				<integer>0</integer>
 				<key>hotstring</key>
-				<string>→</string>
+				<string></string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -542,11 +551,11 @@ end tell</string>
 				<key>argument</key>
 				<integer>0</integer>
 				<key>hotkey</key>
-				<integer>126</integer>
+				<integer>0</integer>
 				<key>hotmod</key>
-				<integer>11796480</integer>
+				<integer>0</integer>
 				<key>hotstring</key>
-				<string>↑</string>
+				<string></string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -567,11 +576,11 @@ end tell</string>
 				<key>argument</key>
 				<integer>0</integer>
 				<key>hotkey</key>
-				<integer>125</integer>
+				<integer>0</integer>
 				<key>hotmod</key>
-				<integer>11796480</integer>
+				<integer>0</integer>
 				<key>hotstring</key>
-				<string>↓</string>
+				<string></string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -600,6 +609,25 @@ end tell</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>BF1F0016-A2CC-4A82-B937-0575496A141A</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>50</integer>
+				<key>script</key>
+				<string>tell application "Spotify"
+	run script {query}
+end tell</string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -663,6 +691,11 @@ end tell</string>
 			<key>ypos</key>
 			<real>780</real>
 		</dict>
+		<key>96FF1F9F-42BA-45EA-8743-09A940B5F2DF</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
 		<key>A03EC08A-349D-406A-B4D2-E40796B68CAD</key>
 		<dict>
 			<key>ypos</key>
@@ -696,7 +729,7 @@ end tell</string>
 		<key>E16D7A45-5212-4A70-AE85-36C6BF0450E7</key>
 		<dict>
 			<key>ypos</key>
-			<real>10</real>
+			<real>1220</real>
 		</dict>
 		<key>E5DE67FB-EEC7-4489-BAFC-5CD549A308A1</key>
 		<dict>

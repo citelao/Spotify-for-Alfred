@@ -1,6 +1,7 @@
 <?php
 mb_internal_encoding("UTF-8");
 include_once('include/helper.php');
+include_once('include/OhAlfred.php');
 
 class Spotifious {
 	public function mainMenu()
@@ -18,7 +19,7 @@ class Spotifious {
 		/* Output now-playing info. */
 		$results[0]['title']        = "$currentTrack";
 		$results[0]['subtitle']     = "$currentAlbum by $currentArtist";
-		$results[0]['arg']          = "playpause";
+		$results[0]['arg']          = OhAlfred::actionify(array("discrete", "playpause"));
 		$results[0]['icon']         = $currentStatus;
 
 		$results[1]['title']        = "$currentAlbum";
@@ -43,6 +44,7 @@ class Spotifious {
 
 	public function controlPanel()
 	{
+		// TODO actionify
 		$results[] = [
 			'title' => "play pause",
 			'arg' => "playpause"];
@@ -133,7 +135,7 @@ class Spotifious {
 				// only used if item is not valid. Tracks run an action, everything
 				// else autocompletes.
 				$currentResult['valid']        = ($type == 'track') ? 'yes' : 'no';
-				$currentResult['arg']          = "play track \"$value->href\"";
+				$currentResult['arg']          = OhAlfred::actionify(array("play", $value->href));
 				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩";
 				$currentResult['icon'] = "include/images/alfred/$type.png";
 
@@ -210,7 +212,7 @@ class Spotifious {
 
 				$currentResult['title'] = $value->{'track-number'} . ". $value->name";
 				$currentResult['subtitle'] = "$popularityString "  . beautifyTime($value->length);
-				$currentResult['arg'] = 'play track "' . $value->href . '" in context "' . $currentURI . '"';
+				$currentResult['arg'] = OhAlfred::actionify(array("play", $value->href, $currentURI));
 				$currentResult['icon'] = "include/images/alfred/track.png";
 
 				$results[] = $currentResult;
@@ -321,6 +323,45 @@ class Spotifious {
 			'subtitle' => "Open this $type in Spotify",
 			'arg' => 'activate (open location "' . $URI . '")',
 			// TODO icon
+		];
+
+		return $results;
+	}
+
+	public function configure($hotkeys_configured, $helper_app_configured, $country_code_configured)
+	{
+		$results[] = [
+			'title' => 'Welcome to Spotifious!',
+			'subtitle' => 'You need to configure a few more things before you can use Spotifious.',
+			'icon' => 'include/images/alfred/configuration.png',
+			'valid' => 'no'
+		];
+
+		$results[] = [
+			'title' => '1. Bind your hotkeys',
+			'subtitle' => 'Action this to bind automatically, or set them yourself in Alfred preferences.',
+			'icon' => $hotkeys_configured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
+			'valid' => $hotkeys_configured ? 'no' : 'yes'
+		];
+
+		$results[] =[
+			'title' => '2. Install the helper app in Spotify',
+			'subtitle' => 'This will open your web browser so you can activate Spotify developer mode.',
+			'icon' => $helper_app_configured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
+			'valid' => $helper_app_configured ? 'no' : 'yes'
+		];
+
+		$results[] = [
+			'title' => '3. Find your country code',
+			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
+			'icon' => $country_code_configured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
+			'valid' => $country_code_configured ? 'no' : 'yes'
+		];
+
+		$results[] = [
+			'title' => 'You can access settings easily',
+			'subtitle' => 'Type `s` from the main menu', // TODO implement settings
+			'icon' => 'include/images/alfred/info.png'
 		];
 
 		return $results;

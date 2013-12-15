@@ -1,6 +1,5 @@
 <?php
 mb_internal_encoding("UTF-8");
-// include_once('include/helper.php');
 
 /* see: https://github.com/jdfwarrior/Workflows/blob/master/workflows.php */
 final class OhAlfred {
@@ -10,8 +9,9 @@ final class OhAlfred {
 	private $cache;
 	private $storage;
 
-	// TODO Instantiate the class or this will never be called
 	public function __construct() {
+		set_exception_handler(array($this, 'errorify'));
+
 		$this->home = exec('printf "$HOME"');
 		$this->cache = $this->home . '/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/com.citelao.spotifious/';
 		$this->storage = $this->home . '/Library/Application Support/Alfred 2/Workflow Data/com.citelao.spotifious/';
@@ -23,6 +23,67 @@ final class OhAlfred {
 		if (!file_exists($this->storage)) {
 			mkdir($this->storage);
 		}
+	}
+
+	public function home()
+	{
+		if($this->home == null)
+			throw new AlfredableException("Home directory is not defined.");
+
+		return $this->home;
+	}
+
+	public function cache() {
+		if($this->cache == null)
+			throw new AlfredableException("Cache directory is not defined.");
+
+		if (!file_exists($this->cache))
+			mkdir($this->cache);
+
+		return $this->cache;
+	}
+
+	public function storage() {
+		if($this->storage == null)
+			throw new AlfredableException("Storage directory is not defined.");
+
+		if (!file_exists($this->storage))
+			mkdir($this->storage);
+
+		return $this->storage;
+	}
+
+	public function actionify($default_action, $cmd_action = '', $shift_action = '', $alt_action = '', $ctrl_action = '') {
+		if($cmd_action == '')
+			$cmd_action = $default_action;
+
+		if($shift_action == '')
+			$shift_action = $default_action;
+
+		if($alt_action == '')
+			$alt_action = $default_action;
+
+		if($ctrl_action == '')
+			$ctrl_action = $default_action;
+
+		// Fast is_array comparison, might as well use it.
+		// http://www.php.net/is_array#98156
+		if((array) $default_action === $default_action)
+			$default_action = implode("⦔", $default_action);
+
+		if((array) $cmd_action === $cmd_action)
+			$cmd_action = implode("⦔", $cmd_action);
+
+		if((array) $shift_action === $shift_action)
+			$shift_action = implode("⦔", $shift_action);
+
+		if((array) $alt_action === $alt_action)
+			$alt_action = implode("⦔", $alt_action);
+
+		if((array) $ctrl_action === $ctrl_action)
+			$ctrl_action = implode("⦔", $ctrl_action);
+
+		return "$default_action ⧙ $cmd_action ⧙ $shift_action ⧙ $alt_action ⧙ $ctrl_action";
 	}
 
 	public function alfredify($r = null) {
@@ -52,12 +113,13 @@ final class OhAlfred {
 
 			if(!isset($result['subtitle']))
 				$result['subtitle'] = '';
-				
+			
+			// TODO rewrite escapequery function	
 			print "\r\n\r\n";
-			print "	<item uid='" . OhAlfred::escapeQuery($result['uid']) . "' arg='" . $result['arg'] . "' valid='" . OhAlfred::escapeQuery($result['valid']) . "' autocomplete='" . OhAlfred::escapeQuery($result['autocomplete']) . "'>\r\n";
-			print "		<title>" . OhAlfred::escapeQuery($result['title']) . "</title>\r\n";
-			print "		<subtitle>" . OhAlfred::escapeQuery($result['subtitle']) . "</subtitle>\r\n";
-			print "		<icon>" . OhAlfred::escapeQuery($result['icon']) . "</icon>\r\n";
+			print "	<item uid='" . $this->escapeQuery($result['uid']) . "' arg='" . $result['arg'] . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
+			print "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
+			print "		<subtitle>" . $this->escapeQuery($result['subtitle']) . "</subtitle>\r\n";
+			print "		<icon>" . $this->escapeQuery($result['icon']) . "</icon>\r\n";
 			print "	</item>\r\n";
 		}
 		
@@ -115,7 +177,7 @@ final class OhAlfred {
 			]
 		];
 
-		OhAlfred::alfredify($results);
+		$this->alfredify($results);
 		exit();
 	}
 
@@ -126,7 +188,7 @@ final class OhAlfred {
 	public function debug($text) {
 		$results[0]['title'] = $text;
 
-		OhAlfred::alfredify($results);
+		$this->alfredify($results);
 		exit();
 	}
 
@@ -163,13 +225,14 @@ final class OhAlfred {
 class AlfredableException extends Exception implements IStatefullException  {
     protected $throwState;
 
+    // List of things that should never be written to debug files.
     private $forbidden = array("_POST", "_SERVER", "_GET", "_FILES", "_COOKIE");
 
     function __construct($message, $vars = '')   {
     	if($vars == '') {
 	        $this->throwState = get_defined_vars();
 	    } else {
-	    	$vars = array_diff_key($vars, array_flip($this->forbidden));
+	    	$vars = array_diff_key($vars, array_flip($this->forbidden)); // Take out all private things.
 	    	$this->throwState = $vars;
 	    }
 

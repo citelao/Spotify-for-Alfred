@@ -1,7 +1,9 @@
 <?php
 mb_internal_encoding("UTF-8");
-include('include/helper.php');
-include('include/OhAlfred.php');
+include_once 'include/helper.php';
+include_once 'include/OhAlfred.php';
+
+$alfred = new OhAlfred();
 
 /* 
 
@@ -30,44 +32,84 @@ include('include/OhAlfred.php');
 
 	Method:
 
-		php -f action.php -- key default_action cmd_action shift_action alt_action ctrl_action
-		php -f action.php -- "discrete" "action"
-							"play" "track" "context (optional)"
-							"queue" "track/album/artist"
-							"preview" "track"
-							"open" "url" 
-							"search" "text"
-							"star" "track"
+		php -f action.php -- key ⧙ default_action ⧙ cmd_action ⧙ shift_action ⧙ alt_action ⧙ ctrl_action
+		php -f action.php --action ⦔ arg
+							discrete ⦔ action
+							play ⦔ track ⦔ context (optional)
+							queue ⦔ track/album/artist
+							preview ⦔ track ?
+							open ⦔ url
+							search ⦔ text
+							star ⦔ track
+							null ⦔ null
 							...: growl error!
 */
 
 // exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
 
 $args = array_map(array('OhAlfred', 'normalize'), $argv);
+array_shift($args);
 
-print_r($args);
+$actions = explode("⧙", implode("", $args));
 
-// TODO
-switch ($args[1]) {
-	case "ctrl":
-		$action = 'playpause';
-		break;
-	
-	case 'alt':
-		$action = $args[5];
-		break;
-
-	case 'shift':
-		$action = $args[4];
+switch ($args[0]) {
+	case 'none':
+		$action = $actions[1];
 		break;
 
 	case 'cmd':
-		$action = $args[3];
+		$action = $actions[2];
+		break;
+
+	case 'shift':
+		$action = $actions[3];
+		break;
+
+	case 'alt':
+		$action = $actions[4];
+		break;	
+
+	case "ctrl":
+		$action = $actions[5];
 		break;
 
 	default:
-		$action = $args[2];
+		throw new AlfredableException("Unknown key. 'none' is the code for no key.");
 		break;
 }
 
-exec("osascript -e 'tell application \"Spotify\"' -e 'run script $action' -e 'end tell'");
+$command = explode("⦔", $action);
+
+// TODO write last command to debug log.
+switch ($command[0]) {
+	case 'discrete':
+		spotifyQuery($command[1]);
+		break;
+
+	case 'open':
+		spotifyQuery('open location "' . $command[1] . '" (activate)');
+	
+	case 'play':
+		$query = 'play track "' . $command[1] . '"';
+
+		// TODO fix addition of newline. Prob mb strings
+		if(isset($command[2]) && $command[2] != '')
+			$query .= ' in context "' . $command[2] . '"';
+
+		print_r($query);
+
+		spotifyQuery($query);
+		break;
+
+	case 'search':
+		//this way is shitty
+		spotifyQuery('open location "spotify:search:' . $command[1] . '"');
+
+	case 'null':
+		// Execute nothing without throwing an error.
+		break;
+
+	default:
+		throw new AlfredableException("Unknown action.", $command);
+		break;
+}

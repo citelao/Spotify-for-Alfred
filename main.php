@@ -10,113 +10,22 @@ include_once('include/spotifious.php');
  * 	a natural Spotify controller for Alfred 
  *  <https://github.com/citelao/Spotify-for-Alfred/>
  * 	an Alfred extension by Ben Stolovitz <http://github.com/citelao/>
- **/
-
-/* Oh, Alfred! */
-$alfred = new OhAlfred();
-set_exception_handler(array($alfred, 'errorify'));
-
-/* If Spotifious isn't configured yet, show the checklist. */
-if(!hotkeys_configured() || !helper_app_configured() || !country_code_configured()) { // todo
-	$results[] = [
-		'title' => 'Welcome to Spotifious!',
-		'subtitle' => 'You need to configure a few more things before you can use Spotifious.',
-		'icon' => 'include/images/alfred/configuration.png',
-		'valid' => 'no'
-	];
-
-	if(hotkeys_configured()) {
-		$results[] = [
-			'title' => '1. Bind your hotkeys',
-			'subtitle' => 'Action this to bind automatically, or set them yourself in Alfred preferences.',
-			'icon' => 'include/images/alfred/checked.png',
-			'valid' => 'no'
-		];
-	} else {
-		$results[] = [
-			'title' => '1. Bind your hotkeys',
-			'subtitle' => 'Action this to bind automatically, or set them yourself in Alfred preferences.',
-			'icon' => 'include/images/alfred/unchecked.png'
-		];
-	}
-
-	if(helper_app_configured()) {
-		$results[] =[
-			'title' => '2. Install the helper app in Spotify',
-			'subtitle' => 'This will open your web browser so you can activate Spotify developer mode.',
-			'icon' => 'include/images/alfred/checked.png',
-			'valid' => 'no'
-		];
-	} else {
-		$results[] =[
-			'title' => '2. Install the helper app in Spotify',
-			'subtitle' => 'This will open your web browser so you can activate Spotify developer mode.',
-			'icon' => 'include/images/alfred/unchecked.png'
-		];
-	}
-	
-	if(country_code_configured()) {
-		$results[] = [
-			'title' => '3. Find your country code',
-			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
-			'icon' => 'include/images/alfred/checked.png',
-			'valid' => 'no'
-		];
-	} else {
-		$results[] = [
-			'title' => '3. Find your country code',
-			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
-			'icon' => 'include/images/alfred/unchecked.png'
-		];
-	}
-
-	$results[] = [
-		'title' => 'You can access settings easily',
-		'subtitle' => 'Type `s` from the main menu', // TODO implement settings
-		'icon' => 'include/images/alfred/info.png'
-	];
-
-	OhAlfred::alfredify($results);
-	return;
-}
-
-function hotkeys_configured()
-{
-	// Check .plist for binds on `spot`
-	// TODO
-	return true;
-}
-
-function helper_app_configured()
-{
-	// TODO genericize
-	if(is_link("/Users/citelao/Spotify/spotifious-helper") || file_exists("/Users/citelao/Spotify/spotifious-helper"))
-		return true;
-
-	return false;
-}
-
-function country_code_configured()
-{
-	// Check file storage location for country code.
-	// TODO $storage
-	// https://raw.github.com/johannesl/Internationalization/master/countrycodes.json
-	return true;
-}
-
-/* Parse the query. */
-$results = array();
-$query   = OhAlfred::normalize($argv[1]);
-
-$URIregex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x'; // TODO use more
-
-/**
- * Determine screen to show
- *  So I figure this could do with some outlining.
  *
- *  First, if the query is tiny, we have one of two options:
+ * 'main.php'
+ *  For sanity's sake, here is in plain English what this file does.
+ *
+ *  This file determines the correct menu to show and passes pure *data* to the
+ *  Spotifious menus class. If I used MVC (which is unwarranted for such a tiny
+ *  project), this would be the controller passing output to the view.
+ *
+ *  It has no view code inside TODO
+ *
+ *  This is not legit MVC because TODO
+ *
+ *  First, if the query is tiny, we have one of three options:
  *   1. First letter is 'c': show the control panel
- *   2. Otherwise:           show the main menu
+ *   2. First letter is 's': show settings
+ *   3. Otherwise:           show the main menu
  *
  *  Deal with our detail menus.
  *   Last char is ⟩
@@ -142,6 +51,47 @@ $URIregex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)
  *
  *  Everything else is a search.
  */
+
+/* Instantiate OhAlfred output class */
+$alfred = new OhAlfred();
+
+/* If Spotifious isn't configured yet, show the checklist. */
+if(!hotkeys_configured() || !helper_app_configured() || !country_code_configured()) { // todo implement
+	$results = Spotifious::configure(hotkeys_configured(), helper_app_configured(), country_code_configured());
+	
+	$alfred->alfredify($results);
+	return;
+}
+
+function hotkeys_configured()
+{
+	// Check .plist for binds on `spot`
+	// TODO
+	return true;
+}
+
+function helper_app_configured()
+{
+	global $alfred;
+
+	if(is_link($alfred->home() . "/Spotify/spotifious-helper") || file_exists($alfred->home() . "/Spotify/spotifious-helper"))
+		return true;
+
+	return false;
+}
+
+function country_code_configured()
+{
+	// Check file storage location for country code.
+	// TODO $storage
+	// https://raw.github.com/johannesl/Internationalization/master/countrycodes.json
+	return true;
+}
+
+/* Parse the query. */
+$results = array();
+$query   = $alfred->normalize($argv[1]);
+
 if (mb_strlen($query) <= 3) {
 	if(substr($query, 0, 1) == "c") {
 		$results = Spotifious::controlPanel();
@@ -191,9 +141,11 @@ if (mb_strlen($query) <= 3) {
 } elseif(contains($query, 'spotify:')) {
 	// Based off https://github.com/felixtriller/spotify-embed/blob/master/spotify-embed.php
 	// TODO: "app:" URLS
+	// TODO use 'is_spotify_uri()'
 	$parts = preg_contains($query, '/^(spotify:(?:album|artist|app|track|user:[^:]+:playlist):[a-zA-Z0-9]+)(?: )+([^\n]*)$/x');
 
-	if($parts === false) throw new AlfredableException("Invalid Spotify URI", get_defined_vars());
+	if($parts === false) 
+		throw new AlfredableException("Invalid Spotify URI", get_defined_vars());
 
 	$URI = $parts[1];
 
@@ -204,4 +156,4 @@ if (mb_strlen($query) <= 3) {
 
 }
 
-OhAlfred::alfredify($results);
+$alfred->alfredify($results);
