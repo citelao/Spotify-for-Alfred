@@ -58,6 +58,9 @@ final class OhAlfred {
 		return $this->storage;
 	}
 
+	// Both `defaults` and `options` are inspired by jdfwarrior's PHP workflow for Alfred.
+	// Though I cited him at the beginning of this class, the plist method of setting
+	// storage I pulled from his workflow.
 	public function defaults($setting, $value = '') {
 		if($value == '')
 			return exec("defaults read " . $this->workflow . "/info $setting");
