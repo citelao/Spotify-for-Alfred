@@ -6,6 +6,7 @@ final class OhAlfred {
 	private $results; // TODO implement
 
 	private $home;
+	private $workflow;
 	private $cache;
 	private $storage;
 
@@ -13,8 +14,12 @@ final class OhAlfred {
 		set_exception_handler(array($this, 'errorify'));
 
 		$this->home = exec('printf "$HOME"');
-		$this->cache = $this->home . '/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/com.citelao.spotifious/';
-		$this->storage = $this->home . '/Library/Application Support/Alfred 2/Workflow Data/com.citelao.spotifious/';
+		$this->workflow = dirname(dirname(__FILE__)); // Because I keep OhAlfred in the include/ directory.
+
+		$name = $this->defaults('bundleid');
+
+		$this->cache = $this->home . "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/$name/";
+		$this->storage = $this->home . "/Library/Application Support/Alfred 2/Workflow Data/$name/";
 
 		if (!file_exists($this->cache)) {
 			mkdir($this->cache);
@@ -51,6 +56,28 @@ final class OhAlfred {
 			mkdir($this->storage);
 
 		return $this->storage;
+	}
+
+	public function defaults($setting, $value = '') {
+		if($value == '')
+			return exec("defaults read " . $this->workflow . "/info $setting");
+
+		return exec("defaults write " . $this->workflow . "/info $setting $value");	
+	}
+
+	public function options($setting, $value = '') {
+		// basically like defaults but for user settings
+
+		$options = $this->storage . "/settings";
+		$optionsFile = $options . ".plist";
+
+		if(!file_exists($optionsFile))
+			touch($optionsFile);
+
+		if($value == '')
+			return exec("defaults read '$options' '$setting'");
+
+		return exec("defaults write '$options' '$setting' '$value'");			
 	}
 
 	public function actionify($default_action, $cmd_action = '', $shift_action = '', $alt_action = '', $ctrl_action = '') {

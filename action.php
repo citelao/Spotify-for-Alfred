@@ -74,7 +74,7 @@ switch ($args[0]) {
 		break;
 
 	default:
-		throw new AlfredableException("Unknown key. 'none' is the code for no key.");
+		throw new AlfredableException("Unknown key '" . $args[0] . "'. 'none' is the code for no key.");
 		break;
 }
 
@@ -104,14 +104,40 @@ switch ($command[0]) {
 		break;
 
 	case 'search':
-		//this way is shitty
+		//this way doesn't change the search bar, which is very annoying.
 		spotifyQuery('activate (open location "spotify:search:' . $command[1] . '")');
 
 	case 'null':
 		// Execute nothing without throwing an error.
 		break;
 
+	case 'config':
+		// Initial config steps!
+		switch ($command[1]) {
+			case 'helperapp':
+				// symlink files
+				applescriptQuery('open location "https://developer.spotify.com/login/"');
+				break;
+			
+			case 'hotkeys':
+				// bind hotkeys
+				break;
+
+			case 'country':
+				// write data
+				// TODO notify better
+				exec('open include/Notifier.app --args "Using country code ' . $command[2] . '✂✂"');
+				$alfred->options('country', $command[2]);
+				break;
+
+			default:
+				throw new AlfredableException("Unknown config step '" . $command[1] . "'");
+				break;
+		}
+
+		break;
+
 	default:
-		throw new AlfredableException("Unknown action.", $command);
+		throw new AlfredableException("Unknown action '" . $command[0] . "'.", $command);
 		break;
 }

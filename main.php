@@ -55,42 +55,22 @@ include_once('include/spotifious.php');
 /* Instantiate OhAlfred output class */
 $alfred = new OhAlfred();
 
+/* Parse the query. */
+$results = array();
+$query   = $alfred->normalize($argv[1]);
+
 /* If Spotifious isn't configured yet, show the checklist. */
-if(!hotkeys_configured() || !helper_app_configured() || !country_code_configured()) { // todo implement
-	$results = Spotifious::configure(hotkeys_configured(), helper_app_configured(), country_code_configured());
+if(!hotkeysConfigured() || !helperAppConfigured() || !countryCodeConfigured()) {
+
+	if(mb_strstr($query, 'Country Code ⟩')) {
+		$results = Spotifious::countries();
+	} else {
+		$results = Spotifious::configure(hotkeysConfigured(), helperAppConfigured(), countryCodeConfigured());
+	}
 	
 	$alfred->alfredify($results);
 	return;
 }
-
-function hotkeys_configured()
-{
-	// Check .plist for binds on `spot`
-	// TODO
-	return true;
-}
-
-function helper_app_configured()
-{
-	global $alfred;
-
-	if(is_link($alfred->home() . "/Spotify/spotifious-helper") || file_exists($alfred->home() . "/Spotify/spotifious-helper"))
-		return true;
-
-	return false;
-}
-
-function country_code_configured()
-{
-	// Check file storage location for country code.
-	// TODO $storage
-	// https://raw.github.com/johannesl/Internationalization/master/countrycodes.json
-	return true;
-}
-
-/* Parse the query. */
-$results = array();
-$query   = $alfred->normalize($argv[1]);
 
 if (mb_strlen($query) <= 3) {
 	if(substr($query, 0, 1) == "c") {

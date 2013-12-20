@@ -344,7 +344,7 @@ class Spotifious {
 		return $results;
 	}
 
-	public function configure($hotkeys_configured, $helper_app_configured, $country_code_configured)
+	public function configure($hotkeysConfigured, $helperAppConfigured, $countryCodeConfigured)
 	{
 		$results[] = [
 			'title' => 'Welcome to Spotifious!',
@@ -356,22 +356,24 @@ class Spotifious {
 		$results[] = [
 			'title' => '1. Bind your hotkeys',
 			'subtitle' => 'Action this to bind automatically, or set them yourself in Alfred preferences.',
-			'icon' => $hotkeys_configured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
-			'valid' => $hotkeys_configured ? 'no' : 'yes'
+			'icon' => $hotkeysConfigured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
+			'valid' => $hotkeysConfigured ? 'no' : 'yes'
 		];
 
 		$results[] =[
 			'title' => '2. Install the helper app in Spotify',
 			'subtitle' => 'This will open your web browser so you can activate Spotify developer mode.',
-			'icon' => $helper_app_configured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
-			'valid' => $helper_app_configured ? 'no' : 'yes'
+			'icon' => $helperAppConfigured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
+			'arg' => OhAlfred::actionify(array("config", "helperapp")),
+			'valid' => $helperAppConfigured ? 'no' : 'yes'
 		];
 
 		$results[] = [
 			'title' => '3. Find your country code',
 			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
-			'icon' => $country_code_configured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
-			'valid' => $country_code_configured ? 'no' : 'yes'
+			'icon' => $countryCodeConfigured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
+			'autocomplete' => $countryCodeConfigured ? '' : 'Country Code ⟩ ',
+			'valid' => 'no'
 		];
 
 		$results[] = [
@@ -379,6 +381,33 @@ class Spotifious {
 			'subtitle' => 'Type `s` from the main menu', // TODO implement settings
 			'icon' => 'include/images/alfred/info.png'
 		];
+
+		return $results;
+	}
+
+	public function countries() 
+	{
+		// Fetch list of country codes
+		$json = OhAlfred::fetch('https://raw.github.com/johannesl/Internationalization/master/countrycodes.json');
+
+		if(empty($json))
+			throw new AlfredableException("No JSON returned from Spotify web lookup");
+
+		$json = json_decode($json);
+
+		if($json == null)
+			throw new AlfredableException("JSON error: " . json_last_error());
+			
+		foreach ($json as $country => $code) {
+			$results[] = [
+				'title' => $country,
+				'subtitle' => $code,
+				'arg' => OhAlfred::actionify(array("config", "country", "$code"))
+			];
+		}
+
+		// Alphabetize w/ weighting.
+		usort($results, 'countrySort');
 
 		return $results;
 	}
