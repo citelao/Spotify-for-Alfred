@@ -45,7 +45,10 @@ $alfred = new OhAlfred();
 							...: growl error!
 */
 
+// TODO beast notifier class
 // exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
+
+// TODO error handler. AlfredableExceptions are meant for alfred display.
 
 $args = array_map(array($alfred, 'normalize'), $argv);
 array_shift($args);
@@ -80,6 +83,7 @@ switch ($args[0]) {
 
 $command = explode(" ⦔ ", $action);
 
+// For debugging.
 print_r($argv);	
 print_r($actions);	
 print_r($command);
@@ -97,6 +101,7 @@ switch ($command[0]) {
 	case 'play':
 		$query = 'play track "' . $command[1] . '"';
 
+		// If there is a context to play the track in.
 		if(isset($command[2]) && $command[2] != '')
 			$query .= ' in context "' . $command[2] . '"';
 		
@@ -116,11 +121,13 @@ switch ($command[0]) {
 		switch ($command[1]) {
 			case 'helperapp':
 				// symlink files
+				// TODO, obviously.
 				applescriptQuery('open location "https://developer.spotify.com/login/"');
 				break;
 			
 			case 'hotkeys':
 				// bind hotkeys
+				// TODO I can read defaults for the specific bindable thingies. Sounds hard.
 				break;
 
 			case 'country':
@@ -134,7 +141,6 @@ switch ($command[0]) {
 				throw new AlfredableException("Unknown config step '" . $command[1] . "'");
 				break;
 		}
-
 		break;
 
 	default:

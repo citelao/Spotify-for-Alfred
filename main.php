@@ -1,5 +1,5 @@
 <?php
-// thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result
+// thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result/?p=10197
 mb_internal_encoding("UTF-8");
 include_once('include/helper.php');
 include_once('include/OhAlfred.php');
@@ -18,30 +18,34 @@ include_once('include/spotifious.php');
  *  Spotifious menus class. If I used MVC (which is unwarranted for such a tiny
  *  project), this would be the controller passing output to the view.
  *
- *  It has no view code inside TODO
+ *  The idea is to do all the query parsing code here and have the spotifious
+ *  file do the display work. Therefore this isn't legit MVC because the display
+ *  code does a lot of work; it doesn't just display strings handed to it from 
+ *  this file.
  *
- *  This is not legit MVC because TODO
+ *  So here's what we do here:
  *
- *  First, if the query is tiny, we have one of three options:
+ *  First, if we haven't fully configured Spotifious, show configuration.
+ *  If we need to load the country code submenu of configuration, do that, too.
+ *
+ *  Now if we are configured and the query is tiny, we have three options:
  *   1. First letter is 'c': show the control panel
  *   2. First letter is 's': show settings
  *   3. Otherwise:           show the main menu
  *
- *  Deal with our detail menus.
- *   Last char is ⟩
+ *  Handle searches containing Spotifious-gen'd content (anything with `⟩`):
+ * 	 Deal with detail menus (last char is `⟩`)
  *    spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ Transatlanticism ⟩
  *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩⟩
  *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩
  *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩ Transatlanticism ⟩
  *
- *  Also our filter searches:
- *   # of ⟩ > # of URIs
+ *   Also our filter searches, narrowing a detail menu (# of ⟩ > # of URIs)
  *    spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ Transatlanticism ⟩ Lightness
  *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩⟩ Expo '86
  *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Death Cab for Cutie ⟩ Transatlanticism
  *
- *  Then our searches containing Spotifious-generated information:
- *   0 < # of ⟩ <= # of URIs
+ *   Then regular searches including gen'd content (0 < # of ⟩ <= # of URIs)
  *    spotify:album:5XGQ4L4XsTI3uIZiAfeAum ⟩ The Shins
  *    spotify:artist:0YrtvWJMgSdVrk3SfNjTbx ⟩ spotify:album:0uzgpzN1ZsCNSwnsVUh4bQ ⟩ Tally Hall
  *
@@ -80,10 +84,10 @@ if (mb_strlen($query) <= 3) {
 	}
 } elseif(contains($query, '⟩')) {
 	// if the query contains any machine-generated text 
-	// (the unicode ⟩ is untypeable so we check for it)
+	// (the unicode `⟩` is untypeable so we check for it)
 	// we need to parse the query and extract the URLs.
 	
-	// So split based on the delimeter "⟩" and excise the delimeter and blanks.
+	// So split based on the delimeter `⟩` and excise the delimeter and blanks.
 	$splitQuery  = array_filter(str_replace("⟩", "", explode("⟩", $query)));
 	               array_walk($splitQuery, 'trim_value');
 

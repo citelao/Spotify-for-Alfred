@@ -233,8 +233,12 @@ final class OhAlfred {
 		 $info    = curl_getinfo($ch);
 		 curl_close($ch);
 
-		 if($info['http_code'] != '200')
-		 	throw new AlfredableException("fetch() failed; error code: " . $info['http_code']);
+		 if($info['http_code'] != '200') {
+		 	if ($info['http_code'] == '0')
+		 		throw new AlfredableException("Could not access Spotify API. Try searching again");
+
+	 		throw new AlfredableException("fetch() failed; error code: " . $info['http_code']);
+		 }
 		 	
 
 		 return ($info['http_code'] == '200') ? $page : null;

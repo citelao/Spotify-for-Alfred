@@ -46,6 +46,9 @@ class Spotifious {
 	public function controlPanel()
 	{
 		// TODO actionify
+		// these are broken now, so throw an error.
+		throw new AlfredableException("Control Panel not yet implemented");
+		
 		$results[] = [
 			'title' => "play pause",
 			'arg' => "playpause"];
@@ -82,7 +85,7 @@ class Spotifious {
 
 	public function settings()
 	{
-		// TODO implement
+		// TODO implement hehe
 	}
 
 	public function search($query)
@@ -142,7 +145,7 @@ class Spotifious {
 													"null",
 													"null",
 													array("open", $value->album->href));
-				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩";
+				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩ ";
 				$currentResult['icon'] = "include/images/alfred/$type.png";
 
 				$results[] = $currentResult;
@@ -165,7 +168,7 @@ class Spotifious {
 		return $results;
 	}
 
-	public function detail($URIs, $args, $depth)
+	public function detail($URIs, $args, $depth, $search = null)
 	{
 		/* Parse the searched URI */
 		$currentURI = $URIs[$depth - 1];
@@ -209,8 +212,11 @@ class Spotifious {
 				$currentResult['title'] = $value->name;
 				$currentResult['subtitle'] = "Browse this $detail...";
 				$currentResult['valid'] = "no";
-				$currentResult['autocomplete'] = "$currentURI ⟩ $value->href ⟩ $query ⟩⟩";
+				$currentResult['autocomplete'] = "$currentURI ⟩ $value->href ⟩ $query ⟩⟩ ";
 				$currentResult['icon'] = "include/images/alfred/album.png";
+
+				if($search != '' && !mb_stristr($currentResult['title'], $search))
+					continue;
 
 				$results[] = $currentResult;
 				$albums[] = "$value->name";
@@ -231,6 +237,9 @@ class Spotifious {
 										array("open", $currentURI));
 				$currentResult['icon'] = "include/images/alfred/track.png";
 
+				if($search != '' && !mb_stristr($currentResult['title'], $search))
+					continue;
+
 				$results[] = $currentResult;
 			}
 		}
@@ -238,11 +247,9 @@ class Spotifious {
 		return $results;
 	}
 
-	public function filteredSearch($URIs, $args)
+	public function filteredSearch($URIs, $args, $depth, $search)
 	{
-		throw new AlfredableException("Filtered search not implemented 😓", get_defined_vars());
-		// TODO
-		return $results;
+		return Spotifious::detail($URIs, $args, $depth, $search);
 	}
 
 	public function convertableInfo($URI)
@@ -288,14 +295,14 @@ class Spotifious {
 						'title' => $json->$type->album->name,
 						'subtitle' => "More from this album...",
 						'valid' => "no",
-						'autocomplete' => $json->$type->album->href . " ⟩ ⟩",
+						'autocomplete' => $json->$type->album->href . " ⟩ ⟩ ",
 						'icon' => "include/images/alfred/album.png"
 					],
 					[
 						'title' => $json->$type->artists[0]->name,
 						'subtitle' => "More by this artist...",
 						'valid' => "no",
-						'autocomplete' => $json->$type->artists[0]->href . " ⟩ ⟩",
+						'autocomplete' => $json->$type->artists[0]->href . " ⟩ ⟩ ",
 						'icon' => "include/images/alfred/artist.png"
 					]
 				];
@@ -306,14 +313,14 @@ class Spotifious {
 						'title' => $json->$type->name,
 						'subtitle' => "Browse this $type...",
 						'valid' => "no",
-						'autocomplete' => $URI . " ⟩ ⟩",
+						'autocomplete' => $URI . " ⟩ ⟩ ",
 						'icon' => "include/images/alfred/$type.png"
 					],
 					[
 						'title' => $json->$type->artist,
 						'subtitle' => "More by this artist...",
 						'valid' => "no",
-						'autocomplete' => $json->$type->{'artist-id'} . " ⟩ ⟩",
+						'autocomplete' => $json->$type->{'artist-id'} . " ⟩ ⟩ ",
 						'icon' => "include/images/alfred/artist.png"
 					]
 				];
@@ -324,7 +331,7 @@ class Spotifious {
 						'title' => $json->$type->name,
 						'subtitle' => "Browse this $type...",
 						'valid' => "no",
-						'autocomplete' => $URI . " ⟩ ⟩",
+						'autocomplete' => $URI . " ⟩ ⟩ ",
 						'icon' => "include/images/alfred/$type.png"
 					]
 				];
