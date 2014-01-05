@@ -44,7 +44,7 @@ $alfred = new OhAlfred();
 							null ⦔ null
 							…: growl error!
 */
-							
+
 // TODO error handler. AlfredableExceptions are meant for alfred display.
 
 $args = array_map(array($alfred, 'normalize'), $argv);
@@ -136,7 +136,7 @@ switch ($command[0]) {
 				symlink($alfred->workflow() . "/include/spotifious-helper", $spotifyDir . "/spotifious-helper");
 				print_r($alfred->workflow() . "/include/spotifious-helper/");
 
-				// TODO notify to login.
+				$alfred->notify('Log In to Spotify', 'This will turn your account into a developer account, an important part of using Spotifious.');
 				applescriptQuery('open location "https://developer.spotify.com/login/"');
 				break;
 			
@@ -147,8 +147,7 @@ switch ($command[0]) {
 
 			case 'country':
 				// write data
-				// TODO notify better
-				exec('open include/Notifier.app --args "Using country code ' . $command[2] . '✂✂"');
+				$alfred->notify('Country code configured!', 'Your code is ' . $command[2] . '. You can change this at any time by typing "s" in Spotifious.');
 				$alfred->options('country', $command[2]);
 				break;
 

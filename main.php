@@ -67,7 +67,8 @@ $query   = $alfred->normalize($argv[1]);
 if(!hotkeysConfigured() || !helperAppConfigured() || !countryCodeConfigured()) {
 
 	if(mb_strstr($query, 'Country Code ⟩')) {
-		$results = Spotifious::countries();
+		$search = mb_substr($query, 14);
+		$results = Spotifious::countries($search);
 	} else {
 		$results = Spotifious::configure(hotkeysConfigured(), helperAppConfigured(), countryCodeConfigured());
 	}

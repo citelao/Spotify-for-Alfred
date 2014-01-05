@@ -237,12 +237,11 @@ final class OhAlfred {
 		exit();
 	}
 
-	public function notify($title, $subtitle = '', $message = '') {
-		exec("open include/Notifier.app --args '$title✂$subtitle✂$message✂'");
+	public function notify($title, $subtitle = '') {
+		// TODO add Growl support if requested... don't really want to.
+		// http://growl.info/documentation/applescript-support.php
 
-		// TODO
-		// exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
-		// or growl?
+		exec("open include/Notifier.app --args '" . $title . "✂" . $subtitle . "✂✂'");
 	}
 
 	public function normalize($text) {

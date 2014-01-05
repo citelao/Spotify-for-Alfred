@@ -402,7 +402,7 @@ class Spotifious {
 			'title' => '3. Find your country code',
 			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
 			'icon' => $countryCodeConfigured ? 'include/images/alfred/checked.png' : 'include/images/alfred/unchecked.png',
-			'autocomplete' => $countryCodeConfigured ? '' : 'Country Code ⟩ ',
+			'autocomplete' => $countryCodeConfigured ? '' : 'Country Code ⟩',
 			'valid' => 'no'
 		];
 
@@ -415,7 +415,7 @@ class Spotifious {
 		return $results;
 	}
 
-	public function countries() 
+	public function countries($search = '') 
 	{
 		// Fetch list of country codes
 		$json = OhAlfred::fetch('https://raw.github.com/johannesl/Internationalization/master/countrycodes.json');
@@ -427,8 +427,11 @@ class Spotifious {
 
 		if($json == null)
 			throw new AlfredableException("JSON error: " . json_last_error());
-			
+
 		foreach ($json as $country => $code) {
+			if (!mb_stristr($country . $code, $search) && $search != '')
+				continue;
+
 			$results[] = [
 				'title' => $country,
 				'subtitle' => $code,
