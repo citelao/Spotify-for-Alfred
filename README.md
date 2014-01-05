@@ -59,7 +59,7 @@ So let's assume you've downloaded and installed the workflow. Now what?
 
 Good! You should briefly see a loading entry, then the main menu:
 
-![Loading...](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/loading.png)
+![Loading…](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/loading.png)
 ![Main Menu](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/main%20menu.png)
 
 You can action the song title (press `⏎`) to play or pause the song, action 

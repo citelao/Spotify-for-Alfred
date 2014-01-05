@@ -33,7 +33,7 @@ So here's what it can do:
 
 *: displays notification. This can be an NC or Growl popup _and_ a HUD-style popover.
 
-?: ... maybe.
+?: … maybe.
 
 Due to Alfred's method of implementing extensions, all shortcuts are wiped on fresh install. Spotifious should account for this and provide a tutorial on binding if it notices it is unbound.
 
@@ -46,7 +46,7 @@ Upon launch, it gives a quick and informative overview of your current spotify s
 --
 users should be able to switch between growl and nc and nothing
 
-"before you start using Spotifious, make sure you set this up..."
+"before you start using Spotifious, make sure you set this up…"
 	"binding hotkeys"
 	"installing the helper app"
 	"configuring country"

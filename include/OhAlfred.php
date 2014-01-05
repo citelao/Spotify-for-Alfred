@@ -5,42 +5,46 @@ mb_internal_encoding("UTF-8");
 final class OhAlfred {
 	private $results; // TODO implement
 
+	private $name;
 	private $home;
 	private $workflow;
 	private $cache;
 	private $storage;
 
+	private $alfredPrefs;
+	private $notificationMethod;
+
 	public function __construct() {
 		set_exception_handler(array($this, 'errorify'));
+	}
 
-		$this->home = exec('printf "$HOME"');
-		$this->workflow = dirname(dirname(__FILE__)); // Because I keep OhAlfred in the include/ directory.
+	public function name()
+	{
+		if($this->name == null)
+			$this->name = $this->defaults('bundleid');
 
-		$name = $this->defaults('bundleid');
-
-		$this->cache = $this->home . "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/$name/";
-		$this->storage = $this->home . "/Library/Application Support/Alfred 2/Workflow Data/$name/";
-
-		if (!file_exists($this->cache)) {
-			mkdir($this->cache);
-		}
-
-		if (!file_exists($this->storage)) {
-			mkdir($this->storage);
-		}
+		return $this->name;
 	}
 
 	public function home()
 	{
 		if($this->home == null)
-			throw new AlfredableException("Home directory is not defined.");
+			$this->home = exec('printf "$HOME"');
 
 		return $this->home;
 	}
 
+	public function workflow()
+	{
+		if($this->workflow == null)
+			$this->workflow = dirname(dirname(__FILE__)); // Because I keep OhAlfred in the include/ directory.
+
+		return $this->workflow;
+	}
+
 	public function cache() {
 		if($this->cache == null)
-			throw new AlfredableException("Cache directory is not defined.");
+			$this->cache = $this->home() . "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/" . $this->name() . "/";
 
 		if (!file_exists($this->cache))
 			mkdir($this->cache);
@@ -50,7 +54,7 @@ final class OhAlfred {
 
 	public function storage() {
 		if($this->storage == null)
-			throw new AlfredableException("Storage directory is not defined.");
+			$this->storage = $this->home() . "/Library/Application Support/Alfred 2/Workflow Data/" . $this->name() . "/";
 
 		if (!file_exists($this->storage))
 			mkdir($this->storage);
@@ -58,29 +62,51 @@ final class OhAlfred {
 		return $this->storage;
 	}
 
+	public function alfredPrefs() {
+		if ($this->alfredPrefs == null)
+			$this->alfredPrefs = $this->plist('com.runningwithcrayons.Alfred-Preferences', 'syncfolder') . '/Alfred.alfredpreferences';
+
+		return $this->alfredPrefs();
+	}
+
+	public function notificationMethod() {
+		if ($this->notificationMethod == null) {
+			$defaultOutput = $this->plist($this->alfredPrefs() . '/notifications/prefs', 'defaultoutput');
+			$this->notificationMethod = ($defaultoutput) ? 'growl' : 'nc';
+		}
+
+		return $this->notificationMethod;
+	}
+
 	// Both `defaults` and `options` are inspired by jdfwarrior's PHP workflow for Alfred.
 	// Though I cited him at the beginning of this class, the plist method of setting
 	// storage I pulled from his workflow.
-	public function defaults($setting, $value = '') {
-		if($value == '')
-			return exec("defaults read " . $this->workflow . "/info $setting");
 
-		return exec("defaults write " . $this->workflow . "/info $setting $value");	
+	// Read an arbitrary plist setting.
+	public function plist($plist, $setting, $value = '') {
+		if ($value == '') {
+			return exec("defaults read '$plist' '$setting'");
+		}
+
+		return exec("defaults write '$plist' '$setting' '$value'");
 	}
 
+	// Read the workflow .plist file.
+	public function defaults($setting, $value = '') {
+		return $this->plist($this->workflow() . "/info", $setting, $value);
+	}
+
+	// Read a custom workflow options .plist file.
 	public function options($setting, $value = '') {
 		// basically like defaults but for user settings
 
-		$options = $this->storage . "/settings";
+		$options = $this->storage() . "/settings";
 		$optionsFile = $options . ".plist";
 
 		if(!file_exists($optionsFile))
 			touch($optionsFile);
-
-		if($value == '')
-			return exec("defaults read '$options' '$setting'");
-
-		return exec("defaults write '$options' '$setting' '$value'");			
+	
+		return $this->plist($options, $setting, $value);		
 	}
 
 	public function actionify($default_action, $cmd_action = '', $shift_action = '', $alt_action = '', $ctrl_action = '') {
@@ -211,6 +237,14 @@ final class OhAlfred {
 		exit();
 	}
 
+	public function notify($title, $subtitle = '', $message = '') {
+		exec("open include/Notifier.app --args '$title✂$subtitle✂$message✂'");
+
+		// TODO
+		// exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
+		// or growl?
+	}
+
 	public function normalize($text) {
 		return exec('./include/normalize "' . $text . '"');
 	}
@@ -245,8 +279,7 @@ final class OhAlfred {
 	}
 
 	public function escapeQuery($text) {
-		$text = str_replace("'", "’", $text);
-		$text = str_replace('"', '\"', $text);
+		$text = str_replace("'", "’", $text); // TODO replace with escaping.
 		$text = str_replace("&", "&amp;", $text);
 		
 		return $text;

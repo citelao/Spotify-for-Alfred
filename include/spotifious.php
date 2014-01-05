@@ -24,18 +24,18 @@ class Spotifious {
 		$results[0]['icon']         = $currentStatus;
 
 		$results[1]['title']        = "$currentAlbum";
-		$results[1]['subtitle']     = "More from this album...";
+		$results[1]['subtitle']     = "More from this album…";
 		$results[1]['autocomplete'] = "$currentAlbum"; // TODO change to albumdetail
 		$results[1]['valid']        = "no";
 		$results[1]['icon']         = 'include/images/alfred/album.png';
 
 		$results[2]['title']        = "$currentArtist";
-		$results[2]['subtitle']     = "More by this artist...";
+		$results[2]['subtitle']     = "More by this artist…";
 		$results[2]['autocomplete'] = $currentArtist; // TODO change to artistdetail
 		$results[2]['valid']        = "no";
 		$results[2]['icon']         = 'include/images/alfred/artist.png';
 
-		$results[3]['title']        = "Search for music...";
+		$results[3]['title']        = "Search for music…";
 		$results[3]['subtitle']     = "Begin typing to search";
 		$results[3]['valid']        = "no";
 		$results[3]['icon']         = "include/images/alfred/search.png";
@@ -88,7 +88,7 @@ class Spotifious {
 		// TODO implement hehe
 	}
 
-	public function search($query)
+	public function search($query, $country = '')
 	{
 		// Run the search using all three types of API queries
 		foreach (array('artist','album','track') as $type) {
@@ -106,6 +106,16 @@ class Spotifious {
 
 			/* Output the results. */
 			foreach ($json->{$type . "s"} as $key => $value) {
+				/* Make sure it's available */
+				if($type == 'album') {
+					if(!strstr($value->availability->territories, $country))
+						continue;
+					
+				} elseif ($type == 'track') {
+					if(!strstr($value->album->availability->territories, $country))
+						continue;
+				}
+
 				/* Weight popularity. */
 				$popularity = $value->popularity;
 
@@ -139,13 +149,13 @@ class Spotifious {
 				// only used if item is not valid. Tracks run an action, everything
 				// else autocompletes.
 				$currentResult['valid']        = ($type == 'track') ? 'yes' : 'no';
-				$currentResult['arg']          = OhAlfred::actionify(
+				$currentResult['arg']          = ($type == 'track') ? OhAlfred::actionify(
 													array("play", $value->href),
 													"null",
 													"null",
 													"null",
-													array("open", $value->album->href));
-				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩ ";
+													array("open", $value->album->href)) : '';
+				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩";
 				$currentResult['icon'] = "include/images/alfred/$type.png";
 
 				$results[] = $currentResult;
@@ -159,7 +169,7 @@ class Spotifious {
 		/* Give the option to continue searching in Spotify because even I know my limits. */
 		$results[] = [
 			'title' => "Search for $query",
-			'subtitle' => "Continue this search in Spotify...",
+			'subtitle' => "Continue this search in Spotify…",
 			'uid' => "bs-spotify-$query-more",
 			'arg' => OhAlfred::actionify(array("search", $query)),
 			'icon' => 'include/images/alfred/search.png'
@@ -202,7 +212,7 @@ class Spotifious {
 
 		if($detail == "album") {
 			$albums = array();
-			$query = implode(" ⟩ ", $args);
+			$query = implode(" ⟩", $args);
 			foreach ($json->$type->{$detail . "s"} as $key => $value) {
 				$value = $value->$detail;
 
@@ -210,9 +220,9 @@ class Spotifious {
 					continue;
 
 				$currentResult['title'] = $value->name;
-				$currentResult['subtitle'] = "Browse this $detail...";
+				$currentResult['subtitle'] = "Browse this $detail…";
 				$currentResult['valid'] = "no";
-				$currentResult['autocomplete'] = "$currentURI ⟩ $value->href ⟩ $query ⟩⟩ ";
+				$currentResult['autocomplete'] = "$currentURI ⟩ $value->href ⟩ $query ⟩" . $search . "⟩";
 				$currentResult['icon'] = "include/images/alfred/album.png";
 
 				if($search != '' && !mb_stristr($currentResult['title'], $search))
@@ -249,7 +259,15 @@ class Spotifious {
 
 	public function filteredSearch($URIs, $args, $depth, $search)
 	{
-		return Spotifious::detail($URIs, $args, $depth, $search);
+		$results = Spotifious::detail($URIs, $args, $depth, $search);
+		// TODO if artist search, allow searching for tracks by artist
+
+		// Move scope to end to make searching work better with slow internet.
+		$scope = $results[0];
+		array_shift($results);
+		$results[] = $scope;
+
+		return $results;
 	}
 
 	public function convertableInfo($URI)
@@ -287,22 +305,27 @@ class Spotifious {
 				$results = [
 					[
 						'title' => $json->$type->name,
-						'subtitle' => "todo", //TODO
-						'arg' => '', // TODO
+						'subtitle' => "Play this song",
+						'arg' => OhAlfred::actionify(
+										array("play", $URI, $json->$type->album->href),
+										"null",
+										"null",
+										"null",
+										array("open", $currentURI)),
 						'icon' => "include/images/alfred/$type.png"
 					],
 					[
 						'title' => $json->$type->album->name,
-						'subtitle' => "More from this album...",
+						'subtitle' => "More from this album…",
 						'valid' => "no",
-						'autocomplete' => $json->$type->album->href . " ⟩ ⟩ ",
+						'autocomplete' => $json->$type->album->href . " ⟩ ⟩",
 						'icon' => "include/images/alfred/album.png"
 					],
 					[
 						'title' => $json->$type->artists[0]->name,
-						'subtitle' => "More by this artist...",
+						'subtitle' => "More by this artist…",
 						'valid' => "no",
-						'autocomplete' => $json->$type->artists[0]->href . " ⟩ ⟩ ",
+						'autocomplete' => $json->$type->artists[0]->href . " ⟩ ⟩",
 						'icon' => "include/images/alfred/artist.png"
 					]
 				];
@@ -311,16 +334,16 @@ class Spotifious {
 				$results = [
 					[
 						'title' => $json->$type->name,
-						'subtitle' => "Browse this $type...",
+						'subtitle' => "Browse this $type…",
 						'valid' => "no",
-						'autocomplete' => $URI . " ⟩ ⟩ ",
+						'autocomplete' => $URI . " ⟩ ⟩",
 						'icon' => "include/images/alfred/$type.png"
 					],
 					[
 						'title' => $json->$type->artist,
-						'subtitle' => "More by this artist...",
+						'subtitle' => "More by this artist…",
 						'valid' => "no",
-						'autocomplete' => $json->$type->{'artist-id'} . " ⟩ ⟩ ",
+						'autocomplete' => $json->$type->{'artist-id'} . " ⟩ ⟩",
 						'icon' => "include/images/alfred/artist.png"
 					]
 				];
@@ -329,9 +352,9 @@ class Spotifious {
 				$results = [
 					[
 						'title' => $json->$type->name,
-						'subtitle' => "Browse this $type...",
+						'subtitle' => "Browse this $type…",
 						'valid' => "no",
-						'autocomplete' => $URI . " ⟩ ⟩ ",
+						'autocomplete' => $URI . " ⟩ ⟩",
 						'icon' => "include/images/alfred/$type.png"
 					]
 				];

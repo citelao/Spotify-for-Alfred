@@ -42,12 +42,9 @@ $alfred = new OhAlfred();
 							search ⦔ text
 							star ⦔ track
 							null ⦔ null
-							...: growl error!
+							…: growl error!
 */
-
-// TODO beast notifier class
-// exec('open include/Notifier.app --args "{query}song title✂album by artist✂stars✂"');
-
+							
 // TODO error handler. AlfredableExceptions are meant for alfred display.
 
 $args = array_map(array($alfred, 'normalize'), $argv);
@@ -108,9 +105,20 @@ switch ($command[0]) {
 		spotifyQuery($query);
 		break;
 
+	case 'star':
+		if ($command[1] == 'current') {
+			// TODO tell app spotify to set starred of current track to "starred" etc,etc
+			// TODO notify
+		} else {
+			// TODO open location spotify:app:spotifious:star:id
+			// TODO notify
+		}
+		break;
+
 	case 'search':
 		//this way doesn't change the search bar, which is very annoying.
 		spotifyQuery('activate (open location "spotify:search:' . $command[1] . '")');
+		break;
 
 	case 'null':
 		// Execute nothing without throwing an error.
@@ -121,7 +129,14 @@ switch ($command[0]) {
 		switch ($command[1]) {
 			case 'helperapp':
 				// symlink files
-				// TODO, obviously.
+				$spotifyDir = $alfred->home() . "/Spotify";
+				if(!is_dir($spotifyDir))
+					mkdir($spotifyDir);
+
+				symlink($alfred->workflow() . "/include/spotifious-helper", $spotifyDir . "/spotifious-helper");
+				print_r($alfred->workflow() . "/include/spotifious-helper/");
+
+				// TODO notify to login.
 				applescriptQuery('open location "https://developer.spotify.com/login/"');
 				break;
 			

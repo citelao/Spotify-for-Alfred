@@ -44,16 +44,6 @@ function spotifyQuery() {
 	array_push($args, 'end tell');
 
 	return call_user_func_array('applescriptQuery', $args);
-
-	// $script = "osascript -e 'tell application \"Spotify\"'";
-	
-	// for ($i = 0; $i < func_num_args(); $i++) {
-	// 	$script .= " -e '" . $args[$i] . "'";
-	// }
-	
-	// $script .= " -e 'end tell'";
-	
-	// return OhAlfred::normalize(exec($script));
 }
 
 function now() {
@@ -63,10 +53,10 @@ function now() {
 }
 
 function popularitySort($a, $b) {
-	if($a[popularity] == $b[popularity])
+	if($a['popularity'] == $b['popularity'])
 		return 0;
 		
-	return ($a[popularity] < $b[popularity]) ? 1 : -1;
+	return ($a['popularity'] < $b['popularity']) ? 1 : -1;
 }
 
 function floatToBars($decimal) {
@@ -89,9 +79,6 @@ function hotkeysConfigured() {
 
 function helperAppConfigured() {
 	global $alfred;
-
-	// Temp
-	return true;
 
 	if(is_link($alfred->home() . "/Spotify/spotifious-helper") || file_exists($alfred->home() . "/Spotify/spotifious-helper"))
 		return true;

@@ -106,7 +106,7 @@ if (mb_strlen($query) <= 3) {
 		$search = array_pop($args);
 		$results = Spotifious::filteredSearch($URIs, $args, $depth, $search);
 	} else {
-		$results = Spotifious::search(end($args));
+		$results = Spotifious::search(end($args), $alfred->options('country'));
 	}
 } elseif (contains($query, 'http://')) {
 	// Explode the URL and arguments into bits for harvesting.
@@ -136,7 +136,7 @@ if (mb_strlen($query) <= 3) {
 	$results = Spotifious::convertableInfo($URI);
 
 } else {
-	$results = Spotifious::search($query);
+	$results = Spotifious::search($query, $alfred->options('country'));
 
 }
 
