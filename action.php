@@ -35,13 +35,14 @@ $alfred = new OhAlfred();
 		php -f action.php -- key ⧙ default_action ⧙ cmd_action ⧙ shift_action ⧙ alt_action ⧙ ctrl_action
 		php -f action.php --action ⦔ arg
 							discrete ⦔ action
+							open ⦔ url
 							play ⦔ track ⦔ context (optional)
+							star ⦔ track/current
+							search ⦔ text
 							queue ⦔ track/album/artist
 							preview ⦔ track ?
-							open ⦔ url
-							search ⦔ text
-							star ⦔ track
 							null ⦔ null
+							config ⦔ helperapp/hotkeys/country
 							…: growl error!
 */
 
@@ -106,18 +107,18 @@ switch ($command[0]) {
 		break;
 
 	case 'star':
-		if ($command[1] == 'current') {
-			// TODO tell app spotify to set starred of current track to "starred" etc,etc
-			// TODO notify
-		} else {
-			// TODO open location spotify:app:spotifious:star:id
-			// TODO notify
-		}
+		// TODO ensure is track, otherwise notify 'no I'm not starring an entire artist'
+		spotifyQuery('open location "spotify:app:spotifious:star:' . $command[1]);
+		// TODO notify, use sockets to get starredness and name.
 		break;
 
 	case 'search':
 		//this way doesn't change the search bar, which is very annoying.
 		spotifyQuery('activate (open location "spotify:search:' . $command[1] . '")');
+		break;
+
+	case 'queue':
+		spotifyQuery('open location "spotify:app:spotifious:queue:' . $command[1]);
 		break;
 
 	case 'null':

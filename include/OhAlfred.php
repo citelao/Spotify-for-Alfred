@@ -78,9 +78,11 @@ final class OhAlfred {
 		return $this->notificationMethod;
 	}
 
-	// Both `defaults` and `options` are inspired by jdfwarrior's PHP workflow for Alfred.
-	// Though I cited him at the beginning of this class, the plist method of setting
-	// storage I pulled from his workflow.
+	/**
+	 * Both `defaults` and `options` are inspired by jdfwarrior's PHP workflow for Alfred.
+	 * Though I cited him at the beginning of this class, the plist method of setting
+	 * storage I pulled from his workflow.
+	 **/
 
 	// Read an arbitrary plist setting.
 	public function plist($plist, $setting, $value = '') {
@@ -98,8 +100,6 @@ final class OhAlfred {
 
 	// Read a custom workflow options .plist file.
 	public function options($setting, $value = '') {
-		// basically like defaults but for user settings
-
 		$options = $this->storage() . "/settings";
 		$optionsFile = $options . ".plist";
 
@@ -109,6 +109,8 @@ final class OhAlfred {
 		return $this->plist($options, $setting, $value);		
 	}
 
+	// Concatenates an action parsable by action.php.
+	// TODO stop being so redundant.
 	public function actionify($default_action, $cmd_action = '', $shift_action = '', $alt_action = '', $ctrl_action = '') {
 		if($cmd_action == '')
 			$cmd_action = $default_action;
@@ -170,7 +172,6 @@ final class OhAlfred {
 			if(!isset($result['subtitle']))
 				$result['subtitle'] = '';
 			
-			// TODO rewrite escapequery function	
 			print "\r\n\r\n";
 			print "	<item uid='" . $this->escapeQuery($result['uid']) . "' arg='" . $result['arg'] . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
 			print "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
@@ -182,11 +183,18 @@ final class OhAlfred {
 		print "</items>";
 	}
 
+	public function escapeQuery($text) {
+		$text = str_replace("'", "\'", $text);
+		$text = str_replace("&", "&amp;", $text);
+		
+		return $text;
+	}
+
 	public function errorify($error) {
 		$titles = ['Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!'];
 
 		// Make a .log file
-		$errordir = $this->cache;
+		$errordir = $this->cache();
 		$fname = date('Y-m-d h-m-s') . " Spotifious.log";
 		$fdir = $errordir . $fname;
 		$fcontents  = "# Error Log # \n";
@@ -244,6 +252,10 @@ final class OhAlfred {
 		exec("open include/Notifier.app --args '" . $title . "✂" . $subtitle . "✂✂'");
 	}
 
+	public function hud($img) {
+		// TODO, exec prevnext via applescript.
+	}
+
 	public function normalize($text) {
 		return exec('./include/normalize "' . $text . '"');
 	}
@@ -276,14 +288,6 @@ final class OhAlfred {
 
 		 return ($info['http_code'] == '200') ? $page : null;
 	}
-
-	public function escapeQuery($text) {
-		$text = str_replace("'", "’", $text); // TODO replace with escaping.
-		$text = str_replace("&", "&amp;", $text);
-		
-		return $text;
-	}
-
 }
 
 // Stack return!
