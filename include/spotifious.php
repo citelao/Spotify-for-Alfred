@@ -1,7 +1,8 @@
 <?php
 mb_internal_encoding("UTF-8");
-include_once('include/helper.php');
+
 include_once('include/OhAlfred.php');
+include_once('include/helper.php');
 
 class Spotifious {
 	public function mainMenu()
