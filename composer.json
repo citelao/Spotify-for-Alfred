@@ -1,0 +1,11 @@
+{
+	"autoload": {
+        "psr-4": {
+        	"OhAlfred\\": "src/citelao/OhAlfred/",
+        	"Spotifious\\": "src/citelao/Spotifious/"
+    	}
+    },
+    "require": {
+        "cboden/Ratchet": "0.3.*"
+    }
+}

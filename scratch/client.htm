@@ -1,0 +1,17 @@
+<html>
+<body>
+<script>
+try {
+	socket = new WebSocket('ws://localhost:33334');
+	console.log('WebSocket - status '+ socket.readyState);
+	socket.onopen    = function(msg){
+		console.log("Welcome - status "+this.readyState); 
+		socket.send("Hi!");
+	};
+	socket.onmessage = function(msg){ console.log("Received: "+msg.data); };
+	socket.onclose   = function(msg){ console.log("Disconnected - status "+this.readyState); };
+}
+catch(ex) { console.log(ex); }
+</script>
+</body>
+</html>

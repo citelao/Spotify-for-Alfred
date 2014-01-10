@@ -1,9 +1,13 @@
 <?php
 // thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result/?p=10197
 mb_internal_encoding("UTF-8");
-include_once('include/helper.php');
-include_once('include/OhAlfred.php');
-include_once('include/spotifious.php');
+date_default_timezone_set('America/New_York');
+
+use OhAlfred\OhAlfred;
+use Spotifious\Menus;
+use Spotifious\Helper as MenuHelper;
+require 'src/citelao/Spotifious/helper_functions.php';
+require 'vendor/autoload.php';
 
 /**
  * Spotifious (v0.7)
@@ -61,16 +65,19 @@ $alfred = new OhAlfred();
 
 /* Parse the query. */
 $results = array();
-$query   = $alfred->normalize($argv[1]);
+$query = $argv[1];
+// $query   = $alfred->normalize($argv[1]);
+
+$a = Menus::settings();
 
 /* If Spotifious isn't configured yet, show the checklist. */
-if(!hotkeysConfigured() || !helperAppConfigured() || !countryCodeConfigured()) {
+if(!MenuHelper::configured()) {
 
 	if(mb_strstr($query, 'Country Code ⟩')) {
 		$search = mb_substr($query, 14);
-		$results = Spotifious::countries($search);
+		$results = Menus::countries($search);
 	} else {
-		$results = Spotifious::configure(hotkeysConfigured(), helperAppConfigured(), countryCodeConfigured());
+		$results = Menus::configure();
 	}
 	
 	$alfred->alfredify($results);
@@ -78,10 +85,18 @@ if(!hotkeysConfigured() || !helperAppConfigured() || !countryCodeConfigured()) {
 }
 
 if (mb_strlen($query) <= 3) {
-	if(substr($query, 0, 1) == "c") {
-		$results = Spotifious::controlPanel();
-	} else {
-		$results = Spotifious::mainMenu();
+	switch (substr($query, 0, 1)) {
+		case 'c':
+			$results = Menus::controls();
+			break;
+
+		case 's':
+			$results = Menus::settings();
+			break;
+
+		default:
+			$results = Menus::main();
+			break;
 	}
 } elseif(contains($query, '⟩')) {
 	// if the query contains any machine-generated text 
@@ -102,12 +117,12 @@ if (mb_strlen($query) <= 3) {
 	$depth = count($URIs) - (2 * count($URIs) - $arrows); // equiv to $arrows - count($URIs).
 
 	if (mb_substr($query, -1) == "⟩") { // Machine-generated
-		$results = Spotifious::detail($URIs, $args, $depth);
+		$results = Menus::detail($URIs, $args, $depth);
 	} elseif($depth > 0) {
 		$search = array_pop($args);
-		$results = Spotifious::filteredSearch($URIs, $args, $depth, $search);
+		$results = Menus::detail($URIs, $args, $depth, $search);
 	} else {
-		$results = Spotifious::search(end($args), $alfred->options('country'));
+		$results = Menus::search(end($args), $alfred->options('country'));
 	}
 } elseif (contains($query, 'http://')) {
 	// Explode the URL and arguments into bits for harvesting.
@@ -121,7 +136,7 @@ if (mb_strlen($query) <= 3) {
 	// TODO make work for apps and playlists
 	$URI = 'spotify:' . $splitQuery[1] . ':' . $splitQuery[2];
 
-	$results = Spotifious::convertableInfo($URI);
+	$results = Menus::convertable($URI);
 
 } elseif(contains($query, 'spotify:')) {
 	// Based off https://github.com/felixtriller/spotify-embed/blob/master/spotify-embed.php
@@ -134,10 +149,10 @@ if (mb_strlen($query) <= 3) {
 
 	$URI = $parts[1];
 
-	$results = Spotifious::convertableInfo($URI);
+	$results = Menus::convertable($URI);
 
 } else {
-	$results = Spotifious::search($query, $alfred->options('country'));
+	$results = Menus::search($query, $alfred->options('country'));
 
 }
 

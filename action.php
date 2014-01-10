@@ -1,9 +1,14 @@
 <?php
+// thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result/?p=10197
 mb_internal_encoding("UTF-8");
-include_once 'include/helper.php';
-include_once 'include/OhAlfred.php';
+date_default_timezone_set('America/New_York');
 
-$alfred = new OhAlfred();
+use OhAlfred\OhAlfred;
+use OhAlfred\AlfredableException; // TODO error handler. AlfredableExceptions are meant for alfred display.
+use OhAlfred\ApplicationApplescript as ApplicationApplescript;
+use Spotifious\Server;
+require 'src/citelao/Spotifious/helper_functions.php';
+require 'vendor/autoload.php';
 
 /* 
 
@@ -46,9 +51,10 @@ $alfred = new OhAlfred();
 							…: growl error!
 */
 
-// TODO error handler. AlfredableExceptions are meant for alfred display.
+$alfred = new OhAlfred();
 
-$args = array_map(array($alfred, 'normalize'), $argv);
+// $args = array_map(array($alfred, 'normalize'), $argv);
+$args = $argv;
 array_shift($args);
 
 $actions = explode(" ⧙ ", implode(" ", $args));
@@ -89,11 +95,13 @@ print_r($command);
 // TODO write last command to debug log.
 switch ($command[0]) {
 	case 'discrete':
-		spotifyQuery($command[1]);
+		$as = new ApplicationApplescript('Spotify', $command[1]);
+		$as->run();
 		break;
 
 	case 'open':
-		spotifyQuery('activate (open location "' . $command[1] . '")');
+		$as = new ApplicationApplescript('Spotify', 'activate (open location "' . $command[1] . '")');
+		$as->run();
 		break; 
 	
 	case 'play':
@@ -103,22 +111,26 @@ switch ($command[0]) {
 		if(isset($command[2]) && $command[2] != '')
 			$query .= ' in context "' . $command[2] . '"';
 		
-		spotifyQuery($query);
+		$as = new ApplicationApplescript('Spotify', $query);
+		$as->run();
 		break;
 
 	case 'star':
 		// TODO ensure is track, otherwise notify 'no I'm not starring an entire artist'
-		spotifyQuery('open location "spotify:app:spotifious:star:' . $command[1]);
 		// TODO notify, use sockets to get starredness and name.
+		$as = new ApplicationApplescript('Spotify', 'open location "spotify:app:spotifious:star:' . $command[1]);
+		$as->run();
 		break;
 
 	case 'search':
 		//this way doesn't change the search bar, which is very annoying.
-		spotifyQuery('activate (open location "spotify:search:' . $command[1] . '")');
+		$as = new ApplicationApplescript('Spotify', 'activate (open location "spotify:search:' . $command[1] . '")');
+		$as->run();
 		break;
 
 	case 'queue':
-		spotifyQuery('open location "spotify:app:spotifious:queue:' . $command[1]);
+		$as = new ApplicationApplescript('Spotify', 'open location "spotify:app:spotifious:queue:' . $command[1]);
+		$as->run();
 		break;
 
 	case 'null':
