@@ -1,5 +1,5 @@
 <?php
-namespace Spotifious;
+namespace Spotifious\Sockets;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
@@ -14,12 +14,16 @@ class Server implements MessageComponentInterface {
     	$this->clients->attach($conn);
 
     	$this->console("New Connection! {$conn->resourceId}");
+
+        $this->console("Telling connection what we need.");
+        $conn->send("Hello, new connection. Here's what you need to get: TODO \n");
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
-    	$this->console("{$from->resourceId}: $msg \n");
-    	
-        $from->send("Got your message!");
+    	$this->console("{$from->resourceId}: $msg");
+
+        $this->console("Acking receipt");
+        $from->send("Got your message!\n");
     }
 
     public function onClose(ConnectionInterface $conn) {
@@ -29,6 +33,8 @@ class Server implements MessageComponentInterface {
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
+        $this->console("Error!");
+        // TODO log
     }
 
     // Inspired by Sann-Remy Chea <http://srchea.com>

@@ -3,15 +3,28 @@
 <script>
 try {
 	socket = new WebSocket('ws://localhost:33334');
-	console.log('WebSocket - status '+ socket.readyState);
+	console.log('Created WebSocket - status '+ socket.readyState);
+
 	socket.onopen    = function(msg){
-		console.log("Welcome - status "+this.readyState); 
-		socket.send("Hi!");
+		console.log("Connection opened; awaiting notification of what's needed"); 
 	};
-	socket.onmessage = function(msg){ console.log("Received: "+msg.data); };
-	socket.onclose   = function(msg){ console.log("Disconnected - status "+this.readyState); };
+
+	socket.onmessage = function(msg){ 
+		console.log("Received: "+msg.data);
+
+		if (msg.data !== "Got your message!\n") {
+			console.log("Responding with requested data");
+			socket.send("Here is what you wanted");
+		}
+	};
+
+	socket.onclose   = function(msg){
+		console.log("Disconnected - status "+this.readyState); 
+	};
 }
-catch(ex) { console.log(ex); }
+catch(ex) {
+	console.log(ex);
+}
 </script>
 </body>
 </html>

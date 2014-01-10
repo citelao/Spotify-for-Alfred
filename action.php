@@ -6,7 +6,7 @@ date_default_timezone_set('America/New_York');
 use OhAlfred\OhAlfred;
 use OhAlfred\AlfredableException; // TODO error handler. AlfredableExceptions are meant for alfred display.
 use OhAlfred\ApplicationApplescript as ApplicationApplescript;
-use Spotifious\Server;
+use Spotifious\Sockets\Server;
 require 'src/citelao/Spotifious/helper_functions.php';
 require 'vendor/autoload.php';
 
