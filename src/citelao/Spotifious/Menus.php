@@ -57,12 +57,12 @@ class Menus {
 			$json = OhAlfred::fetch("http://ws.spotify.com/search/1/$type.json?q=" . $urlQuery);
 
 			if(empty($json))
-				throw new AlfredableException("No JSON returned from Spotify web search");
+				throw new StatefullException("No JSON returned from Spotify web search");
 
 			$json = json_decode($json);
 
 			if($json == null)
-				throw new AlfredableException("JSON error: " . json_last_error());
+				throw new StatefullException("JSON error: " . json_last_error());
 
 			/* Output the results. */
 			foreach ($json->{$type . "s"} as $key => $value) {
@@ -150,12 +150,12 @@ class Menus {
 		$json = OhAlfred::fetch("http://ws.spotify.com/lookup/1/.json?uri=$currentURI&extras=$detail" . "detail");
 
 		if(empty($json))
-			throw new AlfredableException("No JSON returned from Spotify web lookup");
+			throw new StatefullException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
 
 		if($json == null)
-			throw new AlfredableException("JSON error: " . json_last_error());
+			throw new StatefullException("JSON error: " . json_last_error());
 
 		/* Output the details. */
 		$scope['title']        = $json->$type->name;
@@ -231,10 +231,10 @@ class Menus {
 		$detailNeeded = ($type != "track");
 
 		if($type == "app")
-			throw new AlfredableException("Spotifious cannot handle app URLs (yet)"); // TODO
+			throw new StatefullException("Spotifious cannot handle app URLs (yet)"); // TODO
 
 		if(contains($URI,"playlist"))
-			throw new AlfredableException("Spotifious cannot handle playlist URLs (yet)"); // TODO
+			throw new StatefullException("Spotifious cannot handle playlist URLs (yet)"); // TODO
 
 		/* Fetch and parse the details. */
 		$URL = "http://ws.spotify.com/lookup/1/.json?uri=$URI";
@@ -244,12 +244,12 @@ class Menus {
 		$json = OhAlfred::fetch($URL);
 
 		if(empty($json))
-			throw new AlfredableException("No JSON returned from Spotify web lookup");
+			throw new StatefullException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
 
 		if($json == null)
-			throw new AlfredableException("JSON error: " . json_last_error());
+			throw new StatefullException("JSON error: " . json_last_error());
 			
 		/* Output the details. */
 		switch ($type) { // This could SO be DRY-er TODO.
@@ -312,7 +312,7 @@ class Menus {
 				];
 				break;
 			default:
-				throw new AlfredableException("Unknown item type $type", 1);
+				throw new StatefullException("Unknown item type $type", 1);
 				break;
 		}
 
@@ -375,12 +375,12 @@ class Menus {
 		$json = OhAlfred::fetch('https://raw.github.com/johannesl/Internationalization/master/countrycodes.json');
 
 		if(empty($json))
-			throw new AlfredableException("No JSON returned from Spotify web lookup");
+			throw new StatefullException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
 
 		if($json == null)
-			throw new AlfredableException("JSON error: " . json_last_error());
+			throw new StatefullException("JSON error: " . json_last_error());
 
 		foreach ($json as $country => $code) {
 			if (!mb_stristr($country . $code, $search) && $search != null)

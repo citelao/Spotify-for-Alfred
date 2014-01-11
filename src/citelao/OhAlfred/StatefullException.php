@@ -3,7 +3,7 @@ namespace OhAlfred;
 
 // Stack return!
 // http://stackoverflow.com/questions/1809404/get-exception-context-in-php
-class AlfredableException extends \Exception implements IStatefullException  {
+class StatefullException extends \Exception implements IStatefullException  {
     protected $throwState;
 
     // List of things that should never be written to debug files.

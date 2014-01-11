@@ -1,39 +1,56 @@
 <?php
 namespace Spotifious\Sockets;
+use Ratchet\Server\IoServer;
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
 
 class Fetcher {
-	public $port;
-
 	protected $server;
+	protected $port;
 
-	public function __construct() {
-		$port = $this->openPort();
+	protected $desirata;
 
-		$server = IoServer::factory(
+	public function __construct($desirata) {
+		$this->desirata = $desirata;
+
+		$this->server = IoServer::factory(
 		    new HttpServer(
 		    	new WsServer(
-		    		new Server()
+		    		new Server($this->desirata, array($this, 'handleLog'), array($this, 'handleMessage'))
 		    	)
 		    ),
-		    $port
+		    $this->port()
 		);
+	}
+
+	public function port() {
+		if($this->port == null)
+			$this->port = $this->openPort();
+
+		return $this->port;
 	}
 
 	public function run() {
 		$this->server->run();
 	}
 
+	public function handleLog($msg, $die) {
+		// TODO? it already echos.
+	}
+
+	public function handleMessage($msg) {
+		// TODO get data.
+	}
+
 	// https://github.com/vdesabou/alfred-spotify-mini-player/blob/master/functions.php
 	protected function openPort() {
-		//avoid warnings like this PHP Warning:  fsockopen(): unable to connect to localhost (Connection refused) 
-        error_reporting(~E_ALL);
-        
 		$from = 10000;
 		$to = 20000;
 		$host = 'localhost';
          
         for($port = $from; $port <= $to ; $port++) {
-          $fp = fsockopen($host, $port);
+			//avoid warnings like this PHP Warning:  fsockopen(): unable to connect to localhost (Connection refused) 
+		    $fp = @fsockopen($host, $port);
                 if (!$fp) {
                         //port is free
                         return $port;
@@ -44,7 +61,7 @@ class Fetcher {
                         fclose($fp);
                 }
         }
-        
+
         // TODO return an error
         return 17693;
 	}

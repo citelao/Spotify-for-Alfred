@@ -1,6 +1,6 @@
 <?php
 namespace OhAlfred;
-use OhAlfred\AlfredableException;
+use OhAlfred\StatefullException;
 
 /* see: https://github.com/jdfwarrior/Workflows/blob/master/workflows.php */
 class OhAlfred {
@@ -38,7 +38,7 @@ class OhAlfred {
 	public function workflow()
 	{
 		if($this->workflow == null)
-			$this->workflow = dirname(dirname(dirname(__DIR__))); // Because I keep OhAlfred in the include/ directory.
+			$this->workflow = dirname(dirname(dirname(__DIR__))); // Because I keep OhAlfred in the src/citelao/OhAlfred directory.
 
 		return $this->workflow;
 	}
@@ -112,6 +112,7 @@ class OhAlfred {
 
 	// Concatenates an action parsable by action.php.
 	// TODO stop being so redundant.
+	// TODO move to `Serializer` class.
 	public function actionify($default_action, $cmd_action = '', $shift_action = '', $alt_action = '', $ctrl_action = '') {
 		if($cmd_action == '')
 			$cmd_action = $default_action;
@@ -194,30 +195,7 @@ class OhAlfred {
 	public function errorify($error) {
 		$titles = ['Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!'];
 
-		// Make a .log file
-		$errordir = $this->cache();
-		$fname = date('Y-m-d h-m-s') . " Spotifious.log";
-		$fdir = $errordir . $fname;
-		$fcontents  = "# Error Log # \n";
-
-		$fcontents .= "## Error Info ## \n";
-		$fcontents .= $error->getMessage() . "\n";
-		$fcontents .= "Line " . $error->getLine() . ", " . $error->getFile() . "\n\n";
-
-		$fcontents .= "## Symbols ## \n";
-		if(!is_a($error, "AlfredableException")) {
-			$fcontents .= "This is not an Alfred-parsable exception.";
-		} else {
-			$fcontents .= print_r($error->getState(), true) . "\n";
-		}
-		$fcontents .= "\n\n";
-		
-		$fcontents .= "## Stack Trace ## \n";
-		$fcontents .= print_r($error->getTrace(), true) . "\n";
-
-		$log = fopen($fdir, "w");
-		fwrite($log, $fcontents);
-		fclose($log);
+		$fdir = $this->loggifyError($error);
 
 		$results = [
 			[
@@ -244,6 +222,38 @@ class OhAlfred {
 
 		$this->alfredify($results);
 		exit();
+	}
+
+	public function loggifyError($error) {
+		// Write contents of log file.
+		$fcontents  = "# Error Log # \n";
+
+		$fcontents .= "## Error Info ## \n";
+		$fcontents .= $error->getMessage() . "\n";
+		$fcontents .= "Line " . $error->getLine() . ", " . $error->getFile() . "\n\n";
+
+		$fcontents .= "## Symbols ## \n";
+		if(!is_a($error, "StatefullException") && !is_a($error, "OhAlfred\StatefullException")) {
+			$fcontents .= "This is not an Alfred-parsable exception. \n";
+			$fcontents .= "This is a " . get_class($error);
+		} else {
+			$fcontents .= print_r($error->getState(), true) . "\n";
+		}
+		$fcontents .= "\n\n";
+		
+		$fcontents .= "## Stack Trace ## \n";
+		$fcontents .= print_r($error->getTrace(), true) . "\n";
+
+		// Delay storing of error 'till contents are fully generated.
+		$errordir = $this->cache();
+		$fname = date('Y-m-d h-m-s') . " Spotifious.log";
+		$fdir = $errordir . $fname;
+
+		$log = fopen($fdir, "w");
+		fwrite($log, $fcontents);
+		fclose($log);
+
+		return $fdir;
 	}
 
 	public function notify($title, $subtitle = '') {
@@ -277,9 +287,9 @@ class OhAlfred {
 
 		 if($info['http_code'] != '200') {
 		 	if ($info['http_code'] == '0')
-		 		throw new AlfredableException("Could not access Spotify API. Try searching again");
+		 		throw new StatefullException("Could not access Spotify API. Try searching again");
 
-	 		throw new AlfredableException("fetch() failed; error code: " . $info['http_code']);
+	 		throw new StatefullException("fetch() failed; error code: " . $info['http_code']);
 		 }
 		 	
 

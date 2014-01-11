@@ -4,9 +4,10 @@ mb_internal_encoding("UTF-8");
 date_default_timezone_set('America/New_York');
 
 use OhAlfred\OhAlfred;
+use OhAlfred\StatefullException;
 use Spotifious\Menus;
 use Spotifious\Helper as MenuHelper;
-require 'src/citelao/Spotifious/helper_functions.php';
+require 'src/citelao/Spotifious/helper_functions.php'; // TODO be prettier
 require 'vendor/autoload.php';
 
 /**
@@ -140,12 +141,12 @@ if (mb_strlen($query) <= 3) {
 
 } elseif(contains($query, 'spotify:')) {
 	// Based off https://github.com/felixtriller/spotify-embed/blob/master/spotify-embed.php
+	// Does not use `is_spotify_uri` because it also checks for random text at the end (which it strips).
 	// TODO: "app:" URLS
-	// TODO use 'is_spotify_uri()'
 	$parts = preg_contains($query, '/^(spotify:(?:album|artist|app|track|user:[^:]+:playlist):[a-zA-Z0-9]+)(?: )+([^\n]*)$/x');
 
 	if($parts === false) 
-		throw new AlfredableException("Invalid Spotify URI", get_defined_vars());
+		throw new StatefullException("Invalid Spotify URI", get_defined_vars());
 
 	$URI = $parts[1];
 
@@ -153,7 +154,6 @@ if (mb_strlen($query) <= 3) {
 
 } else {
 	$results = Menus::search($query, $alfred->options('country'));
-
 }
 
 $alfred->alfredify($results);

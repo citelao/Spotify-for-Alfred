@@ -2,7 +2,7 @@
 <body>
 <script>
 try {
-	socket = new WebSocket('ws://localhost:33334');
+	socket = new WebSocket('ws://localhost:10000');
 	console.log('Created WebSocket - status '+ socket.readyState);
 
 	socket.onopen    = function(msg){
@@ -10,11 +10,11 @@ try {
 	};
 
 	socket.onmessage = function(msg){ 
-		console.log("Received: "+msg.data);
+		console.log("Received: " + msg.data);
 
 		if (msg.data !== "Got your message!\n") {
 			console.log("Responding with requested data");
-			socket.send("Here is what you wanted");
+			socket.send("Here you go, just what you wanted.");
 		}
 	};
 

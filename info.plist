@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string></string>
+	<string>com.citelao.spotifious</string>
 	<key>connections</key>
 	<dict>
 		<key>18496AC4-EA42-444C-A906-642E38259C96</key>

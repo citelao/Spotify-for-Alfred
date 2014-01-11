@@ -4,10 +4,10 @@ mb_internal_encoding("UTF-8");
 date_default_timezone_set('America/New_York');
 
 use OhAlfred\OhAlfred;
-use OhAlfred\AlfredableException; // TODO error handler. AlfredableExceptions are meant for alfred display.
-use OhAlfred\ApplicationApplescript as ApplicationApplescript;
+use OhAlfred\StatefullException; // TODO error handler
+use OhAlfred\ApplicationApplescript;
 use Spotifious\Sockets\Server;
-require 'src/citelao/Spotifious/helper_functions.php';
+require 'src/citelao/Spotifious/helper_functions.php'; // TODO be prettier
 require 'vendor/autoload.php';
 
 /* 
@@ -81,7 +81,7 @@ switch ($args[0]) {
 		break;
 
 	default:
-		throw new AlfredableException("Unknown key '" . $args[0] . "'. 'none' is the code for no key.");
+		throw new StatefullException("Unknown key '" . $args[0] . "'. 'none' is the code for no key.");
 		break;
 }
 
@@ -165,12 +165,12 @@ switch ($command[0]) {
 				break;
 
 			default:
-				throw new AlfredableException("Unknown config step '" . $command[1] . "'");
+				throw new StatefullException("Unknown config step '" . $command[1] . "'");
 				break;
 		}
 		break;
 
 	default:
-		throw new AlfredableException("Unknown action '" . $command[0] . "'.", $command);
+		throw new StatefullException("Unknown action '" . $command[0] . "'.", $command);
 		break;
 }
