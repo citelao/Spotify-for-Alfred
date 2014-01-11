@@ -108,16 +108,7 @@
 			</dict>
 		</array>
 		<key>96FF1F9F-42BA-45EA-8743-09A940B5F2DF</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>66DB4B28-A929-4E34-9BAB-368CF11210A6</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
+		<array/>
 		<key>A03EC08A-349D-406A-B4D2-E40796B68CAD</key>
 		<array>
 			<dict>
@@ -154,7 +145,16 @@
 		<key>C9149B42-C302-4B85-9FE1-644AB54249EF</key>
 		<array/>
 		<key>E5DE67FB-EEC7-4489-BAFC-5CD549A308A1</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>66DB4B28-A929-4E34-9BAB-368CF11210A6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>F0304935-C17F-4251-A640-79D6D2E60789</key>
 		<array>
 			<dict>
@@ -188,14 +188,6 @@
 	<string>Spotifious</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.output.largetype</string>
-			<key>uid</key>
-			<string>66DB4B28-A929-4E34-9BAB-368CF11210A6</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -283,6 +275,14 @@
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>E5DE67FB-EEC7-4489-BAFC-5CD549A308A1</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.output.largetype</string>
+			<key>uid</key>
+			<string>66DB4B28-A929-4E34-9BAB-368CF11210A6</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -663,7 +663,7 @@ Also thank you for using Spotifious and reading the README; I hope you enjoy it.
 		<key>66DB4B28-A929-4E34-9BAB-368CF11210A6</key>
 		<dict>
 			<key>ypos</key>
-			<real>10</real>
+			<real>120</real>
 		</dict>
 		<key>768E8F4D-68EB-44E9-85F0-7B67748C46D7</key>
 		<dict>

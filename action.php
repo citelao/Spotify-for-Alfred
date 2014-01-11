@@ -5,6 +5,7 @@ date_default_timezone_set('America/New_York');
 
 use OhAlfred\OhAlfred;
 use OhAlfred\StatefullException; // TODO write error handler
+use OhAlfred\Applescript;
 use OhAlfred\ApplicationApplescript;
 use Spotifious\Sockets\Fetcher;
 require 'src/citelao/Spotifious/helper_functions.php'; // TODO be prettier
@@ -151,7 +152,8 @@ switch ($command[0]) {
 				print_r($alfred->workflow() . "/include/spotifious-helper/");
 
 				$alfred->notify('Log In to Spotify', 'This will turn your account into a developer account, an important part of using Spotifious.');
-				applescriptQuery('open location "https://developer.spotify.com/login/"');
+				$as = new Applescript('open location "https://developer.spotify.com/login/"');
+				$as->run();
 				break;
 			
 			case 'hotkeys':

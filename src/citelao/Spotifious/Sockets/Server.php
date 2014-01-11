@@ -9,9 +9,9 @@ class Server implements MessageComponentInterface {
     protected $messageCallback;
     protected $logCallback;
 
-	public function __construct($desirata, $logCallback = null, $messageCallback = null) {
-        $this->logCallback = $logCallback;
+	public function __construct($desirata, $messageCallback = null, $logCallback = null) {
         $this->messageCallback = $messageCallback;
+        $this->logCallback = $logCallback;
 
 		$this->clients = new \SplObjectStorage;  
 

@@ -148,7 +148,7 @@ class OhAlfred {
 
 	public function alfredify($r = null) {
 		if($r == null)
-			$r = $results;
+			$r = $this->results;
 
 		print "<?xml version='1.0'?>\r\n<items>";
 		
@@ -188,9 +188,7 @@ class OhAlfred {
 	public function escapeQuery($text) {
 		$text = str_replace("&", "&amp;", $text);
 		$text = str_replace("'", "&#39;", $text);
-		// $text = str_replace("[", "\[", $text);
-		// $text = str_replace("]", "\]", $text);
-		
+
 		return $text;
 	}
 

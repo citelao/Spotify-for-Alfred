@@ -3,7 +3,7 @@ namespace Spotifious\Sockets;
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
-use OhAlfred\Applescript;
+use OhAlfred\ApplicationApplescript;
 
 class Fetcher {
 	protected $server;
@@ -17,7 +17,7 @@ class Fetcher {
 		$this->server = IoServer::factory(
 		    new HttpServer(
 		    	new WsServer(
-		    		new Server($this->desirata, array($this, 'handleLog'), array($this, 'handleMessage'))
+		    		new Server($this->desirata, array($this, 'handleMessage'), array($this, 'handleLog'))
 		    	)
 		    ),
 		    $this->port()
@@ -32,10 +32,9 @@ class Fetcher {
 	}
 
 	public function run() {
-		$clientStarter = new Applescript('open location "file:///Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/scratch/client.htm"');
+		$clientStarter = new ApplicationApplescript('Spotify', 'open location "spotify:app:spotifious:socket:' . $this->port() . '"');
 		$clientStarter->run();
 		$this->server->run();
-		// echo "test :(";
 	}
 
 	public function handleLog($msg, $die) {
