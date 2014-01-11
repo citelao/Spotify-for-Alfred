@@ -69,8 +69,6 @@ $results = array();
 $query = $argv[1];
 // $query   = $alfred->normalize($argv[1]);
 
-$a = Menus::settings();
-
 /* If Spotifious isn't configured yet, show the checklist. */
 if(!MenuHelper::configured()) {
 

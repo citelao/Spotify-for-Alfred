@@ -14,6 +14,8 @@ class Server implements MessageComponentInterface {
         $this->messageCallback = $messageCallback;
 
 		$this->clients = new \SplObjectStorage;  
+
+        $desirata[] = 'close';
         $this->desired = $desirata;
 	}
 

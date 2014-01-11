@@ -186,8 +186,10 @@ class OhAlfred {
 	}
 
 	public function escapeQuery($text) {
-		$text = str_replace("'", "\'", $text);
 		$text = str_replace("&", "&amp;", $text);
+		$text = str_replace("'", "&#39;", $text);
+		// $text = str_replace("[", "\[", $text);
+		// $text = str_replace("]", "\]", $text);
 		
 		return $text;
 	}

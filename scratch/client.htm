@@ -1,8 +1,9 @@
 <html>
 <body>
-<script>
+<script type="text/javascript" src="reconnecting-websocket.js"></script>
+<script type="text/javascript">
 try {
-	socket = new WebSocket('ws://localhost:10000');
+	socket = new ReconnectingWebSocket('ws://localhost:10000');
 	console.log('Created WebSocket - status '+ socket.readyState);
 
 	socket.onopen    = function(msg){
@@ -11,6 +12,11 @@ try {
 
 	socket.onmessage = function(msg){ 
 		console.log("Received: " + msg.data);
+
+		if(msg.data == "close") {
+			console.log("Closing per server order!");
+			socket.close();
+		}
 
 		if (msg.data !== "Got your message!\n") {
 			console.log("Responding with requested data");

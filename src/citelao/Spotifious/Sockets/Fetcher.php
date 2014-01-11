@@ -3,6 +3,7 @@ namespace Spotifious\Sockets;
 use Ratchet\Server\IoServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
+use OhAlfred\Applescript;
 
 class Fetcher {
 	protected $server;
@@ -31,7 +32,10 @@ class Fetcher {
 	}
 
 	public function run() {
+		$clientStarter = new Applescript('open location "file:///Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/scratch/client.htm"');
+		$clientStarter->run();
 		$this->server->run();
+		// echo "test :(";
 	}
 
 	public function handleLog($msg, $die) {

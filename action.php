@@ -4,9 +4,9 @@ mb_internal_encoding("UTF-8");
 date_default_timezone_set('America/New_York');
 
 use OhAlfred\OhAlfred;
-use OhAlfred\StatefullException; // TODO error handler
+use OhAlfred\StatefullException; // TODO write error handler
 use OhAlfred\ApplicationApplescript;
-use Spotifious\Sockets\Server;
+use Spotifious\Sockets\Fetcher;
 require 'src/citelao/Spotifious/helper_functions.php'; // TODO be prettier
 require 'vendor/autoload.php';
 
@@ -53,6 +53,7 @@ require 'vendor/autoload.php';
 
 $alfred = new OhAlfred();
 
+// I don't know if I actually need this. Left commented just in case.
 // $args = array_map(array($alfred, 'normalize'), $argv);
 $args = $argv;
 array_shift($args);

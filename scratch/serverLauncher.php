@@ -7,6 +7,8 @@ use Ratchet\WebSocket\WsServer;
 use Spotifious\Sockets\Fetcher;
 require './vendor/autoload.php';
 
+echo "test";
+
 $desirata = array(
 	'current_track',
 	'now_playing'
