@@ -70,10 +70,15 @@ class Helper {
 	}
 
 	public function now() {
-		$spotQuery = new ApplicationApplescript('Spotify', 'return name of current track & "✂" & album of current track & "✂" & artist of current track & "✂" & spotify url of current track & "✂" & player state');
+		// $spotQuery = new ApplicationApplescript('Spotify', 'return name of current track & "✂" & album of current track & "✂" & artist of current track & "✂" & spotify url of current track & "✂" & player state');
 
-		$data = $spotQuery->run();
+		$fetcher = new Fetcher(array('now'));
+		$fetcher->run();
 		
+		while ($fetcher->isRunning()) {
+			// wait idly
+		}
+
 		return split("✂", $data);
 	}
 

@@ -47,7 +47,7 @@
  * Latest version: https://github.com/joewalnes/reconnecting-websocket/
  * - Joe Walnes
  */
-function ReconnectingWebSocket(url, protocols) {
+var ReconnectingWebSocket = function(url, protocols) {
     protocols = protocols || [];
 
     // These can be altered by calling code.
@@ -176,5 +176,5 @@ function ReconnectingWebSocket(url, protocols) {
 /**
  * Setting this to true is the equivalent of setting all instances of ReconnectingWebSocket.debug to true.
  */
-ReconnectingWebSocket.debugAll = false;
-
+exports.ReconnectingWebSocket = ReconnectingWebSocket;
+exports.debugAll = false;

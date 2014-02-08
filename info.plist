@@ -200,7 +200,12 @@
 				<key>runningsubtext</key>
 				<string>Harnessing Spotify APIs…</string>
 				<key>script</key>
-				<string>php -f main.php -- "{query}" </string>
+				<string>php -f main.php -- "{query}" 
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f main.php -- "{query}" | tee ~/Desktop/main.log</string>
 				<key>title</key>
 				<string>Show Spotifious Mini Player</string>
 				<key>type</key>
@@ -249,8 +254,10 @@
 				<string>php -f action.php -- none ⧙ {query}
 
 # In case you are experiencing unsolveable issues,
-# modify the first line of this script so it looks like this:
-# php -f action.php -- none ⧙ {query} &gt; ~/Desktop/test.txt</string>
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f action.php -- none ⧙ {query} | tee ~/Desktop/action.log
+</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -615,7 +622,6 @@ end tell</string>
 	<string># Spotifious
 # v0.9
 
-
 I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
 
 GitHub: https://github.com/citelao/Spotify-for-Alfred/
@@ -627,7 +633,9 @@ A lot of people helped out on this:
 - and many more people are referenced in the code itself.
 Thank you everyone! Y’all made Spotifious as awesome as it is.
 
-Also thank you for using Spotifious and reading the README; I hope you enjoy it.</string>
+Also thank you for using Spotifious and reading the README; I hope you enjoy it.
+
+This code is MIT Licensed.</string>
 	<key>uidata</key>
 	<dict>
 		<key>0D5606BC-5963-45FC-9003-6B48E88F2077</key>

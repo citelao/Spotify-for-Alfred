@@ -6,11 +6,14 @@ use Ratchet\ConnectionInterface;
 class Server implements MessageComponentInterface {
 	protected $clients;
     protected $desired;
+
     protected $messageCallback;
     protected $logCallback;
+    protected $doneCallback;
 
-	public function __construct($desirata, $messageCallback = null, $logCallback = null) {
+	public function __construct($desirata, $messageCallback = null, $doneCallback = null, $logCallback = null) {
         $this->messageCallback = $messageCallback;
+        $this->doneCallback = $doneCallback;
         $this->logCallback = $logCallback;
 
 		$this->clients = new \SplObjectStorage;  
@@ -25,11 +28,16 @@ class Server implements MessageComponentInterface {
     	$this->log("New Connection! {$conn->resourceId}");
 
         if ($this->desired != null) {
-            $this->log("Telling connection what we need.");
+            $this->log("Telling connection we need {$this->desired[0]}");
             $conn->send($this->desired[0]);
         } else {   
             $this->log("No data to fetch. Detaching connection.");
+
+            if($this->doneCallback != null)
+                call_user_func($this->doneCallback);
+
             $conn->close();
+            $this->stop();
         }
     }
 
@@ -42,10 +50,14 @@ class Server implements MessageComponentInterface {
         array_shift($this->desired);
 
         if ($this->desired != null) {
-            $this->log("Telling connection what else we need.");
+            $this->log("Telling connection we also need {$this->desired[0]}");
             $from->send($this->desired[0]);
         } else {
             $this->log("All data fetched. Detaching connection.");
+
+            if($this->doneCallback != null)
+                call_user_func($this->doneCallback, false);
+
             $from->close();
         }
     }
@@ -53,18 +65,25 @@ class Server implements MessageComponentInterface {
     public function onClose(ConnectionInterface $conn) {
     	$this->clients->detach($conn);
 
+        if($this->doneCallback != null)
+            call_user_func($this->doneCallback, false); 
+
 		$this->log("{$conn->resourceId} detached. Shutting down.");
-        exit(0);
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e) {
-        $this->log("Error!");
+        $conn->close();
+
+        // Calls doneCallback with argument (isError==true)
+        if($this->doneCallback != null)
+            call_user_func($this->doneCallback, true);
+        
         // TODO log
-        exit(0);
+        $this->log("Error!");
     }
 
     // Inspired by Sann-Remy Chea <http://srchea.com>
-    // TODO actually log
+    // TODO actually log to file.
 	protected function log($msg, $die = false) {
 		$craftedMsg = date('[Y-m-d H:i:s]') . " $msg\r\n";
 

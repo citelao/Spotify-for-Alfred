@@ -20,7 +20,7 @@ try {
 
 		if (msg.data !== "Got your message!\n") {
 			console.log("Responding with requested data");
-			socket.send("Here you go, just what you wanted.");
+			socket.send("Here you go: " + msg.data);
 		}
 	};
 

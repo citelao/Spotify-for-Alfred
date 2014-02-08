@@ -1,6 +1,6 @@
 <?php
 namespace OhAlfred;
-use OhAlfred\StatefullException;
+use OhAlfred\StatefulException;
 
 /* see: https://github.com/jdfwarrior/Workflows/blob/master/workflows.php */
 class OhAlfred {
@@ -233,7 +233,7 @@ class OhAlfred {
 		$fcontents .= "Line " . $error->getLine() . ", " . $error->getFile() . "\n\n";
 
 		$fcontents .= "## Symbols ## \n";
-		if(!is_a($error, "StatefullException") && !is_a($error, "OhAlfred\StatefullException")) {
+		if(!is_a($error, "StatefulException") && !is_a($error, "OhAlfred\StatefulException")) {
 			$fcontents .= "This is not an Alfred-parsable exception. \n";
 			$fcontents .= "This is a " . get_class($error);
 		} else {
@@ -287,9 +287,9 @@ class OhAlfred {
 
 		 if($info['http_code'] != '200') {
 		 	if ($info['http_code'] == '0')
-		 		throw new StatefullException("Could not access Spotify API. Try searching again");
+		 		throw new StatefulException("Could not access Spotify API. Try searching again");
 
-	 		throw new StatefullException("fetch() failed; error code: " . $info['http_code']);
+	 		throw new StatefulException("fetch() failed; error code: " . $info['http_code']);
 		 }
 		 	
 

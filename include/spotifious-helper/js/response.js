@@ -1,59 +1,10 @@
-// TODO rewrite with v1.0 API
+require([
+        '$api/models',
+        'js/reconnecting-websocket'
+        ], function(models, sockets) {
 
-var spot   = getSpotifyApi(1);
-var models = spot.require("sp://import/scripts/api/models");
-
-models.application.observe(models.EVENT.ARGUMENTSCHANGED, handleArgs);
-models.application.observe(models.EVENT.CHANGE, handleArgs);
-
-function handleSocket(port) {
-	try {
-		socket = new ReconnectingWebSocket('ws://localhost:' + port);
-		console.log('Created WebSocket - status '+ socket.readyState);
-
-		socket.onopen    = function(msg){
-			console.log("Connection opened; awaiting notification of what's needed"); 
-		};
-
-		socket.onmessage = function(msg){ 
-			console.log("Received: " + msg.data);
-
-			if(msg.data == "close") {
-				console.log("Closing per server order!");
-				socket.close();
-			}
-
-			if (msg.data !== "Got your message!\n") {
-				console.log("Responding with requested data");
-				socket.send("Here you go, just what you wanted.");
-			}
-		};
-
-		socket.onclose   = function(msg){
-			console.log("Disconnected - status "+this.readyState); 
-		};
-	}
-	catch(ex) {
-		console.log(ex);
-	}
-}
-
-// http://stackoverflow.com/questions/8623693/add-a-song-to-the-current-play-queue-in-a-spotify-app
-function queue(tracks, index) {
-	 var pl = new models.Playlist('Alfred Playlist');
-}
-
-function toggleStarred() {
-	var track = models.player.track;
-
-	if (track == null) {
-		return;
-	}
-
-	track.starred = !track.starred; 	
-
-	console.log("Starred: " + track.starred);
-}
+    models.application.load('arguments').done(handleArgs);
+    models.application.addEventListener('arguments', handleArgs);
 
 function handleArgs() {
 	var args = models.application.arguments;
@@ -75,18 +26,93 @@ function handleArgs() {
 			break;
 		case "preview":
 			break;
+		case "debug":
+			// console.log(models);
+			var test = models.player;
+			console.log(test);
+			break;
 		case "null":
 			break;
 		default:
-			console.error("Could not understand arguments");
+			console.warn("Could not understand arguments");
 			break;
 	}
 	
-	// TODO use this somehow
-	// models.application.openURI('spotify:app:spotifious:null');
+	models.application.openURI('spotify:app:spotifious:null');
+}
+
+function handleSocket(port) {
+	// Using Joe Walnes' ReconnectingWebSocket with a modification
+	// to the close method. 
+	// <https://github.com/joewalnes/reconnecting-websocket>
+	// <https://github.com/joewalnes/reconnecting-websocket/pull/8>
+	socket = new sockets.ReconnectingWebSocket('ws://localhost:' + port);
+	console.log('Created WebSocket - status '+ socket.readyState);
+
+	query = '';
+
+	socket.onopen = function(msg){
+		console.log("Connection opened; awaiting notification of what's needed"); 
+	};
+
+	socket.onmessage = function(msg){ 
+		console.log("Received: " + msg.data);
+
+		if(msg.data == "close") {
+			console.log("Closing per server order!");
+			socket.close();
+		}
+
+		query = msg.data;
+
+		handleSocketQuery();
+	};
+
+	socket.onclose = function(msg){
+		console.log("Disconnected - status " + this.readyState); 
+	};
+
+	this.handleSocketQuery = function() {
+		switch(query) {
+			case "current_track_id":
+				models.player.load('track').done(function(p) {
+						console.log(p.track);
+						socketRespond(p.track.uri);
+				}).fail(function() {
+					console.warn("Load current track failed.");
+					socketRespond("⚠ No track.");
+				});
+				break;
+
+			default:
+				console.warn("Could not understand socket request.");
+				socketRespond("⚠ Could not understand socket request '" + query + "'");
+		}
+	};
+
+	this.socketRespond = function(response) {
+		console.log("Responding to requested data (" + query + ") with '" + response + "'");
+		socket.send(response);
+	};
+}
+
+// http://stackoverflow.com/questions/8623693/add-a-song-to-the-current-play-queue-in-a-spotify-app
+function queue(tracks, index) {
+	 // var pl = new models.Playlist('Alfred Playlist');
+	 console.warn("unimplemented");
+}
+
+function toggleStarred() {
+	// var track = models.player.track;
+
+	// if (track == null) {
+	// 	return;
+	// }
+
+	// track.starred = !track.starred; 	
+	console.warn("unimplemented");
+	console.log("Starred: " + track.starred);
 }
 
 console.log("Loaded!");
-
-console.log(models.EVENT);
-handleArgs();
+});

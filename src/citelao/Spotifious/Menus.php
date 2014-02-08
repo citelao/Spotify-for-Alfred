@@ -6,11 +6,11 @@ class Menus {
 	public function main() {
 		/* Get now-playing info. */
 		$current = Helper::now();
-		$currentTrack             = ($current[0] == null) ? "No Track"  : $current[0];
-		$currentAlbum             = ($current[1] == null) ? "No Album"  : $current[1];
-		$currentArtist            = ($current[2] == null) ? "No Artist" : $current[2];
-		$currentURL               = $current[3];
-		$currentStatus            = ($current[4] == 'playing') ?
+		$currentTrack             = ($current['track'] == null) ? "No Track"  : $current['track'];
+		$currentAlbum             = ($current['album'] == null) ? "No Album"  : $current['album'];
+		$currentArtist            = ($current['artist'] == null) ? "No Artist" : $current['artist'];
+		$currentURL               = $current['url'];
+		$currentStatus            = ($current['status'] == 'playing') ?
 			"include/images/alfred/paused.png" :
 			"include/images/alfred/playing.png";
 
@@ -57,12 +57,12 @@ class Menus {
 			$json = OhAlfred::fetch("http://ws.spotify.com/search/1/$type.json?q=" . $urlQuery);
 
 			if(empty($json))
-				throw new StatefullException("No JSON returned from Spotify web search");
+				throw new StatefulException("No JSON returned from Spotify web search");
 
 			$json = json_decode($json);
 
 			if($json == null)
-				throw new StatefullException("JSON error: " . json_last_error());
+				throw new StatefulException("JSON error: " . json_last_error());
 
 			/* Output the results. */
 			foreach ($json->{$type . "s"} as $key => $value) {
@@ -125,7 +125,7 @@ class Menus {
 
 		/* Sort results by popularity. */
 		if(!empty($results))
-			usort($results, "Helper::popularitySort");
+			usort($results, array('Spotifious\Helper', 'popularitySort'));
 
 		/* Give the option to continue searching in Spotify because even I know my limits. */
 		$results[] = [
@@ -150,12 +150,12 @@ class Menus {
 		$json = OhAlfred::fetch("http://ws.spotify.com/lookup/1/.json?uri=$currentURI&extras=$detail" . "detail");
 
 		if(empty($json))
-			throw new StatefullException("No JSON returned from Spotify web lookup");
+			throw new StatefulException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
 
 		if($json == null)
-			throw new StatefullException("JSON error: " . json_last_error());
+			throw new StatefulException("JSON error: " . json_last_error());
 
 		/* Output the details. */
 		$scope['title']        = $json->$type->name;
@@ -231,10 +231,10 @@ class Menus {
 		$detailNeeded = ($type != "track");
 
 		if($type == "app")
-			throw new StatefullException("Spotifious cannot handle app URLs (yet)"); // TODO
+			throw new StatefulException("Spotifious cannot handle app URLs (yet)"); // TODO
 
 		if(contains($URI,"playlist"))
-			throw new StatefullException("Spotifious cannot handle playlist URLs (yet)"); // TODO
+			throw new StatefulException("Spotifious cannot handle playlist URLs (yet)"); // TODO
 
 		/* Fetch and parse the details. */
 		$URL = "http://ws.spotify.com/lookup/1/.json?uri=$URI";
@@ -244,12 +244,12 @@ class Menus {
 		$json = OhAlfred::fetch($URL);
 
 		if(empty($json))
-			throw new StatefullException("No JSON returned from Spotify web lookup");
+			throw new StatefulException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
 
 		if($json == null)
-			throw new StatefullException("JSON error: " . json_last_error());
+			throw new StatefulException("JSON error: " . json_last_error());
 			
 		/* Output the details. */
 		switch ($type) { // This could SO be DRY-er TODO.
@@ -312,7 +312,7 @@ class Menus {
 				];
 				break;
 			default:
-				throw new StatefullException("Unknown item type $type", 1);
+				throw new StatefulException("Unknown item type $type", 1);
 				break;
 		}
 
@@ -375,15 +375,15 @@ class Menus {
 		$json = OhAlfred::fetch('https://raw.github.com/johannesl/Internationalization/master/countrycodes.json');
 
 		if(empty($json))
-			throw new StatefullException("No JSON returned from Spotify web lookup");
+			throw new StatefulException("No JSON returned from Spotify web lookup");
 
 		$json = json_decode($json);
 
 		if($json == null)
-			throw new StatefullException("JSON error: " . json_last_error());
+			throw new StatefulException("JSON error: " . json_last_error());
 
 		foreach ($json as $country => $code) {
-			if (!mb_stristr($country . $code, $search) && $search != null)
+			if ($search != null && !@mb_stristr($country . $code, $search))
 				continue;
 
 			$results[] = [
@@ -394,7 +394,7 @@ class Menus {
 		}
 
 		// Alphabetize w/ weighting.
-		usort($results, array('Helper', 'countrySort'));
+		usort($results, array('Spotifious\Helper','countrySort'));
 
 		return $results;
 	}

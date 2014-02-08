@@ -4,7 +4,7 @@ mb_internal_encoding("UTF-8");
 date_default_timezone_set('America/New_York');
 
 use OhAlfred\OhAlfred;
-use OhAlfred\StatefullException; // TODO write error handler
+use OhAlfred\StatefulException; // TODO write error handler
 use OhAlfred\Applescript;
 use OhAlfred\ApplicationApplescript;
 use Spotifious\Sockets\Fetcher;
@@ -52,6 +52,8 @@ require 'vendor/autoload.php';
 							…: growl error!
 */
 
+// TODO HUD notification; needs code signing. 
+
 $alfred = new OhAlfred();
 
 // I don't know if I actually need this. Left commented just in case.
@@ -83,7 +85,7 @@ switch ($args[0]) {
 		break;
 
 	default:
-		throw new StatefullException("Unknown key '" . $args[0] . "'. 'none' is the code for no key.");
+		throw new StatefulException("Unknown key '" . $args[0] . "'. 'none' is the code for no key.");
 		break;
 }
 
@@ -151,6 +153,7 @@ switch ($command[0]) {
 				symlink($alfred->workflow() . "/include/spotifious-helper", $spotifyDir . "/spotifious-helper");
 				print_r($alfred->workflow() . "/include/spotifious-helper/");
 
+				// TODO make cleaer.
 				$alfred->notify('Log In to Spotify', 'This will turn your account into a developer account, an important part of using Spotifious.');
 				$as = new Applescript('open location "https://developer.spotify.com/login/"');
 				$as->run();
@@ -168,12 +171,12 @@ switch ($command[0]) {
 				break;
 
 			default:
-				throw new StatefullException("Unknown config step '" . $command[1] . "'");
+				throw new StatefulException("Unknown config step '" . $command[1] . "'");
 				break;
 		}
 		break;
 
 	default:
-		throw new StatefullException("Unknown action '" . $command[0] . "'.", $command);
+		throw new StatefulException("Unknown action '" . $command[0] . "'.", $command);
 		break;
 }

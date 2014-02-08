@@ -3,7 +3,7 @@ namespace OhAlfred;
 
 // Stack return!
 // http://stackoverflow.com/questions/1809404/get-exception-context-in-php
-class StatefullException extends \Exception implements IStatefullException  {
+class StatefulException extends \Exception implements IStatefulException  {
     protected $throwState;
 
     // List of things that should never be written to debug files.
@@ -30,7 +30,7 @@ class StatefullException extends \Exception implements IStatefullException  {
     }
 }
 
-interface  IStatefullException { 
+interface  IStatefulException { 
 	function getState(); 
     function setState(array $state);
 }

@@ -4,7 +4,7 @@ mb_internal_encoding("UTF-8");
 date_default_timezone_set('America/New_York');
 
 use OhAlfred\OhAlfred;
-use OhAlfred\StatefullException;
+use OhAlfred\StatefulException;
 use Spotifious\Menus;
 use Spotifious\Helper as MenuHelper;
 require 'src/citelao/Spotifious/helper_functions.php'; // TODO be prettier
@@ -144,7 +144,7 @@ if (mb_strlen($query) <= 3) {
 	$parts = preg_contains($query, '/^(spotify:(?:album|artist|app|track|user:[^:]+:playlist):[a-zA-Z0-9]+)(?: )+([^\n]*)$/x');
 
 	if($parts === false) 
-		throw new StatefullException("Invalid Spotify URI", get_defined_vars());
+		throw new StatefulException("Invalid Spotify URI", get_defined_vars());
 
 	$URI = $parts[1];
 
