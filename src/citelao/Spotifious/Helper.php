@@ -1,6 +1,7 @@
 <?php
 namespace Spotifious;
 use OhAlfred\ApplicationApplescript;
+use Spotifious\Sockets\Fetcher;
 
 class Helper {
 	public function beautifyTime($seconds) {
@@ -74,12 +75,19 @@ class Helper {
 
 		$fetcher = new Fetcher(array('now'));
 		$fetcher->run();
-		
-		while ($fetcher->isRunning()) {
-			// wait idly
-		}
 
-		return split("✂", $data);
+		$unsorted = split("✂", $fetcher->data()[0]);
+		$types = array(
+			'track',
+			'album', 
+			'trackuri',
+			'albumuri',
+			'starred');
+
+		//todo
+		$sorted = array_combine($types, $unsorted);
+
+		return $sorted;
 	}
 
 	public function popularitySort($a, $b) {

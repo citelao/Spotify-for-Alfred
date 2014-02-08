@@ -14,13 +14,17 @@ class Fetcher {
 	protected $desirata;
 	protected $data;
 
-	public function __construct($desirata) {
+	protected $debug;
+
+	public function __construct($desirata, $debug = false) {
+		$this->debug = $debug;
+
 		$this->desirata = $desirata;
 
 		$this->server = IoServer::factory(
 		    new HttpServer(
 		    	new WsServer(
-		    		new Server($this->desirata, array($this, 'handleMessage'), array($this, 'handleDone'), array($this, 'handleLog'))
+		    		new Server($this->desirata, array($this, 'handleMessage'), array($this, 'handleDone'), array($this, 'handleLog'), $this->debug)
 		    	)
 		    ),
 		    $this->port()

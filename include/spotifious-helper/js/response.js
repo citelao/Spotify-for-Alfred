@@ -84,6 +84,29 @@ function handleSocket(port) {
 				});
 				break;
 
+			case "now":
+				models.player.load('track').done(function(p) {
+						console.log(p);
+
+						models.Album.fromURI(p.track.album.uri).load('name').done(function(album) {
+							var response = p.track.name + "✂"
+							+ album.name + "✂" 
+							// + p.track.artist.name + "✂"
+							+ p.track.uri + "✂"
+							+ p.track.album.uri + "✂"
+							+ p.track.starred;
+							
+							socketRespond(response);
+						}).fail(function() {
+							console.warn("Load current album failed.");
+							socketRespond("⚠ No album.");
+						});
+				}).fail(function() {
+					console.warn("Load current track failed.");
+					socketRespond("⚠ No track.");
+				});
+				break;
+
 			default:
 				console.warn("Could not understand socket request.");
 				socketRespond("⚠ Could not understand socket request '" + query + "'");

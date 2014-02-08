@@ -11,7 +11,11 @@ class Server implements MessageComponentInterface {
     protected $logCallback;
     protected $doneCallback;
 
-	public function __construct($desirata, $messageCallback = null, $doneCallback = null, $logCallback = null) {
+    protected $debug;
+
+	public function __construct($desirata, $messageCallback = null, $doneCallback = null, $logCallback = null, $debug = false) {
+        $this->debug = $debug;
+
         $this->messageCallback = $messageCallback;
         $this->doneCallback = $doneCallback;
         $this->logCallback = $logCallback;
@@ -93,6 +97,7 @@ class Server implements MessageComponentInterface {
 		if($die)
 			die($craftedMsg);
 
-		echo $craftedMsg;
+        if($this->debug)
+    		echo $craftedMsg;
 	}
 }
