@@ -92,9 +92,9 @@ switch ($args[0]) {
 $command = explode(" ⦔ ", $action);
 
 // For debugging.
-// print_r($argv);	
-// print_r($actions);	
-// print_r($command);
+print_r($argv);	
+print_r($actions);	
+print_r($command);
 
 // TODO write last command to debug log.
 switch ($command[0]) {
@@ -121,9 +121,13 @@ switch ($command[0]) {
 
 	case 'star':
 		// TODO ensure is track, otherwise notify 'no I'm not starring an entire artist'
-		// TODO notify, use sockets to get starredness and name.
-		$as = new ApplicationApplescript('Spotify', 'open location "spotify:app:spotifious:star:' . $command[1]);
-		$as->run();
+		// Right now this is handled by response, which is slow and bad.
+
+		$fetcher = new Fetcher(array(array('star', $command[1])));
+		$fetcher->run();
+
+		$star = $fetcher->data()[0];
+		$alfred->notify($star);
 		break;
 
 	case 'search':
@@ -133,7 +137,7 @@ switch ($command[0]) {
 		break;
 
 	case 'queue':
-		$as = new ApplicationApplescript('Spotify', 'open location "spotify:app:spotifious:queue:' . $command[1]);
+		$as = new ApplicationApplescript('Spotify', 'open location "spotify:app:spotifious:queue:' . $command[1] . '"');
 		$as->run();
 		break;
 

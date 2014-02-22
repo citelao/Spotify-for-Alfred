@@ -82,7 +82,8 @@ class Helper {
 			'trackuri',
 			'albumuri',
 			'artisturi',
-			'starred');
+			'starred',
+			'playing');
 
 		//todo
 		$sorted = array_combine($types, $unsorted);

@@ -22,7 +22,7 @@ class Server implements MessageComponentInterface {
 
 		$this->clients = new \SplObjectStorage;  
 
-        $desirata[] = 'close';
+        // $desirata[] = 'close';
         $this->desired = $desirata;
 	}
 
@@ -33,7 +33,14 @@ class Server implements MessageComponentInterface {
 
         if ($this->desired != null) {
             $this->log("Telling connection we need {$this->desired[0]}");
-            $conn->send($this->desired[0]);
+
+            if(is_array($this->desired[0])) {
+                $request = implode('ഽ', $this->desired[0]);
+            } else {
+                $request = $this->desired[0];
+            }
+
+            $conn->send($request);
         } else {   
             $this->log("No data to fetch. Detaching connection.");
 
@@ -55,7 +62,13 @@ class Server implements MessageComponentInterface {
 
         if ($this->desired != null) {
             $this->log("Telling connection we also need {$this->desired[0]}");
-            $from->send($this->desired[0]);
+            if(is_array($this->desired[0])) {
+                $request = implode('ഽ', $this->desired[0]);
+            } else {
+                $request = $this->desired[0];
+            }
+
+            $from->send($request);
         } else {
             $this->log("All data fetched. Detaching connection.");
 

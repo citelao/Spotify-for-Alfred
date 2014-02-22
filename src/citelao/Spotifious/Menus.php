@@ -10,9 +10,7 @@ class Menus {
 		$currentTrack             = ($current['track'] == null) ? "No Track"  : $current['track'];
 		$currentAlbum             = ($current['album'] == null) ? "No Album"  : $current['album'];
 		$currentArtist            = ($current['artist'] == null) ? "No Artist" : $current['artist'];
-		$currentStatus            = ($current['status'] == 'playing') ?
-			"include/images/alfred/paused.png" :
-			"include/images/alfred/playing.png";
+		$currentStatus            = ($current['playing'] == 'true') ? "include/images/alfred/paused.png" : "include/images/alfred/playing.png";
 
 		/* Output now-playing info. */
 		$results[0]['title']        = "$currentTrack";
@@ -48,10 +46,12 @@ class Menus {
 
 	public function controls() {
 		// TODO
+		throw new StatefulException("No controls implemented");
 	}
 
 	public function settings() {
 		// TODO
+		throw new StatefulException("Settings not implemented");
 	}
 
 	public function search($query, $country) {
@@ -74,11 +74,11 @@ class Menus {
 
 				/* Make sure it's available */
 				if($type == 'album') {
-					if(!strstr($value->availability->territories, $country))
+					if(!strstr($value->availability->territories, $country) && $value->availability->territories != '')
 						continue;
 					
 				} elseif ($type == 'track') {
-					if(!strstr($value->album->availability->territories, $country))
+					if(!strstr($value->album->availability->territories, $country) && $value->album->availability->territories != '')
 						continue;
 				}
 
@@ -117,9 +117,9 @@ class Menus {
 				$currentResult['valid']        = ($type == 'track') ? 'yes' : 'no';
 				$currentResult['arg']          = ($type == 'track') ? OhAlfred::actionify(
 													array("play", $value->href),
-													"null", // TODO queue
-													"null", // TODO star
-													"null", // TODO copy
+													array("queue", $value->href),
+													array("star", $value->href),
+													array("copy", $value->href),
 													array("open", $value->album->href)) : '';
 				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩";
 				$currentResult['icon'] = "include/images/alfred/$type.png";
@@ -167,13 +167,16 @@ class Menus {
 		$scope['subtitle']     = "Play $type";
 		$scope['arg']          = OhAlfred::actionify(
 										array("play", $currentURI),
-										"null",
-										"null",
-										"null",
+										array("queue", $currentURI),
+										array("star", $currentURI),
+										array("copy", $currentURI),
 										array("open", $currentURI));
 		$scope['icon']         = "include/images/alfred/$type.png";
 
 		// TODO top tracks?
+
+		if(!strstr($json->$type->availability->territories, $country) && $json->$type->availability->territories != '')
+			$scope['subtitle'] .= "; not available where you live.";
 
 		if($detail == "album") {
 			$albums = array();
@@ -182,6 +185,10 @@ class Menus {
 				$value = $value->$detail;
 
 				if(in_array($value->name, $albums))
+					continue;
+
+				/* Make sure it's available */
+				if(!strstr($value->availability->territories, $country) && $value->availability->territories != '')
 					continue;
 
 				$currentResult['title'] = $value->name;
@@ -206,9 +213,9 @@ class Menus {
 				$currentResult['subtitle'] = "$popularityString "  . Helper::beautifyTime($value->length);
 				$currentResult['arg'] = OhAlfred::actionify(
 										array("play", $value->href, $currentURI),
-										"null",
-										"null",
-										"null",
+										array("queue", $value->href),
+										array("star", $value->href),
+										array("copy", $value->href),
 										array("open", $currentURI));
 				$currentResult['icon'] = "include/images/alfred/track.png";
 

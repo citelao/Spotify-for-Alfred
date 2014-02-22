@@ -260,7 +260,16 @@ class OhAlfred {
 		// TODO add Growl support if requested... don't really want to.
 		// http://growl.info/documentation/applescript-support.php
 
-		exec("open include/Notifier.app --args '" . $title . "✂" . $subtitle . "✂✂'");
+		// TODO why is this slow??
+
+		// TODO parse out quotes. "Norman's Walk"
+		// php -f action.php -- none ⧙ star ⦔ spotify:track:06MOMPokkhyLYztibnU 
+		$title    =  str_replace('"', '\\"', $title);
+		$subtitle =  str_replace('"', '\\"', $subtitle);
+
+		$query = 'open include/Notifier.app --args "' . $title . '✂' . $subtitle . '✂✂"';
+
+		exec($query);
 	}
 
 	public function hud($img) {
