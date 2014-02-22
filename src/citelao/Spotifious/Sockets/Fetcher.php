@@ -50,6 +50,7 @@ class Fetcher {
 
 	public function handleMessage($msg) {
 		// TODO parse out errors
+		// throw new StatefulException();
 
 		$this->data[] = $msg;
 	}

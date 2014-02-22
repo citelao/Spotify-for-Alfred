@@ -1,7 +1,8 @@
 require([
         '$api/models',
+        '$api/library',
         'js/reconnecting-websocket'
-        ], function(models, sockets) {
+        ], function(models, library, sockets) {
 
     models.application.load('arguments').done(handleArgs);
     models.application.addEventListener('arguments', handleArgs);
@@ -17,7 +18,7 @@ function handleArgs() {
 			break;
 		case "queue":
 			console.log("Queueing!");
-			queue(args[1]);
+			queue(args[1], 0);
 			break;
 		case "star":
 			// TODO accept 'current' or an id.
@@ -89,13 +90,17 @@ function handleSocket(port) {
 						console.log(p);
 
 						models.Album.fromURI(p.track.album.uri).load('name').done(function(album) {
+							// TODO multiple artists
+							// models.Artist.fromURI(p.track.artists.uri)
+
 							var response = p.track.name + "✂"
 							+ album.name + "✂" 
-							// + p.track.artist.name + "✂"
+							+ p.track.artists[0].name + "✂"
 							+ p.track.uri + "✂"
 							+ p.track.album.uri + "✂"
+							+ p.track.artists[0].uri + "✂"
 							+ p.track.starred;
-							
+
 							socketRespond(response);
 						}).fail(function() {
 							console.warn("Load current album failed.");
@@ -121,8 +126,7 @@ function handleSocket(port) {
 
 // http://stackoverflow.com/questions/8623693/add-a-song-to-the-current-play-queue-in-a-spotify-app
 function queue(tracks, index) {
-	 // var pl = new models.Playlist('Alfred Playlist');
-	 console.warn("unimplemented");
+	
 }
 
 function toggleStarred() {

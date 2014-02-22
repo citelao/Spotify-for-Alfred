@@ -71,8 +71,6 @@ class Helper {
 	}
 
 	public function now() {
-		// $spotQuery = new ApplicationApplescript('Spotify', 'return name of current track & "✂" & album of current track & "✂" & artist of current track & "✂" & spotify url of current track & "✂" & player state');
-
 		$fetcher = new Fetcher(array('now'));
 		$fetcher->run();
 
@@ -80,8 +78,10 @@ class Helper {
 		$types = array(
 			'track',
 			'album', 
+			'artist',
 			'trackuri',
 			'albumuri',
+			'artisturi',
 			'starred');
 
 		//todo

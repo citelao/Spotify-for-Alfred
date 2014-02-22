@@ -92,9 +92,9 @@ switch ($args[0]) {
 $command = explode(" ⦔ ", $action);
 
 // For debugging.
-print_r($argv);	
-print_r($actions);	
-print_r($command);
+// print_r($argv);	
+// print_r($actions);	
+// print_r($command);
 
 // TODO write last command to debug log.
 switch ($command[0]) {
@@ -137,8 +137,16 @@ switch ($command[0]) {
 		$as->run();
 		break;
 
+	case 'copy':
+		print $command[1];
+		break;
+
 	case 'null':
 		// Execute nothing without throwing an error.
+		break;
+
+	case 'return':
+		// TODO should return to previous user page
 		break;
 
 	case 'config':
@@ -153,7 +161,8 @@ switch ($command[0]) {
 				symlink($alfred->workflow() . "/include/spotifious-helper", $spotifyDir . "/spotifious-helper");
 				print_r($alfred->workflow() . "/include/spotifious-helper/");
 
-				// TODO make cleaer.
+				// TODO make clear.
+				// TODO this link doesn't work
 				$alfred->notify('Log In to Spotify', 'This will turn your account into a developer account, an important part of using Spotifious.');
 				$as = new Applescript('open location "https://developer.spotify.com/login/"');
 				$as->run();

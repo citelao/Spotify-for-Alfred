@@ -68,6 +68,7 @@ $alfred = new OhAlfred();
 $results = array();
 $query = $argv[1];
 // $query   = $alfred->normalize($argv[1]);
+$query = str_replace("►", "⟩", $query);
 
 /* If Spotifious isn't configured yet, show the checklist. */
 if(!MenuHelper::configured()) {
@@ -127,7 +128,7 @@ if (mb_strlen($query) <= 3) {
 	// Explode the URL and arguments into bits for harvesting.
 
 	// Regex for URLs: http://open\.spotify\.com/(album|track|user/[^/]+/playlist)/([a-zA-Z0-9]+)
-	// https://github.com/felixtriller/spotify-embed/blob/master/spotify-embed.php 
+	// <https://github.com/felixtriller/spotify-embed/blob/master/spotify-embed.php>
 	$trimmedQuery = preg_replace('/http:\/\/[^\/]+\/|\//', ' ', $query);
 	$splitQuery = explode(' ', $trimmedQuery); // TODO replace with preg_match
 

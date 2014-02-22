@@ -1,6 +1,7 @@
 <?php
 namespace Spotifious;
 use OhAlfred\OhAlfred;
+use OhAlfred\StatefulException;
 
 class Menus {
 	public function main() {
@@ -9,27 +10,31 @@ class Menus {
 		$currentTrack             = ($current['track'] == null) ? "No Track"  : $current['track'];
 		$currentAlbum             = ($current['album'] == null) ? "No Album"  : $current['album'];
 		$currentArtist            = ($current['artist'] == null) ? "No Artist" : $current['artist'];
-		$currentURL               = $current['url'];
 		$currentStatus            = ($current['status'] == 'playing') ?
 			"include/images/alfred/paused.png" :
 			"include/images/alfred/playing.png";
 
 		/* Output now-playing info. */
-		// TODO use sockets to get more album data.
 		$results[0]['title']        = "$currentTrack";
 		$results[0]['subtitle']     = "$currentAlbum by $currentArtist";
-		$results[0]['arg']          = OhAlfred::actionify(array("discrete", "playpause")); // TODO add more actions
+		$results[0]['arg']          = OhAlfred::actionify(
+										array("discrete", "playpause"),
+										array("queue", $current['trackuri']),
+										array("star", $current['trackuri']),
+										array("copy", $current['trackuri']),
+										array("open", $current['albumuri']) // TODO select correct track
+									  );
 		$results[0]['icon']         = $currentStatus;
 
 		$results[1]['title']        = "$currentAlbum";
 		$results[1]['subtitle']     = "More from this album…";
-		$results[1]['autocomplete'] = "$currentAlbum"; // TODO change to albumdetail
+		$results[1]['autocomplete'] = "{$current['albumuri']} ⟩ $currentAlbum ⟩";
 		$results[1]['valid']        = "no";
 		$results[1]['icon']         = 'include/images/alfred/album.png';
 
 		$results[2]['title']        = "$currentArtist";
 		$results[2]['subtitle']     = "More by this artist…";
-		$results[2]['autocomplete'] = "$currentArtist"; // TODO change to artistdetail
+		$results[2]['autocomplete'] = "{$current['artisturi']} ⟩ $currentArtist ⟩";
 		$results[2]['valid']        = "no";
 		$results[2]['icon']         = 'include/images/alfred/artist.png';
 
@@ -112,9 +117,9 @@ class Menus {
 				$currentResult['valid']        = ($type == 'track') ? 'yes' : 'no';
 				$currentResult['arg']          = ($type == 'track') ? OhAlfred::actionify(
 													array("play", $value->href),
-													"null",
-													"null",
-													"null",
+													"null", // TODO queue
+													"null", // TODO star
+													"null", // TODO copy
 													array("open", $value->album->href)) : '';
 				$currentResult['autocomplete'] = "$value->href ⟩ $query ⟩";
 				$currentResult['icon'] = "include/images/alfred/$type.png";

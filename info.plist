@@ -58,7 +58,16 @@
 			</dict>
 		</array>
 		<key>2718D6D2-D931-48D8-93FC-9BE73F1DA401</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>96599F04-AD3A-4E64-90F2-315F63BB12FE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>3E523778-76AD-4CD0-ADA1-1DDAD3767866</key>
 		<array>
 			<dict>
@@ -290,6 +299,21 @@
 			<string>alfred.workflow.output.largetype</string>
 			<key>uid</key>
 			<string>66DB4B28-A929-4E34-9BAB-368CF11210A6</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>96599F04-AD3A-4E64-90F2-315F63BB12FE</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -692,6 +716,11 @@ This code is MIT Licensed.</string>
 		<dict>
 			<key>ypos</key>
 			<real>780</real>
+		</dict>
+		<key>96599F04-AD3A-4E64-90F2-315F63BB12FE</key>
+		<dict>
+			<key>ypos</key>
+			<real>230</real>
 		</dict>
 		<key>96FF1F9F-42BA-45EA-8743-09A940B5F2DF</key>
 		<dict>
