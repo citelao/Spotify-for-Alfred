@@ -87,7 +87,7 @@ if(!MenuHelper::configured()) {
 if (mb_strlen($query) <= 3) {
 	switch (substr($query, 0, 1)) {
 		case 'c':
-			$results = Menus::controls();
+			$results = Menus::controls(substr($query, 1));
 			break;
 
 		case 's':
@@ -117,10 +117,10 @@ if (mb_strlen($query) <= 3) {
 	$depth = count($URIs) - (2 * count($URIs) - $arrows); // equiv to $arrows - count($URIs).
 
 	if (mb_substr($query, -1) == "⟩") { // Machine-generated
-		$results = Menus::detail($URIs, $args, $depth);
+		$results = Menus::detail($URIs, $args, $depth, $alfred->options('country'));
 	} elseif($depth > 0) {
 		$search = array_pop($args);
-		$results = Menus::detail($URIs, $args, $depth, $search);
+		$results = Menus::detail($URIs, $args, $depth, $alfred->options('country'), $search);
 	} else {
 		$results = Menus::search(end($args), $alfred->options('country'));
 	}

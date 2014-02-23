@@ -44,9 +44,35 @@ class Menus {
 		return $results;
 	}
 
-	public function controls() {
-		// TODO
-		throw new StatefulException("No controls implemented");
+	public function controls($search = null) {
+		$controls[] = array(
+			'title' => 'Next track',
+			'tags' => 'skip nxt',
+			'uid' => 'spotifious-next-track');
+
+		$controls[] = array(
+			'title' => 'Previous track',
+			'tags' => 'prev back',
+			'uid' => 'spotifious-previous-track');
+
+		$controls[] = array(
+			'title' => 'Toggle repeat',
+			'tags' => 'loop',
+			'uid' => 'spotifious-toggle-repeat');
+
+		$controls[] = array(
+			'title' => 'Toggle shuffle',
+			'tags' => 'rand',
+			'uid' => 'spotifious-toggle-shuffle');
+
+		foreach ($controls as $number => $control) {
+			if ($search != null && !@mb_stristr("{$control['title']} {$control['uid']} {$control['tags']}", $search))
+				continue;
+
+			$results[] = $control;
+		}
+
+		return $results;
 	}
 
 	public function settings() {
@@ -144,7 +170,7 @@ class Menus {
 		return $results;
 	}
 
-	public function detail($URIs, $args, $depth, $search = null) {
+	public function detail($URIs, $args, $depth, $country, $search = null) {
 		/* Parse the searched URI */
 		$currentURI = $URIs[$depth - 1];
 		$explodedURI = explode(":", $currentURI);
@@ -178,6 +204,7 @@ class Menus {
 		if(!strstr($json->$type->availability->territories, $country) && $json->$type->availability->territories != '')
 			$scope['subtitle'] .= "; not available where you live.";
 
+		$results = Array();
 		if($detail == "album") {
 			$albums = array();
 			$query = implode(" ⟩", $args);
@@ -387,7 +414,7 @@ class Menus {
 		$json = OhAlfred::fetch('https://raw.github.com/johannesl/Internationalization/master/countrycodes.json');
 
 		if(empty($json))
-			throw new StatefulException("No JSON returned from Spotify web lookup");
+			throw new StatefulException("No JSON returned from countries web lookup.");
 
 		$json = json_decode($json);
 

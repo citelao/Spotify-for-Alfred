@@ -18,7 +18,7 @@ function handleArgs() {
 			break;
 		case "queue":
 			console.log("Queueing!");
-			queue(args[1], 0);
+			queue([models.Track.fromURI(args[1] + ":" + args[2] + ":" + args[3])]);
 			break;
 		case "star":
 			console.log("Toggling starredness!");
@@ -37,6 +37,9 @@ function handleArgs() {
 			console.log(test);
 			break;
 		case "null":
+			break;
+		case 'return':
+			// TODO should return to previous user page
 			break;
 		default:
 			console.warn("Could not understand arguments");
@@ -86,7 +89,7 @@ function handleSocket(port) {
 
 			case "now":
 				models.player.load('track').done(function(p) {
-						models.Album.fromURI(p.track.album.uri).load('name').done(function(album) {
+						p.track.album.load('name').done(function(album) {
 							// TODO multiple artists
 							// models.Artist.fromURI(p.track.artists.uri)
 
@@ -146,8 +149,44 @@ function handleSocket(port) {
 }
 
 // http://stackoverflow.com/questions/8623693/add-a-song-to-the-current-play-queue-in-a-spotify-app
-function queue(tracks, index) {
-	
+// TODO stop reset of current track when switching from non-alfred queue.
+// TODO make work even once user changes playing song.
+// probably add everything to alfred playlist.
+function queue(tracks) {
+	Library.forCurrentUser().playlists.snapshot().done(function(snapshot) {
+		var playlistExists = false;
+		for (var i = 0; i < snapshot.length; i++) {
+			console.log(snapshot.get(i).name);
+
+			if(snapshot.get(i).name == "Alfred Playlist") {
+				add(snapshot.get(i));
+				playlistExists = true;
+				break;
+			}
+		};
+
+		if(playlistExists == false) {
+			models.Playlist.create("Alfred Playlist").done(function(playlist) { add(playlist); });
+		}
+	});
+
+	function add(playlist) {
+		playlist.load('tracks').done(function(playlist) {
+			console.log(tracks);
+
+			models.player.load('context').done(function(loadedplayer) {
+				if(loadedplayer.context.uri == playlist.uri) {
+					models.Playlist.fromURI(playlist.uri).load('tracks').done(function(loadedPlaylist) {
+						loadedPlaylist.tracks.add(tracks);
+					});
+				} else {
+					playlist.tracks.add(tracks);
+					models.player.playContext(playlist);
+				}
+
+			});
+		});
+	}
 }
 
 console.log("Loaded!");

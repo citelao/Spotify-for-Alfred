@@ -39,6 +39,7 @@ class OhAlfred {
 	{
 		if($this->workflow == null)
 			$this->workflow = dirname(dirname(dirname(__DIR__))); // Because I keep OhAlfred in the src/citelao/OhAlfred directory.
+																  // TODO make portable
 
 		return $this->workflow;
 	}

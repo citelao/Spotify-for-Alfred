@@ -92,9 +92,9 @@ switch ($args[0]) {
 $command = explode(" ⦔ ", $action);
 
 // For debugging.
-print_r($argv);	
-print_r($actions);	
-print_r($command);
+// print_r($argv);	
+// print_r($actions);	
+// print_r($command);
 
 // TODO write last command to debug log.
 switch ($command[0]) {
@@ -149,10 +149,6 @@ switch ($command[0]) {
 		// Execute nothing without throwing an error.
 		break;
 
-	case 'return':
-		// TODO should return to previous user page
-		break;
-
 	case 'config':
 		// Initial config steps!
 		switch ($command[1]) {
@@ -166,9 +162,8 @@ switch ($command[0]) {
 				print_r($alfred->workflow() . "/include/spotifious-helper/");
 
 				// TODO make clear.
-				// TODO this link doesn't work
 				$alfred->notify('Log In to Spotify', 'This will turn your account into a developer account, an important part of using Spotifious.');
-				$as = new Applescript('open location "https://developer.spotify.com/login/"');
+				$as = new Applescript('open location "https://devaccount.spotify.com/my-account/"');
 				$as->run();
 				break;
 			
