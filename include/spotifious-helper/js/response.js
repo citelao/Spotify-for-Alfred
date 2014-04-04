@@ -152,6 +152,7 @@ function handleSocket(port) {
 // TODO stop reset of current track when switching from non-alfred queue.
 // TODO make work even once user changes playing song.
 // probably add everything to alfred playlist.
+// TODO add feedback.
 function queue(tracks) {
 	Library.forCurrentUser().playlists.snapshot().done(function(snapshot) {
 		var playlistExists = false;
