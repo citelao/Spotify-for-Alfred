@@ -2,6 +2,7 @@
 namespace Spotifious\Menus;
 
 use Spotifious\Menus\Menu;
+use OhAlfred\Applescript\ApplicationApplescript;
 
 class Main implements Menu {
 
@@ -12,6 +13,7 @@ class Main implements Menu {
 	protected $currentStatus;
 
 	public function __construct($query) {
+		$current = $this->now();
 		$this->currentTrack             = $current[0];
 		$this->currentAlbum             = $current[1];
 		$this->currentArtist            = $current[2];
@@ -25,15 +27,15 @@ class Main implements Menu {
 		$results[0][arg]          = "playpause";
 		$results[0][icon]         = $this->currentStatus;
 		
-		$results[1][title]        = "$currentAlbum";
+		$results[1][title]        = "$this->currentAlbum";
 		$results[1][subtitle]     = "More from this album...";
-		$results[1][autocomplete] = "$currentAlbum"; // TODO change to albumdetail
+		$results[1][autocomplete] = "$this->currentAlbum"; // TODO change to albumdetail
 		$results[1][valid]        = "no";
 		$results[1][icon]         = 'include/images/album.png';
 		
-		$results[2][title]        = "$currentArtist";
+		$results[2][title]        = "$this->currentArtist";
 		$results[2][subtitle]     = "More by this artist...";
-		$results[2][autocomplete] = $currentArtist; // TODO change to artistdetail
+		$results[2][autocomplete] = $this->currentArtist; // TODO change to artistdetail
 		$results[2][valid]        = "no";
 		$results[2][icon]         = 'include/images/artist.png';
 		
@@ -46,6 +48,10 @@ class Main implements Menu {
 	}
 
 	protected function now() {
+		$spotQuery = new ApplicationApplescript('Spotify', 'return name of current track & "✂" & album of current track & "✂" & artist of current track & "✂" & spotify url of current track & "✂" & player state');
 
+		$data = $spotQuery->run();
+
+		return split("✂", $data);
 	}
 }
