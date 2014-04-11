@@ -27,6 +27,8 @@ class Search implements Menu {
 				// TODO check region availability
 
 				// Weight popularity
+				$popularity = $value->popularity;
+
 				if($type == 'artist')
 					$popularity += .5;
 
@@ -49,8 +51,8 @@ class Search implements Menu {
 			}
 		}
 
-		// if(!empty($this->search))
-			// usort($this->search, 'popularitySort');
+		if(!empty($this->search))
+			usort($this->search, array($this, 'popularitySort'));
 	}
 	
 	public function output() {
@@ -81,7 +83,7 @@ class Search implements Menu {
 		$results[] = [
 			'title' => "Search for {$this->query}",
 			'subtitle' => "Continue this search in Spotify…",
-			'uid' => "bs-spotify-$query-more",
+			'uid' => "bs-spotify-{$this->query}-more",
 			// 'arg' => OhAlfred::actionify(array("search", $query)), // TODO working arg
 			'icon' => 'include/images/search.png'
 		];
@@ -90,7 +92,7 @@ class Search implements Menu {
 	}
 
 	protected function floatToBars($float, $max = 12) {
-		$line = ($decimal < 1) ? floor($decimal * $max) : $max;
+		$line = ($float < 1) ? floor($float * $max) : $max;
 		return str_repeat("𝗹", $line) . str_repeat("𝗅", $max - $line);
 	}
 

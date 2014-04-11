@@ -22,27 +22,27 @@ class Main implements Menu {
 	}
 
 	public function output() {
-		$results[0][title]        = "$this->currentTrack";
-		$results[0][subtitle]     = "$this->currentAlbum by $this->currentArtist";
-		$results[0][arg]          = "playpause";
-		$results[0][icon]         = $this->currentStatus;
+		$results[0]['title']        = "$this->currentTrack";
+		$results[0]['subtitle']     = "$this->currentAlbum by $this->currentArtist";
+		$results[0]['arg']          = "playpause";
+		$results[0]['icon']         = $this->currentStatus;
 		
-		$results[1][title]        = "$this->currentAlbum";
-		$results[1][subtitle]     = "More from this album...";
-		$results[1][autocomplete] = "$this->currentAlbum"; // TODO change to albumdetail
-		$results[1][valid]        = "no";
-		$results[1][icon]         = 'include/images/album.png';
+		$results[1]['title']        = "$this->currentAlbum";
+		$results[1]['subtitle']     = "More from this album...";
+		$results[1]['autocomplete'] = "$this->currentAlbum"; // TODO change to albumdetail
+		$results[1]['valid']        = "no";
+		$results[1]['icon']         = 'include/images/album.png';
 		
-		$results[2][title]        = "$this->currentArtist";
-		$results[2][subtitle]     = "More by this artist...";
-		$results[2][autocomplete] = $this->currentArtist; // TODO change to artistdetail
-		$results[2][valid]        = "no";
-		$results[2][icon]         = 'include/images/artist.png';
+		$results[2]['title']        = "$this->currentArtist";
+		$results[2]['subtitle']     = "More by this artist...";
+		$results[2]['autocomplete'] = $this->currentArtist; // TODO change to artistdetail
+		$results[2]['valid']        = "no";
+		$results[2]['icon']         = 'include/images/artist.png';
 		
-		$results[3][title]        = "Search for music...";
-		$results[3][subtitle]     = "Begin typing to search";
-		$results[3][valid]        = "no";
-		$results[3][icon]         = "include/images/search.png";
+		$results[3]['title']        = "Search for music...";
+		$results[3]['subtitle']     = "Begin typing to search";
+		$results[3]['valid']        = "no";
+		$results[3]['icon']         = "include/images/search.png";
 
 		return $results;
 	}
@@ -52,6 +52,6 @@ class Main implements Menu {
 
 		$data = $spotQuery->run();
 
-		return split("✂", $data);
+		return explode("✂", $data);
 	}
 }
