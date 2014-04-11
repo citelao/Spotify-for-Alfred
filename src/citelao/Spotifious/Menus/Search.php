@@ -71,7 +71,7 @@ class Search implements Menu {
 				$currentResult['uid'] = "bs-spotify-{$this->query}-{$current['type']}-{$current['title']}";
 				$currentResult['valid'] = 'no';
 				$currentResult['autocomplete'] = "{$current['href']} ⟩ {$this->query} ⟩";
-				$currentResult['icon'] = "include/images/alfred/{$current['type']}.png";
+				$currentResult['icon'] = "include/images/{$current['type']}.png";
 
 				$results[] = $currentResult;
 			}
@@ -83,7 +83,7 @@ class Search implements Menu {
 			'subtitle' => "Continue this search in Spotify…",
 			'uid' => "bs-spotify-$query-more",
 			// 'arg' => OhAlfred::actionify(array("search", $query)), // TODO working arg
-			'icon' => 'include/images/alfred/search.png'
+			'icon' => 'include/images/search.png'
 		];
 
 		return $results;

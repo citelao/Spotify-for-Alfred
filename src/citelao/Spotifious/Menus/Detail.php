@@ -1,8 +1,8 @@
 <?php
-namespace Spotifious\Menu;
+namespace Spotifious\Menus;
 
 use Spotifious\Menus\Menu;
-use OhAlfred\Fetcher\JsonFetcher;
+use OhAlfred\HTTP\JsonFetcher;
 
 class Detail implements Menu {
 	protected $title;
@@ -66,6 +66,14 @@ class Detail implements Menu {
 	}
 
 	public function output() {
+		$results = array();
 
+		if(!empty($this->raw)) {
+			foreach ($this->raw as $key => $current) {
+				
+			}
+		}
+
+		return $results;
 	}
 }
