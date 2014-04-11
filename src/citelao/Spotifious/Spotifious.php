@@ -3,6 +3,7 @@ namespace Spotifious;
 
 use Spotifious\Menus\Main;
 use Spotifious\Menus\Search;
+use Spotifious\Menus\Detail;
 
 class Spotifious {
 	public function run($query) {
@@ -19,7 +20,10 @@ class Spotifious {
 			// we need to parse the query and extract the URLs.
 
 			// So split based on the delimeter `⟩` and excise the delimeter and blanks.
-			$URIs = array_filter($splitQuery, 'is_spotify_uri');
+			$splitQuery  = array_filter(str_replace("⟩", "", explode("⟩", $query)));
+			               array_walk($splitQuery, array($this, 'trim_value'));
+
+			$URIs = array_filter($splitQuery, array($this, 'is_spotify_uri'));
 			$args = array_diff($splitQuery, $URIs);
 
 			// Find which URI to use (by count, not by array index).
@@ -28,22 +32,47 @@ class Spotifious {
 			$arrows = mb_substr_count($query, "⟩");
 			$depth = count($URIs) - (2 * count($URIs) - $arrows); // equiv to $arrows - count($URIs).
 
+			$options = array(
+				'depth' => $depth,
+				'URIs'  => $URIs,
+				'args'  => $args,
+			);
+
 			if (mb_substr($query, -1) == "⟩") { // Machine-generated
-				// $results = Menus::detail($URIs, $args, $depth, $alfred->options('country'));
+				$menu = new Detail($options);
+				return $menu->output();
+
 			} elseif($depth > 0) {
-				// $search = array_pop($args);
-				// $results = Menus::detail($URIs, $args, $depth, $alfred->options('country'), $search);
+				$search = array_pop($args);
+				$options['search'] = $search;
+				$options['args'] = $args;
+
+				$menu = new Detail($options);
+				return $menu->output();
+
 			} else {
-				// $results = Menus::search(end($args), $alfred->options('country'));
+				$menu = new Search(end($args));
+				return $menu->output();
 			}
 
 		} else {
 			$menu = new Search($query);
 			return $menu->output();
+
 		}
 	}
 
 	protected function contains($stack, $needle) {
 		return (strpos($stack, $needle) !== false);
 	}
+
+	protected function trim_value(&$value) { 
+		$value = trim($value);
+	}
+
+	protected function is_spotify_uri($item) {
+			$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
+
+			return preg_match($regex, $item);
+		}
 }

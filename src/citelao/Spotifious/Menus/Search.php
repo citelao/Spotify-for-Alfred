@@ -6,7 +6,12 @@ use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\Exceptions\StatefulException;
 
 class Search implements Menu {
+	protected $search;
+	protected $query;
+
 	public function __construct($query) {
+		$this->query = $query;
+
 		// Build the search results
 		// for each query type
 		foreach (array('artist', 'album', 'track') as $type) {
@@ -19,12 +24,80 @@ class Search implements Menu {
 
 			// Create the search results array
 			foreach ($json->{$type . "s"} as $key => $value) {
-				
+				// TODO check region availability
+
+				// Weight popularity
+				if($type == 'artist')
+					$popularity += .5;
+
+				if($type == 'album')
+					$popularity += .15;
+
+				if ($type == 'track') {
+					$currentRaw['album'] = $value->album->name;
+					$currentRaw['artist'] = $value->artists[0]->name;	
+				} elseif ($type == 'album') {
+					$currentRaw['artist'] = $value->artists[0]->name;
+				}
+
+				$currentRaw['type'] = $type;
+				$currentRaw['title'] = $value->name;
+				$currentRaw['popularity'] = $popularity;
+				$currentRaw['href'] = $value->href;
+
+				$this->search[] = $currentRaw;
 			}
 		}
+
+		// if(!empty($this->search))
+			// usort($this->search, 'popularitySort');
 	}
 	
 	public function output() {
+		if(!empty($this->search)) {
+			foreach ($this->search as $key => $current) {
+				$popularity = $this->floatToBars($current['popularity']);
 
+				if ($current['type'] == 'track') {
+					$subtitle = "$popularity {$current['album']} by {$current['artist']}";
+				} elseif ($current['type'] == 'album') {
+					$subtitle = "$popularity Album by {$current['artist']}";
+				} else {
+					$subtitle = "$popularity " . ucfirst($current['type']);
+				}
+
+				$currentResult['title']    = $current['title'];
+				$currentResult['subtitle'] = $subtitle;
+				$currentResult['uid'] = "bs-spotify-{$this->query}-{$current['type']}-{$current['title']}";
+				$currentResult['valid'] = 'no';
+				$currentResult['autocomplete'] = "{$current['href']} ⟩ {$this->query} ⟩";
+				$currentResult['icon'] = "include/images/alfred/{$current['type']}.png";
+
+				$results[] = $currentResult;
+			}
+		}
+
+		/* Give the option to continue searching in Spotify because even I know my limits. */
+		$results[] = [
+			'title' => "Search for {$this->query}",
+			'subtitle' => "Continue this search in Spotify…",
+			'uid' => "bs-spotify-$query-more",
+			// 'arg' => OhAlfred::actionify(array("search", $query)), // TODO working arg
+			'icon' => 'include/images/alfred/search.png'
+		];
+
+		return $results;
+	}
+
+	protected function floatToBars($float, $max = 12) {
+		$line = ($decimal < 1) ? floor($decimal * $max) : $max;
+		return str_repeat("𝗹", $line) . str_repeat("𝗅", $max - $line);
+	}
+
+	protected function popularitySort($a, $b) {
+		if($a['popularity'] == $b['popularity'])
+			return 0;
+
+		return ($a['popularity'] < $b['popularity']) ? 1 : -1;
 	}
 }
