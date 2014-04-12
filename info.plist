@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.citelao.spotifious</string>
+	<key>category</key>
+	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
 		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
@@ -104,7 +106,12 @@ end tell
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string>php -f main.php -- "{query}"</string>
+				<string>php -f main.php -- "{query}"
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f main.php -- "{query}" | tee ~/Desktop/Spotifious.log</string>
 				<key>subtext</key>
 				<string>Search for artists, tracks, or albums</string>
 				<key>title</key>
@@ -133,7 +140,23 @@ end tell
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string># Spotifious
+# v0.8dev
+
+I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
+
+GitHub: https://github.com/citelao/Spotify-for-Alfred/
+Forum Link: http://www.alfredforum.com/topic/1644-spotifious-a-natural-spotify-controller-for-alfred/
+
+A lot of people helped out on this:
+- vdesabou and I both trade ideas a ton (sockets were his idea)
+- PHPfunk’s PHP Alfred workflow inspired much of OhAlfred
+- and many more people are referenced in the code itself.
+Thank you everyone! Y’all made Spotifious as awesome as it is.
+
+Also thank you for using Spotifious and reading the README; I hope you enjoy it.
+
+This code is MIT Licensed.</string>
 	<key>uidata</key>
 	<dict>
 		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
