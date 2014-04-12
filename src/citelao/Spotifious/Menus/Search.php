@@ -2,6 +2,7 @@
 namespace Spotifious\Menus;
 
 use Spotifious\Menus\Menu;
+use Spotifious\Menus\Helper;
 use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\Exceptions\StatefulException;
 
@@ -58,7 +59,7 @@ class Search implements Menu {
 	public function output() {
 		if(!empty($this->search)) {
 			foreach ($this->search as $key => $current) {
-				$popularity = $this->floatToBars($current['popularity']);
+				$popularity = Helper::floatToBars($current['popularity']);
 
 				if ($current['type'] == 'track') {
 					$subtitle = "$popularity {$current['album']} by {$current['artist']}";
@@ -68,11 +69,22 @@ class Search implements Menu {
 					$subtitle = "$popularity " . ucfirst($current['type']);
 				}
 
+				if ($current['type'] == 'track') {
+					$valid = 'yes';
+					$arg = "play track \"{$current['href']}\"";
+					$autocomplete = '';
+				} else {
+					$valid = 'no';
+					$arg = '';
+					$autocomplete = "{$current['href']} ⟩ {$this->query} ⟩";
+				}
+
 				$currentResult['title']    = $current['title'];
 				$currentResult['subtitle'] = $subtitle;
 				$currentResult['uid'] = "bs-spotify-{$this->query}-{$current['type']}-{$current['title']}";
-				$currentResult['valid'] = 'no';
-				$currentResult['autocomplete'] = "{$current['href']} ⟩ {$this->query} ⟩";
+				$currentResult['valid'] = $valid;
+				$currentResult['arg'] = $arg;
+				$currentResult['autocomplete'] = $autocomplete;
 				$currentResult['icon'] = "include/images/{$current['type']}.png";
 
 				$results[] = $currentResult;
@@ -89,11 +101,6 @@ class Search implements Menu {
 		];
 
 		return $results;
-	}
-
-	protected function floatToBars($float, $max = 12) {
-		$line = ($float < 1) ? floor($float * $max) : $max;
-		return str_repeat("𝗹", $line) . str_repeat("𝗅", $max - $line);
 	}
 
 	protected function popularitySort($a, $b) {

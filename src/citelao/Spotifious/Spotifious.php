@@ -33,9 +33,10 @@ class Spotifious {
 			$depth = count($URIs) - (2 * count($URIs) - $arrows); // equiv to $arrows - count($URIs).
 
 			$options = array(
-				'depth' => $depth,
-				'URIs'  => $URIs,
-				'args'  => $args,
+				'depth'  => $depth,
+				'URIs'   => $URIs,
+				'args'   => $args,
+				'search' => ''
 			);
 
 			if (mb_substr($query, -1) == "⟩") { // Machine-generated

@@ -2,6 +2,7 @@
 namespace Spotifious\Menus;
 
 use Spotifious\Menus\Menu;
+use Spotifious\Menus\Helper;
 use OhAlfred\HTTP\JsonFetcher;
 
 class Detail implements Menu {
@@ -12,24 +13,28 @@ class Detail implements Menu {
 	protected $rawType;
 
 	protected $currentURI;
+	protected $query;
+	protected $search;
 	// TODO availability
 
 
 	public function __construct($options) {
-		$this->currentURI    = $options['URIs'][$depth - 1];
-		$explodedURI   = explode(":", $this->currentURI);
-		$this->type    = $explodedURI[1];
+		$this->search = $options['search'];
+
+		$this->currentURI = $options['URIs'][$options['depth'] - 1];
+		$explodedURI = explode(":", $this->currentURI);
+		$this->type = $explodedURI[1];
 		$this->rawType = ($this->type == "artist") ? "album" : "track";
 
-		$fetcher = new JsonFetcher("http://ws.spotify.com/lookup/1/.json?uri=$currentURI&extras={$this->rawType}detail");
+		$fetcher = new JsonFetcher("http://ws.spotify.com/lookup/1/.json?uri={$this->currentURI}&extras={$this->rawType}detail");
 		$json = $fetcher->run();
 
-		$this->title = $json->$type->name;
+		$this->title = $json->{$this->type}->name;
 		$this->raw = array();
 
 		if($this->rawType == "album") {
 			$albums = array();
-			$query = implode(" ⟩", $options['args']);
+			$this->query = implode(" ⟩", $options['args']);
 
 			foreach ($json->artist->albums as $key => $value) {
 				$value = $value->album;
@@ -41,7 +46,7 @@ class Detail implements Menu {
 				$currentResult['type'] = 'album';
 				$currentResult['href'] = $value->href;
 
-				if($options['search'] != null && !mb_stristr($currentResult['title'], $options['search']))
+				if($this->search != '' && !mb_stristr($currentResult['title'], $this->search))
 					continue;
 
 				$this->raw[] = $currentResult;
@@ -57,7 +62,7 @@ class Detail implements Menu {
 				$currentResult['popularity'] = $value->popularity;
 				$currentResult['length'] = $value->length;
 
-				if($options['search'] != null && !mb_stristr($currentResult['title'], $options['search']))
+				if($this->search != '' && !mb_stristr($currentResult['title'], $this->search))
 					continue;
 
 				$this->raw[] = $currentResult;
@@ -70,7 +75,22 @@ class Detail implements Menu {
 
 		if(!empty($this->raw)) {
 			foreach ($this->raw as $key => $current) {
-				
+				$currentResult = array();
+				if ($current['type'] == 'track') {
+					$currentResult['title'] = "{$current['number']}. {$current['title']}";
+					$currentResult['subtitle'] = Helper::floatToBars($current['popularity'], 12);
+					$currentResult['arg'] = "play track \"{$current['href']}\" in context \"{$this->currentURI}\""; 
+					$currentResult['valid'] = "yes";
+					$currentResult['icon'] = "include/images/track.png";
+				} else {
+					$currentResult['title'] = $current['title'];
+					$currentResult['subtitle'] = "Browse this {$current['type']}";
+					$currentResult['valid'] = "no";
+					$currentResult['autocomplete'] = "{$this->currentURI} ⟩ {$current['href']} ⟩ {$this->query} ⟩{$this->search}⟩";
+					$currentResult['icon'] = "include/images/album.png";
+				}
+
+				$results[] = $currentResult;
 			}
 		}
 
