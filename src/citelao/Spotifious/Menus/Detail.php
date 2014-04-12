@@ -94,6 +94,17 @@ class Detail implements Menu {
 			}
 		}
 
+		$scope['title'] = $this->title;
+		$scope['subtitle'] = "Browse this {$this->type} in Spotify";
+		$scope['arg'] = "activate (open location \"{$this->currentURI}\")";
+		$scope['icon'] = "include/images/{$this->type}.png";
+
+		if ($this->search == null) {
+			array_unshift($results, $scope);
+		} else {
+			array_push($results, $scope);
+		}
+
 		return $results;
 	}
 }

@@ -96,7 +96,7 @@ class Search implements Menu {
 			'title' => "Search for {$this->query}",
 			'subtitle' => "Continue this search in Spotify…",
 			'uid' => "bs-spotify-{$this->query}-more",
-			// 'arg' => OhAlfred::actionify(array("search", $query)), // TODO working arg
+			'arg' => "activate (open location \"spotify:search:{$this->query}\")",
 			'icon' => 'include/images/search.png'
 		];
 
