@@ -1,7 +1,7 @@
 # Spotifious #
 ## a natural Spotify controller for Alfred ##
 
-![The magical interface](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/hero%20shot.png)
+![The magical interface](include/screenshots/hero_shot.png)
 
 So, you've heard of **Spotifious**, eh? *A natural Spotify controller for
 Alfred*? Searches Spotify, controls your music, generally rocks?
@@ -56,23 +56,20 @@ So let's assume you've downloaded and installed the workflow. Now what?
 
 Good! You should briefly see a loading entry, then the main menu:
 
-![Loading...](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/loading.png)
-![Main Menu](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/main%20menu.png)
+![Loading...](include/screenshots/loading.png)
+![Main Menu](include/screenshots/main_menu.png)
 
 You can action the song title (press `⏎`) to play or pause the song, action 
 the album or artist to search for that album or artist, or just start typing to 
 search for cool music.
 
-![Searching for good music](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/searching.png)
+![Some cool screenshots](include/screenshots/compilation.png)
 
 Once you've searched for something, you can continue to browse albums and arists through Spotifious. Actioning an artist will bring up a list of their albums, and actioning an album will bring up the track list.
 
 If you're looking through a really long album or a particularly prodigious artist, you can also narrow your search by typing a little more— Spotifious will search for results within the album or artist.
 
 **Note:** You can always leave a menu and go back just by pressing `⌫`.
-
-![Album list](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/artist%20menu.png)
-![Track list](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/album%20menu.png)
 
 ## Acknowledgements ##
 
