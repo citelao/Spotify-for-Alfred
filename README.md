@@ -4,14 +4,12 @@
 ![The magical interface](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/hero%20shot.png)
 
 So, you've heard of **Spotifious**, eh? *A natural Spotify controller for
-Alfred*? Searchs Spotify, controls your music, generally rocks?
+Alfred*? Searches Spotify, controls your music, generally rocks?
 
 It's built off a lot of other people's work—
 [PHPFunk](https://github.com/phpfunk/alfred-spotify-controls) and
 [David Ferguson](http://jdfwarrior.tumblr.com/) especially— and tries to match
 the functionality of Alfred's integrated iTunes player. It's not perfect, but it does the job. And I think it's pretty cool.
-
-It uses a slightly modified [Entypo](http://www.entypo.com/) icon font face for icons.
 
 ## Features ##
 
@@ -35,11 +33,11 @@ start it*. And don't worry about errors— we'll handle those.
 
 ## Download & Install ##
 
-Current version: v0.9
+Latest version: [v0.9](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.9](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
 
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)
 this repository.
-2. Open `spotifious.alfredworkflow` by double-clicking it or dragging it into
+2. Open `Spotifious.alfredworkflow` by double-clicking it or dragging it into
 Alfred.
 3. Double-click the thingy marked `Hotkey` (fig. i1).
 4. Click the textfield labeled `Hotkey` and press `^⌘⏎`.
@@ -83,6 +81,7 @@ A lot of people helped out on this:
 - **vdesabou** and I trade ideas a ton
 - **PHPfunk** and his PHP Alfred workflow inspired much of `OhAlfred`
 - **David Ferguson** helped with some iffy Alfred glitches
+- a slightly modified version of [Entypo](http://www.entypo.com/) icon font face for icons.
 - and many other people mentioned in the code.
 
 Thanks to everyone who helped, and thanks to everyone who uses my work!
@@ -95,6 +94,8 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 - Make main menu links go directly to menus.
 
 ## Changelog ##
+
+See `CHANGELOG.md` for more detailed information.
 
 - v0.9: Added error reporting and context-based searching; restructrued app.
 - v0.8: Added new icons; set them as default
