@@ -139,7 +139,7 @@ class OhAlfred {
 	}
 
 	public function exceptionify($error) {
-		// $this->errorify(0, $error->getMessage(), $error->getFile(), $error->getLine());
+		$this->errorify(get_class($error), $error->getMessage(), $error->getFile(), $error->getLine(), array_merge($error->getState(), $error->getTrace()));
 	}
 
 	public function errorify($number, $message, $file, $line, $context) {
@@ -172,10 +172,8 @@ class OhAlfred {
 
 		$this->alfredify($results);
 		return true;
-		// exit();
 	}
 
-	// TODO
 	protected function loggifyError($number, $message, $file, $line, $context) {
 		// Write contents of log file.
 		$fcontents  = "# Error Log # \n";
@@ -184,17 +182,9 @@ class OhAlfred {
 		$fcontents .= $message . "\n";
 		$fcontents .= "Line " . $line . ", " . $file . "\n\n";
 
-		$fcontents .= "## Symbols ## \n"; // TODO rewrite
-		if(!is_a($error, "StatefulException") && !is_a($error, "OhAlfred\StatefulException")) {
-			$fcontents .= "This is not an Alfred-parsable exception. \n";
-			$fcontents .= "This is a " . get_class($error);
-		} else {
-			$fcontents .= print_r($context, true) . "\n";
-		}
+		$fcontents .= "## Symbols ## \n";
+		$fcontents .= print_r($context, true) . "\n";
 		$fcontents .= "\n\n";
-
-		$fcontents .= "## Stack Trace ## \n"; // tODO
-		// $fcontents .= print_r($error->getTrace(), true) . "\n";
 
 		// Delay storing of error 'till contents are fully generated.
 		$errordir = $this->cache();

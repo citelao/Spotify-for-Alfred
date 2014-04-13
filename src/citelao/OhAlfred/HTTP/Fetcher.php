@@ -20,9 +20,11 @@ class Fetcher {
 		$info    = curl_getinfo($ch);
 		curl_close($ch);
 
+
 		if($info['http_code'] != '200') {
-		 	if ($info['http_code'] == '0')
+		 	if ($info['http_code'] == '0') {
 		 		throw new StatefulException("Could not access Spotify API. Try searching again");
+		 	}
 
 	 		throw new StatefulException("fetch() failed; error code: " . $info['http_code']);
 		 }
