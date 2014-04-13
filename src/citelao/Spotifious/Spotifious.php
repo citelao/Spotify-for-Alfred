@@ -71,6 +71,7 @@ class Spotifious {
 		$value = trim($value);
 	}
 
+	// TODO cite
 	protected function is_spotify_uri($item) {
 			$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
 
