@@ -20,7 +20,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>CBDD35D9-C95A-4A15-BB2C-86A429FDA6CF</string>
+				<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -129,19 +129,17 @@ end tell
 			<integer>0</integer>
 		</dict>
 		<dict>
-			<key>config</key>
-			<dict/>
 			<key>type</key>
-			<string>alfred.workflow.action.browseinalfred</string>
+			<string>alfred.workflow.action.revealfile</string>
 			<key>uid</key>
-			<string>CBDD35D9-C95A-4A15-BB2C-86A429FDA6CF</string>
+			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
 	</array>
 	<key>readme</key>
 	<string># Spotifious
-# v0.8dev
+# v0.9
 
 I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
 
@@ -169,7 +167,7 @@ This code is MIT Licensed.</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>CBDD35D9-C95A-4A15-BB2C-86A429FDA6CF</key>
+		<key>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</key>
 		<dict>
 			<key>ypos</key>
 			<real>130</real>
