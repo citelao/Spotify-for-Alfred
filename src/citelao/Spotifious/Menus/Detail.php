@@ -17,7 +17,6 @@ class Detail implements Menu {
 	protected $search;
 	// TODO availability
 
-
 	public function __construct($options) {
 		$this->search = $options['search'];
 
