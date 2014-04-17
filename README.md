@@ -39,14 +39,12 @@ Latest version: [v0.9](https://github.com/citelao/Spotify-for-Alfred/archive/mas
 this repository.
 2. Open `Spotifious.alfredworkflow` by double-clicking it or dragging it into
 Alfred.
-3. Double-click the thingy marked `Hotkey` (fig. i1).
+3. Double-click the thingy marked `Hotkey`.
 4. Click the textfield labeled `Hotkey` and press `^⌘⏎`.
-5. Click `Save` to store the binding (fig. i2).
+5. Click `Save` to store the binding.
 6. Continue on with your merry day— but now with Spotifious.
 
-![fig. i1: Double-click this.](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/fig%20i1%20hotkey.png)
-
-![fig. i2: The Resulting Field](https://dl.dropboxusercontent.com/u/3770885/Spotifious%20Stuff/fig%20i2%20hotkey.png)
+![A visual install guide](include/screenshots/install.png)
 
 ## How to Use ##
 
@@ -87,7 +85,7 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 ## TODO ##
 
 - Allow `⎇`, `^`, and `⌘` to function as modifiers (Open in Spotify, other things?).
-- Provide settings menu in-app.
+- More in-depth Spotify control (radio, queuing, playlists)
 - Make main menu links go directly to menus.
 
 ## Changelog ##
