@@ -1,0 +1,8 @@
+{
+	"autoload": {
+		"psr-4": {
+			"OhAlfred\\": "src/citelao/OhAlfred/",
+        		"Spotifious\\": "src/citelao/Spotifious/"
+		}
+	}
+}

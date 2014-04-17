@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.citelao.spotifious</string>
+	<key>category</key>
+	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
 		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
@@ -16,12 +18,9 @@
 				<key>modifiersubtext</key>
 				<string></string>
 			</dict>
-		</array>
-		<key>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</key>
-		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>26447A5D-A2C6-4DD3-9467-8A7C9422E330</string>
+				<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -56,7 +55,7 @@
 				<key>escaping</key>
 				<integer>50</integer>
 				<key>script</key>
-				<string>tell application &quot;Spotify&quot;
+				<string>tell application "Spotify"
 	run script {query}
 end tell
 </string>
@@ -103,12 +102,16 @@ end tell
 				<key>escaping</key>
 				<integer>62</integer>
 				<key>keyword</key>
-				<string>spot</string>
+				<string>spotifious</string>
 				<key>runningsubtext</key>
-				<string>Harnessing Spotify&apos;s terrible API...</string>
+				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string>SHOWIMAGES=&quot;no&quot; # &apos;yes&apos; or &apos;no&apos;
-php -f main.php -- $SHOWIMAGES &quot;{query}&quot;</string>
+				<string>php -f main.php -- "{query}"
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f main.php -- "{query}" | tee ~/Desktop/Spotifious.log</string>
 				<key>subtext</key>
 				<string>Search for artists, tracks, or albums</string>
 				<key>title</key>
@@ -126,46 +129,32 @@ php -f main.php -- $SHOWIMAGES &quot;{query}&quot;</string>
 			<integer>0</integer>
 		</dict>
 		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>spot cleanup</string>
-				<key>subtext</key>
-				<string>Clear cached artwork</string>
-				<key>text</key>
-				<string>Cleanup Spotifious</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.action.revealfile</string>
 			<key>uid</key>
-			<string>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>escaping</key>
-				<integer>63</integer>
-				<key>script</key>
-				<string>php -f clear.php</string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>26447A5D-A2C6-4DD3-9467-8A7C9422E330</string>
+			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string># Spotifious
+# v0.9
+
+I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
+
+GitHub: https://github.com/citelao/Spotify-for-Alfred/
+Forum Link: http://www.alfredforum.com/topic/1644-spotifious-a-natural-spotify-controller-for-alfred/
+
+A lot of people helped out on this:
+- vdesabou and I both trade ideas a ton (sockets were his idea)
+- PHPfunk’s PHP Alfred workflow inspired much of OhAlfred
+- and many more people are referenced in the code itself.
+Thank you everyone! Y’all made Spotifious as awesome as it is.
+
+Also thank you for using Spotifious and reading the README; I hope you enjoy it.
+
+This code is MIT Licensed.</string>
 	<key>uidata</key>
 	<dict>
 		<key>18496AC4-EA42-444C-A906-642E38259C96</key>
@@ -173,20 +162,15 @@ php -f main.php -- $SHOWIMAGES &quot;{query}&quot;</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>26447A5D-A2C6-4DD3-9467-8A7C9422E330</key>
-		<dict>
-			<key>ypos</key>
-			<real>130</real>
-		</dict>
-		<key>36606F70-E12F-4D1D-81A0-3F3FFE4EA650</key>
-		<dict>
-			<key>ypos</key>
-			<real>130</real>
-		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
+		</dict>
+		<key>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
 		</dict>
 		<key>E16D7A45-5212-4A70-AE85-36C6BF0450E7</key>
 		<dict>
