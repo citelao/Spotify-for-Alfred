@@ -14,6 +14,7 @@ class Main implements Menu {
 
 	public function __construct($query) {
 		$current = $this->now();
+
 		$this->currentTrack             = $current[0];
 		$this->currentAlbum             = $current[1];
 		$this->currentArtist            = $current[2];
@@ -44,6 +45,17 @@ class Main implements Menu {
 		$results[3]['valid']        = "no";
 		$results[3]['icon']         = "include/images/search.png";
 
+		// Overrides for no track
+		if($this->currentTrack == "No track playing") {
+			$results[0]['subtitle']     = "";
+
+			$results[1]['subtitle']     = "";
+			$results[1]['autocomplete'] = "";
+
+			$results[2]['subtitle']     = "";
+			$results[2]['autocomplete'] = "";
+		}
+
 		return $results;
 	}
 
@@ -52,6 +64,16 @@ class Main implements Menu {
 
 		$data = $spotQuery->run();
 
-		return explode("✂", $data);
+		$array = explode("✂", $data);
+
+		if($array[0] == "") {
+			$array[0] = "No track playing";
+			$array[1] = "No album";
+			$array[2] = "No artist";
+			$array[3] = "";
+			$array[4] = "paused";
+		}
+
+		return $array;
 	}
 }

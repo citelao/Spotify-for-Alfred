@@ -1,5 +1,8 @@
 # Changelog #
 
+## v0.9.1 ##
+- Changed: prevent breakage if no track playing.
+
 ## v0.9 ##
 
 - Added: created changelog
