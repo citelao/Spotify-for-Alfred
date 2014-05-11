@@ -33,7 +33,7 @@ start it*. And don't worry about errors— we'll handle those.
 
 ## Download & Install ##
 
-Latest version: [v0.9.1](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.9.1](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
+Latest version: [v0.9.2](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.9.2](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
 
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)
 this repository.
@@ -92,6 +92,7 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 
 See `CHANGELOG.md` for more detailed information.
 
+- v0.9.2: Compatibility changes for PHP v5.3
 - v0.9.1: Fixed "no track" bug.
 - v0.9:   Added error reporting and context-based searching; restructrued app.
 - v0.8:   Added new icons; set them as default
