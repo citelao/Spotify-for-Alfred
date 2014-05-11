@@ -139,36 +139,42 @@ class OhAlfred {
 	}
 
 	public function exceptionify($error) {
-		$this->errorify(get_class($error), $error->getMessage(), $error->getFile(), $error->getLine(), array_merge($error->getState(), $error->getTrace()));
+		if(method_exists($error, 'getState')) {
+			$state = array_merge($error->getState(), $error->getTrace());
+		} else {
+			$state = $error->getTrace();
+		}
+
+		$this->errorify(get_class($error), $error->getMessage(), $error->getFile(), $error->getLine(), $state);
 	}
 
 	public function errorify($number, $message, $file, $line, $context) {
-		$titles = ['Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!'];
+		$titles = array('Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!');
 
 		$fdir = $this->loggifyError($number, $message, $file, $line, $context);
 
-		$results = [
-			[
+		$results = array(
+			array(
 				'title' => $titles[array_rand($titles)],
 				'subtitle' => "Something went haywire. You can continue using Spotifious.",
 				'valid' => "no",
 				'icon' => 'include/images/error.png'
-			],
+			),
 
-			[
+			array(
 				'title' => $message,
 				'subtitle' => "Line " . $line . ", " . $file,
 				'valid' => "no",
 				'icon' => 'include/images/info.png'
-			],
+			),
 
-			[
+			array(
 				'title' => "View log",
 				'subtitle' => "Open new Finder window with .log file.",
 				'icon' => 'include/images/folder.png',
 				'arg' => $fdir
-			]
-		];
+			)
+		);
 
 		$this->alfredify($results);
 		return true;
