@@ -1,5 +1,11 @@
 # Changelog #
 
+## v0.9.3 ##
+- Changed: more compatibility changes for PHP v5.3
+
+## v0.9.2 ##
+- Changed: compatibility changes for PHP v5.3
+
 ## v0.9.1 ##
 - Changed: prevent breakage if no track playing.
 
