@@ -92,13 +92,13 @@ class Search implements Menu {
 		}
 
 		/* Give the option to continue searching in Spotify because even I know my limits. */
-		$results[] = [
+		$results[] = array(
 			'title' => "Search for {$this->query}",
 			'subtitle' => "Continue this search in Spotify…",
 			'uid' => "bs-spotify-{$this->query}-more",
 			'arg' => "activate (open location \"spotify:search:{$this->query}\")",
 			'icon' => 'include/images/search.png'
-		];
+		);
 
 		return $results;
 	}
