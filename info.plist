@@ -55,7 +55,7 @@
 				<key>escaping</key>
 				<integer>50</integer>
 				<key>script</key>
-				<string>tell application "Spotify"
+				<string>tell application &quot;Spotify&quot;
 	run script {query}
 end tell
 </string>
@@ -108,12 +108,12 @@ end tell
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string>php -f main.php -- "{query}"
+				<string>php -f main.php -- &quot;{query}&quot;
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
 # first line of this script so it looks like this:
-# php -f main.php -- "{query}" | tee ~/Desktop/Spotifious.log</string>
+# php -f main.php -- &quot;{query}&quot; | tee ~/Desktop/Spotifious.log</string>
 				<key>subtext</key>
 				<string>Search for artists, tracks, or albums</string>
 				<key>title</key>
@@ -141,7 +141,7 @@ end tell
 	</array>
 	<key>readme</key>
 	<string># Spotifious
-# v0.9.3
+# v0.9.4
 
 I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
 
