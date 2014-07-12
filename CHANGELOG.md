@@ -1,5 +1,8 @@
 # Changelog #
 
+## v0.9.4 ##
+- Changed: more compatibility changes for PHP v5.3. These did not get included in v0.9.3.
+
 ## v0.9.3 ##
 - Changed: more compatibility changes for PHP v5.3
 
