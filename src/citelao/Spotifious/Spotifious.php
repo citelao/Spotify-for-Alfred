@@ -3,12 +3,38 @@ namespace Spotifious;
 
 use Spotifious\Menus\Main;
 use Spotifious\Menus\Search;
+use Spotifious\Menus\Setup;
+use Spotifious\Menus\SetupCountryCode;
 use Spotifious\Menus\Detail;
+use OhAlfred\OhAlfred;
 
 class Spotifious {
+	protected $alfred;
+
 	public function run($query) {
 		// Correct for old Spotifious queries
 		$q = str_replace("►", "⟩", $query);
+
+		$this->alfred = new OhAlfred();
+
+		// Display the setup menu if the app isn't setup.
+		if($this->alfred->options('country') == '' ||
+			$query == "s" || $query == "S") {
+
+			// If we are trying to configure country code
+			if($this->contains($query, "Country Code ⟩")) {
+				$menu = new SetupCountryCode($query);
+				return $menu->output();
+			} 
+
+			$menu = new Setup($query);
+			return $menu->output();
+		} else {
+			// TODO remove
+			return [
+				['title' => $this->alfred->options('country')]
+			];
+		}
 
 		if (mb_strlen($query) <= 3) {
 			$menu = new Main($query);
@@ -59,7 +85,6 @@ class Spotifious {
 		} else {
 			$menu = new Search($query);
 			return $menu->output();
-
 		}
 	}
 
@@ -73,8 +98,8 @@ class Spotifious {
 
 	// TODO cite
 	protected function is_spotify_uri($item) {
-			$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
+		$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
 
-			return preg_match($regex, $item);
-		}
+		return preg_match($regex, $item);
+	}
 }
