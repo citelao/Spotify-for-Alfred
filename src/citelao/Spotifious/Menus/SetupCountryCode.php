@@ -37,8 +37,8 @@ class SetupCountryCode implements Menu {
 
 			$currentResult = array(
 				'title' => $country['name'],
-				'subtitle' => "Set your country to '{$country['code']}.'"
-				// 'valid' => 'no' // TODO this is important
+				'subtitle' => "Set your country to “{$country['code']}.”",
+				'arg' => 'country⟩' . $country['code']
 			);
 
 			$results[] = $currentResult;

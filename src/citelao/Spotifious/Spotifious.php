@@ -7,33 +7,32 @@ use Spotifious\Menus\Setup;
 use Spotifious\Menus\SetupCountryCode;
 use Spotifious\Menus\Detail;
 use OhAlfred\OhAlfred;
+use OhAlfred\Applescript\ApplicationApplescript;
 
 class Spotifious {
 	protected $alfred;
+
+	public function __construct() {
+		$this->alfred = new OhAlfred();
+	}
 
 	public function run($query) {
 		// Correct for old Spotifious queries
 		$q = str_replace("►", "⟩", $query);
 
-		$this->alfred = new OhAlfred();
-
 		// Display the setup menu if the app isn't setup.
 		if($this->alfred->options('country') == '' ||
-			$query == "s" || $query == "S") {
+			$query == "s" || $query == "S" ||
+			$this->contains($query, "Country Code ⟩")) {
 
 			// If we are trying to configure country code
 			if($this->contains($query, "Country Code ⟩")) {
 				$menu = new SetupCountryCode($query);
 				return $menu->output();
-			} 
+			}
 
 			$menu = new Setup($query);
 			return $menu->output();
-		} else {
-			// TODO remove
-			return [
-				['title' => $this->alfred->options('country')]
-			];
 		}
 
 		if (mb_strlen($query) <= 3) {
@@ -62,7 +61,8 @@ class Spotifious {
 				'depth'  => $depth,
 				'URIs'   => $URIs,
 				'args'   => $args,
-				'search' => ''
+				'search' => '',
+				'query'  => $query
 			);
 
 			if (mb_substr($query, -1) == "⟩") { // Machine-generated
@@ -85,6 +85,22 @@ class Spotifious {
 		} else {
 			$menu = new Search($query);
 			return $menu->output();
+		}
+	}
+
+	public function process($action) {
+		if($this->contains($action, '⟩')) {
+			$splitAction = explode('⟩', $action);
+			$command = array_shift($splitAction);
+
+			if($command == 'country') {
+				$this->alfred->options('country', $splitAction[0]);
+			} else if($command == 'spotify') {
+				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
+				$as->run();
+			}
+		} else {
+			return "Could not process!";
 		}
 	}
 
