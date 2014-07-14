@@ -5,13 +5,18 @@ use Spotifious\Menus\Menu;
 use Spotifious\Menus\Helper;
 use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\Exceptions\StatefulException;
+use OhAlfred\OhAlfred;
 
 class Search implements Menu {
+	protected $alfred;	
 	protected $search;
 	protected $query;
 
 	public function __construct($query) {
 		$this->query = $query;
+		$this->alfred = new OhAlfred();
+
+		$locale = $this->alfred->options('country');
 
 		// Build the search results
 		// for each query type
@@ -25,7 +30,25 @@ class Search implements Menu {
 
 			// Create the search results array
 			foreach ($json->{$type . "s"} as $key => $value) {
-				// TODO check region availability
+				// Determine region availability
+				if($type == "track") {
+					if(isset($value->album->availability)) {
+						$regions = $value->album->availability->territories;
+					} else {
+						$regions = "";
+					}
+				} else if($type == "album") {
+					if(isset($value->availability)) {
+						$regions = $value->availability->territories;
+					} else {
+						$regions = "";
+					}
+				} else {
+					$regions = "";
+				}
+
+				if(mb_strlen($regions) > 0 && $this->contains($regions, $locale))
+					continue;
 
 				// Weight popularity
 				$popularity = $value->popularity;
@@ -71,7 +94,7 @@ class Search implements Menu {
 
 				if ($current['type'] == 'track') {
 					$valid = 'yes';
-					$arg = "play track \"{$current['href']}\"";
+					$arg = "spotify⟩play track \"{$current['href']}\"";
 					$autocomplete = '';
 				} else {
 					$valid = 'no';
@@ -96,7 +119,7 @@ class Search implements Menu {
 			'title' => "Search for {$this->query}",
 			'subtitle' => "Continue this search in Spotify…",
 			'uid' => "bs-spotify-{$this->query}-more",
-			'arg' => "activate (open location \"spotify:search:{$this->query}\")",
+			'arg' => "spotify⟩activate (open location \"spotify:search:{$this->query}\")",
 			'icon' => 'include/images/search.png'
 		);
 
@@ -108,5 +131,9 @@ class Search implements Menu {
 			return 0;
 
 		return ($a['popularity'] < $b['popularity']) ? 1 : -1;
+	}
+
+	protected function contains($stack, $needle) {
+		return (strpos($stack, $needle) !== false);
 	}
 }

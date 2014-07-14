@@ -15,7 +15,7 @@ class JsonFetcher {
 		$json = $this->fetcher->run();
 
 		if(empty($json))
-				throw new StatefulException("No JSON returned from Spotify web search");
+				throw new StatefulException("No JSON returned from " . $url);
 
 		$json = json_decode($json);
 

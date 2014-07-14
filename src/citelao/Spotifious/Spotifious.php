@@ -3,12 +3,37 @@ namespace Spotifious;
 
 use Spotifious\Menus\Main;
 use Spotifious\Menus\Search;
+use Spotifious\Menus\Setup;
+use Spotifious\Menus\SetupCountryCode;
 use Spotifious\Menus\Detail;
+use OhAlfred\OhAlfred;
+use OhAlfred\Applescript\ApplicationApplescript;
 
 class Spotifious {
+	protected $alfred;
+
+	public function __construct() {
+		$this->alfred = new OhAlfred();
+	}
+
 	public function run($query) {
 		// Correct for old Spotifious queries
 		$q = str_replace("►", "⟩", $query);
+
+		// Display the setup menu if the app isn't setup.
+		if($this->alfred->options('country') == '' ||
+			$query == "s" || $query == "S" ||
+			$this->contains($query, "Country Code ⟩")) {
+
+			// If we are trying to configure country code
+			if($this->contains($query, "Country Code ⟩")) {
+				$menu = new SetupCountryCode($query);
+				return $menu->output();
+			}
+
+			$menu = new Setup($query);
+			return $menu->output();
+		}
 
 		if (mb_strlen($query) <= 3) {
 			$menu = new Main($query);
@@ -36,7 +61,8 @@ class Spotifious {
 				'depth'  => $depth,
 				'URIs'   => $URIs,
 				'args'   => $args,
-				'search' => ''
+				'search' => '',
+				'query'  => $query
 			);
 
 			if (mb_substr($query, -1) == "⟩") { // Machine-generated
@@ -59,7 +85,22 @@ class Spotifious {
 		} else {
 			$menu = new Search($query);
 			return $menu->output();
+		}
+	}
 
+	public function process($action) {
+		if($this->contains($action, '⟩')) {
+			$splitAction = explode('⟩', $action);
+			$command = array_shift($splitAction);
+
+			if($command == 'country') {
+				$this->alfred->options('country', $splitAction[0]);
+			} else if($command == 'spotify') {
+				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
+				$as->run();
+			}
+		} else {
+			return "Could not process!";
 		}
 	}
 
@@ -73,8 +114,8 @@ class Spotifious {
 
 	// TODO cite
 	protected function is_spotify_uri($item) {
-			$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
+		$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
 
-			return preg_match($regex, $item);
-		}
+		return preg_match($regex, $item);
+	}
 }

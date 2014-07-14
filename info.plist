@@ -12,7 +12,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -27,6 +27,8 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
+		<array/>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<array>
 			<dict>
@@ -52,20 +54,56 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
 				<key>escaping</key>
-				<integer>50</integer>
+				<integer>62</integer>
+				<key>keyword</key>
+				<string>spotifious</string>
+				<key>runningsubtext</key>
+				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string>tell application &quot;Spotify&quot;
-	run script {query}
-end tell
-</string>
+				<string>php -f main.php -- "{query}"
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f main.php -- "{query}" | tee ~/Desktop/Spotifious.log</string>
+				<key>subtext</key>
+				<string>Search for artists, tracks, or albums</string>
+				<key>title</key>
+				<string>Search Spotify for tracks, artists, and albums</string>
 				<key>type</key>
-				<integer>6</integer>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>4</integer>
+				<key>script</key>
+				<string>php -f action.php -- "{query}"
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f action.php -- "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
+			<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -97,44 +135,30 @@ end tell
 			<integer>1</integer>
 		</dict>
 		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>62</integer>
-				<key>keyword</key>
-				<string>spotifious</string>
-				<key>runningsubtext</key>
-				<string>Getting Spotifious data...</string>
-				<key>script</key>
-				<string>php -f main.php -- &quot;{query}&quot;
-
-# In case you are experiencing unsolveable issues,
-# you can generate a log file to help me. Modify the
-# first line of this script so it looks like this:
-# php -f main.php -- &quot;{query}&quot; | tee ~/Desktop/Spotifious.log</string>
-				<key>subtext</key>
-				<string>Search for artists, tracks, or albums</string>
-				<key>title</key>
-				<string>Search Spotify for tracks, artists, and albums</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
 			<key>type</key>
 			<string>alfred.workflow.action.revealfile</string>
 			<key>uid</key>
 			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>50</integer>
+				<key>script</key>
+				<string>tell application "Spotify"
+	run script {query}
+end tell
+</string>
+				<key>type</key>
+				<integer>6</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -164,6 +188,11 @@ This code is MIT Licensed.</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
 			<key>ypos</key>
@@ -177,7 +206,7 @@ This code is MIT Licensed.</string>
 		<key>E16D7A45-5212-4A70-AE85-36C6BF0450E7</key>
 		<dict>
 			<key>ypos</key>
-			<real>10</real>
+			<real>250</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>

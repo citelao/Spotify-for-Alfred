@@ -4,8 +4,11 @@ namespace Spotifious\Menus;
 use Spotifious\Menus\Menu;
 use Spotifious\Menus\Helper;
 use OhAlfred\HTTP\JsonFetcher;
+use OhAlfred\OhAlfred;
 
 class Detail implements Menu {
+	protected $alfred;
+
 	protected $title;
 	protected $type;
 
@@ -14,8 +17,11 @@ class Detail implements Menu {
 
 	protected $currentURI;
 	protected $query;
+	protected $originalQuery;
 	protected $search;
-	// TODO availability
+
+	protected $locale;
+	protected $availability;
 
 	public function __construct($options) {
 		$this->search = $options['search'];
@@ -31,15 +37,36 @@ class Detail implements Menu {
 		$this->title = $json->{$this->type}->name;
 		$this->raw = array();
 
+		$this->alfred = new OhAlfred();
+		$this->locale = $this->alfred->options('country');
+
+		$this->originalQuery = $options['query'];
+
 		if($this->rawType == "album") {
 			$albums = array();
 			$this->query = implode(" ⟩", $options['args']);
 
+			// Invalidate this if anything is unavailable.
+			$this->availability = true;
+
 			foreach ($json->artist->albums as $key => $value) {
 				$value = $value->album;
 
+				// Prevent duplicates.
 				if(in_array($value->name, $albums))
 					continue;
+
+				// Determine region availability
+				if(isset($value->availability)) {
+					$regions = $value->availability->territories;
+				} else {
+					$regions = "";
+				}
+
+				if(mb_strlen($regions) > 0 && !$this->contains($regions, $this->locale)) {
+					$this->availability = false;
+					continue;
+				}
 
 				$currentResult['title'] = $value->name;
 				$currentResult['type'] = 'album';
@@ -52,6 +79,10 @@ class Detail implements Menu {
 				$albums[] = $value->name;
 			}
 		} else {
+			$this->availability = (!isset($json->album->availability) || 
+				mb_strlen($json->album->availability->territories) == 0 ||
+				!$this->contains($json->album->availability->territories, $this->locale));
+
 			foreach ($json->album->tracks as $key => $value) {
 				$currentResult['title'] = $value->name;
 				$currentResult['type'] = 'track';
@@ -78,7 +109,7 @@ class Detail implements Menu {
 				if ($current['type'] == 'track') {
 					$currentResult['title'] = "{$current['number']}. {$current['title']}";
 					$currentResult['subtitle'] = Helper::floatToBars($current['popularity'], 12);
-					$currentResult['arg'] = "play track \"{$current['href']}\" in context \"{$this->currentURI}\""; 
+					$currentResult['arg'] = "spotify⟩play track \"{$current['href']}\" in context \"{$this->currentURI}\""; 
 					$currentResult['valid'] = "yes";
 					$currentResult['icon'] = "include/images/track.png";
 				} else {
@@ -95,15 +126,34 @@ class Detail implements Menu {
 
 		$scope['title'] = $this->title;
 		$scope['subtitle'] = "Browse this {$this->type} in Spotify";
-		$scope['arg'] = "activate (open location \"{$this->currentURI}\")";
+		$scope['arg'] = "spotify⟩activate (open location \"{$this->currentURI}\")";
 		$scope['icon'] = "include/images/{$this->type}.png";
 
+		$available = array();
+		if(!$this->availability) {
+			$available['title'] = "Some music unavailable.";
+			$available['subtitle'] = "Some results were hidden due to your locality (“{$this->locale}”).";
+			$available['valid'] = "no";
+			$available['autocomplete'] = $this->originalQuery;
+			$available['icon'] = "include/images/error.png";
+		}
+
 		if ($this->search == null) {
+			if(sizeof($available) > 0) {
+				array_unshift($results, $available);
+			}
 			array_unshift($results, $scope);
 		} else {
 			array_push($results, $scope);
+			if(sizeof($available) > 0) {
+				array_push($results, $available);
+			}
 		}
 
 		return $results;
+	}
+
+	protected function contains($stack, $needle) {
+		return (strpos($stack, $needle) !== false);
 	}
 }
