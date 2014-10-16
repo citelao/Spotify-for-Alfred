@@ -15,4 +15,5 @@ $results = $spotifious->process($action);
 // For debugging
 // print_r($action);
 // print("\n");
-// print_r($results);
+
+print_r($results);

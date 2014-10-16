@@ -205,7 +205,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>spotify⟩playpause</string>
+				<string>playpause⟩output</string>
 				<key>hotkey</key>
 				<integer>49</integer>
 				<key>hotmod</key>
@@ -234,7 +234,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>spotify⟩next track</string>
+				<string>next⟩output</string>
 				<key>hotkey</key>
 				<integer>124</integer>
 				<key>hotmod</key>

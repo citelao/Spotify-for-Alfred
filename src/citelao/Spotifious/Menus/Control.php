@@ -12,12 +12,14 @@ class Control implements Menu {
 		array(
 			'name' => 'Next track',
 			'keys' => 'skip',
+			'icon' => 'include/images/commands/next.png',
 			'action' => 'spotify⟩next track'
 		),
 
 		array(
 			'name' => 'Previous track',
 			'keys' => 'back',
+			'icon' => 'include/images/commands/previous.png',
 			'action' => 'spotify⟩previous track'
 		)
 	);
@@ -35,7 +37,8 @@ class Control implements Menu {
 
 			$results[] = array(
 				'title' => $command['name'],
-				'arg' => $command['action']
+				'arg' => $command['action'],
+				'icon' => $command['icon']
 			);
 		}
 
