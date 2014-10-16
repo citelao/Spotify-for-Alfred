@@ -38,7 +38,8 @@ class SetupCountryCode implements Menu {
 			$currentResult = array(
 				'title' => $country['name'],
 				'subtitle' => "Set your country to “{$country['code']}.”",
-				'arg' => 'country⟩' . $country['code']
+				'arg' => 'country⟩' . $country['code'],
+				'autocomplete' => 'Country Code ⟩' . $country['name']
 			);
 
 			$results[] = $currentResult;
@@ -48,6 +49,7 @@ class SetupCountryCode implements Menu {
 			$results[] = array(
 				'title' => 'Could not find country',
 				'subtitle' => 'We are looking for a country called "' . $this->search . '"',
+				'autocomplete' => 'Country Code ⟩',
 				'valid' => 'no'
 			);
 		} else {
