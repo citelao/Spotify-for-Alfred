@@ -1,6 +1,7 @@
 <?php
 namespace Spotifious;
 
+use Spotifious\Menus\Control;
 use Spotifious\Menus\Main;
 use Spotifious\Menus\Search;
 use Spotifious\Menus\Setup;
@@ -36,8 +37,13 @@ class Spotifious {
 		}
 
 		if (mb_strlen($query) <= 3) {
-			$menu = new Main($query);
-			return $menu->output();
+			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
+				$menu = new Control($query);
+				return $menu->output();
+			} else {
+				$menu = new Main($query);
+				return $menu->output();
+			}
 			
 		} elseif ($this->contains($query, '⟩')) {
 			// if the query contains any machine-generated text 
@@ -84,7 +90,14 @@ class Spotifious {
 
 		} else {
 			$menu = new Search($query);
-			return $menu->output();
+			$results = $menu->output();
+
+			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
+				$controlMenu = new Control($query);
+				$results = array_merge($controlMenu->output(), $results);
+			}
+
+			return $results;
 		}
 	}
 
