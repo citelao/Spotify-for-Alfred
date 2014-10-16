@@ -1,6 +1,7 @@
 <?php
 namespace Spotifious;
 
+use Spotifious\Menus\Control;
 use Spotifious\Menus\Main;
 use Spotifious\Menus\Search;
 use Spotifious\Menus\Setup;
@@ -36,8 +37,13 @@ class Spotifious {
 		}
 
 		if (mb_strlen($query) <= 3) {
-			$menu = new Main($query);
-			return $menu->output();
+			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
+				$menu = new Control($query);
+				return $menu->output();
+			} else {
+				$menu = new Main($query);
+				return $menu->output();
+			}
 			
 		} elseif ($this->contains($query, '⟩')) {
 			// if the query contains any machine-generated text 
@@ -84,7 +90,14 @@ class Spotifious {
 
 		} else {
 			$menu = new Search($query);
-			return $menu->output();
+			$results = $menu->output();
+
+			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
+				$controlMenu = new Control($query);
+				$results = array_merge($controlMenu->output(), $results);
+			}
+
+			return $results;
 		}
 	}
 
@@ -95,12 +108,60 @@ class Spotifious {
 
 			if($command == 'country') {
 				$this->alfred->options('country', $splitAction[0]);
+			} else if($command == 'next') {
+				$song = $this->respondingSpotifyQuery('next track');
+
+				if($splitAction[0] && $splitAction[0] == 'output') {
+					$icon = ($song['state'] == "playing") ? "▶" : "‖";
+
+					$this->alfred->notify(
+						$song['album'] . " — " . $song['artist'], 
+						$icon . " " . $song['title'], 
+						// $song['url'],
+						"",
+						"",
+						"",
+						$song['url']);
+				}
+
+			} else if($command == 'previous') {
+				$song = $this->respondingSpotifyQuery('previous track');
+
+				if($splitAction[0] && $splitAction[0] == 'output') {
+					$icon = ($song['state'] == "playing") ? "▶" : "‖";
+
+					$this->alfred->notify(
+						$song['album'] . " — " . $song['artist'], 
+						$icon . " " . $song['title'], 
+						// $song['url'],
+						"",
+						"",
+						"",
+						$song['url']);
+				}
+
+			} else if($command == 'playpause') {
+				$song = $this->respondingSpotifyQuery('playpause');
+
+				if($splitAction[0] && $splitAction[0] == 'output') {
+					$icon = ($song['state'] == "playing") ? "▶" : "‖";
+
+					$this->alfred->notify(
+						$song['album'] . " — " . $song['artist'], 
+						$icon . " " . $song['title'], 
+						// $song['url'],
+						"",
+						"",
+						"",
+						$song['url']);
+				}
+
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
 				$as->run();
 			}
 		} else {
-			return "Could not process!";
+			return "Could not process command!";
 		}
 	}
 
@@ -117,5 +178,29 @@ class Spotifious {
 		$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
 
 		return preg_match($regex, $item);
+	}
+
+	protected function respondingSpotifyQuery($query) {
+		$as = new ApplicationApplescript("Spotify", $query . " \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
+		$result = $as->run();
+
+		$array = explode("✂", $result);
+		if($array[0] == "") {
+			$array[0] = "No track playing";
+			$array[1] = "No album";
+			$array[2] = "No artist";
+			$array[3] = "";
+			$array[4] = "paused";
+		}
+
+		$data = array(
+			'title' => $array[0],
+			'album' => $array[1],
+			'artist' => $array[2],
+			'url' => $array[3],
+			'state' => $array[4]
+		);
+
+		return $data;
 	}
 }

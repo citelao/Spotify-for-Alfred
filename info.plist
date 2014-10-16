@@ -12,7 +12,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -20,7 +20,29 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -29,11 +51,44 @@
 		</array>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
 		<array/>
+		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>7858554D-2173-462A-B03D-1078EC7059D6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>BFFC58C1-626F-4091-A0A4-61034DDD10D0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -52,31 +107,12 @@
 	<key>objects</key>
 	<array>
 		<dict>
-			<key>config</key>
-			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>hotkey</key>
-				<integer>36</integer>
-				<key>hotmod</key>
-				<integer>1310720</integer>
-				<key>hotstring</key>
-				<string>↩</string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
+			<string>alfred.workflow.action.revealfile</string>
 			<key>uid</key>
-			<string>AE6160D1-56EA-4416-991E-CF12B874FFD3</string>
+			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -115,6 +151,33 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>36</integer>
+				<key>hotmod</key>
+				<integer>1310720</integer>
+				<key>hotstring</key>
+				<string>↩</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>AE6160D1-56EA-4416-991E-CF12B874FFD3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>escaping</key>
 				<integer>4</integer>
 				<key>script</key>
@@ -135,12 +198,149 @@
 			<integer>0</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>playpause⟩output</string>
+				<key>hotkey</key>
+				<integer>49</integer>
+				<key>hotmod</key>
+				<integer>1310720</integer>
+				<key>hotstring</key>
+				<string>Space</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.revealfile</string>
+			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
+			<string>7858554D-2173-462A-B03D-1078EC7059D6</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>next⟩output</string>
+				<key>hotkey</key>
+				<integer>124</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>→</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>5610E60C-68BF-4445-BAE3-CB55DEA70D99</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>spotify⟩previous track</string>
+				<key>hotkey</key>
+				<integer>123</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>←</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>30E2AA18-937F-4B5D-B685-7852B9717F34</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>spotify⟩set sound volume to sound volume + 10</string>
+				<key>hotkey</key>
+				<integer>126</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>↑</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>BFFC58C1-626F-4091-A0A4-61034DDD10D0</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>spotify⟩set sound volume to sound volume - 10</string>
+				<key>hotkey</key>
+				<integer>125</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>↓</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>73FAFE96-4B16-4AB5-B181-229B4BB79E25</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -168,20 +368,45 @@ This code is MIT Licensed.</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
+		<dict>
+			<key>ypos</key>
+			<real>370</real>
+		</dict>
+		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
 		<dict>
 			<key>ypos</key>
-			<real>10</real>
+			<real>130</real>
+		</dict>
+		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
+		<dict>
+			<key>ypos</key>
+			<real>610</real>
+		</dict>
+		<key>7858554D-2173-462A-B03D-1078EC7059D6</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
 		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>BFFC58C1-626F-4091-A0A4-61034DDD10D0</key>
+		<dict>
+			<key>ypos</key>
+			<real>490</real>
+		</dict>
 		<key>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</key>
 		<dict>
 			<key>ypos</key>
-			<real>130</real>
+			<real>10</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>
