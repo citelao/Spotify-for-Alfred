@@ -26,17 +26,20 @@ class Main implements Menu {
 		$results[0]['title']        = "$this->currentTrack";
 		$results[0]['subtitle']     = "$this->currentAlbum by $this->currentArtist";
 		$results[0]['arg']          = "playpause⟩";
+		$results[0]['copy']			= $this->currentURL;
 		$results[0]['icon']         = $this->currentStatus;
 		
 		$results[1]['title']        = "$this->currentAlbum";
 		$results[1]['subtitle']     = "More from this album...";
 		$results[1]['autocomplete'] = "$this->currentAlbum"; // TODO change to albumdetail
+		$results[1]['copy'] 		= "$this->currentAlbum"; // TODO change to albumdetail
 		$results[1]['valid']        = "no";
 		$results[1]['icon']         = 'include/images/album.png';
 		
 		$results[2]['title']        = "$this->currentArtist";
 		$results[2]['subtitle']     = "More by this artist...";
 		$results[2]['autocomplete'] = $this->currentArtist; // TODO change to artistdetail
+		$results[2]['copy']			= $this->currentArtist; // TODO change to artistdetail
 		$results[2]['valid']        = "no";
 		$results[2]['icon']         = 'include/images/artist.png';
 		
@@ -51,9 +54,11 @@ class Main implements Menu {
 
 			$results[1]['subtitle']     = "";
 			$results[1]['autocomplete'] = "";
+			$results[1]['copy'] 		= "";
 
 			$results[2]['subtitle']     = "";
 			$results[2]['autocomplete'] = "";
+			$results[2]['copy'] 		= "";
 		}
 
 		return $results;

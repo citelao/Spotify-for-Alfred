@@ -128,10 +128,16 @@ class OhAlfred {
 				$result['subtitle'] = '';
 
 			print "\r\n\r\n";
-			print "	<item uid='" . $this->escapeQuery($result['uid']) . "' arg='" . $result['arg'] . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
+			print "	<item uid='" . $this->escapeQuery($result['uid']) . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
+			print "		<arg>" . $result['arg'] . "</arg>\r\n";
 			print "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
 			print "		<subtitle>" . $this->escapeQuery($result['subtitle']) . "</subtitle>\r\n";
 			print "		<icon>" . $this->escapeQuery($result['icon']) . "</icon>\r\n";
+
+			if(isset($result['copy'])) {
+				print "		<text type='copy'>" . $this->escapeQuery($result['copy']) . "</text>\r\n";
+			}
+
 			print "	</item>\r\n";
 		}
 

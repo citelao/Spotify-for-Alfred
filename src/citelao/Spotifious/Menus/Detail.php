@@ -110,6 +110,7 @@ class Detail implements Menu {
 					$currentResult['title'] = "{$current['number']}. {$current['title']}";
 					$currentResult['subtitle'] = Helper::floatToBars($current['popularity'], 12);
 					$currentResult['arg'] = "spotify⟩play track \"{$current['href']}\" in context \"{$this->currentURI}\""; 
+					$currentResult['copy'] = $current['href'];
 					$currentResult['valid'] = "yes";
 					$currentResult['icon'] = "include/images/track.png";
 				} else {
@@ -117,6 +118,7 @@ class Detail implements Menu {
 					$currentResult['subtitle'] = "Browse this {$current['type']}";
 					$currentResult['valid'] = "no";
 					$currentResult['autocomplete'] = "{$this->currentURI} ⟩ {$current['href']} ⟩ {$this->query} ⟩{$this->search}⟩";
+					$currentResult['copy'] = $current['href'];
 					$currentResult['icon'] = "include/images/album.png";
 				}
 
@@ -127,6 +129,8 @@ class Detail implements Menu {
 		$scope['title'] = $this->title;
 		$scope['subtitle'] = "Browse this {$this->type} in Spotify";
 		$scope['arg'] = "spotify⟩activate (open location \"{$this->currentURI}\")";
+		$scope['autocomplete'] = $this->originalQuery;
+		$scope['copy'] = $this->currentURI;
 		$scope['icon'] = "include/images/{$this->type}.png";
 
 		$available = array();

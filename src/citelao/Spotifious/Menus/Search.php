@@ -108,6 +108,7 @@ class Search implements Menu {
 				$currentResult['valid'] = $valid;
 				$currentResult['arg'] = $arg;
 				$currentResult['autocomplete'] = $autocomplete;
+				$currentResult['copy'] = $current['href'];
 				$currentResult['icon'] = "include/images/{$current['type']}.png";
 
 				$results[] = $currentResult;
