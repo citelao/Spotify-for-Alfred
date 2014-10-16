@@ -112,21 +112,48 @@ class Spotifious {
 				$song = $this->respondingSpotifyQuery('next track');
 
 				if($splitAction[0] && $splitAction[0] == 'output') {
-					return $song['title'];
+					$icon = ($song['state'] == "playing") ? "▶" : "‖";
+
+					$this->alfred->notify(
+						$song['album'] . " — " . $song['artist'], 
+						$icon . " " . $song['title'], 
+						// $song['url'],
+						"",
+						"",
+						"",
+						$song['url']);
 				}
 
 			} else if($command == 'previous') {
-				$song = $this->respondingSpotifyQuery('playpause');
+				$song = $this->respondingSpotifyQuery('previous track');
 
 				if($splitAction[0] && $splitAction[0] == 'output') {
-					return $song['title'];
+					$icon = ($song['state'] == "playing") ? "▶" : "‖";
+
+					$this->alfred->notify(
+						$song['album'] . " — " . $song['artist'], 
+						$icon . " " . $song['title'], 
+						// $song['url'],
+						"",
+						"",
+						"",
+						$song['url']);
 				}
 
 			} else if($command == 'playpause') {
 				$song = $this->respondingSpotifyQuery('playpause');
 
 				if($splitAction[0] && $splitAction[0] == 'output') {
-					return $song['title'];
+					$icon = ($song['state'] == "playing") ? "▶" : "‖";
+
+					$this->alfred->notify(
+						$song['album'] . " — " . $song['artist'], 
+						$icon . " " . $song['title'], 
+						// $song['url'],
+						"",
+						"",
+						"",
+						$song['url']);
 				}
 
 			} else if($command == 'spotify') {

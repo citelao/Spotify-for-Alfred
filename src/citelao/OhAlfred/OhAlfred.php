@@ -214,4 +214,27 @@ class OhAlfred {
 
 		return $fdir;
 	}
+
+	public function notify($message, $title = '', $subtitle = '', $appIcon = '', $contentImage = '', $open = '') {
+		$command = "include/terminal-notifier.app/Contents/MacOS/terminal-notifier ";
+
+		$command .= "-message " . escapeshellarg($message) . " ";
+
+		if($title)
+			$command .= "-title " . escapeshellarg($title) . " ";
+
+		if($subtitle)
+			$command .= "-subtitle " . escapeshellarg($subtitle) . " ";
+
+		if($appIcon)
+			$command .= "-appIcon " . escapeshellarg($appIcon) . " ";
+
+		if($contentImage)
+			$command .= "-contentImage " . escapeshellarg($contentImage) . " ";
+
+		if($open)
+			$command .= "-open " . escapeshellarg($open) . " ";
+
+		exec($command);
+	}
 }

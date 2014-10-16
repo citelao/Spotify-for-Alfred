@@ -25,7 +25,7 @@ class Main implements Menu {
 	public function output() {
 		$results[0]['title']        = "$this->currentTrack";
 		$results[0]['subtitle']     = "$this->currentAlbum by $this->currentArtist";
-		$results[0]['arg']          = "spotify⟩playpause";
+		$results[0]['arg']          = "playpause⟩";
 		$results[0]['icon']         = $this->currentStatus;
 		
 		$results[1]['title']        = "$this->currentAlbum";
