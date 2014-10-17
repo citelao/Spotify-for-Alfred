@@ -25,32 +25,30 @@ class Search implements Menu {
 		$fetcher = new JsonFetcher($url);
 		$json = $fetcher->run();
 
+		// Albums do not include artist data.
+		// Grab all the album ids, and find their artists
+		$albumIDs = array();
+		foreach ($json->albums->items as $key => $value) {
+			$albumIDs[] = $value->id;
+		}
+
+		$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
+		$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
+		
+		$albumFetcher = new JsonFetcher($url);
+		$albumsJson = $albumFetcher->run();
+
+		$albums = array();
+		foreach ($albumsJson->albums as $key => $value) {
+			$albums[] = array(
+				'artist' => $value->artists[0]->name,
+				'popularity' => $value->popularity
+			);
+		}
+
 		// Build the search results
 		// for each query type
 		foreach (array('artist', 'album', 'track') as $type) {
-			// Albums do not include artist data.
-			// Grab all the album ids, and find their artists
-			if($type == 'album') {
-				$albumIDs = array();
-				foreach ($json->albums->items as $key => $value) {
-					$albumIDs[] = $value->id;
-				}
-
-				$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
-				$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
-				
-				$albumFetcher = new JsonFetcher($url);
-				$albumsJson = $albumFetcher->run();
-
-				$albums = array();
-				foreach ($albumsJson->albums as $key => $value) {
-					$albums[] = array(
-						'artist' => $value->artists[0]->name,
-						'popularity' => $value->popularity
-					);
-				}
-			}
-
 			// Create the search results array
 			foreach ($json->{$type . "s"}->items as $key => $value) {
 				// Weight popularity
