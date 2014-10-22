@@ -32,18 +32,21 @@ class Search implements Menu {
 			$albumIDs[] = $value->id;
 		}
 
-		$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
-		$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
-		
-		$albumFetcher = new JsonFetcher($url);
-		$albumsJson = $albumFetcher->run();
+		if(sizeof($albumIDs) != 0)
+		{
+			$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
+			$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
+			
+			$albumFetcher = new JsonFetcher($url);
+			$albumsJson = $albumFetcher->run();
 
-		$albums = array();
-		foreach ($albumsJson->albums as $key => $value) {
-			$albums[] = array(
-				'artist' => $value->artists[0]->name,
-				'popularity' => $value->popularity
-			);
+			$albums = array();
+			foreach ($albumsJson->albums as $key => $value) {
+				$albums[] = array(
+					'artist' => $value->artists[0]->name,
+					'popularity' => $value->popularity
+				);
+			}
 		}
 
 		// Build the search results
