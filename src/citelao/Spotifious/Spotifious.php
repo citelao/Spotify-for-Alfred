@@ -112,11 +112,10 @@ class Spotifious {
 				$song = $this->respondingSpotifyQuery('next track');
 
 				if($splitAction[0] && $splitAction[0] == 'output') {
-					$icon = ($song['state'] == "playing") ? "▶" : "‖";
 
 					$this->alfred->notify(
 						$song['album'] . " — " . $song['artist'], 
-						$icon . " " . $song['title'], 
+						$song['title'], 
 						// $song['url'],
 						"",
 						"",
@@ -128,11 +127,10 @@ class Spotifious {
 				$song = $this->respondingSpotifyQuery('previous track');
 
 				if($splitAction[0] && $splitAction[0] == 'output') {
-					$icon = ($song['state'] == "playing") ? "▶" : "‖";
 
 					$this->alfred->notify(
 						$song['album'] . " — " . $song['artist'], 
-						$icon . " " . $song['title'], 
+						$song['title'], 
 						// $song['url'],
 						"",
 						"",
