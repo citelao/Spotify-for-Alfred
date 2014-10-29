@@ -33,7 +33,7 @@ start it*. And don't worry about errors— we'll handle those.
 
 ## Download & Install ##
 
-Latest version: [v0.10](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.10](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
+Latest version: [v0.10](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.11](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
 
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)
 this repository.
@@ -92,6 +92,7 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 
 See `CHANGELOG.md` for more detailed information.
 
+- v0.11:  new API, hotkeys, and	notifications
 - v0.10:  Location-based filtering
 - v0.9.4: Actually implemented the aforementioned changes
 - v0.9.3: more compatibility changes for PHP v5.3
