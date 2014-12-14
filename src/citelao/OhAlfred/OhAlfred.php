@@ -222,25 +222,34 @@ class OhAlfred {
 	}
 
 	public function notify($message, $title = '', $subtitle = '', $appIcon = '', $contentImage = '', $open = '') {
-		$command = "include/terminal-notifier.app/Contents/MacOS/terminal-notifier ";
+		$command = "LANG=en_US.utf-8; include/terminal-notifier.app/Contents/MacOS/terminal-notifier ";
 
-		$command .= "-message " . escapeshellarg($message) . " ";
+		$command .= "-message " . $this->escapeNotify($message) . " ";
+		$command .= "-group ohAlfredNotifications ";
 
 		if($title)
-			$command .= "-title " . escapeshellarg($title) . " ";
+			$command .= "-title " . $this->escapeNotify($title) . " ";
 
 		if($subtitle)
-			$command .= "-subtitle " . escapeshellarg($subtitle) . " ";
+			$command .= "-subtitle " . $this->escapeNotify($subtitle) . " ";
 
 		if($appIcon)
-			$command .= "-appIcon " . escapeshellarg($appIcon) . " ";
+			$command .= "-appIcon " . $this->escapeNotify($appIcon) . " ";
 
 		if($contentImage)
-			$command .= "-contentImage " . escapeshellarg($contentImage) . " ";
+			$command .= "-contentImage " . $this->escapeNotify($contentImage) . " ";
 
 		if($open)
-			$command .= "-open " . escapeshellarg($open) . " ";
+			$command .= "-open " . $this->escapeNotify($open) . " ";
 
 		exec($command);
+	}
+
+	protected function escapeNotify($string) {
+		if(!preg_match('/[a-zA-Z0-9]/', $string[0])) {
+			$string = '\\' . $string;
+		}
+
+		return escapeshellarg($string);
 	}
 }
