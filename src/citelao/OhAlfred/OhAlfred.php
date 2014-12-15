@@ -222,7 +222,7 @@ class OhAlfred {
 	}
 
 	public function notify($message, $title = '', $subtitle = '', $appIcon = '', $contentImage = '', $open = '') {
-		$command = "LANG=en_US.utf-8; include/terminal-notifier.app/Contents/MacOS/terminal-notifier ";
+		$command = "include/terminal-notifier.app/Contents/MacOS/terminal-notifier ";
 
 		$command .= "-message " . $this->escapeNotify($message) . " ";
 		$command .= "-group ohAlfredNotifications ";

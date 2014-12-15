@@ -1,9 +1,6 @@
 <?php
 // thanks to http://www.alfredforum.com/topic/1788-prevent-flash-of-no-result
 mb_internal_encoding("UTF-8");
-$locale = 'en_US.utf-8';
-setlocale(LC_ALL, $locale);
-putenv('LC_ALL='.$locale);
 date_default_timezone_set('America/New_York');
 
 use OhAlfred\OhAlfred;
