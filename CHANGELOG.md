@@ -1,5 +1,20 @@
 # Changelog #
 
+## v0.12 ##
+- Fixed: non-responsiveness after some requests to Spotify
+
+## v0.11 ##
+- Added: hotkeys, configurable via Alfred
+- Added: notifications
+- Added: controls menu (type `c`)
+- Changed: using Spotify's faster web API!
+- Changed: non-unicode popularity glyphs
+
+## v0.10 ##
+- Added: Settings menu (accessible using "s")
+- Added: Location-based filtering of search results
+- Changed: Actions route through `action.php` now, instead of direct Applescript execution.
+
 ## v0.9.4 ##
 - Changed: more compatibility changes for PHP v5.3. These did not get included in v0.9.3.
 

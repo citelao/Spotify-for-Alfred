@@ -12,7 +12,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
+				<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -20,7 +20,53 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
+		<array/>
+		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>7858554D-2173-462A-B03D-1078EC7059D6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -32,6 +78,17 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>BFFC58C1-626F-4091-A0A4-61034DDD10D0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -52,20 +109,42 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
 				<key>escaping</key>
-				<integer>50</integer>
+				<integer>62</integer>
+				<key>keyword</key>
+				<string>spotifious</string>
+				<key>runningsubtext</key>
+				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string>tell application &quot;Spotify&quot;
-	run script {query}
-end tell
-</string>
+				<string>php -f main.php -- "{query}"
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f main.php -- "{query}" | tee ~/Desktop/Spotifious.log</string>
+				<key>subtext</key>
+				<string>Search for artists, tracks, or albums</string>
+				<key>title</key>
+				<string>Search Spotify for tracks, artists, and albums</string>
 				<key>type</key>
-				<integer>6</integer>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>E16D7A45-5212-4A70-AE85-36C6BF0450E7</string>
+			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.action.revealfile</string>
+			<key>uid</key>
+			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -99,49 +178,174 @@ end tell
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
 				<key>escaping</key>
-				<integer>62</integer>
-				<key>keyword</key>
-				<string>spotifious</string>
-				<key>runningsubtext</key>
-				<string>Getting Spotifious data...</string>
+				<integer>4</integer>
 				<key>script</key>
-				<string>php -f main.php -- &quot;{query}&quot;
+				<string>php -f action.php -- "{query}"
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
 # first line of this script so it looks like this:
-# php -f main.php -- &quot;{query}&quot; | tee ~/Desktop/Spotifious.log</string>
-				<key>subtext</key>
-				<string>Search for artists, tracks, or albums</string>
-				<key>title</key>
-				<string>Search Spotify for tracks, artists, and albums</string>
+# php -f action.php -- "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
 				<key>type</key>
 				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+			<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>playpause⟩output</string>
+				<key>hotkey</key>
+				<integer>49</integer>
+				<key>hotmod</key>
+				<integer>1310720</integer>
+				<key>hotstring</key>
+				<string>Space</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.revealfile</string>
+			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
+			<string>7858554D-2173-462A-B03D-1078EC7059D6</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>next⟩output</string>
+				<key>hotkey</key>
+				<integer>124</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>→</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>5610E60C-68BF-4445-BAE3-CB55DEA70D99</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>spotify⟩previous track</string>
+				<key>hotkey</key>
+				<integer>123</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>←</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>30E2AA18-937F-4B5D-B685-7852B9717F34</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>spotify⟩set sound volume to sound volume + 10</string>
+				<key>hotkey</key>
+				<integer>126</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>↑</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>BFFC58C1-626F-4091-A0A4-61034DDD10D0</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>spotify⟩set sound volume to sound volume - 10</string>
+				<key>hotkey</key>
+				<integer>125</integer>
+				<key>hotmod</key>
+				<integer>11796480</integer>
+				<key>hotstring</key>
+				<string>↓</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>73FAFE96-4B16-4AB5-B181-229B4BB79E25</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
 	<string># Spotifious
-# v0.9.4
+# v0.10
 
 I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
 
@@ -164,17 +368,42 @@ This code is MIT Licensed.</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
+		<dict>
+			<key>ypos</key>
+			<real>370</real>
+		</dict>
+		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
+		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
+		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
+		<dict>
+			<key>ypos</key>
+			<real>610</real>
+		</dict>
+		<key>7858554D-2173-462A-B03D-1078EC7059D6</key>
+		<dict>
+			<key>ypos</key>
+			<real>130</real>
+		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</key>
+		<key>BFFC58C1-626F-4091-A0A4-61034DDD10D0</key>
 		<dict>
 			<key>ypos</key>
-			<real>130</real>
+			<real>490</real>
 		</dict>
-		<key>E16D7A45-5212-4A70-AE85-36C6BF0450E7</key>
+		<key>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>

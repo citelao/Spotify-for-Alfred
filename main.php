@@ -8,7 +8,7 @@ use Spotifious\Spotifious;
 require 'vendor/autoload.php';
 
 /**
- * Spotifious (v0.9)
+ * Spotifious (v0.10)
  * 	a natural Spotify controller for Alfred <https://github.com/citelao/Spotify-for-Alfred/>
  * 	an Alfred extension by Ben Stolovitz <http://github.com/citelao/>
  **/

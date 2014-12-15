@@ -5,48 +5,84 @@ use Spotifious\Menus\Menu;
 use Spotifious\Menus\Helper;
 use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\Exceptions\StatefulException;
+use OhAlfred\OhAlfred;
 
 class Search implements Menu {
+	protected $alfred;	
 	protected $search;
 	protected $query;
 
 	public function __construct($query) {
 		$this->query = $query;
+		$this->alfred = new OhAlfred();
+
+		$locale = $this->alfred->options('country');
+
+		/* Fetch and parse the search results. */
+		$urlQuery = str_replace("%3A", ":", urlencode($query));
+		$url = "https://api.spotify.com/v1/search?q=$urlQuery&type=artist,album,track&market=$locale";
+		
+		$fetcher = new JsonFetcher($url);
+		$json = $fetcher->run();
+
+		// Albums do not include artist data.
+		// Grab all the album ids, and find their artists
+		$albumIDs = array();
+		foreach ($json->albums->items as $key => $value) {
+			$albumIDs[] = $value->id;
+		}
+
+		if(sizeof($albumIDs) != 0)
+		{
+			$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
+			$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
+			
+			$albumFetcher = new JsonFetcher($url);
+			$albumsJson = $albumFetcher->run();
+
+			$albums = array();
+			foreach ($albumsJson->albums as $key => $value) {
+				$albums[] = array(
+					'artist' => $value->artists[0]->name,
+					'popularity' => $value->popularity
+				);
+			}
+		}
 
 		// Build the search results
 		// for each query type
 		foreach (array('artist', 'album', 'track') as $type) {
-			/* Fetch and parse the search results. */
-			$urlQuery = str_replace("%3A", ":", urlencode($query));
-			$url = "http://ws.spotify.com/search/1/$type.json?q=$urlQuery";
-			
-			$fetcher = new JsonFetcher($url);
-			$json = $fetcher->run();
-
 			// Create the search results array
-			foreach ($json->{$type . "s"} as $key => $value) {
-				// TODO check region availability
-
+			foreach ($json->{$type . "s"}->items as $key => $value) {
 				// Weight popularity
-				$popularity = $value->popularity;
+				if($type == 'album') {
+					$popularity = $albums[$key]['popularity'];
+				} else {
+					$popularity = $value->popularity;
+				}
 
 				if($type == 'artist')
-					$popularity += .5;
+					$popularity += 50;
 
 				if($type == 'album')
-					$popularity += .15;
+					$popularity += 25;
 
 				if ($type == 'track') {
 					$currentRaw['album'] = $value->album->name;
 					$currentRaw['artist'] = $value->artists[0]->name;	
 				} elseif ($type == 'album') {
-					$currentRaw['artist'] = $value->artists[0]->name;
+					$currentRaw['artist'] = $albums[$key]['artist'];
 				}
 
-				$currentRaw['type'] = $type;
+				if($type == 'album') {
+					$currentRaw['type'] = $value->album_type;	
+				} else {
+					$currentRaw['type'] = $value->type;	
+				}
+				
 				$currentRaw['title'] = $value->name;
 				$currentRaw['popularity'] = $popularity;
-				$currentRaw['href'] = $value->href;
+				$currentRaw['uri'] = $value->uri;
 
 				$this->search[] = $currentRaw;
 			}
@@ -65,18 +101,20 @@ class Search implements Menu {
 					$subtitle = "$popularity {$current['album']} by {$current['artist']}";
 				} elseif ($current['type'] == 'album') {
 					$subtitle = "$popularity Album by {$current['artist']}";
+				} elseif ($current['type'] == 'single') {
+					$subtitle = "$popularity Single by {$current['artist']}";
 				} else {
 					$subtitle = "$popularity " . ucfirst($current['type']);
 				}
 
 				if ($current['type'] == 'track') {
 					$valid = 'yes';
-					$arg = "play track \"{$current['href']}\"";
+					$arg = "spotify⟩play track \"{$current['uri']}\"";
 					$autocomplete = '';
 				} else {
 					$valid = 'no';
 					$arg = '';
-					$autocomplete = "{$current['href']} ⟩ {$this->query} ⟩";
+					$autocomplete = "{$current['uri']} ⟩ {$this->query} ⟩";
 				}
 
 				$currentResult['title']    = $current['title'];
@@ -85,6 +123,7 @@ class Search implements Menu {
 				$currentResult['valid'] = $valid;
 				$currentResult['arg'] = $arg;
 				$currentResult['autocomplete'] = $autocomplete;
+				$currentResult['copy'] = $current['uri'];
 				$currentResult['icon'] = "include/images/{$current['type']}.png";
 
 				$results[] = $currentResult;
@@ -96,7 +135,7 @@ class Search implements Menu {
 			'title' => "Search for {$this->query}",
 			'subtitle' => "Continue this search in Spotify…",
 			'uid' => "bs-spotify-{$this->query}-more",
-			'arg' => "activate (open location \"spotify:search:{$this->query}\")",
+			'arg' => "spotify⟩activate (open location \"spotify:search:{$this->query}\")",
 			'icon' => 'include/images/search.png'
 		);
 
@@ -108,5 +147,9 @@ class Search implements Menu {
 			return 0;
 
 		return ($a['popularity'] < $b['popularity']) ? 1 : -1;
+	}
+
+	protected function contains($stack, $needle) {
+		return (strpos($stack, $needle) !== false);
 	}
 }

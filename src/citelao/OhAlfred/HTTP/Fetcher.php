@@ -23,7 +23,7 @@ class Fetcher {
 
 		if($info['http_code'] != '200') {
 		 	if ($info['http_code'] == '0') {
-		 		throw new StatefulException("Could not access Spotify API. Try searching again");
+		 		throw new StatefulException("Could not access $this->url. Try searching again");
 		 	}
 
 	 		throw new StatefulException("fetch() failed; error code: " . $info['http_code']);
