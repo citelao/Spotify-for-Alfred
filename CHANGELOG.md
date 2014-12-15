@@ -1,5 +1,8 @@
 # Changelog #
 
+## v0.12 ##
+- Fixed: non-responsiveness after some requests to Spotify
+
 ## v0.11 ##
 - Added: hotkeys, configurable via Alfred
 - Added: notifications
