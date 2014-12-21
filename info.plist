@@ -263,7 +263,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>spotify⟩previous track</string>
+				<string>previous⟩output</string>
 				<key>hotkey</key>
 				<integer>123</integer>
 				<key>hotmod</key>
@@ -292,7 +292,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>spotify⟩set sound volume to sound volume + 10</string>
+				<string>volup⟩</string>
 				<key>hotkey</key>
 				<integer>126</integer>
 				<key>hotmod</key>
@@ -321,7 +321,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>spotify⟩set sound volume to sound volume - 10</string>
+				<string>voldown⟩</string>
 				<key>hotkey</key>
 				<integer>125</integer>
 				<key>hotmod</key>
@@ -345,7 +345,7 @@
 	</array>
 	<key>readme</key>
 	<string># Spotifious
-# v0.11
+# v0.11.2
 
 I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
 
