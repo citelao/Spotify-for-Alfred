@@ -154,6 +154,14 @@ class Spotifious {
 						$song['url']);
 				}
 
+			} else if($command == 'volup') {
+				$as = new ApplicationApplescript("Spotify", "set sound volume to sound volume + 10");
+				$as->run();
+				
+			} else if($command == 'voldown') {
+				$as = new ApplicationApplescript("Spotify", "set sound volume to sound volume - 10");
+				$as->run();
+
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
 				$as->run();

@@ -1,6 +1,10 @@
 # Changelog #
 
-## v0.12 ##
+## v0.11.2 ##
+- Added: opt-out feature for location information
+- Changed: better installation guide
+
+## v0.11.1 ##
 - Fixed: non-responsiveness after some requests to Spotify
 
 ## v0.11 ##
