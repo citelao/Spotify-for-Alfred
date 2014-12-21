@@ -32,7 +32,11 @@ class DetailAlbum implements Menu {
 		$this->name = $artistJson->name;
 		$this->type = $artistJson->type;
 
-		$tracksFetcher = new JsonFetcher("https://api.spotify.com/v1/albums/{$options['id']}/tracks?market=$locale");
+		$url = "https://api.spotify.com/v1/albums/{$options['id']}/tracks";
+		if($locale != 'not-given') {
+			$url .= "?market=$locale";
+		}
+		$tracksFetcher = new JsonFetcher($url);
 		$tracksJson = $tracksFetcher->run();
 
 		$this->tracks = array();
