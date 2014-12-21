@@ -25,6 +25,11 @@ class SetupCountryCode implements Menu {
 
 			$this->countries[] = $currentCountry;
 		}
+
+		$this->countries[] = array(
+				'name' => "I'd rather not give a country!",
+				'code' => 'not-given'
+			);
 	}
 
 	public function output() {
@@ -66,7 +71,8 @@ class SetupCountryCode implements Menu {
 			"United States", // America first hehehe
 			"United Kingdom",
 			"Canada",
-			"Australia"
+			"Australia",
+			"I'd rather not give a country!"
 		);
 
 		if(in_array($a['title'], $common)) {

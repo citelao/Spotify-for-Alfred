@@ -20,7 +20,10 @@ class Search implements Menu {
 
 		/* Fetch and parse the search results. */
 		$urlQuery = str_replace("%3A", ":", urlencode($query));
-		$url = "https://api.spotify.com/v1/search?q=$urlQuery&type=artist,album,track&market=$locale";
+		$url = "https://api.spotify.com/v1/search?q=$urlQuery&type=artist,album,track";
+		if($locale != 'not-given') {
+			$url .= "&market=$locale";
+		}
 		
 		$fetcher = new JsonFetcher($url);
 		$json = $fetcher->run();
