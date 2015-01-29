@@ -9,6 +9,7 @@ use Spotifious\Menus\SetupCountryCode;
 use Spotifious\Menus\Detail;
 use OhAlfred\OhAlfred;
 use OhAlfred\Applescript\ApplicationApplescript;
+use OhAlfred\Command\Timeout;
 
 class Spotifious {
 	protected $alfred;
@@ -22,7 +23,10 @@ class Spotifious {
 		$q = str_replace("►", "⟩", $query);
 
 		// Display the setup menu if the app isn't setup.
+		// Or the "options" menu if the S key is pressed
 		if($this->alfred->options('country') == '' ||
+			$this->alfred->options('spotify_client_id') == '' ||
+			$this->alfred->options('spotify_secret') == '' ||
 			$query == "s" || $query == "S" ||
 			$this->contains($query, "Country Code ⟩")) {
 
@@ -161,6 +165,12 @@ class Spotifious {
 			} else if($command == 'voldown') {
 				$as = new ApplicationApplescript("Spotify", "set sound volume to sound volume - 10");
 				$as->run();
+
+			} else if($command == 'appsetup') {
+				// Autokill server in 10 minutes
+				$server = new Timeout(5 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
+				$server->run();
+
 
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);

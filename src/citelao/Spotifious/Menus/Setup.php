@@ -16,6 +16,8 @@ class Setup implements Menu {
 		$this->userTriggered = ($query == "s" || $query == "S");
 
 		$this->countryCodeConfigured = !($this->alfred->options('country') == '');
+		$this->applicationCreated = !($this->alfred->options('spotify_client_id') == '');
+		$this->applicationLinked = !($this->alfred->options('spotify_secret') == '');
 	}
 
 	public function output() {
@@ -39,6 +41,21 @@ class Setup implements Menu {
 			'title' => '1. Set your country code',
 			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
 			'icon' => $this->countryCodeConfigured ? 'include/images/checked.png' : 'include/images/unchecked.png',
+			'autocomplete' => 'Country Code ⟩',
+			'valid' => 'no'
+		);
+
+		$results[] = array(
+			'title' => '2. Create a Spotify application',
+			'subtitle' => 'Set up a Spotify application so you can search playlists!',
+			'icon' => $this->applicationCreated ? 'include/images/checked.png' : 'include/images/unchecked.png',
+			'arg' => 'appsetup⟩'
+		);
+
+		$results[] = array(
+			'title' => '3. Link your Spotify application',
+			'subtitle' => 'Connect your Spotify application to Spotifious to search your playlists.',
+			'icon' => $this->applicationLinked ? 'include/images/checked.png' : 'include/images/unchecked.png',
 			'autocomplete' => 'Country Code ⟩',
 			'valid' => 'no'
 		);

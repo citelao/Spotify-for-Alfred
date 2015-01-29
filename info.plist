@@ -115,6 +115,14 @@
 				<integer>62</integer>
 				<key>keyword</key>
 				<string>spotifious</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
