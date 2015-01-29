@@ -84,6 +84,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>8020A500-17C9-43BA-B17A-00D35E460EB6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</key>
 		<array>
 			<dict>
@@ -510,6 +521,27 @@
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>playpause⟩output</string>
+				<key>argumenttype</key>
+				<integer>3</integer>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.playpause</string>
+				<key>triggername</key>
+				<string>Play/Pause</string>
+				<key>workflowonly</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.remote</string>
+			<key>uid</key>
+			<string>8020A500-17C9-43BA-B17A-00D35E460EB6</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string># Spotifious
@@ -565,6 +597,11 @@ This code is MIT Licensed.</string>
 		<dict>
 			<key>ypos</key>
 			<real>250</real>
+		</dict>
+		<key>8020A500-17C9-43BA-B17A-00D35E460EB6</key>
+		<dict>
+			<key>ypos</key>
+			<real>1200</real>
 		</dict>
 		<key>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</key>
 		<dict>
