@@ -38,6 +38,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>4BB22960-369A-4674-AF29-00CCE1603B53</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
 		<array>
 			<dict>
@@ -73,6 +84,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<array>
 			<dict>
@@ -84,7 +106,40 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>B02E0659-E11A-4746-ADB7-2C2C0A8BD8BB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>BFFC58C1-626F-4091-A0A4-61034DDD10D0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>C5E43F66-AD1D-4D8D-9E4A-D7855C8F5AE2</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>F1B61D14-D686-468D-9373-AB4FC3EEE3C8</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -115,6 +170,14 @@
 				<integer>62</integer>
 				<key>keyword</key>
 				<string>spotifious</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
@@ -137,14 +200,6 @@
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.action.revealfile</string>
-			<key>uid</key>
-			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -176,6 +231,35 @@
 			<integer>1</integer>
 		</dict>
 		<dict>
+			<key>type</key>
+			<string>alfred.workflow.action.revealfile</string>
+			<key>uid</key>
+			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.search</string>
+				<key>triggername</key>
+				<string>Search</string>
+				<key>workflowonly</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.remote</string>
+			<key>uid</key>
+			<string>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
 			<key>config</key>
 			<dict>
 				<key>escaping</key>
@@ -196,35 +280,6 @@
 			<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 			<key>version</key>
 			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>3</integer>
-				<key>argumenttext</key>
-				<string>playpause⟩output</string>
-				<key>hotkey</key>
-				<integer>49</integer>
-				<key>hotmod</key>
-				<integer>1310720</integer>
-				<key>hotstring</key>
-				<string>Space</string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>7858554D-2173-462A-B03D-1078EC7059D6</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -263,6 +318,56 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
+				<string>playpause⟩output</string>
+				<key>hotkey</key>
+				<integer>49</integer>
+				<key>hotmod</key>
+				<integer>1310720</integer>
+				<key>hotstring</key>
+				<string>Space</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>7858554D-2173-462A-B03D-1078EC7059D6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>next⟩output</string>
+				<key>argumenttype</key>
+				<integer>3</integer>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.next</string>
+				<key>triggername</key>
+				<string>Next Track</string>
+				<key>workflowonly</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.remote</string>
+			<key>uid</key>
+			<string>4BB22960-369A-4674-AF29-00CCE1603B53</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
 				<string>previous⟩output</string>
 				<key>hotkey</key>
 				<integer>123</integer>
@@ -283,6 +388,27 @@
 			<string>30E2AA18-937F-4B5D-B685-7852B9717F34</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>previous⟩output</string>
+				<key>argumenttype</key>
+				<integer>3</integer>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.previous</string>
+				<key>triggername</key>
+				<string>Previous Track</string>
+				<key>workflowonly</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.remote</string>
+			<key>uid</key>
+			<string>C5E43F66-AD1D-4D8D-9E4A-D7855C8F5AE2</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -316,6 +442,27 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argument</key>
+				<string>volup⟩</string>
+				<key>argumenttype</key>
+				<integer>3</integer>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.volup</string>
+				<key>triggername</key>
+				<string>Volume Up</string>
+				<key>workflowonly</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.remote</string>
+			<key>uid</key>
+			<string>B02E0659-E11A-4746-ADB7-2C2C0A8BD8BB</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -341,6 +488,27 @@
 			<string>73FAFE96-4B16-4AB5-B181-229B4BB79E25</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>voldown⟩</string>
+				<key>argumenttype</key>
+				<integer>3</integer>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.voldown</string>
+				<key>triggername</key>
+				<string>Volume Down</string>
+				<key>workflowonly</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.remote</string>
+			<key>uid</key>
+			<string>F1B61D14-D686-468D-9373-AB4FC3EEE3C8</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -371,7 +539,12 @@ This code is MIT Licensed.</string>
 		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
 		<dict>
 			<key>ypos</key>
-			<real>370</real>
+			<real>490</real>
+		</dict>
+		<key>4BB22960-369A-4674-AF29-00CCE1603B53</key>
+		<dict>
+			<key>ypos</key>
+			<real>360</real>
 		</dict>
 		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
 		<dict>
@@ -386,27 +559,47 @@ This code is MIT Licensed.</string>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<dict>
 			<key>ypos</key>
-			<real>610</real>
+			<real>960</real>
 		</dict>
 		<key>7858554D-2173-462A-B03D-1078EC7059D6</key>
 		<dict>
 			<key>ypos</key>
-			<real>130</real>
+			<real>250</real>
+		</dict>
+		<key>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</key>
+		<dict>
+			<key>ypos</key>
+			<real>120</real>
 		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>B02E0659-E11A-4746-ADB7-2C2C0A8BD8BB</key>
+		<dict>
+			<key>ypos</key>
+			<real>830</real>
+		</dict>
 		<key>BFFC58C1-626F-4091-A0A4-61034DDD10D0</key>
 		<dict>
 			<key>ypos</key>
-			<real>490</real>
+			<real>720</real>
+		</dict>
+		<key>C5E43F66-AD1D-4D8D-9E4A-D7855C8F5AE2</key>
+		<dict>
+			<key>ypos</key>
+			<real>600</real>
 		</dict>
 		<key>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
+		</dict>
+		<key>F1B61D14-D686-468D-9373-AB4FC3EEE3C8</key>
+		<dict>
+			<key>ypos</key>
+			<real>1070</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>
