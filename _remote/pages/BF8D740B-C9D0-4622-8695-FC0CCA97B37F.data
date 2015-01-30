@@ -9,63 +9,11 @@
 		<real>0.66290569305419922</real>
 	</array>
 	<key>iconid</key>
-	<string>230948C7-5F12-41A4-95AA-95165C09801E</string>
+	<string>396A6C7D-DEF5-4580-8F15-927EFB5D6BFC</string>
 	<key>iconisuserspecified</key>
 	<false/>
 	<key>items</key>
 	<array>
-		<dict>
-			<key>actionconfig</key>
-			<dict>
-				<key>autoworkflowuid</key>
-				<true/>
-				<key>triggerid</key>
-				<string>com.citelao.spotifious.search</string>
-			</dict>
-			<key>actionuid</key>
-			<string>remote.alfred.runworkflow</string>
-			<key>buttoniconid</key>
-			<string>B476C144-0CAF-4BC7-8609-BD97EBFCCF3F</string>
-			<key>buttonlabel</key>
-			<string>Search</string>
-			<key>itemuid</key>
-			<string>D1B96059-3586-42DD-8CBB-13A9AA19574D</string>
-		</dict>
-		<dict>
-			<key>actionconfig</key>
-			<dict>
-				<key>autoworkflowuid</key>
-				<true/>
-				<key>triggerid</key>
-				<string>com.citelao.spotifious.playpause</string>
-			</dict>
-			<key>actionuid</key>
-			<string>remote.alfred.runworkflow</string>
-			<key>buttoniconid</key>
-			<string>6DB42277-ABF1-4CD4-A1EC-7D0D06A8EC9D</string>
-			<key>buttonlabel</key>
-			<string>Play/Pause</string>
-			<key>itemuid</key>
-			<string>60010EB8-95D0-414B-8732-2DEABA8D7D0E</string>
-		</dict>
-		<dict/>
-		<dict>
-			<key>actionconfig</key>
-			<dict>
-				<key>autoworkflowuid</key>
-				<true/>
-				<key>triggerid</key>
-				<string>com.citelao.spotifious.volup</string>
-			</dict>
-			<key>actionuid</key>
-			<string>remote.alfred.runworkflow</string>
-			<key>buttoniconid</key>
-			<string>B9E265B5-D967-4B9A-B0C8-9092B1FF990F</string>
-			<key>buttonlabel</key>
-			<string>Volume Up</string>
-			<key>itemuid</key>
-			<string>FBE348BE-7495-4997-BC2C-4FA298E552FF</string>
-		</dict>
 		<dict>
 			<key>actionconfig</key>
 			<dict>
@@ -89,6 +37,40 @@
 				<key>autoworkflowuid</key>
 				<true/>
 				<key>triggerid</key>
+				<string>com.citelao.spotifious.playpause</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>3277740D-DEEE-4C08-8B1D-E7B962742990</string>
+			<key>buttonlabel</key>
+			<string>Play/Pause</string>
+			<key>itemuid</key>
+			<string>60010EB8-95D0-414B-8732-2DEABA8D7D0E</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.search</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>B476C144-0CAF-4BC7-8609-BD97EBFCCF3F</string>
+			<key>buttonlabel</key>
+			<string>Search</string>
+			<key>itemuid</key>
+			<string>D1B96059-3586-42DD-8CBB-13A9AA19574D</string>
+		</dict>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
 				<string>com.citelao.spotifious.next</string>
 			</dict>
 			<key>actionuid</key>
@@ -101,6 +83,13 @@
 			<string>FC6BDC0F-E523-4849-A970-1F8026B4B40B</string>
 		</dict>
 		<dict/>
+		<dict/>
+		<dict/>
+		<dict/>
+		<dict/>
+		<dict/>
+		<dict/>
+		<dict/>
 		<dict>
 			<key>actionconfig</key>
 			<dict>
@@ -112,7 +101,7 @@
 			<key>actionuid</key>
 			<string>remote.alfred.runworkflow</string>
 			<key>buttoniconid</key>
-			<string>FA6F799A-C3AA-4019-ABD5-49F635A0CAC1</string>
+			<string>3A89A720-DC62-42BE-9FB6-2BFEA717BCE9</string>
 			<key>buttonlabel</key>
 			<string>Volume Down</string>
 			<key>itemuid</key>
@@ -120,15 +109,26 @@
 		</dict>
 		<dict/>
 		<dict/>
-		<dict/>
-		<dict/>
-		<dict/>
-		<dict/>
-		<dict/>
-		<dict/>
+		<dict>
+			<key>actionconfig</key>
+			<dict>
+				<key>autoworkflowuid</key>
+				<true/>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.volup</string>
+			</dict>
+			<key>actionuid</key>
+			<string>remote.alfred.runworkflow</string>
+			<key>buttoniconid</key>
+			<string>9AF9D5D1-FA74-4419-9B9C-C075BEC1AD75</string>
+			<key>buttonlabel</key>
+			<string>Volume Up</string>
+			<key>itemuid</key>
+			<string>FBE348BE-7495-4997-BC2C-4FA298E552FF</string>
+		</dict>
 	</array>
 	<key>subtitle</key>
-	<string>Control Spotify via Spotifious</string>
+	<string>Control Spotify</string>
 	<key>title</key>
 	<string>Spotifious</string>
 </dict>
