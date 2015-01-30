@@ -106,6 +106,7 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 
 See `CHANGELOG.md` for more detailed information.
 
+- v0.12:   Compatible with Alfred Remote
 - v0.11.2: Location opt-out and tutorial
 - v0.11.1: Fixed response freezing
 - v0.11:   New API, hotkeys, and notifications
