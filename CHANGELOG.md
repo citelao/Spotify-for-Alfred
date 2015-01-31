@@ -1,5 +1,8 @@
 # Changelog #
 
+## v0.12 ##
+- Added: compatiblity with Alfred Remote
+
 ## v0.11.2 ##
 - Added: opt-out feature for location information
 - Changed: better installation guide
