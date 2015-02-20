@@ -1,13 +1,20 @@
 <?php
 namespace OhAlfred\Command;
 
+use OhAlfred\OhAlfred;
+
 class Timeout {
 	protected $script;
+	protected $alfred;
 
 	public function __construct($timeout, $command) {
-		$script = $command;
+		$script = "(";
 
-		$script .= " & sleep $timeout; kill -9 \$!";
+		$script .= $command;
+
+		$script .= " && sleep $timeout; kill -9 \$!) > /dev/null 2>/dev/null &";
+
+		echo($script);
 
 		$this->script = $script;
 	}

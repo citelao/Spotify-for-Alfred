@@ -168,7 +168,7 @@ class Spotifious {
 
 			} else if($command == 'appsetup') {
 				// Autokill server in 10 minutes
-				$server = new Timeout(5 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
+				$server = new Timeout(5 * 5, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
 				$server->run();
 
 
