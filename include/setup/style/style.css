@@ -101,6 +101,10 @@ input {
 		border-radius: 1em;
 	}
 
+	input[disabled] {
+		color: #999;
+	}
+
 .cancel {
 	float: right;
 	display: inline-block;
@@ -109,6 +113,20 @@ input {
 	color: #627699;
 	font-size: 0.75em;
 }
+
+.response {
+	text-align: center;
+	padding: 1em 0;
+	display: none;
+}
+
+	.error {
+		background: #E52C48;
+	}
+
+	.success {
+		background: #6CD19B;
+	}
 
 @-webkit-keyframes bounce {
   0% { -webkit-transform: scale(1); transform: scale(1);}
