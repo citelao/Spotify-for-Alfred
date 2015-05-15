@@ -1,14 +1,21 @@
 <?php
 namespace Spotifious;
 
-use Spotifious\Menus\Control;
-use Spotifious\Menus\Main;
-use Spotifious\Menus\Search;
-use Spotifious\Menus\Setup;
-use Spotifious\Menus\SetupCountryCode;
-use Spotifious\Menus\Detail;
+use SpotifyWebAPI\SpotifyWebAPI;
+use SpotifyWebAPI\Session;
+
 use OhAlfred\OhAlfred;
 use OhAlfred\Applescript\ApplicationApplescript;
+use OhAlfred\Command\Timeout;
+use OhAlfred\Exceptions\StatefulException;
+
+use Spotifious\Menus\Control;
+use Spotifious\Menus\Detail;
+use Spotifious\Menus\Main;
+use Spotifious\Menus\Search;
+use Spotifious\Menus\Settings;
+use Spotifious\Menus\Setup;
+use Spotifious\Menus\SetupCountryCode;
 
 class Spotifious {
 	protected $alfred;
@@ -21,9 +28,26 @@ class Spotifious {
 		// Correct for old Spotifious queries
 		$q = str_replace("►", "⟩", $query);
 
+		// Set defaults if they've not been set before
+		if($this->alfred->options('track_notifications') == '') {
+			$this->alfred->options('track_notifications', 'true');
+		}
+
+		if($this->alfred->options('desired_scopes') != '') {
+			$this->alfred->options('desired_scopes', '');
+		}
+
 		// Display the setup menu if the app isn't setup.
+		// Or the "options" menu if the S key is pressed
 		if($this->alfred->options('country') == '' ||
-			$query == "s" || $query == "S" ||
+			$this->alfred->options('spotify_client_id') == '' ||
+			$this->alfred->options('spotify_secret') == '' ||
+			!$this->optedOut() && (
+				$this->alfred->options('spotify_access_token') == '' ||
+				$this->alfred->options('spotify_access_token_expires') == '' ||
+				$this->alfred->options('spotify_refresh_token') == '' ||
+				$this->alfred->options('desired_scopes') != $this->alfred->options('registered_scopes')
+			) || 
 			$this->contains($query, "Country Code ⟩")) {
 
 			// If we are trying to configure country code
@@ -36,9 +60,22 @@ class Spotifious {
 			return $menu->output();
 		}
 
+		// Don't bother connecting if we've opted out :).
+		$api = null;
+		if(!$this->optedOut()) {
+			$api = $this->getSpotifyApi();
+		}
+		// TODO
+		// if expired
+			// attempt refresh
+			// if failed, prompt for relogin
+
 		if (mb_strlen($query) <= 3) {
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
 				$menu = new Control($query);
+				return $menu->output();
+			} elseif(mb_strlen($query) > 0 && ($query[0] == "s" || $query[0] == "S")) {
+				$menu = new Settings($query);
 				return $menu->output();
 			} else {
 				$menu = new Main($query);
@@ -102,33 +139,58 @@ class Spotifious {
 	}
 
 	public function process($action) {
+		// TODO refresh token
+		// this is identical code to run()
+		// if expired
+			// attempt refresh
+			// if failed, prompt for relogin
+
+
 		if($this->contains($action, '⟩')) {
 			$splitAction = explode('⟩', $action);
 			$command = array_shift($splitAction);
 
 			if($command == 'country') {
 				$this->alfred->options('country', $splitAction[0]);
+
+				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+				$as->run();
+
+			} else if($command == 'appsetup') {
+				// Autokill server in 10 minutes
+				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
+				$server->run();
+
+			} else if($command == 'applink') {
+				// Autokill server in 10 minutes
+				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/link.php'");
+				$server->run();
+
+			} else if($command == 'togglenotifications') {
+				$current = $this->alfred->options('track_notifications');
+
+				if($current == 'true') {
+					$this->alfred->options('track_notifications', 'false');
+				} else {
+					$this->alfred->options('track_notifications', 'true');
+				}
+
 			} else if($command == 'next') {
 				$song = $this->respondingSpotifyQuery('next track');
 
-				if($splitAction[0] && $splitAction[0] == 'output') {
-
-					$this->alfred->notify(
-						$song['album'] . " — " . $song['artist'], 
-						$song['title'], 
-						// $song['url'],
-						"",
-						"",
-						"",
-						$song['url']);
-				}
+				$this->alfred->notify(
+					$song['album'] . " — " . $song['artist'], 
+					$song['title'], 
+					// $song['url'],
+					"",
+					"",
+					"",
+					$song['url']);
 
 			} else if($command == 'previous') {
 				$song = $this->respondingSpotifyQuery('previous track');
 
-				if($splitAction[0] && $splitAction[0] == 'output') {
-
-					$this->alfred->notify(
+				$this->alfred->notify(
 						$song['album'] . " — " . $song['artist'], 
 						$song['title'], 
 						// $song['url'],
@@ -136,23 +198,19 @@ class Spotifious {
 						"",
 						"",
 						$song['url']);
-				}
 
 			} else if($command == 'playpause') {
 				$song = $this->respondingSpotifyQuery('playpause');
 
-				if($splitAction[0] && $splitAction[0] == 'output') {
-					$icon = ($song['state'] == "playing") ? "▶" : "‖";
-
-					$this->alfred->notify(
-						$song['album'] . " — " . $song['artist'], 
-						$icon . " " . $song['title'], 
-						// $song['url'],
-						"",
-						"",
-						"",
-						$song['url']);
-				}
+				$icon = ($song['state'] == "playing") ? "▶" : "‖";
+				$this->alfred->notify(
+					$song['album'] . " — " . $song['artist'], 
+					$icon . " " . $song['title'], 
+					// $song['url'],
+					"",
+					"",
+					"",
+					$song['url']);
 
 			} else if($command == 'volup') {
 				$as = new ApplicationApplescript("Spotify", "set sound volume to sound volume + 10");
@@ -165,6 +223,16 @@ class Spotifious {
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
 				$as->run();
+			}
+
+
+			if($splitAction[0] && $splitAction[0] == 'return') {
+				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+				$as->run();
+			} elseif($splitAction[0] && $splitAction[0] == 'returnControls') {
+				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious" with argument "c"');
+				$as->run();
+
 			}
 		} else {
 			return "Could not process command!";
@@ -187,7 +255,7 @@ class Spotifious {
 	}
 
 	protected function respondingSpotifyQuery($query) {
-		$as = new ApplicationApplescript("Spotify", $query . " \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
+		$as = new ApplicationApplescript("Spotify", $query . " \n delay 0.1 \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
 		$result = $as->run();
 
 		$array = explode("✂", $result);
@@ -208,5 +276,31 @@ class Spotifious {
 		);
 
 		return $data;
+	}
+
+	protected function getSpotifyApi() {
+		if($this->optedOut()) {
+			throw new StatefulException("Trying to get API for opted out user. My bad.");
+		}
+
+		$api = new SpotifyWebAPI();
+
+		// If the access token has expired :(
+		if ($this->alfred->options('spotify_access_token_expires') < time()) {
+			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
+			$session->setRefreshToken($this->alfred->options('spotify_refresh_token'));
+			$session->refreshToken();
+
+			$this->alfred->options('spotify_access_token_expires', time() + $session->getExpires());
+			$this->alfred->options('spotify_access_token', $session->getAccessToken());
+		}
+
+		$api->setAccessToken($this->alfred->options('spotify_access_token'));
+
+		return $api;
+	}
+
+	protected function optedOut() {
+		return $this->alfred->options('spotify_app_opt_out') == 'true';
 	}
 }

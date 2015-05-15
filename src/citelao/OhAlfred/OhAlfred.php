@@ -23,7 +23,7 @@ class OhAlfred {
 		if($this->name == null)
 			$this->name = $this->defaults('bundleid');
 
-		return $this->name;
+		return $this->name; 
 	}
 
 	// Get the user's home directory.
@@ -74,8 +74,8 @@ class OhAlfred {
 	 **/
 
 	// Read an arbitrary plist setting.
-	public function plist($plist, $setting, $value = '') {
-		if ($value == '') {
+	public function plist($plist, $setting, $value = -1) {
+		if ($value === -1) {
 			return exec("defaults read '$plist' '$setting'");
 		}
 
@@ -83,12 +83,12 @@ class OhAlfred {
 	}
 
 	// Read the workflow .plist file.
-	public function defaults($setting, $value = '') {
+	public function defaults($setting, $value = -1) {
 		return $this->plist($this->workflow() . "/info", $setting, $value);
 	}
 
 	// Read a custom workflow options .plist file.
-	public function options($setting, $value = '') {
+	public function options($setting, $value = -1) {
 		$options = $this->storage() . "/settings";
 		$optionsFile = $options . ".plist";
 
@@ -222,6 +222,10 @@ class OhAlfred {
 	}
 
 	public function notify($message, $title = '', $subtitle = '', $appIcon = '', $contentImage = '', $open = '') {
+		if($this->options('track_notifications') != 'true') {
+			return;
+		}
+
 		$command = "include/terminal-notifier.app/Contents/MacOS/terminal-notifier ";
 
 		$command .= "-message " . $this->escapeNotify($message) . " ";

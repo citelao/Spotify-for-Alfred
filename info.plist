@@ -161,6 +161,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>F4A2A879-4C5A-4532-BF35-02BAAD863581</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>18496AC4-EA42-444C-A906-642E38259C96</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Ben Stolovitz</string>
@@ -182,13 +193,13 @@
 				<key>keyword</key>
 				<string>spotifious</string>
 				<key>queuedelaycustom</key>
-				<integer>1</integer>
+				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
-				<false/>
+				<true/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
 				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
@@ -273,6 +284,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>4</integer>
 				<key>script</key>
@@ -289,6 +302,19 @@
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>search</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>F4A2A879-4C5A-4532-BF35-02BAAD863581</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -321,7 +347,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>playpause⟩output</string>
+				<string>playpause⟩</string>
 				<key>hotkey</key>
 				<integer>49</integer>
 				<key>hotmod</key>
@@ -371,7 +397,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>next⟩output</string>
+				<string>next⟩</string>
 				<key>hotkey</key>
 				<integer>124</integer>
 				<key>hotmod</key>
@@ -421,7 +447,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>previous⟩output</string>
+				<string>previous⟩</string>
 				<key>hotkey</key>
 				<integer>123</integer>
 				<key>hotmod</key>
@@ -545,7 +571,7 @@
 	</array>
 	<key>readme</key>
 	<string># Spotifious
-# v0.11.2
+# v0.13
 
 I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
 
@@ -571,17 +597,17 @@ This code is MIT Licensed.</string>
 		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
 		<dict>
 			<key>ypos</key>
-			<real>830</real>
+			<real>990</real>
 		</dict>
 		<key>4BB22960-369A-4674-AF29-00CCE1603B53</key>
 		<dict>
 			<key>ypos</key>
-			<real>490</real>
+			<real>620</real>
 		</dict>
 		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
 		<dict>
 			<key>ypos</key>
-			<real>600</real>
+			<real>730</real>
 		</dict>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
 		<dict>
@@ -591,17 +617,17 @@ This code is MIT Licensed.</string>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<dict>
 			<key>ypos</key>
-			<real>1310</real>
+			<real>1470</real>
 		</dict>
 		<key>7858554D-2173-462A-B03D-1078EC7059D6</key>
 		<dict>
 			<key>ypos</key>
-			<real>360</real>
+			<real>490</real>
 		</dict>
 		<key>8020A500-17C9-43BA-B17A-00D35E460EB6</key>
 		<dict>
 			<key>ypos</key>
-			<real>250</real>
+			<real>380</real>
 		</dict>
 		<key>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</key>
 		<dict>
@@ -616,17 +642,17 @@ This code is MIT Licensed.</string>
 		<key>B02E0659-E11A-4746-ADB7-2C2C0A8BD8BB</key>
 		<dict>
 			<key>ypos</key>
-			<real>960</real>
+			<real>1120</real>
 		</dict>
 		<key>BFFC58C1-626F-4091-A0A4-61034DDD10D0</key>
 		<dict>
 			<key>ypos</key>
-			<real>1070</real>
+			<real>1230</real>
 		</dict>
 		<key>C5E43F66-AD1D-4D8D-9E4A-D7855C8F5AE2</key>
 		<dict>
 			<key>ypos</key>
-			<real>720</real>
+			<real>880</real>
 		</dict>
 		<key>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</key>
 		<dict>
@@ -636,7 +662,12 @@ This code is MIT Licensed.</string>
 		<key>F1B61D14-D686-468D-9373-AB4FC3EEE3C8</key>
 		<dict>
 			<key>ypos</key>
-			<real>1200</real>
+			<real>1360</real>
+		</dict>
+		<key>F4A2A879-4C5A-4532-BF35-02BAAD863581</key>
+		<dict>
+			<key>ypos</key>
+			<real>230</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>
