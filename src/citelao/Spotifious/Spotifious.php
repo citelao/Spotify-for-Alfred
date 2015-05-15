@@ -3,15 +3,18 @@ namespace Spotifious;
 
 use SpotifyWebAPI\SpotifyWebAPI;
 use SpotifyWebAPI\Session;
-use Spotifious\Menus\Control;
-use Spotifious\Menus\Main;
-use Spotifious\Menus\Search;
-use Spotifious\Menus\Setup;
-use Spotifious\Menus\SetupCountryCode;
-use Spotifious\Menus\Detail;
+
 use OhAlfred\OhAlfred;
 use OhAlfred\Applescript\ApplicationApplescript;
 use OhAlfred\Command\Timeout;
+
+use Spotifious\Menus\Control;
+use Spotifious\Menus\Detail;
+use Spotifious\Menus\Main;
+use Spotifious\Menus\Search;
+use Spotifious\Menus\Settings;
+use Spotifious\Menus\Setup;
+use Spotifious\Menus\SetupCountryCode;
 
 class Spotifious {
 	protected $alfred;
@@ -32,7 +35,6 @@ class Spotifious {
 			$this->alfred->options('spotify_access_token') == '' ||
 			$this->alfred->options('spotify_access_token_expires') == '' ||
 			$this->alfred->options('spotify_refresh_token') == '' ||
-			$query == "s" || $query == "S" ||
 			$this->contains($query, "Country Code ⟩")) {
 
 			// If we are trying to configure country code
@@ -53,6 +55,9 @@ class Spotifious {
 		if (mb_strlen($query) <= 3) {
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
 				$menu = new Control($query);
+				return $menu->output();
+			} elseif(mb_strlen($query) > 0 && ($query[0] == "s" || $query[0] == "S")) {
+				$menu = new Settings($query);
 				return $menu->output();
 			} else {
 				$menu = new Main($query);
@@ -142,6 +147,15 @@ class Spotifious {
 				// Autokill server in 10 minutes
 				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/link.php'");
 				$server->run();
+
+			} else if($command == 'togglenotifications') {
+				$current = $this->alfred->options('track_notifications');
+
+				if($current == 'true') {
+					$this->alfred->options('track_notifications', 'false');
+				} else {
+					$this->alfred->options('track_notifications', 'true');
+				}
 
 			} else if($command == 'next') {
 				$song = $this->respondingSpotifyQuery('next track');

@@ -7,13 +7,14 @@ use OhAlfred\OhAlfred;
 class Setup implements Menu {
 
 	protected $alfred;
-	protected $userTriggered;
 	protected $countryCodeConfigured;
 
 	public function __construct($query) {
 		$this->alfred = new OhAlfred();
 
-		$this->userTriggered = ($query == "s" || $query == "S");
+		// Set default settings
+		// TODO clear
+		$this->alfred->options('track_notifications', 'true');
 
 		$this->countryCodeConfigured = !($this->alfred->options('country') == '');
 		$this->applicationCreated = !($this->alfred->options('spotify_client_id') == '' || $this->alfred->options('spotify_secret') == '');
@@ -21,21 +22,12 @@ class Setup implements Menu {
 	}
 
 	public function output() {
-		if($this->userTriggered) {
-			$results[] = array(
-				'title' => 'Settings',
-				'subtitle' => 'Here you can configure any options you want.',
-				'icon' => 'include/images/configuration.png',
-				'valid' => 'no'
-			);
-		} else {
-			$results[] = array(
-				'title' => 'Welcome to Spotifious!',
-				'subtitle' => 'You need to configure a few more things before you can use Spotifious.',
-				'icon' => 'include/images/configuration.png',
-				'valid' => 'no'
-			);
-		}
+		$results[] = array(
+			'title' => 'Welcome to Spotifious!',
+			'subtitle' => 'You need to configure a few more things before you can use Spotifious.',
+			'icon' => 'include/images/configuration.png',
+			'valid' => 'no'
+		);
 
 		$results[] = array(
 			'title' => '1. Set your country code',

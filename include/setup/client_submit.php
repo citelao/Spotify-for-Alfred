@@ -77,6 +77,9 @@ try {
 // Save data
 $alfred->options('spotify_client_id', $_GET["id"]);
 $alfred->options('spotify_secret', $_GET["secret"]);
+$alfred->options('spotify_access_token', '');
+$alfred->options('spotify_access_token_expires', '');
+$alfred->options('spotify_refresh_token', '');
 
 $response["status"] = "success";
 $response["message"] = "Saved your information! Make sure to do step 8 :)";
