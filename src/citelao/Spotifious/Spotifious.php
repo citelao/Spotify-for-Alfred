@@ -7,6 +7,7 @@ use SpotifyWebAPI\Session;
 use OhAlfred\OhAlfred;
 use OhAlfred\Applescript\ApplicationApplescript;
 use OhAlfred\Command\Timeout;
+use OhAlfred\Exceptions\StatefulException;
 
 use Spotifious\Menus\Control;
 use Spotifious\Menus\Detail;
@@ -32,14 +33,21 @@ class Spotifious {
 			$this->alfred->options('track_notifications', 'true');
 		}
 
+		if($this->alfred->options('desired_scopes') != '') {
+			$this->alfred->options('desired_scopes', '');
+		}
+
 		// Display the setup menu if the app isn't setup.
 		// Or the "options" menu if the S key is pressed
 		if($this->alfred->options('country') == '' ||
 			$this->alfred->options('spotify_client_id') == '' ||
 			$this->alfred->options('spotify_secret') == '' ||
-			$this->alfred->options('spotify_access_token') == '' ||
-			$this->alfred->options('spotify_access_token_expires') == '' ||
-			$this->alfred->options('spotify_refresh_token') == '' ||
+			!$this->optedOut() && (
+				$this->alfred->options('spotify_access_token') == '' ||
+				$this->alfred->options('spotify_access_token_expires') == '' ||
+				$this->alfred->options('spotify_refresh_token') == '' ||
+				$this->alfred->options('desired_scopes') != $this->alfred->options('registered_scopes')
+			) || 
 			$this->contains($query, "Country Code ⟩")) {
 
 			// If we are trying to configure country code
@@ -52,7 +60,12 @@ class Spotifious {
 			return $menu->output();
 		}
 
-		$api = $this->getSpotifyApi();
+		// Don't bother connecting if we've opted out :).
+		$api = null;
+		if(!$this->optedOut()) {
+			$api = $this->getSpotifyApi();
+		}
+		// TODO
 		// if expired
 			// attempt refresh
 			// if failed, prompt for relogin
@@ -266,12 +279,17 @@ class Spotifious {
 	}
 
 	protected function getSpotifyApi() {
+		if($this->optedOut()) {
+			throw new StatefulException("Trying to get API for opted out user. My bad.");
+		}
+
 		$api = new SpotifyWebAPI();
 
 		// If the access token has expired :(
 		if ($this->alfred->options('spotify_access_token_expires') < time()) {
 			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
-			$session->refreshAccessToken();
+			$session->setRefreshToken($this->alfred->options('spotify_refresh_token'));
+			$session->refreshToken();
 
 			$this->alfred->options('spotify_access_token_expires', time() + $session->getExpires());
 			$this->alfred->options('spotify_access_token', $session->getAccessToken());
@@ -280,5 +298,9 @@ class Spotifious {
 		$api->setAccessToken($this->alfred->options('spotify_access_token'));
 
 		return $api;
+	}
+
+	protected function optedOut() {
+		return $this->alfred->options('spotify_app_opt_out') == 'true';
 	}
 }

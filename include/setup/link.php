@@ -9,10 +9,7 @@ require '../../vendor/autoload.php';
 $alfred = new OhAlfred();
 $session = new SpotifyWebAPI\Session($alfred->options('spotify_client_id'), $alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
 
-$scopes = array(
-    'playlist-read-private',
-    'user-read-private'
-);
+$scopes = explode(', ', $alfred->options('desired_scopes'));
 
 $authorizeUrl = $session->getAuthorizeUrl(array(
     'scope' => $scopes

@@ -10,12 +10,18 @@ $alfred = new OhAlfred();
 $session = new SpotifyWebAPI\Session($alfred->options('spotify_client_id'), $alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
 
 // Request a access token using the code from Spotify
-$session->requestToken($_GET['code']);
+$success = !array_key_exists('error', $_GET);
 
-// Save the tokens
-$alfred->options("spotify_access_token", $session->getAccessToken());
-$alfred->options("spotify_refresh_token", $session->getRefreshToken());
-$alfred->options("spotify_access_token_expires", time() + $session->getExpires());
+if($success) {
+	$session->requestToken($_GET['code']);
+
+	// Save the tokens
+	$alfred->options("spotify_access_token", $session->getAccessToken());
+	$alfred->options("spotify_refresh_token", $session->getRefreshToken());
+	$alfred->options("spotify_access_token_expires", time() + $session->getExpires());
+
+	$alfred->options('registered_scopes', $alfred->options('desired_scopes'));
+}
 
 ?>
 <html>
@@ -28,6 +34,7 @@ $alfred->options("spotify_access_token_expires", time() + $session->getExpires()
 
 <body>
 	<div id="wrapper" class="wrapper">
+	<?php if($success): ?> 
 		<section>
 			<h1>Spotifious should be setup :)</h1>
 			<p>
@@ -36,5 +43,15 @@ $alfred->options("spotify_access_token_expires", time() + $session->getExpires()
 
 			<p>(enjoy)</p>
 		</section>
+	<?php else: ?>
+		<section>
+			<h1>Spotifious didn't setup correctly.</h1>
+			<p>
+				Error: <code><?php print $_GET['error']; ?></code>
+			</p>
+
+			<p>You'll need to try logging in again.</p>
+		</section>
+	<?php endif; ?>
 	</div>
 </body>
