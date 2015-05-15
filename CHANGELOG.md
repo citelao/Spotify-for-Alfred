@@ -1,5 +1,11 @@
 # Changelog #
 
+## v0.13 ##
+- Added: preliminary scaffolding for web API (playlists, starring, all of it is coming)
+- Added: new settings menu.
+- Added: you can now *disable* track notifications
+- Fixed: track notifications say the right thing in Spotify 1.0
+
 ## v0.12 ##
 - Added: compatiblity with Alfred Remote
 
