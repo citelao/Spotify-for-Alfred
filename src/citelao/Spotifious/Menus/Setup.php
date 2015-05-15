@@ -55,9 +55,9 @@ class Setup implements Menu {
 		$results[] = array(
 			'title' => '3. Link your Spotify application',
 			'subtitle' => 'Connect your Spotify application to Spotifious to search your playlists.',
-			'icon' => $this->applicationLinked ? 'include/images/checked.png' : 'include/images/unchecked.png',
+			'icon' => $this->applicationCreated ? $this->applicationLinked ? 'include/images/checked.png' : 'include/images/unchecked.png' : 'include/images/disabled.png',
 			'arg' => 'applink⟩',
-			'valid' => $this->applicationCreated
+			'valid' => $this->applicationCreated ? 'yes' : 'no'
 		);
 
 		$results[] = array(

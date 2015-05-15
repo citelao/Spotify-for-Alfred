@@ -129,6 +129,20 @@ class Spotifious {
 
 			if($command == 'country') {
 				$this->alfred->options('country', $splitAction[0]);
+
+				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+				$as->run();
+
+			} else if($command == 'appsetup') {
+				// Autokill server in 10 minutes
+				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
+				$server->run();
+
+			} else if($command == 'applink') {
+				// Autokill server in 10 minutes
+				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/link.php'");
+				$server->run();
+
 			} else if($command == 'next') {
 				$song = $this->respondingSpotifyQuery('next track');
 
@@ -182,16 +196,6 @@ class Spotifious {
 			} else if($command == 'voldown') {
 				$as = new ApplicationApplescript("Spotify", "set sound volume to sound volume - 10");
 				$as->run();
-
-			} else if($command == 'appsetup') {
-				// Autokill server in 10 minutes
-				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
-				$server->run();
-
-			} else if($command == 'applink') {
-				// Autokill server in 10 minutes
-				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/link.php'");
-				$server->run();
 
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
