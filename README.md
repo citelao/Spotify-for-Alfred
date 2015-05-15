@@ -32,7 +32,7 @@ Spotifious uses Packal to make sure you always have the latest version. It gives
 
 ## Download & Install ##
 
-Latest version: [v0.11.2](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.11.2](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
+Latest version: [v0.13](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.13](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
 
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)
 this repository.
@@ -90,6 +90,7 @@ A lot of people helped out on this:
 - **vdesabou** and I trade ideas a ton
 - **PHPfunk** and his PHP Alfred workflow inspired much of `OhAlfred`
 - **David Ferguson** helped with some iffy Alfred glitches
+- **jwilsson**'s [Spotify PHP web API](http://jwilsson.github.io/spotify-web-api-php/).
 - a slightly modified version of [Entypo](http://www.entypo.com/) icon font face for icons.
 - and many other people mentioned in the code.
 
@@ -106,6 +107,7 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 
 See `CHANGELOG.md` for more detailed information.
 
+- v0.13:   Preliminary Web API; toggle track notifications
 - v0.12:   Compatible with Alfred Remote
 - v0.11.2: Location opt-out and tutorial
 - v0.11.1: Fixed response freezing

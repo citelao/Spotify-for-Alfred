@@ -4,5 +4,8 @@
 			"OhAlfred\\": "src/citelao/OhAlfred/",
         		"Spotifious\\": "src/citelao/Spotifious/"
 		}
+	},
+	"require": {
+		"jwilsson/spotify-web-api-php": "0.6.*"
 	}
 }
