@@ -12,10 +12,6 @@ class Setup implements Menu {
 	public function __construct($query) {
 		$this->alfred = new OhAlfred();
 
-		// Set default settings
-		// TODO clear
-		$this->alfred->options('track_notifications', 'true');
-
 		$this->countryCodeConfigured = !($this->alfred->options('country') == '');
 		$this->applicationCreated = !($this->alfred->options('spotify_client_id') == '' || $this->alfred->options('spotify_secret') == '');
 		$this->applicationLinked = !($this->alfred->options('spotify_access_token') == '' || $this->alfred->options('spotify_refresh_token') == '' || $this->alfred->options('spotify_access_token_expires') == '');

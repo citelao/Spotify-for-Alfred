@@ -347,7 +347,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>playpause⟩output</string>
+				<string>playpause⟩</string>
 				<key>hotkey</key>
 				<integer>49</integer>
 				<key>hotmod</key>
@@ -397,7 +397,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>next⟩output</string>
+				<string>next⟩</string>
 				<key>hotkey</key>
 				<integer>124</integer>
 				<key>hotmod</key>
@@ -447,7 +447,7 @@
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>previous⟩output</string>
+				<string>previous⟩</string>
 				<key>hotkey</key>
 				<integer>123</integer>
 				<key>hotmod</key>

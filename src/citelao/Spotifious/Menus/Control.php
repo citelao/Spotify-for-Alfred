@@ -13,14 +13,14 @@ class Control implements Menu {
 			'name' => 'Next track',
 			'keys' => 'skip',
 			'icon' => 'include/images/commands/next.png',
-			'action' => 'next⟩output'
+			'action' => 'next⟩returnControls'
 		),
 
 		array(
 			'name' => 'Previous track',
 			'keys' => 'back',
 			'icon' => 'include/images/commands/previous.png',
-			'action' => 'previous⟩output'
+			'action' => 'previous⟩returnControls'
 		)
 	);
 

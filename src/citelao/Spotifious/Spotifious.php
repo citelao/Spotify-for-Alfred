@@ -27,6 +27,11 @@ class Spotifious {
 		// Correct for old Spotifious queries
 		$q = str_replace("►", "⟩", $query);
 
+		// Set defaults if they've not been set before
+		if($this->alfred->options('track_notifications') == '') {
+			$this->alfred->options('track_notifications', 'true');
+		}
+
 		// Display the setup menu if the app isn't setup.
 		// Or the "options" menu if the S key is pressed
 		if($this->alfred->options('country') == '' ||
@@ -160,24 +165,19 @@ class Spotifious {
 			} else if($command == 'next') {
 				$song = $this->respondingSpotifyQuery('next track');
 
-				if($splitAction[0] && $splitAction[0] == 'output') {
-
-					$this->alfred->notify(
-						$song['album'] . " — " . $song['artist'], 
-						$song['title'], 
-						// $song['url'],
-						"",
-						"",
-						"",
-						$song['url']);
-				}
+				$this->alfred->notify(
+					$song['album'] . " — " . $song['artist'], 
+					$song['title'], 
+					// $song['url'],
+					"",
+					"",
+					"",
+					$song['url']);
 
 			} else if($command == 'previous') {
 				$song = $this->respondingSpotifyQuery('previous track');
 
-				if($splitAction[0] && $splitAction[0] == 'output') {
-
-					$this->alfred->notify(
+				$this->alfred->notify(
 						$song['album'] . " — " . $song['artist'], 
 						$song['title'], 
 						// $song['url'],
@@ -185,23 +185,19 @@ class Spotifious {
 						"",
 						"",
 						$song['url']);
-				}
 
 			} else if($command == 'playpause') {
 				$song = $this->respondingSpotifyQuery('playpause');
 
-				if($splitAction[0] && $splitAction[0] == 'output') {
-					$icon = ($song['state'] == "playing") ? "▶" : "‖";
-
-					$this->alfred->notify(
-						$song['album'] . " — " . $song['artist'], 
-						$icon . " " . $song['title'], 
-						// $song['url'],
-						"",
-						"",
-						"",
-						$song['url']);
-				}
+				$icon = ($song['state'] == "playing") ? "▶" : "‖";
+				$this->alfred->notify(
+					$song['album'] . " — " . $song['artist'], 
+					$icon . " " . $song['title'], 
+					// $song['url'],
+					"",
+					"",
+					"",
+					$song['url']);
 
 			} else if($command == 'volup') {
 				$as = new ApplicationApplescript("Spotify", "set sound volume to sound volume + 10");
@@ -214,6 +210,16 @@ class Spotifious {
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
 				$as->run();
+			}
+
+
+			if($splitAction[0] && $splitAction[0] == 'return') {
+				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+				$as->run();
+			} elseif($splitAction[0] && $splitAction[0] == 'returnControls') {
+				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious" with argument "c"');
+				$as->run();
+
 			}
 		} else {
 			return "Could not process command!";
