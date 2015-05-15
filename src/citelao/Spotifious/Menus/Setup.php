@@ -16,8 +16,8 @@ class Setup implements Menu {
 		$this->userTriggered = ($query == "s" || $query == "S");
 
 		$this->countryCodeConfigured = !($this->alfred->options('country') == '');
-		$this->applicationCreated = !($this->alfred->options('spotify_client_id') == '');
-		$this->applicationLinked = !($this->alfred->options('spotify_secret') == '');
+		$this->applicationCreated = !($this->alfred->options('spotify_client_id') == '' || $this->alfred->options('spotify_secret') == '');
+		$this->applicationLinked = !($this->alfred->options('spotify_access_token') == '' || $this->alfred->options('spotify_refresh_token') == '' || $this->alfred->options('spotify_access_token_expires') == '');
 	}
 
 	public function output() {
@@ -56,8 +56,8 @@ class Setup implements Menu {
 			'title' => '3. Link your Spotify application',
 			'subtitle' => 'Connect your Spotify application to Spotifious to search your playlists.',
 			'icon' => $this->applicationLinked ? 'include/images/checked.png' : 'include/images/unchecked.png',
-			'autocomplete' => 'Country Code ⟩',
-			'valid' => 'no'
+			'arg' => 'applink⟩',
+			'valid' => $this->applicationCreated
 		);
 
 		$results[] = array(

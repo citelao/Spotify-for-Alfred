@@ -1,6 +1,8 @@
 <?php
 namespace Spotifious;
 
+use SpotifyWebAPI\SpotifyWebAPI;
+use SpotifyWebAPI\Session;
 use Spotifious\Menus\Control;
 use Spotifious\Menus\Main;
 use Spotifious\Menus\Search;
@@ -27,6 +29,9 @@ class Spotifious {
 		if($this->alfred->options('country') == '' ||
 			$this->alfred->options('spotify_client_id') == '' ||
 			$this->alfred->options('spotify_secret') == '' ||
+			$this->alfred->options('spotify_access_token') == '' ||
+			$this->alfred->options('spotify_access_token_expires') == '' ||
+			$this->alfred->options('spotify_refresh_token') == '' ||
 			$query == "s" || $query == "S" ||
 			$this->contains($query, "Country Code ⟩")) {
 
@@ -39,6 +44,11 @@ class Spotifious {
 			$menu = new Setup($query);
 			return $menu->output();
 		}
+
+		$api = $this->getSpotifyApi();
+		// if expired
+			// attempt refresh
+			// if failed, prompt for relogin
 
 		if (mb_strlen($query) <= 3) {
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
@@ -106,6 +116,13 @@ class Spotifious {
 	}
 
 	public function process($action) {
+		// TODO refresh token
+		// this is identical code to run()
+		// if expired
+			// attempt refresh
+			// if failed, prompt for relogin
+
+
 		if($this->contains($action, '⟩')) {
 			$splitAction = explode('⟩', $action);
 			$command = array_shift($splitAction);
@@ -171,6 +188,10 @@ class Spotifious {
 				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
 				$server->run();
 
+			} else if($command == 'applink') {
+				// Autokill server in 10 minutes
+				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/link.php'");
+				$server->run();
 
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
@@ -218,5 +239,22 @@ class Spotifious {
 		);
 
 		return $data;
+	}
+
+	protected function getSpotifyApi() {
+		$api = new SpotifyWebAPI();
+
+		// If the access token has expired :(
+		if ($this->alfred->options('spotify_access_token_expires') < time()) {
+			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
+			$session->refreshAccessToken();
+
+			$this->alfred->options('spotify_access_token_expires', time() + $session->getExpires());
+			$this->alfred->options('spotify_access_token', $session->getAccessToken());
+		}
+
+		$api->setAccessToken($this->alfred->options('spotify_access_token'));
+
+		return $api;
 	}
 }

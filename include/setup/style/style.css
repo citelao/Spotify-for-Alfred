@@ -45,7 +45,7 @@ body {
 	margin: 0 auto;
 }
 
-code {
+code, kbd {
 	background: #ddd;
 	padding: .5em;
 
@@ -114,18 +114,29 @@ input {
 	font-size: 0.75em;
 }
 
-.response {
+.response, .info {
 	text-align: center;
 	padding: 1em 0;
-	display: none;
 }
+	.response {
+		display: none;
+	}
 
 	.error {
 		background: #E52C48;
+		color: #fff;
 	}
 
 	.success {
 		background: #6CD19B;
+	}
+
+	.note {
+		background: #80A0FF;
+	}
+
+	.warning {
+		background: #93FF74;
 	}
 
 @-webkit-keyframes bounce {

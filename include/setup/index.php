@@ -11,23 +11,32 @@
 		<section>
 			<h1>Spotifious Setup</h1>
 			<p>
-				Hi! In order to fully use Spotifious (search playlists, star tracks, etc.),
-				you need to generate a Spotify API key by creating a Spotify app.
+				Hi! In order to fully use Spotifious (search playlists, star 
+				tracks, etc.), you need to generate a Spotify API key by 
+				creating a Spotify app.
 			</p>
-			<p>
-				<strong>NOTE</strong>: this server will automatically close in 5 minutes.
-				If you get errors like "page not found," just reopen Spotifious.
+			<p class="info warning">
+				<strong>NOTE</strong>: this server will automatically close in 5
+				minutes. If you get errors like "page not found," just reopen 
+				Spotifious.
 			</p>
 		</section>
 
 		<section>
 			<h2>Instructions</h2>
 			<p>
-				Setting up the app is not very hard, but it has a couple specific steps.
-				Just follow these instructions, and you'll be fine!
+				Setting up the app is not very hard, but it has a couple 
+				specific steps. Just follow these instructions, and you'll be
+				fine!
 			</p>
 			<p>
-				If you're worried about privacy, <a href="#privacy">here&rsquo;s</a> what I have to say.
+				If you're worried about privacy, 
+				<a href="#privacy">here&rsquo;s</a> what I have to say.
+			</p>
+			<p class="info note">
+				If you already know how to make a Spotify app, you can enter the
+				ID and secret <a href="#ajax">here</a>. Please set the callback
+				URL correctly, though (step 8).
 			</p>
 
 			<ol>
@@ -52,6 +61,29 @@
 					</figure>
 				</li>
 				<li>Click "Create"!</li>
+				<li>
+					Note the "Client ID" and "Client Secret." You'll enter them
+					later.
+				</li>
+				<li>Click the "Add URI" button to add a new Redirect URI.</li>
+				<li>
+					Type <code>http://localhost:11114/callback.php</code> and click "Add"
+					<figure>
+						<img src="img/redirect.png" 
+						alt="A screenshot of the Spotify Developer application data page, with our redirect page ready to be submitted."
+						/>
+						<figcaption>Just type it in!</figcaption>
+					</figure>
+				</li>
+				<li>
+					Save those changes!
+					<figure>
+						<img src="img/save.png" 
+						alt="A screenshot of the Spotify Developer application data page showing the save button."
+						/>
+						<figcaption>The green one, please.</figcaption>
+					</figure>
+				</li>
 				<li>Copy and paste your <strong>Client ID</strong> and <strong>Client Secret</strong> below:
 					<form id="ajax" action="client_callback.php">
 						<table>
@@ -79,25 +111,6 @@
 						<figcaption>This will not be a blur on your screen.</figcaption>
 					</figure>
 				</li>
-				<li>Click the "Add URI" button to add a new Redirect URI.</li>
-				<li>
-					Type <code>http://localhost:11114/callback.php</code> and click "Add"
-					<figure>
-						<img src="img/redirect.png" 
-						alt="A screenshot of the Spotify Developer application data page, with our redirect page ready to be submitted."
-						/>
-						<figcaption>Just type it in!</figcaption>
-					</figure>
-				</li>
-				<li>
-					Save those changes!
-					<figure>
-						<img src="img/save.png" 
-						alt="A screenshot of the Spotify Developer application data page showing the save button."
-						/>
-						<figcaption>The green one, please.</figcaption>
-					</figure>
-				</li>
 				<li>Go back to Spotifious and finish your setup!</li>
 			</ol>
 		</section>
@@ -105,16 +118,18 @@
 		<section>
 			<h2 id="privacy">Privacy</h2>
 			<p>
-				Spotifious merely reads and writes your keys from and to
-				your hard drive. They are never used in a way that could compromise their 
-				integrity other than in the Spotify query, as required by the API. 
-				Spotifious itself <strong>never</strong> sends the data anywhere else, for
-				any reason, at any time.
+				Spotifious merely reads and writes your keys from and to your
+				hard drive. They are never used in a way that could compromise 
+				their integrity other than in the Spotify query, as required by 
+				the API. Spotifious itself <strong>never</strong> sends the data
+				anywhere else, for any reason, at any time.
 			</p>
 			<p>
-				You do <strong>not</strong> need to set up a Spotify app to use Spotifious,
-				but you lose a lot of functionality. If you would prefer not to use this
-				part of Spotify, <a href="client_callback.php?opt_out=true" title="TODO">click here</a>.
+				You do <strong>not</strong> need to set up a Spotify app to use 
+				Spotifious, but you lose a lot of functionality. If you would 
+				prefer not to use this part of Spotify, 
+				<a href="client_submit.php?opt_out=true" 
+					title="Opt out of using a Spotify app">click here</a>.
 			</p>
 		</section>
 	</div>
@@ -126,10 +141,13 @@
 		// http://stackoverflow.com/questions/5004233/jquery-ajax-post-example-with-php
 		$("#ajax").submit(function(event) {
 			$("input").prop('disabled', true);
+			$("#response").show();
+			$("#response").addClass("note");
+			$("#response").text("Verifying your information...");
 
 			request = $.ajax({
-				type: "POST",
-				url: "client_callback.php",
+				type: "GET",
+				url: "client_submit.php",
 				data: {
 					"id": $("#ClientID").val(),
 					"secret": $("#ClientSecret").val()
@@ -140,15 +158,18 @@
 			request.done(function(response) {
 				console.log(response);
 				if (response.status === "error") {
+					$("#response").removeClass("note").removeClass("success");
 					$("#response").show().addClass("error");
-					$("#response").text("ERROR: " + response.message);
+					$("#response").html("<strong>Error:</strong> " + response.message);
 				} else {
+					$("#response").removeClass("note").removeClass("error");
 					$("#response").show().addClass("success");
 					$("#response").text(response.message);
 				}
 			});
 
 			request.always(function() {
+				$("#response").removeClass("note");
 				$("input").prop('disabled', false);
 			});
 
