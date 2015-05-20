@@ -103,7 +103,7 @@ class OhAlfred {
 		if($r == null)
 			$r = $this->results;
 
-		print "<?xml version='1.0'?>\r\n<items>";
+		print "<?xml version='1.0' encoding='UTF-8' ?>\r\n<items>";
 
 		foreach($r as $result) {
 			if(!isset($result['arg']))
@@ -132,6 +132,13 @@ class OhAlfred {
 			print "		<arg>" . $result['arg'] . "</arg>\r\n";
 			print "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
 			print "		<subtitle>" . $this->escapeQuery($result['subtitle']) . "</subtitle>\r\n";
+
+			if(isset($result['mods'])) {
+				foreach ($result['mods'] as $key => $value) {
+					print "		<subtitle mod='{$key}'>" . $this->escapeQuery($value) . "</subtitle>\r\n";
+				}
+			}
+
 			print "		<icon>" . $this->escapeQuery($result['icon']) . "</icon>\r\n";
 
 			if(isset($result['copy'])) {

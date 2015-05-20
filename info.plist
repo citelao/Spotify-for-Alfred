@@ -20,6 +20,14 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
+				<string>28A24A83-5309-4FAA-9E71-AA2D332B960E</string>
+				<key>modifiers</key>
+				<integer>131072</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
 				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -284,6 +292,43 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>triggerid</key>
+				<string>search</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>F4A2A879-4C5A-4532-BF35-02BAAD863581</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>4</integer>
+				<key>script</key>
+				<string>php -f action.php -- "{query}"
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f action.php -- "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>28A24A83-5309-4FAA-9E71-AA2D332B960E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -302,19 +347,6 @@
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>triggerid</key>
-				<string>search</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.external</string>
-			<key>uid</key>
-			<string>F4A2A879-4C5A-4532-BF35-02BAAD863581</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -594,6 +626,11 @@ This code is MIT Licensed.</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>28A24A83-5309-4FAA-9E71-AA2D332B960E</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
 		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
 		<dict>
 			<key>ypos</key>
@@ -612,7 +649,7 @@ This code is MIT Licensed.</string>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
 		<dict>
 			<key>ypos</key>
-			<real>130</real>
+			<real>370</real>
 		</dict>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<dict>

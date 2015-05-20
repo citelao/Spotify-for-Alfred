@@ -25,6 +25,7 @@ class Main implements Menu {
 	public function output() {
 		$results[0]['title']        = "$this->currentTrack";
 		$results[0]['subtitle']     = "$this->currentAlbum by $this->currentArtist";
+		$results[0]['mods']['shift']= "Test";
 		$results[0]['arg']          = "playpause⟩";
 		$results[0]['copy']			= $this->currentURL;
 		$results[0]['icon']         = $this->currentStatus;
