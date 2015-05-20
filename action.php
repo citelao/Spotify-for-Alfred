@@ -4,10 +4,10 @@ mb_internal_encoding("UTF-8");
 date_default_timezone_set('America/New_York');
 
 use OhAlfred\OhAlfred;
-use Spotifious\Spotifious;
+use Spotifious\SpotifiousController;
 require 'vendor/autoload.php';
 
-$spotifious = new Spotifious();
+$spotifious = new SpotifiousController();
 
 $action = $argv[1];
 $results = $spotifious->process($action);

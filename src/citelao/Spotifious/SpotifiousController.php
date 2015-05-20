@@ -1,14 +1,11 @@
 <?php
 namespace Spotifious;
 
-use SpotifyWebAPI\SpotifyWebAPI;
-use SpotifyWebAPI\Session;
-
 use OhAlfred\OhAlfred;
 use OhAlfred\Applescript\ApplicationApplescript;
 use OhAlfred\Command\Timeout;
-use OhAlfred\Exceptions\StatefulException;
 
+use Spotifious\SpotifiousModel;
 use Spotifious\Menus\Control;
 use Spotifious\Menus\Detail;
 use Spotifious\Menus\Main;
@@ -17,11 +14,13 @@ use Spotifious\Menus\Settings;
 use Spotifious\Menus\Setup;
 use Spotifious\Menus\SetupCountryCode;
 
-class Spotifious {
+class SpotifiousController {
 	protected $alfred;
+	protected $model;
 
 	public function __construct() {
 		$this->alfred = new OhAlfred();
+		$this->model = new SpotifiousModel();
 	}
 
 	public function run($query) {
@@ -42,16 +41,16 @@ class Spotifious {
 		if($this->alfred->options('country') == '' ||
 			$this->alfred->options('spotify_client_id') == '' ||
 			$this->alfred->options('spotify_secret') == '' ||
-			!$this->optedOut() && (
+			!$this->model->isOptedOut() && (
 				$this->alfred->options('spotify_access_token') == '' ||
 				$this->alfred->options('spotify_access_token_expires') == '' ||
 				$this->alfred->options('spotify_refresh_token') == '' ||
 				$this->alfred->options('desired_scopes') != $this->alfred->options('registered_scopes')
 			) || 
-			$this->contains($query, "Country Code ⟩")) {
+			$this->model->contains($query, "Country Code ⟩")) {
 
 			// If we are trying to configure country code
-			if($this->contains($query, "Country Code ⟩")) {
+			if($this->model->contains($query, "Country Code ⟩")) {
 				$menu = new SetupCountryCode($query);
 				return $menu->output();
 			}
@@ -62,8 +61,8 @@ class Spotifious {
 
 		// Don't bother connecting if we've opted out :).
 		$api = null;
-		if(!$this->optedOut()) {
-			$api = $this->getSpotifyApi();
+		if(!$this->model->isOptedOut()) {
+			$api = $this->model->getSpotifyApi();
 		}
 		// TODO
 		// if expired
@@ -82,7 +81,7 @@ class Spotifious {
 				return $menu->output();
 			}
 			
-		} elseif ($this->contains($query, '⟩')) {
+		} elseif ($this->model->contains($query, '⟩')) {
 			// if the query contains any machine-generated text 
 			// (the unicode `⟩` is untypeable so we check for it)
 			// we need to parse the query and extract the URLs.
@@ -91,7 +90,7 @@ class Spotifious {
 			$splitQuery  = array_filter(str_replace("⟩", "", explode("⟩", $query)));
 			               array_walk($splitQuery, array($this, 'trim_value'));
 
-			$URIs = array_filter($splitQuery, array($this, 'is_spotify_uri'));
+			$URIs = array_filter($splitQuery, array($this->model, 'isSpotifyUri'));
 			$args = array_diff($splitQuery, $URIs);
 
 			// Find which URI to use (by count, not by array index).
@@ -146,7 +145,7 @@ class Spotifious {
 			// if failed, prompt for relogin
 
 
-		if($this->contains($action, '⟩')) {
+		if($this->model->contains($action, '⟩')) {
 			$splitAction = explode('⟩', $action);
 			$command = array_shift($splitAction);
 
@@ -225,7 +224,6 @@ class Spotifious {
 				$as->run();
 			}
 
-
 			if($splitAction[0] && $splitAction[0] == 'return') {
 				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
 				$as->run();
@@ -239,19 +237,8 @@ class Spotifious {
 		}
 	}
 
-	protected function contains($stack, $needle) {
-		return (strpos($stack, $needle) !== false);
-	}
-
 	protected function trim_value(&$value) { 
 		$value = trim($value);
-	}
-
-	// TODO cite
-	protected function is_spotify_uri($item) {
-		$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
-
-		return preg_match($regex, $item);
 	}
 
 	protected function respondingSpotifyQuery($query) {
@@ -276,31 +263,5 @@ class Spotifious {
 		);
 
 		return $data;
-	}
-
-	protected function getSpotifyApi() {
-		if($this->optedOut()) {
-			throw new StatefulException("Trying to get API for opted out user. My bad.");
-		}
-
-		$api = new SpotifyWebAPI();
-
-		// If the access token has expired :(
-		if ($this->alfred->options('spotify_access_token_expires') < time()) {
-			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
-			$session->setRefreshToken($this->alfred->options('spotify_refresh_token'));
-			$session->refreshToken();
-
-			$this->alfred->options('spotify_access_token_expires', time() + $session->getExpires());
-			$this->alfred->options('spotify_access_token', $session->getAccessToken());
-		}
-
-		$api->setAccessToken($this->alfred->options('spotify_access_token'));
-
-		return $api;
-	}
-
-	protected function optedOut() {
-		return $this->alfred->options('spotify_app_opt_out') == 'true';
 	}
 }
