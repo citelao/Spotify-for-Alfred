@@ -1,13 +1,16 @@
 /**
- * Text styles
+ * Basic styles
  */
+img {
+	width: 100%;
+}
 
 /**
  * Body styles
  */
 html {
 	background: #BEE5A7;
-	font-family: Arial;
+	font: 100%/1.5 Arial;
 }
 
 .wrapper {
