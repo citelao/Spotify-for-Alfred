@@ -3,9 +3,14 @@
 
   {% include head.html %}
 
-  <body>
-
+  <body class="hero">
     {% include header.html %}
+
+    <section class="hero-shot">
+      <div class="wrapper">
+        <img src="{{site.baseurl}}/img/hero_shot.png" alt="">
+      </div>
+    </section>
 
     {% include nav.html %}
 
@@ -16,7 +21,5 @@
     </section>
 
     {% include footer.html %}
-
   </body>
-
 </html>

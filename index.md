@@ -1,17 +1,9 @@
 ---
-layout: default
+layout: hero
 title: Home
+permalink: /
 ---
 
-# this is a header
+# Spotifious
 
-some text
-
-
-## a second header
-
-asdfads
-
-# a nother primer
-
-asdf
+Alpha *and* Omega

@@ -11,6 +11,8 @@ happier than a fourth-grader at recess.
 
 It's a two-part process, but it shouldn't take all of 5 minutes.
 
+## Download the thingy
+
 1. Download the [latest version][latest] of Spotifious.
 2. Open `Spotifious.alfredworkflow` by double-clicking it or dragging it
 	into Alfred.
@@ -23,3 +25,5 @@ It's a two-part process, but it shouldn't take all of 5 minutes.
 5. Pop up Spotifious with the key command you set— I would have `^⌘⏎`
 
 [latest]: https://github.com/citelao/Spotify-for-Alfred/releases/latest "Always the latest versionf of Spotifious"
+
+## Install the thingy

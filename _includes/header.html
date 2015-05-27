@@ -6,15 +6,3 @@
     </hgroup>
   </div>
 </header>
-
-<nav class="site-nav">
-  <div class="wrapper">
-    <ul>
-      {% for page in site.pages %}
-        {% if page.title %}
-          <li><a href="{{site.baseurl}}{{page.url}}">{{page.title}}</a></li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-</nav>

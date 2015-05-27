@@ -47,6 +47,11 @@ html {
 		text-align: center;
 	}
 
+		.hero .site-header hgroup {
+			padding: 1rem 0;
+			text-align: center;
+		}
+
 	.site-header h1 {
 		font-size: 4rem;
 		margin: 0;
@@ -70,11 +75,29 @@ html {
 		display: inline-block;
 
 		margin 0;
-		padding: 1rem;
+		padding: 0;
 	}
 
 	.site-nav a {
+		display: block;
 		color: #fff;
+		padding: 1rem;
+		margin 0;
+	}
+
+		.site-nav a:hover, 
+		.site-nav .active {
+			background: rebeccapurple;
+			text-decoration: none;
+		}
+
+.hero-shot {
+	background: rebeccapurple;
+}
+
+	.hero-shot img {
+		width: 150%;
+		margin-left: -25%;
 	}
 
 .page-content {

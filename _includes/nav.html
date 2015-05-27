@@ -1,0 +1,17 @@
+<nav class="site-nav">
+  <div class="wrapper">
+    <ul>
+      {% for node in site.pages %}
+        {% if node.title %}
+          {% if page.url == node.url %}
+            <li class="active">
+          {% else %}
+            <li>
+          {% endif %}
+              <a href="{{site.baseurl}}{{node.url}}">{{node.title}}</a>
+            </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
