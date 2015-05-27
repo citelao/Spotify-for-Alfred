@@ -19,6 +19,24 @@ a {
 		bottom: -0.1rem;
 	}
 
+.button {
+	display: inline-block;
+
+	padding: 1rem;
+	text-align: center;
+
+	background: #9ED072;
+	border: 0.5rem solid #3F582C;
+	border-radius: 1rem;
+	color: #333;
+	font-weight: bold;
+}
+
+	.button:hover {
+		text-decoration: none;
+		background: #3F582C;
+	}
+
 img {
 	width: 100%;
 }
@@ -112,7 +130,12 @@ html {
 
 .hero-shot {
 	background: rebeccapurple;
+	text-align: center;
 }
+
+	.hero-shot .wrapper {
+		padding-bottom: 2rem;
+	}
 
 	.hero-shot img {
 		width: 150%;
