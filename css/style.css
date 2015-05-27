@@ -1,0 +1,21 @@
+/**
+ * Text styles
+ */
+
+/**
+ * Body styles
+ */
+html {
+	background: #BEE5A7;
+	font-family: Arial;
+}
+
+.wrapper {
+	margin: 0 auto;
+	padding: 0 3rem;
+
+	max-width: 40rem;
+
+	background: white;
+}
+
