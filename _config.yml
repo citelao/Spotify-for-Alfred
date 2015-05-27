@@ -1,0 +1,13 @@
+# Site settings
+title: Spotifious – the natural Spotify controller for Alfred
+email: ben@stolovitz.com
+description: >
+  Spotifious is the natural Spotify controller for Alfred.
+  It's a dream to set up and a dream to use, with search,
+  hotkeys, and more. Listening to music has never been more fun.
+baseurl: "/Spotify-for-Alfred" # the subpath of your site, e.g. /blog/
+url: "http://yourdomain.com" # the base hostname & protocol for your site
+github_username:  citelao
+
+# Build settings
+markdown: kramdown

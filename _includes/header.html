@@ -1,0 +1,20 @@
+<header class="site-header">
+  <div class="wrapper">
+    <hgroup>
+      <h1><a href="{{site.baseurl}}/">Spotifious</a></h1>
+      <h2>the <em>natural</em> Spotify controller for Alfred</h2>
+    </hgroup>
+  </div>
+</header>
+
+<nav class="site-nav">
+  <div class="wrapper">
+    <ul>
+      {% for page in site.pages %}
+        {% if page.title %}
+          <li><a href="{{site.baseurl}}{{page.url}}">{{page.title}}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>

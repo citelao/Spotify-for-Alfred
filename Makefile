@@ -1,9 +1,15 @@
-.phony: all clean serve
+.PHONY: all clean serve
 
-all: init serve
+all: clean init serve
+
+clean:
+	rm -rf _site/
 
 init:
 	bundle install
 
 serve:
-	jekyll serve
+	bundle exec jekyll serve --baseurl ''
+
+build:
+	bundle exec jekyll build

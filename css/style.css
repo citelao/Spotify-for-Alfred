@@ -1,6 +1,14 @@
 /**
  * Basic styles
  */
+a {
+	text-decoration: none;
+}
+
+	a:hover {
+		text-decoration: underline;
+	}
+
 img {
 	width: 100%;
 }
@@ -8,17 +16,89 @@ img {
 /**
  * Body styles
  */
+* {
+	box-sizing: border-box;
+}
+
 html {
-	background: #BEE5A7;
+	background: #fff;
+	color: #333;
 	font: 100%/1.5 Arial;
 }
 
 .wrapper {
+	max-width: 40rem;
 	margin: 0 auto;
 	padding: 0 3rem;
 
-	max-width: 40rem;
-
-	background: white;
+	background: rgba(255,255,255,0.5);
 }
 
+.site-header {
+	background: #9ED072;
+}
+
+	.site-header a {
+		color: inherit;
+	}
+
+	.site-header hgroup {
+		padding: 5rem 0;
+		text-align: center;
+	}
+
+	.site-header h1 {
+		font-size: 4rem;
+		margin: 0;
+	}
+
+	.site-header h2 {
+		font-size: 1rem;
+		margin: 0;
+	}
+
+.site-nav {
+	background: rebeccapurple;
+}
+
+	.site-nav ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	.site-nav li {
+		display: inline-block;
+
+		margin 0;
+		padding: 1rem;
+	}
+
+	.site-nav a {
+		color: #fff;
+	}
+
+.page-content {
+	background: #9ED072;
+}
+
+	.page-content .wrapper {
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+
+		display: flex;
+		min-height: 70vh;
+		flex-direction: column;
+	}
+
+.site-footer {
+	flex: 1;
+
+	background: rebeccapurple;
+	text-align: center;
+	padding-bottom: 6rem;
+}
+
+	.site-footer .wrapper {
+		padding-top: 1rem;
+		padding-bottom: 1rem;
+	}
