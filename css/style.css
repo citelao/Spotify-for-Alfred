@@ -66,6 +66,10 @@ html {
 	background: #9ED072;
 }
 
+	.hero .site-header {
+		background: rebeccapurple; /* TODO maybe? */
+	}
+
 	.site-header a {
 		color: inherit;
 	}
@@ -98,6 +102,10 @@ html {
 .site-nav {
 	background: rebeccapurple;
 }
+
+	.hero .site-nav {
+		background: #301849;
+	}
 
 	.site-nav .wrapper {
 		padding: 0;
