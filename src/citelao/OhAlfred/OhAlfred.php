@@ -11,6 +11,8 @@ class OhAlfred {
 	protected $cache;
 	protected $storage;
 
+	protected $plists = array();
+
 	// Set the exception handlers
 	public function __construct() {
 		set_exception_handler(array($this, 'exceptionify'));
@@ -39,7 +41,7 @@ class OhAlfred {
 	public function workflow()
 	{
 		if($this->workflow == null)
-			$this->workflow = dirname(dirname(dirname(__DIR__))); // Because I keep OhAlfred in the src/citelao/OhAlfred directory.
+			$this->workflow = dirname(dirname(dirname(__DIR__))) . '/'; // Because I keep OhAlfred in the src/citelao/OhAlfred directory.
 																  // TODO make portable
 
 		return $this->workflow;
@@ -76,20 +78,34 @@ class OhAlfred {
 	// Read an arbitrary plist setting.
 	public function plist($plist, $setting, $value = -1) {
 		if ($value === -1) {
-			return exec("defaults read '$plist' '$setting'");
+			if(!array_key_exists($plist, $this->plists)) {
+				$json = exec("plutil -convert json -o - '{$plist}.plist'");
+				$decoded = json_decode($json);
+
+				$this->plists[$plist] = $decoded;	
+			}
+
+			if(!property_exists($this->plists[$plist], $setting)) {
+				return false;
+			}
+
+			return $this->plists[$plist]->{$setting};
 		}
+
+		// Uncache plist on write
+		unset($plists[$plist]);
 
 		return exec("defaults write '$plist' '$setting' '$value'");
 	}
 
 	// Read the workflow .plist file.
 	public function defaults($setting, $value = -1) {
-		return $this->plist($this->workflow() . "/info", $setting, $value);
+		return $this->plist($this->workflow() . "info", $setting, $value);
 	}
 
 	// Read a custom workflow options .plist file.
 	public function options($setting, $value = -1) {
-		$options = $this->storage() . "/settings";
+		$options = $this->storage() . "settings";
 		$optionsFile = $options . ".plist";
 
 		if(!file_exists($optionsFile))
@@ -193,7 +209,7 @@ class OhAlfred {
 		);
 
 		$this->alfredify($results);
-		return true;
+		die();
 	}
 
 	// Write a log file of an error.
