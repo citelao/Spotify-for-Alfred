@@ -520,18 +520,40 @@
 	"buffers":
 	[
 		{
-			"file": "composer.json",
+			"file": "src/citelao/Spotifious/Spotifious.php",
 			"settings":
 			{
-				"buffer_size": 193,
+				"buffer_size": 9040,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/citelao/OhAlfred/OhAlfred.php",
+			"settings":
+			{
+				"buffer_size": 7375,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 198,
+				"line_ending": "Unix",
+				"name": ".PHONY = init"
 			}
 		}
 	],
 	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
 	"command_palette":
 	{
 		"height": 400.0,
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -635,7 +657,11 @@
 	},
 	"console":
 	{
-		"height": 0.0
+		"height": 0.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2deb499853c4371624f5a07e27c334aa' + 'bf8c4e67d14fb0525ba4f89698a6d7e1'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
 	},
 	"distraction_free":
 	{
@@ -646,8 +672,18 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious",
+		"/Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/src",
+		"/Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/src/citelao"
+	],
 	"file_history":
 	[
+		"/Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/main.php",
+		"/Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/composer.json",
+		"/Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/.gitignore",
+		"/Users/citelao/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/citelao/Projects/Accessible Tables/speaker/content_script.js",
 		"/Users/citelao/Projects/Accessible Tables/content_script.js",
 		"/Users/citelao/Projects/Accessible Tables/js/phenidate/rules/rules.json",
@@ -688,7 +724,6 @@
 		"/Users/citelao/Projects/Accessible Tables/js/phenidate/test/phenidate.test.js",
 		"/Users/citelao/Projects/Accessible Tables/speaker/options.html",
 		"/Users/citelao/Projects/Accessible Tables/README.md",
-		"/Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/composer.json",
 		"/Users/citelao/Downloads/DC_MasterFile_912110.mvl",
 		"/Users/citelao/Documents/School/Animation/another head.mud",
 		"/Users/citelao/Projects/Accessible Tables/lib/mousetrap.min.js",
@@ -772,14 +807,11 @@
 		"/Users/citelao/Library/Application Support/KeyRemap4MacBook/private.xml",
 		"/Users/citelao/Projects/yum-lemonade/resource/text/headlines.txt",
 		"/Users/citelao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/spotifious/src/citelao/Spotifious/Menus/Search.php",
-		"/Users/citelao/Projects/test/CardLayoutDemo2.java",
-		"/Users/citelao/Projects/241/lab3/src/PriorityQueue.java",
-		"/Users/citelao/Projects/241/lab3/src/PQNode.java",
-		"/Users/citelao/Projects/241/lab3/src/Handle.java"
+		"/Users/citelao/Projects/test/CardLayoutDemo2.java"
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 45.0
 	},
 	"find_in_files":
 	{
@@ -794,6 +826,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"array",
 			"requirejs",
 			"ouptut",
 			"before",
@@ -920,8 +953,7 @@
 			"neighbor",
 			"input",
 			" {text}",
-			"matchedRule",
-			"content"
+			"matchedRule"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -940,264 +972,97 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "composer.json",
+					"file": "src/citelao/Spotifious/Spotifious.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 193,
+						"buffer_size": 9040,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								187,
-								187
+								872,
+								879
 							]
 						],
 						"settings":
 						{
-							"annotations":
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 2.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/citelao/OhAlfred/OhAlfred.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7375,
+						"regions":
+						{
+						},
+						"selection":
+						[
 							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"codeintel": true,
-							"codeintel_config":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2.0,
-									"codeintel_scan_files_in_project": false,
-									"javascriptExtraPaths":
-									[
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 5.0,
-									"codeintel_scan_files_in_project": false,
-									"phpExtraPaths":
-									[
-									]
-								},
-								"Python":
-								{
-									"env":
-									{
-									}
-								}
-							},
-							"codeintel_database_dir": "~/.codeintel",
-							"codeintel_enabled_languages":
+								2366,
+								2366
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1933.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Makefile",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 198,
+						"regions":
+						{
+						},
+						"selection":
+						[
 							[
-								"JavaScript",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Node.js",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_exclude_scopes_from_complete_triggers":
-							[
-								"comment"
-							],
-							"codeintel_language_settings":
-							{
-								"JavaScript":
-								{
-									"codeintel_max_recursive_dir_depth": 2.0,
-									"codeintel_scan_exclude_dir":
-									[
-										"/build/",
-										"/min/"
-									],
-									"codeintel_scan_extra_dir":
-									[
-									],
-									"codeintel_scan_files_in_project": false,
-									"codeintel_selected_catalogs":
-									[
-										"jQuery"
-									]
-								},
-								"PHP":
-								{
-									"codeintel_max_recursive_dir_depth": 15.0,
-									"codeintel_scan_exclude_dir":
-									[
-										"/Applications/MAMP/bin/php/php5.5.3/"
-									],
-									"codeintel_scan_extra_dir":
-									[
-									],
-									"codeintel_scan_files_in_project": true,
-									"php": "/Applications/MAMP/bin/php/php5.5.3/bin/php"
-								},
-								"Python3":
-								{
-									"codeintel_scan_extra_dir":
-									[
-										"/Applications/Sublime Text.app/Contents/MacOS",
-										"~/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/arch",
-										"~/Library/Application Support/Sublime Text 3/Packages/SublimeCodeIntel/libs"
-									],
-									"codeintel_scan_files_in_project": true,
-									"codeintel_selected_catalogs":
-									[
-									],
-									"python3": "/usr/local/bin/python3.3"
-								}
-							},
-							"codeintel_live": true,
-							"codeintel_live_enabled_languages":
-							[
-								"JavaScript",
-								"Mason",
-								"XBL",
-								"XUL",
-								"RHTML",
-								"SCSS",
-								"Python",
-								"HTML",
-								"Ruby",
-								"Python3",
-								"XML",
-								"Sass",
-								"XSLT",
-								"Django",
-								"HTML5",
-								"Perl",
-								"CSS",
-								"Twig",
-								"Less",
-								"Smarty",
-								"Node.js",
-								"Tcl",
-								"TemplateToolkit",
-								"PHP"
-							],
-							"codeintel_max_recursive_dir_depth": 10.0,
-							"codeintel_scan_exclude_dir":
-							[
-							],
-							"codeintel_scan_files_in_project": true,
-							"codeintel_selected_catalogs":
-							[
-							],
-							"codeintel_snippets": false,
-							"codeintel_syntax_map":
-							{
-								"Python Django": "Python"
-							},
-							"codeintel_tooltips": "popup",
-							"codeintel_word_completions": "buffer",
-							"color_scheme": "Packages/User/Color Highlighter/themes/base16-eighties.dark.tmTheme",
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110.0
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublime_auto_complete": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2.0,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+								198,
+								198
+							]
+						],
+						"settings":
+						{
+							"auto_name": ".PHONY = init",
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1238,6 +1103,12 @@
 	{
 		"height": 170.0
 	},
+	"output.find_results":
+	{
+		"height": 108.0
+	},
+	"pinned_build_system": "",
+	"project": "spotifious.sublime-project",
 	"replace":
 	{
 		"height": 86.0
@@ -1246,8 +1117,25 @@
 	"select_file":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"main",
+				"main.php"
+			],
+			[
+				"composer",
+				"composer.json"
+			],
+			[
+				".git",
+				".gitignore"
+			],
+			[
+				"oh",
+				"src/citelao/OhAlfred/OhAlfred.php"
+			],
 			[
 				"rules.j",
 				"js/phenidate/phenidate.rules.js"
@@ -1517,10 +1405,6 @@
 				"src/citelao/Spotifious/Menus/Search.php"
 			],
 			[
-				"oh",
-				"src/citelao/OhAlfred/OhAlfred.php"
-			],
-			[
 				"search",
 				"src/citelao/Spotifious/Menus/Search.php"
 			],
@@ -1538,15 +1422,40 @@
 	"select_project":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
 		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 107.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"fa",
+				"onFocusChange"
+			],
+			[
+				"sendkey",
+				"sendKeyToAllTabs"
+			]
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
 	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 177.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

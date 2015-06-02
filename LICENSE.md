@@ -9,6 +9,8 @@ You may do what you want with this program and its source subject to these restr
 - You MUST respect the licenses for the software below
 - You MUST NOT misrepresent this software as yours.
 
+Furthermore, I am not responsible or liable for any problems that might occur from you using this software. I provide no warranty or guarantee on this software, and I am not liable for any damages, claims, or liabilities of *any* sort that might arise from this software in any way.
+
 ## Entypo
 
 Entypo pictograms by Daniel Bruce — www.entypo.com
