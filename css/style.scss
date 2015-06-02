@@ -1,3 +1,8 @@
+---
+---
+
+@import 'variables';
+
 /**
  * Basic styles
  */
@@ -25,7 +30,7 @@ a {
 	padding: 1rem;
 	text-align: center;
 
-	background: #9ED072;
+	background: $green;
 	border: 0.5rem solid #3F582C;
 	border-radius: 1rem;
 	color: #333;
@@ -63,11 +68,11 @@ html {
 }
 
 .site-header {
-	background: #9ED072;
+	background: $green;
 }
 
 	.hero .site-header {
-		background: rebeccapurple; /* TODO maybe? */
+		background: $purple;
 	}
 
 	.site-header a {
@@ -100,11 +105,11 @@ html {
 	}
 
 .site-nav {
-	background: rebeccapurple;
+	background: $purple;
 }
 
 	.hero .site-nav {
-		background: #301849;
+		background: darken($purple, 20%);
 	}
 
 	.site-nav .wrapper {
@@ -119,7 +124,7 @@ html {
 	.site-nav li {
 		display: inline-block;
 
-		margin 0;
+		margin: 0;
 		padding: 0;
 	}
 
@@ -127,17 +132,17 @@ html {
 		display: block;
 		color: #fff;
 		padding: 1rem;
-		margin 0;
+		margin: 0;
 	}
 
 		.site-nav a:hover, 
 		.site-nav .active {
-			background: rebeccapurple;
+			background: $purple;
 			text-decoration: none;
 		}
 
 .hero-shot {
-	background: rebeccapurple;
+	background: $purple;
 	text-align: center;
 }
 
@@ -181,7 +186,7 @@ html {
 }
 
 .page-content {
-	background: #9ED072;
+	background: $green;
 }
 
 	.page-content .wrapper {
@@ -196,7 +201,7 @@ html {
 .site-footer {
 	flex: 1;
 
-	background: rebeccapurple;
+	background: $purple;
 	text-align: center;
 	padding-bottom: 6rem;
 }
