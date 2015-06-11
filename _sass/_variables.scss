@@ -1,3 +1,7 @@
 $purple: rebeccapurple;
 $green: #9ED072;
 
+$ltpurple: lighten($purple, 30%);
+$ltgreen: lighten($green, 20%);
+
+$dkpurple: darken($purple, 20%);

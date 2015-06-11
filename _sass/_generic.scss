@@ -1,0 +1,63 @@
+@import 'mixins';
+
+/**
+ * Basic styles
+ */
+* {
+	box-sizing: border-box;
+}
+
+html {
+	background: #fff;
+	color: #333;
+	font: 100%/1.5 Arial;
+}
+
+a {
+	text-decoration: none;
+	/*transition: all 100ms ease-in;*/
+
+	&:hover {
+		text-decoration: underline;
+
+		position: relative;
+		top: -0.1rem;
+	}
+
+	&:active {
+		position: relative;
+		top: 0;
+		bottom: -0.1rem;
+	}
+}
+
+.button {
+	display: inline-block;
+
+	padding: 1rem;
+	text-align: center;
+
+	background: $green;
+	// border-radius: 0.7rem;
+	color: #333;
+	font-weight: bold;
+
+	@include box-shadow(0 0.2rem 0 darken($green, 40%));
+
+	&:hover {
+		text-decoration: none;
+
+		@include box-shadow(0 0.3rem 0 darken($green, 40%));
+	}
+
+	&:active {
+		position: relative;
+		top: 0.2rem;
+
+		@include box-shadow(0 0 0 darken($green, 40%));
+	}
+}
+
+img {
+	width: 100%;
+}

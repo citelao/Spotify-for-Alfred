@@ -3,200 +3,173 @@
 
 @import 'variables';
 
-/**
- * Basic styles
- */
-a {
-	text-decoration: none;
-	/*transition: all 100ms ease-in;*/
-}
-
-	a:hover {
-		text-decoration: underline;
-
-		position: relative;
-		top: -0.1rem;
-	}
-
-	a:active {
-		position: relative;
-		top: 0;
-		bottom: -0.1rem;
-	}
-
-.button {
-	display: inline-block;
-
-	padding: 1rem;
-	text-align: center;
-
-	background: $green;
-	border: 0.5rem solid #3F582C;
-	border-radius: 1rem;
-	color: #333;
-	font-weight: bold;
-}
-
-	.button:hover {
-		text-decoration: none;
-		background: #3F582C;
-	}
-
-img {
-	width: 100%;
-}
+@import 'generic';
 
 /**
  * Body styles
  */
-* {
-	box-sizing: border-box;
-}
-
-html {
-	background: #fff;
-	color: #333;
-	font: 100%/1.5 Arial;
-}
-
 .wrapper {
 	max-width: 40rem;
 	margin: 0 auto;
 	padding: 0 3rem;
 
-	background: rgba(255,255,255,0.5);
+	background: rgba(255,255,255,1);
 }
 
 .site-header {
 	background: $green;
-}
 
-	.hero .site-header {
-		background: $purple;
+	.hero & {
+		background: $purple;	
 	}
 
-	.site-header a {
+	.wrapper {
+		background: lighten($green, 20%);
+
+		.hero & {
+			background: $ltpurple;
+		}
+	}
+
+	a {
 		color: inherit;
 	}
 
-	.site-header hgroup {
+	hgroup {
 		padding: 0;
 		text-align: center;
-	}
 
-		.hero .site-header hgroup {
+		.hero & {
 			padding: 1rem 0;
 			text-align: center;
 		}
-
-	.site-header h1 {
-		font-size: 3rem;
-		margin: 0;
 	}
 
-		.hero .site-header h1 {
+	h1 {
+		font-size: 3rem;
+		margin: 0;
+
+		.hero & {
 			font-size: 4rem;
 			margin: 0;
 		}
+	}
 
-	.site-header h2 {
+	h2 {
 		font-size: 1rem;
 		margin: 0;
 	}
+}
 
 .site-nav {
 	background: $purple;
-}
 
-	.hero .site-nav {
-		background: darken($purple, 20%);
+	.hero & {
+		background: $dkpurple;
 	}
 
-	.site-nav .wrapper {
+	.wrapper {
 		padding: 0;
+		background: $ltpurple;
+
+		.hero & {
+			background: $purple;
+		}
 	}
 
-	.site-nav ul {
+	ul {
 		margin: 0;
 		padding: 0;
 	}
 
-	.site-nav li {
+	li {
 		display: inline-block;
 
 		margin: 0;
 		padding: 0;
 	}
 
-	.site-nav a {
+	a {
 		display: block;
 		color: #fff;
 		padding: 1rem;
 		margin: 0;
-	}
 
-		.site-nav a:hover, 
-		.site-nav .active {
+		&:hover,
+		&.active {
 			background: $purple;
 			text-decoration: none;
+
+			.hero & {
+				background: $dkpurple;
+			}
 		}
+	}
+}
 
 .hero-shot {
 	background: $purple;
 	text-align: center;
-}
 
-	.hero-shot .wrapper {
+	.wrapper {
 		padding-bottom: 2rem;
+		background: $ltpurple;
 	}
 
-	.hero-shot img {
+	img {
 		width: 150%;
 		margin-left: -25%;
 	}
-
-.feature img {
-	float: left;
-	width: 70%;
-	margin-left: -25%;
-	margin-right: 5%;
 }
 
-	.feature:nth-child(even) img {
+.feature {
+	img {
+		float: left;
+		width: 70%;
+		margin-left: -25%;
+		margin-right: 5%;
+	}
+
+	&:nth-child(even) img {
 		float: right;
 		width: 70%;
 		margin-right: -25%;
 		margin-left: 5%;
 	}
 
-.feature h2 {
-	float: left;
-	width: 50%;
+	h2 {
+		float: left;
+		width: 50%;
 
-	padding: 0;
-	margin: 0;
+		padding: 0;
+		margin: 0;
 
-	line-height: 1;
+		line-height: 1;
+	}
+
+	p {
+		float: left;
+		width: 50%;
+		margin: 0;
+	}
 }
 
-.feature p {
-	float: left;
-	width: 50%;
-	margin: 0;
-}
 
 .page-content {
 	background: $green;
-}
 
-	.page-content .wrapper {
+	.wrapper {
 		padding-top: 1rem;
 		padding-bottom: 1rem;
 
 		display: flex;
 		min-height: 70vh;
 		flex-direction: column;
+
+		background: $ltgreen;
 	}
+
+}
 
 .site-footer {
 	flex: 1;
@@ -204,9 +177,11 @@ html {
 	background: $purple;
 	text-align: center;
 	padding-bottom: 6rem;
-}
 
-	.site-footer .wrapper {
+	.wrapper {
 		padding-top: 1rem;
 		padding-bottom: 1rem;
+
+		background: $ltpurple;
 	}
+}
