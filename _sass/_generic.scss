@@ -31,33 +31,6 @@ a {
 	}
 }
 
-.button {
-	display: inline-block;
-
-	padding: 1rem;
-	text-align: center;
-
-	background: $green;
-	// border-radius: 0.7rem;
-	color: #333;
-	font-weight: bold;
-
-	@include box-shadow(0 0.2rem 0 darken($green, 40%));
-
-	&:hover {
-		text-decoration: none;
-
-		@include box-shadow(0 0.3rem 0 darken($green, 40%));
-	}
-
-	&:active {
-		position: relative;
-		top: 0.2rem;
-
-		@include box-shadow(0 0 0 darken($green, 40%));
-	}
-}
-
 code {
 	background: #ccc;
 	padding: 0 0.2rem;

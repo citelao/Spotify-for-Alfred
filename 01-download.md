@@ -4,7 +4,8 @@ title: Download & Install
 permalink: /download/
 ---
 
-[dlink up here]
+{: .center}
+[Grab the latest version][latest]{: .button .button--purple target="_blank"}
 
 Installation is gosh-darned simple. Follow these instructions and you'll be
 happier than a fourth-grader at recess.
@@ -25,7 +26,7 @@ It's a two-part process, but it shouldn't take all of 5 minutes.
 	field, under `Argument`
 5. You can now install Spotifious!
 
-[latest]: https://github.com/citelao/Spotify-for-Alfred/releases/latest "Always the latest versionf of Spotifious"
+[latest]: https://github.com/citelao/Spotify-for-Alfred/releases/latest "Always the latest version of Spotifious"
 
 ## Install the thingy
 
@@ -44,4 +45,4 @@ It's a two-part process, but it shouldn't take all of 5 minutes.
 		This link will not work if you are not in the middle of setup.
 	8. Pop open Spotifious again to continue setup!
 4. **Link your Spotify application** by selecting it from the menu and logging in to Spotify. You'll see a list of what permissions Spotifious uses.
-5. You're done! Read the [User Guide](/usage) to learn the ins and outs of Spotifious.
+5. You're done! Read the [User's Guide](/usage) to learn the ins and outs of Spotifious.
