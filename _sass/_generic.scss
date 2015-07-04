@@ -58,6 +58,19 @@ a {
 	}
 }
 
+code {
+	background: #ccc;
+	padding: 0 0.2rem;
+	border: 0.1rem solid #666;
+	border-radius: 0.3rem;
+}
+
 img {
 	width: 100%;
+}
+
+li {
+	& > p:first-child {
+		margin-top: 0;
+	}
 }

@@ -1,0 +1,17 @@
+.installation-guide {
+	// nothing atm
+
+	&__callout {
+		// float: right;
+		// width: 40%;
+		// margin-right: -25%;
+		// margin-left: 5%;
+		margin: 1rem;
+		padding: 1rem;
+
+		@include cf;
+
+		background: $purple;
+		color: white;
+	}
+}
