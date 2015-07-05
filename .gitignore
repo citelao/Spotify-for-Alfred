@@ -1,5 +1,2 @@
 # my private data
 *.sublime-workspace
-
-# build cruft
-build/*

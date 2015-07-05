@@ -6,8 +6,8 @@ init:
 	composer install
 
 clean:
-	-rm -r build/
+	-rm -r dist/
 
 build:
-	mkdir build/
-	zip -x '*.git*' '*include/images/psd*' '*.psd' -r build/Spotifious.alfredworkflow ./
+	mkdir dist/
+	zip -x '*.git*' '*include/images/psd*' '*.psd' -r dist/Spotifious.alfredworkflow ./

@@ -106,6 +106,8 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 
 ## Changelog ##
 
+This project uses pseudo-SemVer. It will use SemVer when we hit v1.0.0.
+
 See `CHANGELOG.md` for more detailed information.
 
 - v0.13:   Preliminary Web API; toggle track notifications
