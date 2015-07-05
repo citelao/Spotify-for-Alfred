@@ -33,9 +33,12 @@ a {
 
 code {
 	background: #ccc;
-	padding: 0 0.2rem;
+	padding: 0.2rem;
 	border: 0.1rem solid #666;
 	border-radius: 0.3rem;
+
+	font-family: Monaco, "Lucida Sans Typewriter", "Lucida Console", "Courier New", Courier, monospace;
+	font-size: 0.8em;
 }
 
 img {

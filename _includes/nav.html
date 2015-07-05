@@ -3,13 +3,13 @@
     <ul>
       {% for node in site.pages %}
         {% if node.title %}
-          {% if page.url == node.url %}
-            <li class="active">
-          {% else %}
-            <li>
-          {% endif %}
+          <li>
+            {% if page.url == node.url %}
+              <a href="{{site.baseurl}}{{node.url}}" class="active">{{node.title}}</a>
+            {% else %}
               <a href="{{site.baseurl}}{{node.url}}">{{node.title}}</a>
-            </li>
+            {% endif %}
+          </li>
         {% endif %}
       {% endfor %}
     </ul>

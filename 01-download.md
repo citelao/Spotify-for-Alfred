@@ -7,6 +7,11 @@ permalink: /download/
 {: .center}
 [Grab the latest version][latest]{: .button .button--purple target="_blank"}
 
+<div class="download-information">
+  v0.13.0 | <a href="https://github.com/citelao/Spotify-for-Alfred/releases">All versions</a> | 
+  <a href="https://github.com/citelao/Spotify-for-Alfred">Source</a>
+</div>
+
 Installation is gosh-darned simple. Follow these instructions and you'll be
 happier than a fourth-grader at recess.
 
