@@ -34,6 +34,8 @@ Spotifious uses Packal to make sure you always have the latest version. It gives
 
 Latest version: [v0.13](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.13](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
 
+An in-depth [installation guide](http://ben.stolovitz.com/Spotify-for-Alfred/download/) is available on the Spotifious website.
+
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)
 this repository.
 2. Open `Spotifious.alfredworkflow` by double-clicking it or dragging it into
@@ -43,11 +45,10 @@ Alfred.
 5. Click `Save` to store the binding.
 6. Bind the other hotkeys as you wish. Their actions are visible in the `Text` field, under `Argument`.
 7. Pop up Spotifious with the key command you set— I would have `^⌘⏎`.
-8. Follow the instructions on the settings menu.
-9. You'll be asked to type in your country.
-	- Type it in, if you'd like. This option is recommmended.
-	- Choose `I'd rather not give a country!`. The country is stored locally and only sent to Spotify to narrow results, with no other identifying information, but Spotifious can avoid that if you'd prefer. Choosing this option will noticeably degrade your search results. 
-	- You can always change your settings by typing `s` at the main menu.
+8. Follow the instructions on the set-up menu.
+	1. You'll be asked to choose your country (for better search results— you can opt out).
+	2. You'll create a Spotify application (or not, you can opt out).
+	3. You'll link the new app to Spotifious.
 10. Continue on with your merry day— but now with Spotifious.
 
 ![A visual install guide](include/screenshots/install.png)
@@ -124,4 +125,4 @@ See `CHANGELOG.md` for more detailed information.
 - v0.5:    Added a menu system
 - v0.1:    Inital search system
 
-This code is MIT Licensed.
+This code is licensed as written in the LICENSE.md file.

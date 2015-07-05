@@ -1,4 +1,4 @@
-.PHONY = all clean build
+.PHONY = all init clean build
 
 all: clean build
 
