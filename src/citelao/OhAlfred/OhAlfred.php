@@ -82,6 +82,10 @@ class OhAlfred {
 				$json = exec("plutil -convert json -o - '{$plist}.plist'");
 				$decoded = json_decode($json);
 
+				if(json_last_error() !== JSON_ERROR_NONE) {
+					return false;
+				}
+
 				$this->plists[$plist] = $decoded;	
 			}
 
