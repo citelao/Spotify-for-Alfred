@@ -45,9 +45,9 @@ It's a two-part process, but it shouldn't take all of 5 minutes.
 	2. Click the shiny **Create an app** button and enter an awesome application name & description. Or a boring name, it doesn't matter. .
 	5. Add `http://localhost:11114/callback.php` as a redirect URI.
 	6. Save those changes by clicking `Save` at the bottom of the page.
-	7. Enter your `Client ID` and `Client Secret` on the [guide page](http://localhost:11114/include/setup/index.php#ajax).
+	7. Enter your `Client ID` and `Client Secret` on the [guide page](http://localhost:11114/include/setup/index.php#ajax){: target="_blank"}.
 
 		This link will not work if you are not in the middle of setup.
 	8. Pop open Spotifious again to continue setup!
 4. **Link your Spotify application** by selecting it from the menu and logging in to Spotify. You'll see a list of what permissions Spotifious uses.
-5. You're done! Read the [User's Guide](/usage) to learn the ins and outs of Spotifious.
+5. You're done! Read the [User's Guide]({{site.baseurl}}/usage) to learn the ins and outs of Spotifious.
