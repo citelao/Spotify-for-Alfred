@@ -6,6 +6,7 @@ use OhAlfred\Applescript\ApplicationApplescript;
 
 class Control implements Menu {
 
+	protected $query;
 	protected $search;
 
 	protected $commands = array(
@@ -21,10 +22,18 @@ class Control implements Menu {
 			'keys' => 'back',
 			'icon' => 'include/images/commands/previous.png',
 			'action' => 'previous⟩returnControls'
+		),
+
+		array(
+			'name' => 'Play/pause',
+			'keys' => 'playpause',
+			'icon' => 'include/images/commands/playpause.png',
+			'action' => 'playpause⟩returnControls'
 		)
 	);
 
 	public function __construct($query) {
+		$this->query = $query;
 		$this->search = mb_substr($query, 1);
 	}
 
@@ -46,6 +55,8 @@ class Control implements Menu {
 			'title' => 'Controls',
 			'subtitle' => 'Access this menu at any time by typing `c`',
 			'icon' => 'include/images/info.png',
+			'valid' => 'no',
+			'autocomplete' => $this->query
 		);
 
 		return $results;
