@@ -2,7 +2,7 @@
 	"autoload": {
 		"psr-4": {
 			"OhAlfred\\": "src/citelao/OhAlfred/",
-        		"Spotifious\\": "src/citelao/Spotifious/"
+    		"Spotifious\\": "src/citelao/Spotifious/"
 		}
 	},
 	"require": {

@@ -34,6 +34,8 @@ Spotifious uses Packal to make sure you always have the latest version. It gives
 
 Latest version: [v0.13](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.13](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
 
+An in-depth [installation guide](http://ben.stolovitz.com/Spotify-for-Alfred/download/) is available on the Spotifious website.
+
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)
 this repository.
 2. Open `Spotifious.alfredworkflow` by double-clicking it or dragging it into
@@ -43,11 +45,10 @@ Alfred.
 5. Click `Save` to store the binding.
 6. Bind the other hotkeys as you wish. Their actions are visible in the `Text` field, under `Argument`.
 7. Pop up Spotifious with the key command you set— I would have `^⌘⏎`.
-8. Follow the instructions on the settings menu.
-9. You'll be asked to type in your country.
-	- Type it in, if you'd like. This option is recommmended.
-	- Choose `I'd rather not give a country!`. The country is stored locally and only sent to Spotify to narrow results, with no other identifying information, but Spotifious can avoid that if you'd prefer. Choosing this option will noticeably degrade your search results. 
-	- You can always change your settings by typing `s` at the main menu.
+8. Follow the instructions on the set-up menu.
+	1. You'll be asked to choose your country (for better search results— you can opt out).
+	2. You'll create a Spotify application (or not, you can opt out).
+	3. You'll link the new app to Spotifious.
 10. Continue on with your merry day— but now with Spotifious.
 
 ![A visual install guide](include/screenshots/install.png)
@@ -105,23 +106,10 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 
 ## Changelog ##
 
-See `CHANGELOG.md` for more detailed information.
+This project uses pseudo-SemVer. It will use SemVer when we hit v1.0.0.
 
-- v0.13:   Preliminary Web API; toggle track notifications
-- v0.12:   Compatible with Alfred Remote
-- v0.11.2: Location opt-out and tutorial
-- v0.11.1: Fixed response freezing
-- v0.11:   New API, hotkeys, and notifications
-- v0.10:   Location-based filtering
-- v0.9.4:  Actually implemented the aforementioned changes
-- v0.9.3:  More compatibility changes for PHP v5.3
-- v0.9.2:  Compatibility changes for PHP v5.3
-- v0.9.1:  Fixed "no track" bug.
-- v0.9:    Added error reporting and context-based searching; restructrued app.
-- v0.8:    Added new icons; set them as default
-- v0.7:    General clean-up; added artist- and album-specific menus
-- v0.6:    Added Alleyoop support
-- v0.5:    Added a menu system
-- v0.1:    Inital search system
+See `CHANGELOG.md`.
 
-This code is MIT Licensed.
+## License ##
+
+This code is licensed as written in the LICENSE.md file.

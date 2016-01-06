@@ -5,6 +5,8 @@
 - Added: new settings menu.
 - Added: you can now *disable* track notifications
 - Fixed: track notifications say the right thing in Spotify 1.0
+- Fixed: control panel stays open properly
+- Fixed: weird looping volume changes
 
 ## v0.12 ##
 - Added: compatiblity with Alfred Remote

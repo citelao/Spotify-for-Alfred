@@ -1,0 +1,15 @@
+language: php
+php:
+- 5.4
+- 5.5
+- 5.6
+install: make clean init
+script: make build
+deploy:
+  provider: releases
+  api_key:
+    secure: jeJ1Dw4sMhttDclMPJ7bzWgVhn8NPF8QdGS2b85RICTU8+Z6rDsN9xwwhzbfyHVT16cmlB6GSPkX8Vhxw6BM8IiFFxN07S3uK6wNvzunUKkZqAh/o3hvpniRmmOmmTZfOCFhEZRuyYeng+NnNaHAU3bvH3tnRMuJUq9tKUqusw7Vbp7driQu2J5hvr7rgIu/mw+4SI16q6jshx6Vsc4owAyFGjt3vtTf+jke8aEqZOiweeRYJY7lDTf3jlSHiqeOOZm204M6v3FY32TIOIX3NQEFqjmAyGcSBXN89n31ufLAKOageTZOEqdffiPXgYfO8YAT5n/FupFcW6MaAH55PQUHVWhccYsRL80ix7h/xQ+PUFXS55AZR4B1AGVzkTZhrn5eJTtMyP+JevKX3SgjmK0uxfV4ckEEPSNPHIHpImP6gkUts3JlcxKhWH3htN7dh8XEfhQ4fK3zvhxVk/syS8QQ5eXOHrhkcjsnmx0BhlNyjLEeO0bxa0AvQOltEfsrNbicEr9z5i+GcI98HJeVWWUE4ZncLKK8wQffs3ONtrZVcCcLNhvIJrhjg27/Jr953DMi1SexgFyrDax0gOAmjwU3J4XhmNSKgNNxZlpZE5OcVSO5wKz7aZUTbOSfp6JcfpsU/uX+P+348Ve2X68gQWvrZPU/Wwuu7JB/w43+aeI=
+  file: dist/Spotifious.alfredworkflow
+  skip_cleanup: true
+  on:
+    branch: master
