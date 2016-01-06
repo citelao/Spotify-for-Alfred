@@ -16,3 +16,5 @@ Good! You should see a brief loading entry, then the main menu:
 
 ![]({{site.baseurl}}/img/loading.png)
 ![]({{site.baseurl}}/img/main_menu.png)
+
+Now you are free to type to search, type `c` to access the control panel, `s` to access settings, or bind other key commands in Alfred workflow settings.

@@ -1,5 +1,9 @@
 .installation-guide {
 	// nothing atm
+	
+	li {
+		position: relative;
+	}
 
 	&__callout {
 		// float: right;
@@ -13,5 +17,18 @@
 
 		background: $purple;
 		color: white;
+	}
+
+	&__aside {
+		display: inline-block;
+
+		position: relative;
+		float: right;
+		width: 22rem;
+		left: 15rem;
+		margin: 0 0 0 -13rem;
+		
+		padding: 1rem;
+		background: lighten($green, 20%);
 	}
 }

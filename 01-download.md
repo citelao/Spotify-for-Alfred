@@ -20,13 +20,19 @@ It's a two-part process, but it shouldn't take all of 5 minutes.
 ## Download the thingy
 
 {: .installation-guide}
-1. Download the [latest version][latest] of Spotifious.
+1. Download the [latest version][latest] of Spotifious, specifically the `alfredworkflow` file.
 2. Open `Spotifious.alfredworkflow` by double-clicking it or dragging it
 	into Alfred.
-3. **Bind the launcher hotkey**:
-	3. Double-click the first thingy marked `Hotkey`.
-	4. Click the text field labeled `Hotkey` and press `^⌘⏎`.
-	5. Click `Save` to store the binding.
+3. 
+	{: .installation-guide__aside}
+	![Figure 1]({{site.baseurl}}/img/hotkey.png){: .shadow}
+	**Figure 1**: The first thingy marked `Hotkey`
+	
+	**Bind the launcher hotkey**:
+
+	1. Double-click the first thingy marked `Hotkey` (see **Figure 1**).
+	2. Click the text field labeled `Hotkey` and press `^⌘⏎`.
+	3. Click `Save` to store the binding.
 4. Bind the other hotkeys as you wish. Their actions are visible in the `Text`
 	field, under `Argument`
 5. You can now install Spotifious!
@@ -49,5 +55,5 @@ It's a two-part process, but it shouldn't take all of 5 minutes.
 
 		This link will not work if you are not in the middle of setup.
 	8. Pop open Spotifious again to continue setup!
-4. **Link your Spotify application** by selecting it from the menu and logging in to Spotify. You'll see a list of what permissions Spotifious uses.
+4. **Link your Spotify application** by selecting the so-named option in Spotifious and logging in to Spotify. You'll see a list of what permissions Spotifious uses.
 5. You're done! Read the [User's Guide]({{site.baseurl}}/usage) to learn the ins and outs of Spotifious.
