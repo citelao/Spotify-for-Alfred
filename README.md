@@ -108,23 +108,8 @@ Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 
 This project uses pseudo-SemVer. It will use SemVer when we hit v1.0.0.
 
-See `CHANGELOG.md` for more detailed information.
+See `CHANGELOG.md`.
 
-- v0.13:   Preliminary Web API; toggle track notifications
-- v0.12:   Compatible with Alfred Remote
-- v0.11.2: Location opt-out and tutorial
-- v0.11.1: Fixed response freezing
-- v0.11:   New API, hotkeys, and notifications
-- v0.10:   Location-based filtering
-- v0.9.4:  Actually implemented the aforementioned changes
-- v0.9.3:  More compatibility changes for PHP v5.3
-- v0.9.2:  Compatibility changes for PHP v5.3
-- v0.9.1:  Fixed "no track" bug.
-- v0.9:    Added error reporting and context-based searching; restructrued app.
-- v0.8:    Added new icons; set them as default
-- v0.7:    General clean-up; added artist- and album-specific menus
-- v0.6:    Added Alleyoop support
-- v0.5:    Added a menu system
-- v0.1:    Inital search system
+## License ##
 
 This code is licensed as written in the LICENSE.md file.

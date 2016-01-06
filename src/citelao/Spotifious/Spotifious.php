@@ -213,11 +213,11 @@ class Spotifious {
 					$song['url']);
 
 			} else if($command == 'volup') {
-				$as = new ApplicationApplescript("Spotify", "set sound volume to sound volume + 10");
+				$as = new ApplicationApplescript("Spotify", "if sound volume < 90 then \n set sound volume to sound volume + 10 \n else \n set sound volume to 100 \n end if");
 				$as->run();
 				
 			} else if($command == 'voldown') {
-				$as = new ApplicationApplescript("Spotify", "set sound volume to sound volume - 10");
+				$as = new ApplicationApplescript("Spotify", "if sound volume > 10 then \n set sound volume to sound volume - 10 \n else \n set sound volume to 0 \n end if");
 				$as->run();
 
 			} else if($command == 'spotify') {
