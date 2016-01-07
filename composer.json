@@ -6,6 +6,6 @@
 		}
 	},
 	"require": {
-		"jwilsson/spotify-web-api-php": "0.6.*"
+		"jwilsson/spotify-web-api-php": "^1.0.0"
 	}
 }

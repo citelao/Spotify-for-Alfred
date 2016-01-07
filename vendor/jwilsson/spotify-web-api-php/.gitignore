@@ -1,5 +1,5 @@
-/vendor
 .DS_Store
+build
 composer.lock
-Thumbs.db
-.env
+phpunit.xml
+vendor

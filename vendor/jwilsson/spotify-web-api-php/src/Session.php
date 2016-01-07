@@ -6,10 +6,9 @@ class Session
     private $accessToken = '';
     private $clientId = '';
     private $clientSecret = '';
-    private $expires = 0;
+    private $expirationTime = 0;
     private $redirectUri = '';
     private $refreshToken = '';
-
     private $request = null;
 
     /**
@@ -18,12 +17,12 @@ class Session
      *
      * @param string $clientId The client ID.
      * @param string $clientSecret The client secret.
-     * @param string $redirectUri The redirect URI.
+     * @param string $redirectUri Optional. The redirect URI.
      * @param Request $request Optional. The Request object to use.
      *
      * @return void
      */
-    public function __construct($clientId, $clientSecret, $redirectUri, $request = null)
+    public function __construct($clientId, $clientSecret, $redirectUri = '', $request = null)
     {
         $this->setClientId($clientId);
         $this->setClientSecret($clientSecret);
@@ -44,24 +43,19 @@ class Session
      * - boolean show_dialog Optional. Whether or not to force the user to always approve the app. Default is false.
      * - string state Optional. A CSRF token.
      *
-     * @return string
+     * @return string The authorization URL.
      */
     public function getAuthorizeUrl($options = array())
     {
-        $defaults = array(
-            'scope' => array(),
-            'show_dialog' => false,
-            'state' => ''
-        );
+        $options = (array) $options;
 
-        $options = array_merge($defaults, (array) $options);
         $parameters = array(
             'client_id' => $this->getClientId(),
             'redirect_uri' => $this->getRedirectUri(),
             'response_type' => 'code',
-            'scope' => implode(' ', $options['scope']),
-            'show_dialog' => $options['show_dialog'] ? 'true' : 'false',
-            'state' => $options['state']
+            'scope' => isset($options['scope']) ? implode(' ', $options['scope']) : null,
+            'show_dialog' => !empty($options['show_dialog']) ? 'true' : null,
+            'state' => isset($options['state']) ? $options['state'] : null,
         );
 
         return Request::ACCOUNT_URL . '/authorize/?' . http_build_query($parameters);
@@ -70,7 +64,7 @@ class Session
     /**
      * Get the access token.
      *
-     * @return string
+     * @return string The access token.
      */
     public function getAccessToken()
     {
@@ -80,7 +74,7 @@ class Session
     /**
      * Get the client ID.
      *
-     * @return string
+     * @return string The client ID.
      */
     public function getClientId()
     {
@@ -90,7 +84,7 @@ class Session
     /**
      * Get the client secret.
      *
-     * @return string
+     * @return string The client secret.
      */
     public function getClientSecret()
     {
@@ -98,19 +92,19 @@ class Session
     }
 
     /**
-     * Get the number of seconds before the access token expires.
+     * Get the access token expiration time.
      *
-     * @return int
+     * @return int A Unix timestamp indicating the token expiration time.
      */
-    public function getExpires()
+    public function getTokenExpiration()
     {
-        return $this->expires;
+        return $this->expirationTime;
     }
 
     /**
      * Get the client's redirect URI.
      *
-     * @return string
+     * @return string The redirect URI.
      */
     public function getRedirectUri()
     {
@@ -120,7 +114,7 @@ class Session
     /**
      * Get the refresh token.
      *
-     * @return string
+     * @return string The refresh token.
      */
     public function getRefreshToken()
     {
@@ -128,21 +122,23 @@ class Session
     }
 
     /**
-     * Refresh a access token.
+     * Refresh an access token.
      *
-     * @return bool
+     * @param string $refreshToken The refresh token to use.
+     *
+     * @return bool Whether the access token was successfully refreshed.
      */
-    public function refreshToken()
+    public function refreshAccessToken($refreshToken)
     {
         $payload = base64_encode($this->getClientId() . ':' . $this->getClientSecret());
 
         $parameters = array(
             'grant_type' => 'refresh_token',
-            'refresh_token' => $this->refreshToken
+            'refresh_token' => $refreshToken,
         );
 
         $headers = array(
-            'Authorization' => 'Basic ' . $payload
+            'Authorization' => 'Basic ' . $payload,
         );
 
         $response = $this->request->account('POST', '/api/token', $parameters, $headers);
@@ -150,7 +146,7 @@ class Session
 
         if (isset($response->access_token)) {
             $this->accessToken = $response->access_token;
-            $this->expires = $response->expires_in;
+            $this->expirationTime = time() + $response->expires_in;
 
             return true;
         }
@@ -159,11 +155,11 @@ class Session
     }
 
     /**
-     * Request a access token using the Client Credentials Flow.
+     * Request an access token using the Client Credentials Flow.
      *
      * @param array $scope Optional. Scope(s) to request from the user.
      *
-     * @return bool
+     * @return bool True when an access token was successfully granted, false otherwise.
      */
     public function requestCredentialsToken($scope = array())
     {
@@ -171,11 +167,11 @@ class Session
 
         $parameters = array(
             'grant_type' => 'client_credentials',
-            'scope' => implode(' ', $scope)
+            'scope' => implode(' ', $scope),
         );
 
         $headers = array(
-            'Authorization' => 'Basic ' . $payload
+            'Authorization' => 'Basic ' . $payload,
         );
 
         $response = $this->request->account('POST', '/api/token', $parameters, $headers);
@@ -183,7 +179,7 @@ class Session
 
         if (isset($response->access_token)) {
             $this->accessToken = $response->access_token;
-            $this->expires = $response->expires_in;
+            $this->expirationTime = time() + $response->expires_in;
 
             return true;
         }
@@ -192,29 +188,29 @@ class Session
     }
 
     /**
-     * Request a access token.
+     * Request an access token given an authorization code.
      *
-     * @param string $code The authorization code from Spotify.
+     * @param string $authorizationCode The authorization code from Spotify.
      *
-     * @return bool
+     * @return bool True when the access token was successfully granted, false otherwise.
      */
-    public function requestToken($code)
+    public function requestAccessToken($authorizationCode)
     {
         $parameters = array(
             'client_id' => $this->getClientId(),
             'client_secret' => $this->getClientSecret(),
-            'code' => $code,
+            'code' => $authorizationCode,
             'grant_type' => 'authorization_code',
-            'redirect_uri' => $this->getRedirectUri()
+            'redirect_uri' => $this->getRedirectUri(),
         );
 
-        $response = $this->request->account('POST', '/api/token', $parameters);
+        $response = $this->request->account('POST', '/api/token', $parameters, array());
         $response = $response['body'];
 
-        if (isset($response->access_token)) {
-            $this->accessToken = $response->access_token;
-            $this->expires = $response->expires_in;
+        if (isset($response->refresh_token) && isset($response->access_token)) {
             $this->refreshToken = $response->refresh_token;
+            $this->accessToken = $response->access_token;
+            $this->expirationTime = time() + $response->expires_in;
 
             return true;
         }
@@ -256,17 +252,5 @@ class Session
     public function setRedirectUri($redirectUri)
     {
         $this->redirectUri = $redirectUri;
-    }
-
-    /**
-     * Set the refresh token.
-     *
-     * @param string $refreshToken The refresh token.
-     *
-     * @return void
-     */
-    public function setRefreshToken($refreshToken)
-    {
-        $this->refreshToken = $refreshToken;
     }
 }

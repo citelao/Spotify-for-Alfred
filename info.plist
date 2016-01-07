@@ -26,6 +26,14 @@
 				<key>modifiersubtext</key>
 				<string></string>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>6E0C0507-42A6-4139-B98B-CE66DA3AC17A</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
 		</array>
 		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
 		<array>
@@ -61,7 +69,27 @@
 			</dict>
 		</array>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>89029556-829D-4A8E-86D5-F55FFF80D524</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>6E0C0507-42A6-4139-B98B-CE66DA3AC17A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>89029556-829D-4A8E-86D5-F55FFF80D524</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<array>
 			<dict>
@@ -289,12 +317,12 @@
 				<key>escaping</key>
 				<integer>4</integer>
 				<key>script</key>
-				<string>php -f action.php -- "{query}"
+				<string>php -f action.php -- "none" "{query}"
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
 # first line of this script so it looks like this:
-# php -f action.php -- "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
+# php -f action.php -- "none" "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -302,6 +330,14 @@
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.output.largetype</string>
+			<key>uid</key>
+			<string>89029556-829D-4A8E-86D5-F55FFF80D524</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -315,6 +351,30 @@
 			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
 			<string>F4A2A879-4C5A-4532-BF35-02BAAD863581</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>4</integer>
+				<key>script</key>
+				<string>php -f action.php -- "cmd" "{query}"
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f action.php -- "cmd" "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>6E0C0507-42A6-4139-B98B-CE66DA3AC17A</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -614,6 +674,11 @@ This code’s license can be found in LICENSE.md</string>
 			<key>ypos</key>
 			<real>130</real>
 		</dict>
+		<key>6E0C0507-42A6-4139-B98B-CE66DA3AC17A</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<dict>
 			<key>ypos</key>
@@ -633,6 +698,11 @@ This code’s license can be found in LICENSE.md</string>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
+		</dict>
+		<key>89029556-829D-4A8E-86D5-F55FFF80D524</key>
+		<dict>
+			<key>ypos</key>
+			<real>150</real>
 		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>

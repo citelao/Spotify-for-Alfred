@@ -6,6 +6,7 @@ use OhAlfred\OhAlfred;
 
 class Settings implements Menu {
 	protected $alfred;
+	protected $query;
 
 	protected $trackNotificationsEnabled;
 	protected $countryCode;
@@ -13,6 +14,7 @@ class Settings implements Menu {
 
 	public function __construct($query) {
 		$this->alfred = new OhAlfred();
+		$this->query = $query;
 
 		$this->trackNotificationsEnabled = ($this->alfred->options('track_notifications') == 'true');
 		$this->countryCode = $this->alfred->options('country');
@@ -24,7 +26,8 @@ class Settings implements Menu {
 			'title' => 'Settings',
 			'subtitle' => 'Here you can configure any options you want.',
 			'icon' => 'include/images/configuration.png',
-			'valid' => 'no'
+			'valid' => 'no',
+			'autocomplete' => $this->query
 		);
 
 		$results[] = array(

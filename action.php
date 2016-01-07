@@ -9,11 +9,12 @@ require 'vendor/autoload.php';
 
 $spotifious = new Spotifious();
 
-$action = $argv[1];
+$action = $argv[2];
 $results = $spotifious->process($action);
 
 // For debugging
 // print_r($action);
 // print("\n");
 
+// print_r($argv[1]);
 print_r($results);

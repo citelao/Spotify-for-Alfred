@@ -144,14 +144,29 @@ class OhAlfred {
 			if(!isset($result['autocomplete']))
 				$result['autocomplete'] = '';
 
+			// Subtitles
 			if(!isset($result['subtitle']))
 				$result['subtitle'] = '';
+
+			if((array) $result['subtitle'] === $result['subtitle']) {
+				if(!isset($result['subtitle']['default']))
+					$result['subtitle']['default'] = '';
+
+				if(!isset($result['subtitle']['cmd']))
+					$result['subtitle']['cmd'] = $result['subtitle']['default'];
+			} else {
+				$result['subtitle'] = array(
+					'default' => $result['subtitle'],
+					'cmd' => $result['subtitle']
+				);
+			}
 
 			print "\r\n\r\n";
 			print "	<item uid='" . $this->escapeQuery($result['uid']) . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
 			print "		<arg>" . $result['arg'] . "</arg>\r\n";
 			print "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
-			print "		<subtitle>" . $this->escapeQuery($result['subtitle']) . "</subtitle>\r\n";
+			print "		<subtitle>" . $this->escapeQuery($result['subtitle']['default']) . "</subtitle>\r\n";
+			print "		<subtitle mod='cmd'>" . $this->escapeQuery($result['subtitle']['cmd']) . "</subtitle>\r\n";
 			print "		<icon>" . $this->escapeQuery($result['icon']) . "</icon>\r\n";
 
 			if(isset($result['copy'])) {

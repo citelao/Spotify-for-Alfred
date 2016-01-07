@@ -23,30 +23,55 @@ class Main implements Menu {
 	}
 
 	public function output() {
-		$results[0]['title']        = "$this->currentTrack";
-		$results[0]['subtitle']     = "$this->currentAlbum by $this->currentArtist";
-		$results[0]['arg']          = "playpause⟩";
-		$results[0]['copy']			= $this->currentURL;
-		$results[0]['icon']         = $this->currentStatus;
-		
-		$results[1]['title']        = "$this->currentAlbum";
-		$results[1]['subtitle']     = "More from this album...";
-		$results[1]['autocomplete'] = "$this->currentAlbum"; // TODO change to albumdetail
-		$results[1]['copy'] 		= "$this->currentAlbum"; // TODO change to albumdetail
-		$results[1]['valid']        = "no";
-		$results[1]['icon']         = 'include/images/album.png';
-		
-		$results[2]['title']        = "$this->currentArtist";
-		$results[2]['subtitle']     = "More by this artist...";
-		$results[2]['autocomplete'] = $this->currentArtist; // TODO change to artistdetail
-		$results[2]['copy']			= $this->currentArtist; // TODO change to artistdetail
-		$results[2]['valid']        = "no";
-		$results[2]['icon']         = 'include/images/artist.png';
-		
-		$results[3]['title']        = "Search for music...";
-		$results[3]['subtitle']     = "Begin typing to search";
-		$results[3]['valid']        = "no";
-		$results[3]['icon']         = "include/images/search.png";
+		$results[] = array(
+			'title' => $this->currentTrack,
+			'subtitle' => array(
+				'default' => "$this->currentAlbum by $this->currentArtist",
+				'cmd' => "Queue this track" 
+				),
+			'arg' => 'playpause⟩return',
+			'copy' => $this->currentURL,
+			'icon' => $this->currentStatus
+		);
+
+		$results[] = array(
+			'title' => $this->currentAlbum,
+			'subtitle' => array(
+				'default' => "More from this album...",
+				'cmd' => "Queue this album"
+				),
+			// 'arg' => 'playpause⟩',
+			// temp, soon we can get autocomplete!
+			'valid' => 'no',
+			'autocomplete' => $this->currentAlbum,
+
+			'copy' => $this->currentAlbum,
+			'icon' => 'include/images/album.png'
+		);
+
+		$results[] = array(
+			'title' => $this->currentArtist,
+			'subtitle' => array(
+				'default' => "More by this artist...",
+				'cmd' => "Queue this artist"
+				),
+			// 'arg' => 'playpause⟩',
+			// temp, soon we can get autocomplete!
+			'valid' => 'no',
+			'autocomplete' => $this->currentArtist,
+
+			'copy' => $this->currentArtist,
+			'icon' => 'include/images/artist.png'
+		);
+
+		$results[] = array(
+			'title' => "Search for music...",
+			'subtitle' => array(
+				'default' => "Begin typing to search"
+				),
+			'valid' => 'no',
+			'icon' => 'include/images/search.png'
+		);
 
 		// Overrides for no track
 		if($this->currentTrack == "No track playing") {

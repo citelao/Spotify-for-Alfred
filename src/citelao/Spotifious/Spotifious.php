@@ -28,15 +28,6 @@ class Spotifious {
 		// Correct for old Spotifious queries
 		$q = str_replace("►", "⟩", $query);
 
-		// Set defaults if they've not been set before
-		if($this->alfred->options('track_notifications') == '') {
-			$this->alfred->options('track_notifications', 'true');
-		}
-
-		if($this->alfred->options('desired_scopes') != '') {
-			$this->alfred->options('desired_scopes', '');
-		}
-
 		// Display the setup menu if the app isn't setup.
 		// Or the "options" menu if the S key is pressed
 		if($this->alfred->options('country') == '' ||
@@ -69,6 +60,24 @@ class Spotifious {
 		// if expired
 			// attempt refresh
 			// if failed, prompt for relogin
+
+		// Set defaults if they've not been set before
+		if($this->alfred->options('track_notifications') == '') {
+			$this->alfred->options('track_notifications', 'true');
+		}
+
+		if($this->alfred->options('desired_scopes') != '') {
+			$this->alfred->options('desired_scopes', '');
+		}
+
+		if($api && $this->alfred->options('queue_playlist') == '') {
+			$playlist = $api->createUserPlaylist($api->me()->id, 
+				array(
+					'name' => 'Alfred Playlist',
+					'public' => false
+				));
+			$this->alfred->options('queue_playlist', $playlist->id);
+		}
 
 		if (mb_strlen($query) <= 3) {
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
@@ -293,10 +302,9 @@ class Spotifious {
 		// If the access token has expired :(
 		if ($this->alfred->options('spotify_access_token_expires') < time()) {
 			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
-			$session->setRefreshToken($this->alfred->options('spotify_refresh_token'));
-			$session->refreshToken();
+			$session->refreshAccessToken($this->alfred->options('spotify_refresh_token'));
 
-			$this->alfred->options('spotify_access_token_expires', time() + $session->getExpires());
+			$this->alfred->options('spotify_access_token_expires', $session->getTokenExpiration());
 			$this->alfred->options('spotify_access_token', $session->getAccessToken());
 		}
 
