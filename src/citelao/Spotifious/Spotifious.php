@@ -220,6 +220,11 @@ class Spotifious {
 				$as = new ApplicationApplescript("Spotify", "if sound volume > 10 then \n set sound volume to sound volume - 10 \n else \n set sound volume to 0 \n end if");
 				$as->run();
 
+			} else if($command == 'toggleshuffle') {
+				$as = new ApplicationApplescript("Spotify", "set shuffling to not shuffling");
+				$as->run();
+
+
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
 				$as->run();

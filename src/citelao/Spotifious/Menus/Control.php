@@ -29,6 +29,13 @@ class Control implements Menu {
 			'keys' => 'playpause',
 			'icon' => 'include/images/commands/playpause.png',
 			'action' => 'playpause⟩returnControls'
+		),
+
+		array(
+			'name' => 'Toggle shuffle',
+			'keys' => 'shuffle',
+			'icon' => 'include/images/commands/playpause.png',
+			'action' => 'toggleshuffle⟩returnControls'
 		)
 	);
 
