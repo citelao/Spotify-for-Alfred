@@ -29,7 +29,20 @@ class Main implements Menu {
 				'default' => "$this->currentAlbum by $this->currentArtist",
 				'cmd' => "Queue this track" 
 				),
-			'arg' => 'playpause⟩return',
+			'arg' => json_encode(
+				array(
+					'default' => array(
+						'action' => 'playpause',
+						'response' => 'return'
+					),
+					'cmd' => array(
+						'action' => 'queue',
+						'options' => array(
+							'id' => 'test'
+						)
+					)
+				)
+			),
 			'copy' => $this->currentURL,
 			'icon' => $this->currentStatus
 		);
@@ -38,13 +51,19 @@ class Main implements Menu {
 			'title' => $this->currentAlbum,
 			'subtitle' => array(
 				'default' => "More from this album...",
-				'cmd' => "Queue this album"
-				),
-			// 'arg' => 'playpause⟩',
-			// temp, soon we can get autocomplete!
-			'valid' => 'no',
-			'autocomplete' => $this->currentAlbum,
-
+				// 'cmd' => "Queue this album"
+			),
+			'arg' => json_encode(
+				array(
+					'default' => array(
+						'action' => 'none',
+						'response' => 'return',
+						'responseOptions' => array(
+							'query' => $this->currentAlbum
+						)
+					)
+				)
+			),
 			'copy' => $this->currentAlbum,
 			'icon' => 'include/images/album.png'
 		);

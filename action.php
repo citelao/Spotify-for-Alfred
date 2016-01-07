@@ -10,7 +10,8 @@ require 'vendor/autoload.php';
 $spotifious = new Spotifious();
 
 $action = $argv[2];
-$results = $spotifious->process($action);
+$modifiers = $argv[1];
+$results = $spotifious->process($action, $modifiers);
 
 // For debugging
 // print_r($action);

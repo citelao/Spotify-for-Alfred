@@ -147,47 +147,104 @@ class Spotifious {
 		}
 	}
 
-	public function process($action) {
+	public function process($action, $modifiers = 'default') {
 		// TODO refresh token
 		// this is identical code to run()
 		// if expired
 			// attempt refresh
 			// if failed, prompt for relogin
 
-
+		// If we have a ⟩, it is an old-format command.
+		// If it doesn't, assume it is the new-format JSON.
+		// ⟩ format is deprecated.
 		if($this->contains($action, '⟩')) {
 			$splitAction = explode('⟩', $action);
 			$command = array_shift($splitAction);
+			$response = $splitAction[0];
+		} else {
+			$parsedAction = json_decode($action, true);
 
-			if($command == 'country') {
-				$this->alfred->options('country', $splitAction[0]);
+			if(json_last_error() !== JSON_ERROR_NONE) {
+				return "Could not process command!";
+			}
 
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
-				$as->run();
+			if(isset($parsedAction[$modifiers])) {
+				if(isset($parsedAction[$modifiers]['action']))
+					$command = $parsedAction[$modifiers]['action'];
 
-			} else if($command == 'appsetup') {
-				// Autokill server in 10 minutes
-				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
-				$server->run();
+				if(isset($parsedAction[$modifiers]['response']))
+					$response = $parsedAction[$modifiers]['response'];
 
-			} else if($command == 'applink') {
-				// Autokill server in 10 minutes
-				$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/link.php'");
-				$server->run();
+				if(isset($parsedAction[$modifiers]['responseOptions']))
+					$responseOptions = $parsedAction[$modifiers]['responseOptions'];
+			}
 
-			} else if($command == 'togglenotifications') {
-				$current = $this->alfred->options('track_notifications');
-
-				if($current == 'true') {
-					$this->alfred->options('track_notifications', 'false');
+			if(!isset($command)) {
+				if(isset($parsedAction['default']['action'])) {
+					$command = $parsedAction['default']['action'];
 				} else {
-					$this->alfred->options('track_notifications', 'true');
+					return "No action and no default action! What do you want to do?";
 				}
+			}
 
-			} else if($command == 'next') {
-				$song = $this->respondingSpotifyQuery('next track');
+			if(!isset($response)) {
+				if(isset($parsedAction['default']['response'])) {
+					$response = $parsedAction['default']['response'];
+				} else {
+					$response = null;
+				}
+			}
 
-				$this->alfred->notify(
+			if(!isset($responseOptions)) {
+				if(isset($parsedAction['default']['responseOptions'])) {
+					$responseOptions = $parsedAction['default']['responseOptions'];
+				} else {
+					$responseOptions = null;
+				}
+			}
+		}
+
+		if($command == 'country') {
+			$this->alfred->options('country', $splitAction[0]);
+
+			$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+			$as->run();
+
+		} else if($command == 'appsetup') {
+			// Autokill server in 10 minutes
+			$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/index.php'");
+			$server->run();
+
+		} else if($command == 'applink') {
+			// Autokill server in 10 minutes
+			$server = new Timeout(10 * 60, "php -S localhost:11114 & open 'http://localhost:11114/include/setup/link.php'");
+			$server->run();
+
+		} else if($command == 'togglenotifications') {
+			$current = $this->alfred->options('track_notifications');
+
+			if($current == 'true') {
+				$this->alfred->options('track_notifications', 'false');
+			} else {
+				$this->alfred->options('track_notifications', 'true');
+			}
+
+		} else if($command == 'next') {
+			$song = $this->respondingSpotifyQuery('next track');
+
+			$this->alfred->notify(
+				$song['album'] . " — " . $song['artist'], 
+				$song['title'], 
+				// $song['url'],
+				"",
+				"",
+				"",
+				$song['url']);
+
+		} else if($command == 'previous') {
+			$song = $this->respondingSpotifyQuery('previous track');
+
+			$this->alfred->notify(
 					$song['album'] . " — " . $song['artist'], 
 					$song['title'], 
 					// $song['url'],
@@ -196,61 +253,51 @@ class Spotifious {
 					"",
 					$song['url']);
 
-			} else if($command == 'previous') {
-				$song = $this->respondingSpotifyQuery('previous track');
+		} else if($command == 'playpause') {
+			$song = $this->respondingSpotifyQuery('playpause');
 
-				$this->alfred->notify(
-						$song['album'] . " — " . $song['artist'], 
-						$song['title'], 
-						// $song['url'],
-						"",
-						"",
-						"",
-						$song['url']);
+			$icon = ($song['state'] == "playing") ? "▶" : "‖";
+			$this->alfred->notify(
+				$song['album'] . " — " . $song['artist'], 
+				$icon . " " . $song['title'], 
+				// $song['url'],
+				"",
+				"",
+				"",
+				$song['url']);
 
-			} else if($command == 'playpause') {
-				$song = $this->respondingSpotifyQuery('playpause');
+		} else if($command == 'volup') {
+			$as = new ApplicationApplescript("Spotify", "if sound volume < 90 then \n set sound volume to sound volume + 10 \n else \n set sound volume to 100 \n end if");
+			$as->run();
+			
+		} else if($command == 'voldown') {
+			$as = new ApplicationApplescript("Spotify", "if sound volume > 10 then \n set sound volume to sound volume - 10 \n else \n set sound volume to 0 \n end if");
+			$as->run();
 
-				$icon = ($song['state'] == "playing") ? "▶" : "‖";
-				$this->alfred->notify(
-					$song['album'] . " — " . $song['artist'], 
-					$icon . " " . $song['title'], 
-					// $song['url'],
-					"",
-					"",
-					"",
-					$song['url']);
-
-			} else if($command == 'volup') {
-				$as = new ApplicationApplescript("Spotify", "if sound volume < 90 then \n set sound volume to sound volume + 10 \n else \n set sound volume to 100 \n end if");
-				$as->run();
-				
-			} else if($command == 'voldown') {
-				$as = new ApplicationApplescript("Spotify", "if sound volume > 10 then \n set sound volume to sound volume - 10 \n else \n set sound volume to 0 \n end if");
-				$as->run();
-
-			} else if($command == 'toggleshuffle') {
-				$as = new ApplicationApplescript("Spotify", "set shuffling to not shuffling");
-				$as->run();
+		} else if($command == 'toggleshuffle') {
+			$as = new ApplicationApplescript("Spotify", "set shuffling to not shuffling");
+			$as->run();
 
 
-			} else if($command == 'spotify') {
-				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
-				$as->run();
-			}
-
-
-			if($splitAction[0] && $splitAction[0] == 'return') {
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
-				$as->run();
-			} elseif($splitAction[0] && $splitAction[0] == 'returnControls') {
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious" with argument "c"');
-				$as->run();
-
-			}
-		} else {
-			return "Could not process command!";
+		} else if($command == 'spotify') {
+			$as = new ApplicationApplescript("Spotify", $splitAction[0]);
+			$as->run();
 		}
+
+
+		if($response == 'return') {
+			if($responseOptions['query']) {
+				$as = new ApplicationApplescript("Alfred 2", 
+					'run trigger "search" in workflow "com.citelao.spotifious" with argument "' . $responseOptions['query'] . '"');
+			} else {
+				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+			}
+			$as->run();
+		} elseif($splitAction[0] && $splitAction[0] == 'returnControls') {
+			$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious" with argument "c"');
+			$as->run();
+		}
+
 	}
 
 	protected function contains($stack, $needle) {

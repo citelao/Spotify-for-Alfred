@@ -72,7 +72,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>89029556-829D-4A8E-86D5-F55FFF80D524</string>
+				<string>5555DA19-6278-4CB0-BC28-64AD245D22C4</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -83,7 +83,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>89029556-829D-4A8E-86D5-F55FFF80D524</string>
+				<string>5555DA19-6278-4CB0-BC28-64AD245D22C4</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -262,6 +262,14 @@
 			<integer>0</integer>
 		</dict>
 		<dict>
+			<key>type</key>
+			<string>alfred.workflow.output.largetype</string>
+			<key>uid</key>
+			<string>5555DA19-6278-4CB0-BC28-64AD245D22C4</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
 			<key>config</key>
 			<dict>
 				<key>argument</key>
@@ -330,14 +338,6 @@
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.output.largetype</string>
-			<key>uid</key>
-			<string>89029556-829D-4A8E-86D5-F55FFF80D524</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -664,6 +664,11 @@ This code’s license can be found in LICENSE.md</string>
 			<key>ypos</key>
 			<real>620</real>
 		</dict>
+		<key>5555DA19-6278-4CB0-BC28-64AD245D22C4</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
 		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
 		<dict>
 			<key>ypos</key>
@@ -698,11 +703,6 @@ This code’s license can be found in LICENSE.md</string>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
-		</dict>
-		<key>89029556-829D-4A8E-86D5-F55FFF80D524</key>
-		<dict>
-			<key>ypos</key>
-			<real>150</real>
 		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
