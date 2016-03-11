@@ -69,27 +69,9 @@
 			</dict>
 		</array>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>5555DA19-6278-4CB0-BC28-64AD245D22C4</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
+		<array/>
 		<key>6E0C0507-42A6-4139-B98B-CE66DA3AC17A</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>5555DA19-6278-4CB0-BC28-64AD245D22C4</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
+		<array/>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<array>
 			<dict>
@@ -258,14 +240,6 @@
 			<string>alfred.workflow.action.revealfile</string>
 			<key>uid</key>
 			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.output.largetype</string>
-			<key>uid</key>
-			<string>5555DA19-6278-4CB0-BC28-64AD245D22C4</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -663,11 +637,6 @@ This code’s license can be found in LICENSE.md</string>
 		<dict>
 			<key>ypos</key>
 			<real>620</real>
-		</dict>
-		<key>5555DA19-6278-4CB0-BC28-64AD245D22C4</key>
-		<dict>
-			<key>ypos</key>
-			<real>10</real>
 		</dict>
 		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
 		<dict>

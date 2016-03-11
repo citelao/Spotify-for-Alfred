@@ -70,14 +70,16 @@ class Spotifious {
 			$this->alfred->options('desired_scopes', '');
 		}
 
-		if($api && $this->alfred->options('queue_playlist') == '') {
-			$playlist = $api->createUserPlaylist($api->me()->id, 
-				array(
-					'name' => 'Alfred Playlist',
-					'public' => false
-				));
-			$this->alfred->options('queue_playlist', $playlist->id);
-		}
+		// TODO we need special privilege to actually create a playlist
+		// but I don't want to do that unless I've added functionality.
+		// if($api && $this->alfred->options('queue_playlist') == '') {
+		// 	$playlist = $api->createUserPlaylist($api->me()->id, 
+		// 		array(
+		// 			'name' => 'Alfred Playlist',
+		// 			'public' => false
+		// 		));
+		// 	$this->alfred->options('queue_playlist', $playlist->id);
+		// }
 
 		if (mb_strlen($query) <= 3) {
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
@@ -156,7 +158,7 @@ class Spotifious {
 
 		// If we have a ⟩, it is an old-format command.
 		// If it doesn't, assume it is the new-format JSON.
-		// ⟩ format is deprecated.
+		// ⟩ format is deprecated. I can't believe I didn't do this sooner.
 		if($this->contains($action, '⟩')) {
 			$splitAction = explode('⟩', $action);
 			$command = array_shift($splitAction);
