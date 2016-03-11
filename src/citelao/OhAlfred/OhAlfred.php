@@ -163,7 +163,7 @@ class OhAlfred {
 
 			print "\r\n\r\n";
 			print "	<item uid='" . $this->escapeQuery($result['uid']) . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
-			print "		<arg>" . $result['arg'] . "</arg>\r\n";
+			print "		<arg>" . htmlspecialchars($result['arg']) . "</arg>\r\n";
 			print "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
 			print "		<subtitle>" . $this->escapeQuery($result['subtitle']['default']) . "</subtitle>\r\n";
 			print "		<subtitle mod='cmd'>" . $this->escapeQuery($result['subtitle']['cmd']) . "</subtitle>\r\n";
