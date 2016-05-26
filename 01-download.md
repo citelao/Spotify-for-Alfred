@@ -31,7 +31,7 @@ It's a two-part process, but it shouldn't take all of 5 minutes.
 	**Bind the launcher hotkey**:
 
 	1. Double-click the first thingy marked `Hotkey` (see **Figure 1**).
-	2. Click the text field labeled `Hotkey` and press `^⌘⏎`.
+	2. Click the text field labeled `Hotkey` and press `^⌘⏎`. If your iTunes Mini Player is set to the same hotkey, you will have to unbind/rebind it first (`Features` &rarr; `iTunes` &rarr; the thing that has a hotkey in it).
 	3. Click `Save` to store the binding.
 4. Bind the other hotkeys as you wish. Their actions are visible in the `Text`
 	field, under `Argument`
