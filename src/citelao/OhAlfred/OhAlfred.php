@@ -49,22 +49,34 @@ class OhAlfred {
 
 	// Get the cache directory
 	public function cache() {
-		if($this->cache == null)
-			$this->cache = $this->home() . "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/" . $this->name() . "/";
+		if($this->cache == null) {
+			if(isset($_ENV['alfred_workflow_data'])) {
+				$this->cache = $_ENV['alfred_workflow_cache'];
+			} else {
+				$this->cache = $this->home() . "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/" . $this->name() . "/";
+			}
+		}
 
-		if (!file_exists($this->cache))
+		if (!file_exists($this->cache)) {
 			mkdir($this->cache);
+		}
 
 		return $this->cache;
 	}
 
 	// Get the storage directory
 	public function storage() {
-		if($this->storage == null)
-			$this->storage = $this->home() . "/Library/Application Support/Alfred 2/Workflow Data/" . $this->name() . "/";
+		if($this->storage == null) {
+			if(isset($_ENV['alfred_workflow_data'])) {
+				$this->storage = $_ENV['alfred_workflow_data'];
+			} else {
+				$this->storage = $this->home() . "/Library/Application Support/Alfred 2/Workflow Data/" . $this->name() . "/";
+			}
+		}
 
-		if (!file_exists($this->storage))
+		if (!file_exists($this->storage)) {
 			mkdir($this->storage);
+		}
 
 		return $this->storage;
 	}
