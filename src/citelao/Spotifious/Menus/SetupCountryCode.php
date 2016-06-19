@@ -69,7 +69,7 @@ class SetupCountryCode implements Menu {
 		// Give priority to common countries.
 		// Arbitrarily decided by me.
 		$common = array(
-			"United States", // America first hehehe
+			"United States of America", // America first hehehe
 			"United Kingdom",
 			"Canada",
 			"Australia",
