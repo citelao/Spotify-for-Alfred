@@ -235,7 +235,8 @@
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string>php -d display_errors='stderr' -f main.php -- "{query}"
+				<string>source set-php-path.sh
+php -d display_errors='stderr' -f main.php -- "{query}"
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
@@ -325,7 +326,8 @@
 				<key>escaping</key>
 				<integer>4</integer>
 				<key>script</key>
-				<string>php -f action.php -- "{query}"
+				<string>source set-php-path.sh
+php -f action.php -- "{query}"
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
