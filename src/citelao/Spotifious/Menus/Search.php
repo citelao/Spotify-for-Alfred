@@ -39,8 +39,6 @@ class Search implements Menu {
 			$json = $fetcher->run();
 		}
 
-		
-
 		// Albums do not include artist data.
 		// Grab all the album ids, and find their artists
 		$albumIDs = array();
@@ -50,11 +48,16 @@ class Search implements Menu {
 
 		if(sizeof($albumIDs) != 0)
 		{
-			$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
-			$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
-			
-			$albumFetcher = new JsonFetcher($url);
-			$albumsJson = $albumFetcher->run();
+			$albumsJson = null;
+			if($api) {
+				$albumsJson = $api->getAlbums($albumIDs);
+			} else {
+				$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
+				$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
+				
+				$albumFetcher = new JsonFetcher($url);
+				$albumsJson = $albumFetcher->run();
+			}
 
 			$albums = array();
 			foreach ($albumsJson->albums as $key => $value) {
