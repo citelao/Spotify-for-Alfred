@@ -31,14 +31,14 @@ class Main implements Menu {
 		
 		$results[1]['title']        = "$this->currentAlbum";
 		$results[1]['subtitle']     = "More from this album...";
-		$results[1]['autocomplete'] = "$this->currentAlbum"; // TODO change to albumdetail
+		$results[1]['autocomplete'] = "album:$this->currentAlbum"; // TODO change to albumdetail
 		$results[1]['copy'] 		= "$this->currentAlbum"; // TODO change to albumdetail
 		$results[1]['valid']        = "no";
 		$results[1]['icon']         = 'include/images/album.png';
 		
 		$results[2]['title']        = "$this->currentArtist";
 		$results[2]['subtitle']     = "More by this artist...";
-		$results[2]['autocomplete'] = $this->currentArtist; // TODO change to artistdetail
+		$results[2]['autocomplete'] = "artist:$this->currentArtist"; // TODO change to artistdetail
 		$results[2]['copy']			= $this->currentArtist; // TODO change to artistdetail
 		$results[2]['valid']        = "no";
 		$results[2]['icon']         = 'include/images/artist.png';
