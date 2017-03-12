@@ -17,9 +17,6 @@ require 'vendor/autoload.php';
 $alfred = new OhAlfred();
 $spotifious = new Spotifious();
 
-set_exception_handler(array($alfred, 'exceptionify'));
-set_error_handler(array($alfred, 'errorify'), E_ALL);
-
 $query = $argv[1];
 $results = $spotifious->run($query);
 

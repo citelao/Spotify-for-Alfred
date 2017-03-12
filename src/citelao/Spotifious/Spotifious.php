@@ -37,6 +37,10 @@ class Spotifious {
 			$this->alfred->options('desired_scopes', '');
 		}
 
+		if($this->alfred->options('lookup_current_song') == '') {
+			$this->alfred->options('lookup_current_song', 'true');
+		}
+
 		// Display the setup menu if the app isn't setup.
 		// Or the "options" menu if the S key is pressed
 		if($this->alfred->options('country') == '' ||

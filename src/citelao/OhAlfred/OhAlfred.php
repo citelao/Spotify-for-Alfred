@@ -17,7 +17,7 @@ class OhAlfred {
 	// Set the exception handlers
 	public function __construct() {
 		set_exception_handler(array($this, 'exceptionify'));
-		set_error_handler(array($this, 'errorify'));
+		set_error_handler(array($this, 'errorify'), E_ALL);
 	}
 
 	// Get the current workflow name.
@@ -150,7 +150,7 @@ class OhAlfred {
 		if($r == null)
 			$r = $this->results;
 
-		print "<?xml version='1.0'?>\r\n<items>";
+		$output = "<?xml version='1.0'?>\r\n<items>";
 
 		foreach($r as $result) {
 			if(!isset($result['arg']))
@@ -174,21 +174,23 @@ class OhAlfred {
 			if(!isset($result['subtitle']))
 				$result['subtitle'] = '';
 
-			print "\r\n\r\n";
-			print "	<item uid='" . $this->escapeQuery($result['uid']) . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
-			print "		<arg>" . $result['arg'] . "</arg>\r\n";
-			print "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
-			print "		<subtitle>" . $this->escapeQuery($result['subtitle']) . "</subtitle>\r\n";
-			print "		<icon>" . $this->escapeQuery($result['icon']) . "</icon>\r\n";
+			$output .= "\r\n\r\n";
+			$output .= "	<item uid='" . $this->escapeQuery($result['uid']) . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
+			$output .= "		<arg>" . $result['arg'] . "</arg>\r\n";
+			$output .= "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
+			$output .= "		<subtitle>" . $this->escapeQuery($result['subtitle']) . "</subtitle>\r\n";
+			$output .= "		<icon>" . $this->escapeQuery($result['icon']) . "</icon>\r\n";
 
 			if(isset($result['copy'])) {
-				print "		<text type='copy'>" . $this->escapeQuery($result['copy']) . "</text>\r\n";
+				$output .= "		<text type='copy'>" . $this->escapeQuery($result['copy']) . "</text>\r\n";
 			}
 
-			print "	</item>\r\n";
+			$output .= "	</item>\r\n";
 		}
 
-		print "</items>";
+		$output .= "</items>";
+
+		print $output;
 	}
 
 	// Replace some symbols that confuse Alfred.
