@@ -12,7 +12,7 @@ class Main implements Menu {
 	protected $currentURL;
 	protected $currentStatus;
 
-	public function __construct($query) {
+	public function __construct($query, $alfred=null, $api=null) {
 		$current = $this->now();
 
 		$this->currentTrack             = $current[0];
@@ -31,7 +31,7 @@ class Main implements Menu {
 		
 		$results[1]['title']        = "$this->currentAlbum";
 		$results[1]['subtitle']     = "More from this album...";
-		$results[1]['autocomplete'] = "album:$this->currentAlbum"; // TODO change to albumdetail
+		$results[1]['autocomplete'] = "artist:$this->currentArtist album:$this->currentAlbum"; // TODO change to albumdetail
 		$results[1]['copy'] 		= "$this->currentAlbum"; // TODO change to albumdetail
 		$results[1]['valid']        = "no";
 		$results[1]['icon']         = 'include/images/album.png';

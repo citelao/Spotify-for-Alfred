@@ -5,10 +5,10 @@ use Spotifious\Menus\Menu;
 use Spotifious\Menus\DetailArtist;
 use Spotifious\Menus\DetailAlbum;
 
-class Detail implements Menu {
+class Detail {
 	protected $submenu;
 
-	public function __construct($options) {
+	public function __construct($options, $alfred) {
 		$this->search = $options['search'];
 
 		$this->currentURI = $options['URIs'][$options['depth'] - 1];
@@ -24,9 +24,9 @@ class Detail implements Menu {
 		);
 
 		if($this->type == "artist") {
-			$this->submenu = new DetailArtist($constructedOptions);
+			$this->submenu = new DetailArtist($constructedOptions, $alfred);
 		} else {
-			$this->submenu = new DetailAlbum($constructedOptions);
+			$this->submenu = new DetailAlbum($constructedOptions, $alfred);
 		}
 	}
 

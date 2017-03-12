@@ -8,7 +8,7 @@ class SetupCountryCode implements Menu {
 	protected $countries;
 	protected $search;
 
-	public function __construct($query) {
+	public function __construct($query, $alfred=null, $api=null) {
 		// Thanks, Lukes <https://github.com/lukes>
 		$url = "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json";
 

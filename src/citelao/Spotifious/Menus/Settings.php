@@ -11,8 +11,8 @@ class Settings implements Menu {
 	protected $countryCode;
 	protected $optedOut;
 
-	public function __construct($query) {
-		$this->alfred = new OhAlfred();
+	public function __construct($query, $alfred, $api=null) {
+		$this->alfred = $alfred;
 
 		$this->trackNotificationsEnabled = ($this->alfred->options('track_notifications') == 'true');
 		$this->countryCode = $this->alfred->options('country');

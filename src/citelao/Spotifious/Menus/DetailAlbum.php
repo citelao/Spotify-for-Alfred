@@ -3,9 +3,8 @@ namespace Spotifious\Menus;
 
 use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\OhAlfred;
-use Spotifious\Menus\Menu;
 
-class DetailAlbum implements Menu {
+class DetailAlbum {
 	protected $alfred;
 
 	protected $currentURI;
@@ -17,8 +16,8 @@ class DetailAlbum implements Menu {
 	protected $type;
 	protected $tracks;
 
-	public function __construct($options) {
-		$this->alfred = new OhAlfred();
+	public function __construct($options, $alfred) {
+		$this->alfred = $alfred;
 		$locale = $this->alfred->options('country');
 
 		$this->currentURI = $options['currentURI'];

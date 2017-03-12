@@ -69,7 +69,7 @@ class Spotifious {
 				return $menu->output();
 			}
 
-			$menu = new Setup($query);
+			$menu = new Setup($query, $this->alfred);
 			return $menu->output();
 		}
 
@@ -88,7 +88,7 @@ class Spotifious {
 				$menu = new Control($query);
 				return $menu->output();
 			} elseif(mb_strlen($query) > 0 && ($query[0] == "s" || $query[0] == "S")) {
-				$menu = new Settings($query);
+				$menu = new Settings($query, $this->alfred);
 				return $menu->output();
 			} else {
 				$menu = new Main($query);
@@ -122,7 +122,7 @@ class Spotifious {
 			);
 
 			if (mb_substr($query, -1) == "⟩") { // Machine-generated
-				$menu = new Detail($options);
+				$menu = new Detail($options, $this->alfred);
 				return $menu->output();
 
 			} elseif($depth > 0) {
@@ -130,16 +130,16 @@ class Spotifious {
 				$options['search'] = $search;
 				$options['args'] = $args;
 
-				$menu = new Detail($options);
+				$menu = new Detail($options, $this->alfred);
 				return $menu->output();
 
 			} else {
-				$menu = new Search(end($args));
+				$menu = new Search(end($args), $this->alfred, $api);
 				return $menu->output();
 			}
 
 		} else {
-			$menu = new Search($query);
+			$menu = new Search($query, $this->alfred, $api);
 			$results = $menu->output();
 
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {

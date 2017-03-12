@@ -32,7 +32,7 @@ class Control implements Menu {
 		)
 	);
 
-	public function __construct($query) {
+	public function __construct($query, $alfred=null, $api=null) {
 		$this->query = $query;
 		$this->search = mb_substr($query, 1);
 	}

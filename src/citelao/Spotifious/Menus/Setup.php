@@ -12,8 +12,8 @@ class Setup implements Menu {
 	protected $applicationLinked;
 	protected $applicationPreviouslyLinked;
 
-	public function __construct($query) {
-		$this->alfred = new OhAlfred();
+	public function __construct($query, $alfred, $api=null) {
+		$this->alfred = $alfred;
 
 		$this->countryCodeConfigured = !($this->alfred->options('country') == '');
 		$this->applicationCreated = !($this->alfred->options('spotify_client_id') == '' || $this->alfred->options('spotify_secret') == '');
