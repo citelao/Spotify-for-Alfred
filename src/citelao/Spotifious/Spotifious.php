@@ -255,7 +255,7 @@ class Spotifious {
 	}
 
 	protected function respondingSpotifyQuery($query) {
-		$as = new ApplicationApplescript("Spotify", $query . " \n delay 0.1 \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
+		$as = new ApplicationApplescript("Spotify", $query . " \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
 		$result = $as->run();
 
 		$array = explode("✂", $result);
