@@ -1,5 +1,9 @@
 # Changelog #
 
+## v0.13.1 ##
+- Fixed: Alfred 3 compatibility
+- Fixed: America appears first in country selection
+
 ## v0.13 ##
 - Added: preliminary scaffolding for web API (playlists, starring, all of it is coming)
 - Added: new settings menu.

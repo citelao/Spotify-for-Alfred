@@ -50,6 +50,15 @@ class Spotifious {
 			) || 
 			$this->contains($query, "Country Code ⟩")) {
 
+			// Check version first
+			if(version_compare(phpversion(), "5.4") < 0) {
+				throw new StatefulException("Your PHP version is too low",
+					array(
+						"Your version" => phpversion(),
+						"Required version" => "5.4"
+					));
+			}
+
 			// If we are trying to configure country code
 			if($this->contains($query, "Country Code ⟩")) {
 				$menu = new SetupCountryCode($query);
