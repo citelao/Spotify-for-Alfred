@@ -22,9 +22,10 @@ class Search implements Menu {
 		// Use the API to fetch, if possible.
 		$json = "";
 		if($api) {
-			$options = array(
-				'market' => $locale
-			);
+			$options = array();
+			if($locale != 'not-given') {
+				$options['market'] = $locale;
+			}
 			$json = $api->search($query, ['artist', 'album', 'track'], $options);
 		} else {
 			/* Fetch and parse the search results. */

@@ -70,7 +70,7 @@ class SetupCountryCode implements Menu {
 		// Arbitrarily decided by me.
 		$common = array(
 			"United States of America", // America first hehehe
-			"United Kingdom",
+			"United Kingdom of Great Britain and Northern Ireland",
 			"Canada",
 			"Australia",
 			"I'd rather not give a country!"
