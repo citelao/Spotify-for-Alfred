@@ -300,6 +300,10 @@ php -f main.php -- "{query}"
 				<integer>0</integer>
 				<key>argument</key>
 				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>36</integer>
 				<key>hotmod</key>
@@ -394,6 +398,10 @@ php -f action.php -- "{query}"
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>playpause⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>49</integer>
 				<key>hotmod</key>
@@ -444,6 +452,10 @@ php -f action.php -- "{query}"
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>next⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>124</integer>
 				<key>hotmod</key>
@@ -494,6 +506,10 @@ php -f action.php -- "{query}"
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>previous⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>123</integer>
 				<key>hotmod</key>
@@ -544,6 +560,10 @@ php -f action.php -- "{query}"
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>volup⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>126</integer>
 				<key>hotmod</key>
@@ -594,6 +614,10 @@ php -f action.php -- "{query}"
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>voldown⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>125</integer>
 				<key>hotmod</key>

@@ -154,7 +154,6 @@ class Spotifious {
 			// attempt refresh
 			// if failed, prompt for relogin
 
-
 		if($this->contains($action, '⟩')) {
 			$splitAction = explode('⟩', $action);
 			$command = array_shift($splitAction);
@@ -162,7 +161,8 @@ class Spotifious {
 			if($command == 'country') {
 				$this->alfred->options('country', $splitAction[0]);
 
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+				$v = $this->alfred->version()[0];
+				$as = new ApplicationApplescript("Alfred $v", 'run trigger "search" in workflow "com.citelao.spotifious"');
 				$as->run();
 
 			} else if($command == 'appsetup') {
