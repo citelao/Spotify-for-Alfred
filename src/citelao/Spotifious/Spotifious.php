@@ -175,6 +175,16 @@ class Spotifious {
 			$action = null;
 			if($json->action == "applescript") {
 				$action = new Applescript($options, $this->alfred, $api);
+			} else if($json->action == "spotifious") {
+				$v = $this->alfred->version()[0];
+				$command = ($options->command)
+					? $options->command
+					: '';
+				$passed_options = (object) array(
+					'application' => "Alfred $v",
+					'command' => 'run trigger "search" in workflow "com.citelao.spotifious" with argument "' . $command . '"'
+				);
+				$action = new Applescript($passed_options, $this->alfred, $api);
 			} else {
 				throw new StatefulException("Could not process command", array('json' => $json));
 			}
@@ -262,12 +272,12 @@ class Spotifious {
 				$as->run();
 			}
 
-
+			$v = $this->alfred->version()[0];
 			if($splitAction[0] && $splitAction[0] == 'return') {
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+				$as = new ApplicationApplescript("Alfred $v", 'run trigger "search" in workflow "com.citelao.spotifious"');
 				$as->run();
 			} elseif($splitAction[0] && $splitAction[0] == 'returnControls') {
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious" with argument "c"');
+				$as = new ApplicationApplescript("Alfred $v", 'run trigger "search" in workflow "com.citelao.spotifious" with argument "c"');
 				$as->run();
 
 			}

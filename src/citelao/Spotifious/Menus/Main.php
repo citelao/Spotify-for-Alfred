@@ -31,17 +31,17 @@ class Main implements Menu {
 			'icon' => array(
 				'path' => $this->currentStatus
 			),
-			'mods' => array(
-				'alt' => array(
-					'subtitle' => "Browse to artist ($this->currentArtist)..."
-				),
-				'ctrl' => array(
-					'subtitle' => "Browse to album ($this->currentAlbum)..."
-				),
-				'cmd' => array(
-					'subtitle' => 'Queue this song'
-				),
-			)
+			// 'mods' => array(
+			// 	'alt' => array(
+			// 		'subtitle' => "Browse to artist ($this->currentArtist)..."
+			// 	),
+			// 	'ctrl' => array(
+			// 		'subtitle' => "Browse to album ($this->currentAlbum)..."
+			// 	),
+			// 	'cmd' => array(
+			// 		'subtitle' => 'Queue this song'
+			// 	),
+			// )
 		);
 		
 		$results[1] = array(
@@ -53,14 +53,14 @@ class Main implements Menu {
 			'icon'  => array(
 				'path' => 'include/images/album.png'
 			),
-			'mods' => array(
-				'alt' => array(
-					'subtitle' => "Browse to artist ($this->currentArtist)..."
-				),
-				'cmd' => array(
-					'subtitle' => 'Queue this album'
-				),
-			)
+			// 'mods' => array(
+			// 	'alt' => array(
+			// 		'subtitle' => "Browse to artist ($this->currentArtist)..."
+			// 	),
+			// 	'cmd' => array(
+			// 		'subtitle' => 'Queue this album'
+			// 	),
+			// )
 		);
 		
 		$results[2] = array(
@@ -81,12 +81,12 @@ class Main implements Menu {
 				'ctrl' => array(
 					'valid' => true,
 					'subtitle' => 'Open controls...',
-					'arg' => 'c'
+					'arg' => '{"action": "spotifious", "options": { "command": "c" }}'
 				),
 				'cmd' => array(
 					'valid' => true,
 					'subtitle' => 'Open settings...',
-					'arg' => 's'
+					'arg' => '{"action": "spotifious", "options": { "command": "s" }}'
 				),
 				'shift' => array(
 					'valid' => true,

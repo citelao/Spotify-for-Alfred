@@ -185,6 +185,11 @@ class OhAlfred {
 				throw new StatefulException("Expected boolean for validity, not string");
 			}
 
+			if(isset($item['copy']) && is_string($item['copy'])) {
+				$item['text'] = array('copy' => $item['copy']);
+				// TODO purge the copy tag!
+			}
+
 			$output['items'][] = $item;
 		}
 
