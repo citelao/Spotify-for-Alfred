@@ -235,7 +235,10 @@
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string>php -d display_errors='stderr' -f main.php -- "{query}"
+				<string># Add Homebrew to path for those who need :)
+export PATH="/usr/local/bin:${PATH}"
+
+php -f main.php -- "{query}"
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
@@ -297,6 +300,10 @@
 				<integer>0</integer>
 				<key>argument</key>
 				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>36</integer>
 				<key>hotmod</key>
@@ -325,7 +332,10 @@
 				<key>escaping</key>
 				<integer>4</integer>
 				<key>script</key>
-				<string>php -f action.php -- "{query}"
+				<string># Add Homebrew to path for those who need :)
+export PATH="/usr/local/bin:${PATH}"
+
+php -f action.php -- "{query}"
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
@@ -388,6 +398,10 @@
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>playpause⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>49</integer>
 				<key>hotmod</key>
@@ -438,6 +452,10 @@
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>next⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>124</integer>
 				<key>hotmod</key>
@@ -488,6 +506,10 @@
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>previous⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>123</integer>
 				<key>hotmod</key>
@@ -538,6 +560,10 @@
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>volup⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>126</integer>
 				<key>hotmod</key>
@@ -588,6 +614,10 @@
 				<integer>3</integer>
 				<key>argumenttext</key>
 				<string>voldown⟩</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>125</integer>
 				<key>hotmod</key>
@@ -611,7 +641,6 @@
 	</array>
 	<key>readme</key>
 	<string># Spotifious
-# v0.13.1
 
 I’ve worked a long time on it to make it as good as it can be, and if you have any ideas to make it better or if you need to complain, leave me a note on my GitHub page or on the forum threads, linked below.
 
@@ -743,7 +772,7 @@ This code’s license can be found in LICENSE.md</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string></string>
+	<string>0.13.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/citelao/Spotify-for-Alfred</string>
 </dict>

@@ -8,6 +8,9 @@ use OhAlfred\OhAlfred;
 use OhAlfred\Applescript\ApplicationApplescript;
 use OhAlfred\Command\Timeout;
 use OhAlfred\Exceptions\StatefulException;
+use OhAlfred\HTTP\JsonParser;
+
+use Spotifious\Actions\Applescript;
 
 use Spotifious\Menus\Control;
 use Spotifious\Menus\Detail;
@@ -20,8 +23,8 @@ use Spotifious\Menus\SetupCountryCode;
 class Spotifious {
 	protected $alfred;
 
-	public function __construct() {
-		$this->alfred = new OhAlfred();
+	public function __construct($alfred) {
+		$this->alfred = $alfred;
 	}
 
 	public function run($query) {
@@ -37,6 +40,10 @@ class Spotifious {
 			$this->alfred->options('desired_scopes', '');
 		}
 
+		if($this->alfred->options('lookup_current_song') == '') {
+			$this->alfred->options('lookup_current_song', 'true');
+		}
+
 		// Display the setup menu if the app isn't setup.
 		// Or the "options" menu if the S key is pressed
 		if($this->alfred->options('country') == '' ||
@@ -50,13 +57,22 @@ class Spotifious {
 			) || 
 			$this->contains($query, "Country Code ⟩")) {
 
+			// Check version first
+			if(version_compare(phpversion(), "5.4") < 0) {
+				throw new StatefulException("Your PHP version is too low",
+					array(
+						"Your version" => phpversion(),
+						"Required version" => "5.4"
+					));
+			}
+
 			// If we are trying to configure country code
 			if($this->contains($query, "Country Code ⟩")) {
 				$menu = new SetupCountryCode($query);
 				return $menu->output();
 			}
 
-			$menu = new Setup($query);
+			$menu = new Setup($query, $this->alfred);
 			return $menu->output();
 		}
 
@@ -75,7 +91,7 @@ class Spotifious {
 				$menu = new Control($query);
 				return $menu->output();
 			} elseif(mb_strlen($query) > 0 && ($query[0] == "s" || $query[0] == "S")) {
-				$menu = new Settings($query);
+				$menu = new Settings($query, $this->alfred);
 				return $menu->output();
 			} else {
 				$menu = new Main($query);
@@ -109,7 +125,7 @@ class Spotifious {
 			);
 
 			if (mb_substr($query, -1) == "⟩") { // Machine-generated
-				$menu = new Detail($options);
+				$menu = new Detail($options, $this->alfred, $api);
 				return $menu->output();
 
 			} elseif($depth > 0) {
@@ -117,16 +133,16 @@ class Spotifious {
 				$options['search'] = $search;
 				$options['args'] = $args;
 
-				$menu = new Detail($options);
+				$menu = new Detail($options, $this->alfred, $api);
 				return $menu->output();
 
 			} else {
-				$menu = new Search(end($args));
+				$menu = new Search(end($args), $this->alfred, $api);
 				return $menu->output();
 			}
 
 		} else {
-			$menu = new Search($query);
+			$menu = new Search($query, $this->alfred, $api);
 			$results = $menu->output();
 
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
@@ -139,12 +155,42 @@ class Spotifious {
 	}
 
 	public function process($action) {
+		$api = null;
+		if(!$this->optedOut()) {
+			$api = $this->getSpotifyApi();
+		}
 		// TODO refresh token
 		// this is identical code to run()
 		// if expired
 			// attempt refresh
 			// if failed, prompt for relogin
 
+		// Handle JSON if given
+		if($action[0] == "{") {
+			$json = JsonParser::parse($action);
+			$options = (isset($json->options)) 
+				? $json->options
+				: new \stdClass();
+
+			$action = null;
+			if($json->action == "applescript") {
+				$action = new Applescript($options, $this->alfred, $api);
+			} else if($json->action == "spotifious") {
+				$v = $this->alfred->version()[0];
+				$command = ($options->command)
+					? $options->command
+					: '';
+				$passed_options = (object) array(
+					'application' => "Alfred $v",
+					'command' => 'run trigger "search" in workflow "com.citelao.spotifious" with argument "' . $command . '"'
+				);
+				$action = new Applescript($passed_options, $this->alfred, $api);
+			} else {
+				throw new StatefulException("Could not process command", array('json' => $json));
+			}
+			$action->run();
+			return;
+		}
 
 		if($this->contains($action, '⟩')) {
 			$splitAction = explode('⟩', $action);
@@ -153,7 +199,8 @@ class Spotifious {
 			if($command == 'country') {
 				$this->alfred->options('country', $splitAction[0]);
 
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+				$v = $this->alfred->version()[0];
+				$as = new ApplicationApplescript("Alfred $v", 'run trigger "search" in workflow "com.citelao.spotifious"');
 				$as->run();
 
 			} else if($command == 'appsetup') {
@@ -225,12 +272,12 @@ class Spotifious {
 				$as->run();
 			}
 
-
+			$v = $this->alfred->version()[0];
 			if($splitAction[0] && $splitAction[0] == 'return') {
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious"');
+				$as = new ApplicationApplescript("Alfred $v", 'run trigger "search" in workflow "com.citelao.spotifious"');
 				$as->run();
 			} elseif($splitAction[0] && $splitAction[0] == 'returnControls') {
-				$as = new ApplicationApplescript("Alfred 2", 'run trigger "search" in workflow "com.citelao.spotifious" with argument "c"');
+				$as = new ApplicationApplescript("Alfred $v", 'run trigger "search" in workflow "com.citelao.spotifious" with argument "c"');
 				$as->run();
 
 			}
@@ -255,7 +302,7 @@ class Spotifious {
 	}
 
 	protected function respondingSpotifyQuery($query) {
-		$as = new ApplicationApplescript("Spotify", $query . " \n delay 0.1 \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
+		$as = new ApplicationApplescript("Spotify", $query . " \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
 		$result = $as->run();
 
 		$array = explode("✂", $result);

@@ -8,7 +8,7 @@ class SetupCountryCode implements Menu {
 	protected $countries;
 	protected $search;
 
-	public function __construct($query) {
+	public function __construct($query, $alfred=null, $api=null) {
 		// Thanks, Lukes <https://github.com/lukes>
 		$url = "https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json";
 
@@ -45,7 +45,7 @@ class SetupCountryCode implements Menu {
 				'subtitle' => "Set your country to “{$country['code']}.”",
 				'arg' => 'country⟩' . $country['code'],
 				'autocomplete' => 'Country Code ⟩' . $country['name'],
-				'icon' => 'include/images/dash.png'
+				'icon' => array('path' => 'include/images/dash.png')
 			);
 
 			$results[] = $currentResult;
@@ -56,7 +56,7 @@ class SetupCountryCode implements Menu {
 				'title' => 'Could not find country',
 				'subtitle' => 'We are looking for a country called "' . $this->search . '"',
 				'autocomplete' => 'Country Code ⟩',
-				'valid' => 'no'
+				'valid' => false
 			);
 		} else {
 			usort($results, array($this,'countrySort'));
@@ -70,7 +70,7 @@ class SetupCountryCode implements Menu {
 		// Arbitrarily decided by me.
 		$common = array(
 			"United States of America", // America first hehehe
-			"United Kingdom",
+			"United Kingdom of Great Britain and Northern Ireland",
 			"Canada",
 			"Australia",
 			"I'd rather not give a country!"

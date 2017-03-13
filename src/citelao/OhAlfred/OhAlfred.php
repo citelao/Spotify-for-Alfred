@@ -1,11 +1,14 @@
 <?php
 namespace OhAlfred;
 
+use OhAlfred\Exceptions\StatefulException;
+
 /* see: https://github.com/jdfwarrior/Workflows/blob/master/workflows.php */
 class OhAlfred {
 	protected $results;
 
 	protected $name;
+	protected $version;
 	protected $home;
 	protected $workflow;
 	protected $cache;
@@ -15,8 +18,7 @@ class OhAlfred {
 
 	// Set the exception handlers
 	public function __construct() {
-		set_exception_handler(array($this, 'exceptionify'));
-		set_error_handler(array($this, 'errorify'));
+		set_error_handler(array($this, 'errorify'), E_ALL);
 	}
 
 	// Get the current workflow name.
@@ -26,6 +28,26 @@ class OhAlfred {
 			$this->name = $this->defaults('bundleid');
 
 		return $this->name; 
+	}
+
+	// Get the current Alfred version
+	public function version()
+	{
+		if($this->version == null) {
+			if(!isset($_ENV["alfred_version"])) {
+				$this->version = "2";
+			} else {
+				$this->version = $_ENV["alfred_version"];
+			}
+		}
+
+		return $this->version;
+	}
+
+	// Helper for Alfred 3
+	public function isAlfred3()
+	{
+		return $this->version()[0] === "3";
 	}
 
 	// Get the user's home directory.
@@ -51,7 +73,7 @@ class OhAlfred {
 	public function cache() {
 		if($this->cache == null) {
 			if(isset($_ENV['alfred_workflow_data'])) {
-				$this->cache = $_ENV['alfred_workflow_cache'];
+				$this->cache = $_ENV['alfred_workflow_cache'] . "/";
 			} else {
 				$this->cache = $this->home() . "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/" . $this->name() . "/";
 			}
@@ -68,7 +90,7 @@ class OhAlfred {
 	public function storage() {
 		if($this->storage == null) {
 			if(isset($_ENV['alfred_workflow_data'])) {
-				$this->storage = $_ENV['alfred_workflow_data'];
+				$this->storage = $_ENV['alfred_workflow_data'] . "/";
 			} else {
 				$this->storage = $this->home() . "/Library/Application Support/Alfred 2/Workflow Data/" . $this->name() . "/";
 			}
@@ -135,9 +157,49 @@ class OhAlfred {
 		if($r == null)
 			$r = $this->results;
 
-		print "<?xml version='1.0'?>\r\n<items>";
+		$output = "";
+		if($this->isAlfred3()) {
+			$output = $this->jsonify($r);
+		} else {
+			$output = $this->xmlify($r);
+		}
 
-		foreach($r as $result) {
+		print $output;
+	}
+
+	protected function jsonify($results) {
+		$output = array('items' => []);
+
+		foreach ($results as $result) {
+			$item = $result;
+
+			// Meantime checks
+			if(isset($item['icon']) && is_string($item['icon'])) {
+				$icon = array('path' => $item['icon']);
+				$item['icon'] = $icon;
+				throw new StatefulException("Expected array for icon, not string");
+			}
+
+			if(isset($item['valid']) && is_string($item['valid'])) {
+				$item['valid'] = $item['valid'] === 'yes';
+				throw new StatefulException("Expected boolean for validity, not string");
+			}
+
+			if(isset($item['copy']) && is_string($item['copy'])) {
+				$item['text'] = array('copy' => $item['copy']);
+				// TODO purge the copy tag!
+			}
+
+			$output['items'][] = $item;
+		}
+
+		return json_encode($output);
+	}
+
+	protected function xmlify($results) {
+		$output = "<?xml version='1.0'?>\r\n<items>";
+
+		foreach($results as $result) {
 			if(!isset($result['arg']))
 				$result['arg'] = 'null';
 
@@ -147,8 +209,17 @@ class OhAlfred {
 			if(!isset($result['icon']))
 				$result['icon'] = 'icon.png';
 
+			if(!is_string($result['icon'])) {
+				$icon = $result['icon']['path'];
+				$result['icon'] = $icon;
+			}
+
 			if(!isset($result['valid']))
 				$result['valid'] = 'yes';
+
+			if(!is_string($result['valid'])) {
+				$result['valid'] = ($result['valid']) ? 'yes' : 'no';
+			}
 
 			if(!isset($result['uid']))
 				$result['uid'] = time() . "-" . $result['title'];
@@ -159,21 +230,22 @@ class OhAlfred {
 			if(!isset($result['subtitle']))
 				$result['subtitle'] = '';
 
-			print "\r\n\r\n";
-			print "	<item uid='" . $this->escapeQuery($result['uid']) . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
-			print "		<arg>" . $result['arg'] . "</arg>\r\n";
-			print "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
-			print "		<subtitle>" . $this->escapeQuery($result['subtitle']) . "</subtitle>\r\n";
-			print "		<icon>" . $this->escapeQuery($result['icon']) . "</icon>\r\n";
+			$output .= "\r\n\r\n";
+			$output .= "	<item uid='" . $this->escapeQuery($result['uid']) . "' valid='" . $this->escapeQuery($result['valid']) . "' autocomplete='" . $this->escapeQuery($result['autocomplete']) . "'>\r\n";
+			$output .= "		<arg>" . $result['arg'] . "</arg>\r\n";
+			$output .= "		<title>" . $this->escapeQuery($result['title']) . "</title>\r\n";
+			$output .= "		<subtitle>" . $this->escapeQuery($result['subtitle']) . "</subtitle>\r\n";
+			$output .= "		<icon>" . $this->escapeQuery($result['icon']) . "</icon>\r\n";
 
 			if(isset($result['copy'])) {
-				print "		<text type='copy'>" . $this->escapeQuery($result['copy']) . "</text>\r\n";
+				$output .= "		<text type='copy'>" . $this->escapeQuery($result['copy']) . "</text>\r\n";
 			}
 
-			print "	</item>\r\n";
+			$output .= "	</item>\r\n";
 		}
 
-		print "</items>";
+		$output .= "</items>";
+		return $output;
 	}
 
 	// Replace some symbols that confuse Alfred.
@@ -185,18 +257,18 @@ class OhAlfred {
 	}
 
 	// Change an exception into Alfred-displayable XML.
-	public function exceptionify($error) {
+	public function exceptionify($error, $should_die = true) {
 		if(method_exists($error, 'getState')) {
 			$state = array_merge($error->getState(), $error->getTrace());
 		} else {
 			$state = $error->getTrace();
 		}
 
-		$this->errorify(get_class($error), $error->getMessage(), $error->getFile(), $error->getLine(), $state);
+		$this->errorify(get_class($error), $error->getMessage(), $error->getFile(), $error->getLine(), $state, $should_die);
 	}
 
 	// Change an error into Alfred-displayable XML
-	public function errorify($number, $message, $file, $line, $context) {
+	public function errorify($number, $message, $file, $line, $context, $should_die = true) {
 		$titles = array('Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!');
 
 		$fdir = $this->loggifyError($number, $message, $file, $line, $context);
@@ -205,27 +277,30 @@ class OhAlfred {
 			array(
 				'title' => $titles[array_rand($titles)],
 				'subtitle' => "Something went haywire. You can continue using Spotifious.",
-				'valid' => "no",
-				'icon' => 'include/images/error.png'
+				'valid' => false,
+				'icon' => array('path' => 'include/images/error.png')
 			),
 
 			array(
 				'title' => $message,
 				'subtitle' => "Line " . $line . ", " . $file,
-				'valid' => "no",
-				'icon' => 'include/images/info.png'
+				'valid' => false,
+				'icon' => array('path' => 'include/images/info.png')
 			),
 
 			array(
 				'title' => "View log",
 				'subtitle' => "Open new Finder window with .log file.",
-				'icon' => 'include/images/folder.png',
+				'icon' => array('path' => 'include/images/folder.png'),
 				'arg' => $fdir
 			)
 		);
 
 		$this->alfredify($results);
-		die();
+
+		if($should_die) {
+			die();
+		}
 	}
 
 	// Write a log file of an error.

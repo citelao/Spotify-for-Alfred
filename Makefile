@@ -1,4 +1,4 @@
-.PHONY = all init clean build
+.PHONY = all init clean build.intermediates build.images build
 
 all: clean build
 
@@ -7,7 +7,15 @@ init:
 
 clean:
 	-rm -r dist/
+	-rm -r build/
 
-build:
+build.intermediates:
+	mkdir build/
+	@echo "TODO BUILD IN BUILD DIRECTORY"
+
+build.images:
+	@echo "TODO COMPILE IMAGES"
+
+build: build.intermediates build.images
 	mkdir dist/
-	zip -x '*.git*' '*include/images/psd*' '*.psd' -r dist/Spotifious.alfredworkflow ./
+	zip -q -x '*.git*' '*include/images/psd*' '*include/screenshots*' '*.psd' -r dist/Spotifious.alfredworkflow ./
