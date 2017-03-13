@@ -51,7 +51,6 @@ class DetailAlbum {
 	public function output() {
 		$results = array();
 
-
 		foreach ($this->tracks as $key => $current) {
 			$explicit = $current['explicit'] ? " (explicit)" : "";
 

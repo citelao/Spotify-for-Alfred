@@ -43,6 +43,12 @@ class OhAlfred {
 		return $this->version;
 	}
 
+	// Helper for Alfred 3
+	public function isAlfred3()
+	{
+		return $this->version()[0] === "3";
+	}
+
 	// Get the user's home directory.
 	public function home()
 	{
@@ -150,9 +156,31 @@ class OhAlfred {
 		if($r == null)
 			$r = $this->results;
 
+		$output = "";
+		if($this->isAlfred3()) {
+			$output = $this->jsonify($r);
+		} else {
+			$output = $this->xmlify($r);
+		}
+
+		print $output;
+	}
+
+	protected function jsonify($results) {
+		$output = array('items' => []);
+
+		foreach ($results as $result) {
+			$item = $result;
+			$output['items'][] = $item;
+		}
+
+		return json_encode($output);
+	}
+
+	protected function xmlify($results) {
 		$output = "<?xml version='1.0'?>\r\n<items>";
 
-		foreach($r as $result) {
+		foreach($results as $result) {
 			if(!isset($result['arg']))
 				$result['arg'] = 'null';
 
@@ -161,6 +189,11 @@ class OhAlfred {
 
 			if(!isset($result['icon']))
 				$result['icon'] = 'icon.png';
+
+			if(!is_string($result['icon'])) {
+				$icon = $result['icon']['path'];
+				$result['icon'] = $icon;
+			}
 
 			if(!isset($result['valid']))
 				$result['valid'] = 'yes';
@@ -189,8 +222,7 @@ class OhAlfred {
 		}
 
 		$output .= "</items>";
-
-		print $output;
+		return $output;
 	}
 
 	// Replace some symbols that confuse Alfred.
