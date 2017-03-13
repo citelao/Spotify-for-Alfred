@@ -32,7 +32,7 @@ class Control implements Menu {
 		)
 	);
 
-	public function __construct($query) {
+	public function __construct($query, $alfred=null, $api=null) {
 		$this->query = $query;
 		$this->search = mb_substr($query, 1);
 	}
@@ -47,15 +47,15 @@ class Control implements Menu {
 			$results[] = array(
 				'title' => $command['name'],
 				'arg' => $command['action'],
-				'icon' => $command['icon']
+				'icon' => array('path' => $command['icon'])
 			);
 		}
 
 		$results[] = array(
 			'title' => 'Controls',
 			'subtitle' => 'Access this menu at any time by typing `c`',
-			'icon' => 'include/images/info.png',
-			'valid' => 'no',
+			'icon' => array('path' => 'include/images/info.png'),
+			'valid' => false,
 			'autocomplete' => $this->query
 		);
 

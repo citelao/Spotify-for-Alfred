@@ -3,9 +3,8 @@ namespace Spotifious\Menus;
 
 use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\OhAlfred;
-use Spotifious\Menus\Menu;
 
-class DetailAlbum implements Menu {
+class DetailAlbum {
 	protected $alfred;
 
 	protected $currentURI;
@@ -17,8 +16,8 @@ class DetailAlbum implements Menu {
 	protected $type;
 	protected $tracks;
 
-	public function __construct($options) {
-		$this->alfred = new OhAlfred();
+	public function __construct($options, $alfred, $api) {
+		$this->alfred = $alfred;
 		$locale = $this->alfred->options('country');
 
 		$this->currentURI = $options['currentURI'];
@@ -26,21 +25,18 @@ class DetailAlbum implements Menu {
 		$this->originalQuery = $options['originalQuery'];
 		$this->search = $options['search'];
 
-		$artistFetcher = new JsonFetcher("https://api.spotify.com/v1/albums/{$options['id']}");
-		$artistJson = $artistFetcher->run();
-
-		$this->name = $artistJson->name;
-		$this->type = $artistJson->type;
-
-		$url = "https://api.spotify.com/v1/albums/{$options['id']}/tracks";
-		if($locale != 'not-given') {
-			$url .= "?market=$locale";
+		if($api) {
+			$artistFetcher = new JsonFetcher("https://api.spotify.com/v1/albums/{$options['id']}");
+			$json = $artistFetcher->run();
+		} else {
+			$json = $api->getAlbum($options['id']);
 		}
-		$tracksFetcher = new JsonFetcher($url);
-		$tracksJson = $tracksFetcher->run();
+		
+		$this->name = $json->name;
+		$this->type = $json->type;
 
 		$this->tracks = array();
-		foreach ($tracksJson->items as $key => $value) {
+		foreach ($json->tracks->items as $key => $value) {
 			$this->tracks[] = array(
 				'uri' => $value->uri,
 				'name' => $value->name,
@@ -55,17 +51,16 @@ class DetailAlbum implements Menu {
 	public function output() {
 		$results = array();
 
-
 		foreach ($this->tracks as $key => $current) {
 			$explicit = $current['explicit'] ? " (explicit)" : "";
 
 			$currentResult = array(
 				'title' => "{$current['number']}. {$current['name']}",
 				'subtitle' => $this->prettifyTime($current['duration']) . $explicit,
-				'valid' => 'yes',
+				'valid' => true,
 				'arg' => "spotify⟩play track \"{$current['uri']}\" in context \"{$this->currentURI}\"",
 				'copy' => $current['uri'],
-				'icon' => "include/images/track.png"
+				'icon' => array('path' => "include/images/track.png")
 			);
 
 			if($this->search != '' && !mb_stristr($currentResult['title'], $this->search))
@@ -79,7 +74,7 @@ class DetailAlbum implements Menu {
 		$scope['arg'] = "spotify⟩activate (open location \"{$this->currentURI}\")";
 		$scope['autocomplete'] = $this->originalQuery;
 		$scope['copy'] = $this->currentURI;
-		$scope['icon'] = "include/images/{$this->type}.png";
+		$scope['icon'] = array('path' => "include/images/{$this->type}.png");
 
 		if ($this->search == null) {
 			array_unshift($results, $scope);
@@ -96,6 +91,10 @@ class DetailAlbum implements Menu {
 		$seconds = $secondsForm % 60;
 		$minutes = floor($secondsForm / 60);
 
-		return $minutes . ":" . $seconds;
+		$seconds_string = ($seconds < 10)
+			? "0" . $seconds
+			: $seconds;
+
+		return $minutes . ":" . $seconds_string;
 	}
 }

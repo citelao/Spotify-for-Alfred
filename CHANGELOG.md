@@ -1,11 +1,17 @@
 # Changelog #
 
 ## v0.13.2 #
+- Added: Use JSON output when possible
+- Added: Exceptions appear in debugger for actions
+- Changed: Search uses API with auth
+- Changed: Album pages use API with auth
+- Changed: Album pages load faster
 - Changed: Info loads much faster (but may break in edge cases)
 - Changed: Popularity boxes look pretty now (thanks, danielma!)
 - Fixed: Single-digit seconds are now prefixed with a 0.
 - Fixed: Add Homebrew to path if needed (thanks, mieubrisse!)
 - Fixed: Setup in Alfred 3 works
+- Fixed: The UK shows up at the top of country selection
 
 ## v0.13.1 ##
 - Fixed: Alfred 3 compatibility
