@@ -58,7 +58,7 @@ class DetailArtist {
 			$currentResult = array(
 				'title' => $current['name'],
 				'subtitle' => "Browse this {$current['type']}",
-				'valid' => 'no',
+				'valid' => false,
 				'autocomplete' => "{$this->currentURI} ⟩ {$current['uri']} ⟩ {$this->query} ⟩{$this->search}⟩",
 				'copy' => $this->currentURI,
 				'icon' => array('path' => "include/images/album.png")

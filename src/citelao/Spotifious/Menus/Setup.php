@@ -30,7 +30,7 @@ class Setup implements Menu {
 			'title' => 'Welcome to Spotifious!',
 			'subtitle' => 'You need to configure a few more things before you can use Spotifious.',
 			'icon' => array('path' => 'include/images/configuration.png'),
-			'valid' => 'no'
+			'valid' => false
 		);
 
 		$results[] = array(
@@ -38,7 +38,7 @@ class Setup implements Menu {
 			'subtitle' => 'Choosing the correct country code makes sure you can play songs you select.',
 			'icon' => array('path' => $this->countryCodeConfigured ? 'include/images/checked.png' : 'include/images/unchecked.png'),
 			'autocomplete' => 'Country Code ⟩',
-			'valid' => 'no'
+			'valid' => false
 		);
 
 		$results[] = array(
@@ -54,7 +54,7 @@ class Setup implements Menu {
 				'subtitle' => "We've added new features to Spotifious, but you need to login to your Spotify app again.",
 				'icon' => array('path' => $this->applicationCreated ? $this->applicationLinked ? 'include/images/checked.png' : 'include/images/unchecked.png' : 'include/images/disabled.png'),
 				'arg' => 'applink⟩',
-				'valid' => $this->applicationCreated ? 'yes' : 'no'
+				'valid' => $this->applicationCreated ? true : false
 			);
 
 		} else {
@@ -63,7 +63,7 @@ class Setup implements Menu {
 				'subtitle' => 'Connect your Spotify application to Spotifious to search your playlists.',
 				'icon' => array('path' => $this->applicationCreated ? $this->applicationLinked ? 'include/images/checked.png' : 'include/images/unchecked.png' : 'include/images/disabled.png'),
 				'arg' => 'applink⟩',
-				'valid' => $this->applicationCreated ? 'yes' : 'no'
+				'valid' => $this->applicationCreated ? true : false
 			);
 		}
 
@@ -71,7 +71,7 @@ class Setup implements Menu {
 			'title' => 'You can access settings easily.',
 			'subtitle' => 'Type `s` from the main menu.',
 			'icon' => array('path' => 'include/images/info.png'),
-			'valid' => 'no'
+			'valid' => false
 		);
 
 		return $results;

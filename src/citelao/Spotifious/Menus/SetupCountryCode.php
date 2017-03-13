@@ -56,7 +56,7 @@ class SetupCountryCode implements Menu {
 				'title' => 'Could not find country',
 				'subtitle' => 'We are looking for a country called "' . $this->search . '"',
 				'autocomplete' => 'Country Code ⟩',
-				'valid' => 'no'
+				'valid' => false
 			);
 		} else {
 			usort($results, array($this,'countrySort'));

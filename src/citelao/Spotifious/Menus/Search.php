@@ -127,11 +127,11 @@ class Search implements Menu {
 				}
 
 				if ($current['type'] == 'track') {
-					$valid = 'yes';
+					$valid = true;
 					$arg = "spotify⟩play track \"{$current['uri']}\"";
 					$autocomplete = '';
 				} else {
-					$valid = 'no';
+					$valid = false;
 					$arg = '';
 					$autocomplete = "{$current['uri']} ⟩ {$this->query} ⟩";
 				}

@@ -57,7 +57,7 @@ class DetailAlbum {
 			$currentResult = array(
 				'title' => "{$current['number']}. {$current['name']}",
 				'subtitle' => $this->prettifyTime($current['duration']) . $explicit,
-				'valid' => 'yes',
+				'valid' => true,
 				'arg' => "spotify⟩play track \"{$current['uri']}\" in context \"{$this->currentURI}\"",
 				'copy' => $current['uri'],
 				'icon' => array('path' => "include/images/track.png")

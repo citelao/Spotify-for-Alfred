@@ -55,7 +55,7 @@ class Control implements Menu {
 			'title' => 'Controls',
 			'subtitle' => 'Access this menu at any time by typing `c`',
 			'icon' => array('path' => 'include/images/info.png'),
-			'valid' => 'no',
+			'valid' => false,
 			'autocomplete' => $this->query
 		);
 
