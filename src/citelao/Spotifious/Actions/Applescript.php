@@ -24,6 +24,6 @@ class Applescript implements IAction {
 	}
 
 	public function run() {
-		$action->run();
+		$this->action->run();
 	}
 }

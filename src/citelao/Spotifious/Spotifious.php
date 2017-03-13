@@ -169,7 +169,7 @@ class Spotifious {
 		if($action[0] == "{") {
 			$json = JsonParser::parse($action);
 			$options = (isset($json->options)) 
-				? $options
+				? $json->options
 				: new \stdClass();
 
 			$action = null;
