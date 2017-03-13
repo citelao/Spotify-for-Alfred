@@ -30,6 +30,17 @@ class Main implements Menu {
 			'copy' => $this->currentURL,
 			'icon' => array(
 				'path' => $this->currentStatus
+			),
+			'mods' => array(
+				'alt' => array(
+					'subtitle' => "Browse to artist ($this->currentArtist)..."
+				),
+				'ctrl' => array(
+					'subtitle' => "Browse to album ($this->currentAlbum)..."
+				),
+				'cmd' => array(
+					'subtitle' => 'Queue this song'
+				),
 			)
 		);
 		
@@ -41,6 +52,14 @@ class Main implements Menu {
 			'valid' => false,
 			'icon'  => array(
 				'path' => 'include/images/album.png'
+			),
+			'mods' => array(
+				'alt' => array(
+					'subtitle' => "Browse to artist ($this->currentArtist)..."
+				),
+				'cmd' => array(
+					'subtitle' => 'Queue this album'
+				),
 			)
 		);
 		
@@ -53,10 +72,29 @@ class Main implements Menu {
 			'icon'  => array('path' => 'include/images/artist.png')
 		);
 		
-		$results[3]['title']        = "Search for music...";
-		$results[3]['subtitle']     = "Begin typing to search";
-		$results[3]['valid']        = false;
-		$results[3]['icon']         = array('path' => "include/images/search.png");
+		$results[3] = array(
+			'title' => "Search for music...",
+			'subtitle' => "Begin typing to search",
+			'valid' => false,
+			'icon' => array('path' => "include/images/search.png"),
+			'mods' => array(
+				'ctrl' => array(
+					'valid' => true,
+					'subtitle' => 'Open controls...',
+					'arg' => 'c'
+				),
+				'cmd' => array(
+					'valid' => true,
+					'subtitle' => 'Open settings...',
+					'arg' => 's'
+				),
+				'shift' => array(
+					'valid' => true,
+					'subtitle' => 'Activate Spotify',
+					'arg' => '{"action": "applescript"}'
+				)
+			)
+		);
 
 		// Overrides for no track
 		if($this->currentTrack == "No track playing") {

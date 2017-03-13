@@ -8,6 +8,7 @@ use OhAlfred\OhAlfred;
 use OhAlfred\Applescript\ApplicationApplescript;
 use OhAlfred\Command\Timeout;
 use OhAlfred\Exceptions\StatefulException;
+use OhAlfred\HTTP\JsonParser;
 
 use Spotifious\Menus\Control;
 use Spotifious\Menus\Detail;
@@ -20,8 +21,8 @@ use Spotifious\Menus\SetupCountryCode;
 class Spotifious {
 	protected $alfred;
 
-	public function __construct() {
-		$this->alfred = new OhAlfred();
+	public function __construct($alfred) {
+		$this->alfred = $alfred;
 	}
 
 	public function run($query) {
@@ -157,6 +158,17 @@ class Spotifious {
 		// if expired
 			// attempt refresh
 			// if failed, prompt for relogin
+
+		// Handle JSON if given
+		if($action[0] == "{") {
+			$json = JsonParser::parse($action);
+			// if($json->action == "applescript") {
+				
+			// } else {
+				throw new StatefulException("Could not process command", array('json' => $json));
+			// }
+			return;
+		}
 
 		if($this->contains($action, '⟩')) {
 			$splitAction = explode('⟩', $action);

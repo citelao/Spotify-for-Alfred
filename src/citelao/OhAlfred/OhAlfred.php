@@ -18,7 +18,6 @@ class OhAlfred {
 
 	// Set the exception handlers
 	public function __construct() {
-		set_exception_handler(array($this, 'exceptionify'));
 		set_error_handler(array($this, 'errorify'), E_ALL);
 	}
 
@@ -175,7 +174,9 @@ class OhAlfred {
 			$item = $result;
 
 			// Meantime checks
-			if(isset($item['valid']) && is_string($item['icon'])) {
+			if(isset($item['icon']) && is_string($item['icon'])) {
+				$icon = array('path' => $item['icon']);
+				$item['icon'] = $icon;
 				throw new StatefulException("Expected array for icon, not string");
 			}
 
@@ -251,18 +252,18 @@ class OhAlfred {
 	}
 
 	// Change an exception into Alfred-displayable XML.
-	public function exceptionify($error) {
+	public function exceptionify($error, $should_die = true) {
 		if(method_exists($error, 'getState')) {
 			$state = array_merge($error->getState(), $error->getTrace());
 		} else {
 			$state = $error->getTrace();
 		}
 
-		$this->errorify(get_class($error), $error->getMessage(), $error->getFile(), $error->getLine(), $state);
+		$this->errorify(get_class($error), $error->getMessage(), $error->getFile(), $error->getLine(), $state, $should_die);
 	}
 
 	// Change an error into Alfred-displayable XML
-	public function errorify($number, $message, $file, $line, $context) {
+	public function errorify($number, $message, $file, $line, $context, $should_die = true) {
 		$titles = array('Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!');
 
 		$fdir = $this->loggifyError($number, $message, $file, $line, $context);
@@ -291,7 +292,10 @@ class OhAlfred {
 		);
 
 		$this->alfredify($results);
-		die();
+
+		if($should_die) {
+			die();
+		}
 	}
 
 	// Write a log file of an error.
