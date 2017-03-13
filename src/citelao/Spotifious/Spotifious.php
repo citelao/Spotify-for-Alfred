@@ -10,6 +10,8 @@ use OhAlfred\Command\Timeout;
 use OhAlfred\Exceptions\StatefulException;
 use OhAlfred\HTTP\JsonParser;
 
+use Spotifious\Actions\Applescript;
+
 use Spotifious\Menus\Control;
 use Spotifious\Menus\Detail;
 use Spotifious\Menus\Main;
@@ -153,6 +155,10 @@ class Spotifious {
 	}
 
 	public function process($action) {
+		$api = null;
+		if(!$this->optedOut()) {
+			$api = $this->getSpotifyApi();
+		}
 		// TODO refresh token
 		// this is identical code to run()
 		// if expired
@@ -162,11 +168,17 @@ class Spotifious {
 		// Handle JSON if given
 		if($action[0] == "{") {
 			$json = JsonParser::parse($action);
-			// if($json->action == "applescript") {
-				
-			// } else {
+			$options = (isset($json->options)) 
+				? $options
+				: new \stdClass();
+
+			$action = null;
+			if($json->action == "applescript") {
+				$action = new Applescript($options, $this->alfred, $api);
+			} else {
 				throw new StatefulException("Could not process command", array('json' => $json));
-			// }
+			}
+			$action->run();
 			return;
 		}
 

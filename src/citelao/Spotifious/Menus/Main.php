@@ -91,7 +91,7 @@ class Main implements Menu {
 				'shift' => array(
 					'valid' => true,
 					'subtitle' => 'Activate Spotify',
-					'arg' => '{"action": "applescript"}'
+					'arg' => '{"action": "applescript", "options": { "command": "tell application \\\"Spotify\\\" to activate" }}'
 				)
 			)
 		);

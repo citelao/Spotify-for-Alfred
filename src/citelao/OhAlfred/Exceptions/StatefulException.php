@@ -7,15 +7,11 @@ class StatefulException extends \Exception implements IStatefulException {
 	protected $throwState;
 
 	// List of things that should never be written to debug files.
-	protected $forbidden = array("_POST", "_SERVER", "_GET", "_FILES", "_COOKIE");
+	protected $forbidden = array("_POST", "_SERVER", "_GET", "_FILES", "_COOKIE", "api");
 
-	function __construct($message, $vars = '')   {
-		if($vars == '') {
-	        $this->throwState = get_defined_vars();
-	    } else {
-	    	$vars = array_diff_key($vars, array_flip($this->forbidden)); // Take out all private things.
-	    	$this->throwState = $vars;
-	    }
+	function __construct($message, $vars = [])   {
+	    $all_vars = array_merge(get_defined_vars(), $vars);
+	    $this->throwState = array_diff_key($all_vars, array_flip($this->forbidden)); // Take out all private things.
 
 	    parent::__construct($message);
 	}
