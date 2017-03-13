@@ -16,7 +16,7 @@ class DetailAlbum {
 	protected $type;
 	protected $tracks;
 
-	public function __construct($options, $alfred) {
+	public function __construct($options, $alfred, $api) {
 		$this->alfred = $alfred;
 		$locale = $this->alfred->options('country');
 
@@ -25,21 +25,18 @@ class DetailAlbum {
 		$this->originalQuery = $options['originalQuery'];
 		$this->search = $options['search'];
 
-		$artistFetcher = new JsonFetcher("https://api.spotify.com/v1/albums/{$options['id']}");
-		$artistJson = $artistFetcher->run();
-
-		$this->name = $artistJson->name;
-		$this->type = $artistJson->type;
-
-		$url = "https://api.spotify.com/v1/albums/{$options['id']}/tracks";
-		if($locale != 'not-given') {
-			$url .= "?market=$locale";
+		if($api) {
+			$artistFetcher = new JsonFetcher("https://api.spotify.com/v1/albums/{$options['id']}");
+			$json = $artistFetcher->run();
+		} else {
+			$json = $api->getAlbum($options['id']);
 		}
-		$tracksFetcher = new JsonFetcher($url);
-		$tracksJson = $tracksFetcher->run();
+		
+		$this->name = $json->name;
+		$this->type = $json->type;
 
 		$this->tracks = array();
-		foreach ($tracksJson->items as $key => $value) {
+		foreach ($json->tracks->items as $key => $value) {
 			$this->tracks[] = array(
 				'uri' => $value->uri,
 				'name' => $value->name,
@@ -95,6 +92,10 @@ class DetailAlbum {
 		$seconds = $secondsForm % 60;
 		$minutes = floor($secondsForm / 60);
 
-		return $minutes . ":" . $seconds;
+		$seconds_string = ($seconds < 10)
+			? "0" . $seconds
+			: $seconds;
+
+		return $minutes . ":" . $seconds_string;
 	}
 }

@@ -8,7 +8,7 @@ use Spotifious\Menus\DetailAlbum;
 class Detail {
 	protected $submenu;
 
-	public function __construct($options, $alfred) {
+	public function __construct($options, $alfred, $api) {
 		$this->search = $options['search'];
 
 		$this->currentURI = $options['URIs'][$options['depth'] - 1];
@@ -24,9 +24,9 @@ class Detail {
 		);
 
 		if($this->type == "artist") {
-			$this->submenu = new DetailArtist($constructedOptions, $alfred);
+			$this->submenu = new DetailArtist($constructedOptions, $alfred, $api);
 		} else {
-			$this->submenu = new DetailAlbum($constructedOptions, $alfred);
+			$this->submenu = new DetailAlbum($constructedOptions, $alfred, $api);
 		}
 	}
 

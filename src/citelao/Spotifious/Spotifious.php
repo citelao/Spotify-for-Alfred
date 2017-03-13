@@ -122,7 +122,7 @@ class Spotifious {
 			);
 
 			if (mb_substr($query, -1) == "⟩") { // Machine-generated
-				$menu = new Detail($options, $this->alfred);
+				$menu = new Detail($options, $this->alfred, $api);
 				return $menu->output();
 
 			} elseif($depth > 0) {
@@ -130,7 +130,7 @@ class Spotifious {
 				$options['search'] = $search;
 				$options['args'] = $args;
 
-				$menu = new Detail($options, $this->alfred);
+				$menu = new Detail($options, $this->alfred, $api);
 				return $menu->output();
 
 			} else {

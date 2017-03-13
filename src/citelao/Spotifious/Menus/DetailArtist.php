@@ -17,7 +17,7 @@ class DetailArtist {
 	protected $type;
 	protected $albums;
 
-	public function __construct($options, $alfred) {
+	public function __construct($options, $alfred, $api) {
 		$this->alfred = $alfred;
 		$locale = $this->alfred->options('country');
 
