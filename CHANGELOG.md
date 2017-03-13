@@ -8,7 +8,8 @@
 - Changed: Album pages load faster
 - Changed: Info loads much faster (but may break in edge cases)
 - Changed: Popularity boxes look pretty now (thanks, danielma!)
-- Fixed: Single-digit seconds are now prefixed with a 0.
+- Changed: Build size is much smaller
+- Fixed: Single-digit seconds are now prefixed with a 0
 - Fixed: Add Homebrew to path if needed (thanks, mieubrisse!)
 - Fixed: Setup in Alfred 3 works
 - Fixed: The UK shows up at the top of country selection
