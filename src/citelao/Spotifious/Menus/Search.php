@@ -143,7 +143,7 @@ class Search implements Menu {
 				$currentResult['arg'] = $arg;
 				$currentResult['autocomplete'] = $autocomplete;
 				$currentResult['copy'] = $current['uri'];
-				$currentResult['icon'] = "include/images/{$current['type']}.png";
+				$currentResult['icon'] = array('path' => "include/images/{$current['type']}.png");
 
 				$results[] = $currentResult;
 			}
@@ -155,7 +155,7 @@ class Search implements Menu {
 			'subtitle' => "Continue this search in Spotify…",
 			'uid' => "bs-spotify-{$this->query}-more",
 			'arg' => "spotify⟩activate (open location \"spotify:search:{$this->query}\")",
-			'icon' => 'include/images/search.png'
+			'icon' => array('path' => 'include/images/search.png')
 		);
 
 		return $results;

@@ -60,7 +60,7 @@ class DetailAlbum {
 				'valid' => 'yes',
 				'arg' => "spotify⟩play track \"{$current['uri']}\" in context \"{$this->currentURI}\"",
 				'copy' => $current['uri'],
-				'icon' => "include/images/track.png"
+				'icon' => array('path' => "include/images/track.png")
 			);
 
 			if($this->search != '' && !mb_stristr($currentResult['title'], $this->search))
@@ -74,7 +74,7 @@ class DetailAlbum {
 		$scope['arg'] = "spotify⟩activate (open location \"{$this->currentURI}\")";
 		$scope['autocomplete'] = $this->originalQuery;
 		$scope['copy'] = $this->currentURI;
-		$scope['icon'] = "include/images/{$this->type}.png";
+		$scope['icon'] = array('path' => "include/images/{$this->type}.png");
 
 		if ($this->search == null) {
 			array_unshift($results, $scope);

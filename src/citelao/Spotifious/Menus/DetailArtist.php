@@ -61,7 +61,7 @@ class DetailArtist {
 				'valid' => 'no',
 				'autocomplete' => "{$this->currentURI} ⟩ {$current['uri']} ⟩ {$this->query} ⟩{$this->search}⟩",
 				'copy' => $this->currentURI,
-				'icon' => "include/images/album.png"
+				'icon' => array('path' => "include/images/album.png")
 			);
 
 			if($this->search != '' && !mb_stristr($currentResult['title'], $this->search))
@@ -75,7 +75,7 @@ class DetailArtist {
 		$scope['arg'] = "spotify⟩activate (open location \"{$this->currentURI}\")";
 		$scope['autocomplete'] = $this->originalQuery;
 		$scope['copy'] = $this->currentURI;
-		$scope['icon'] = "include/images/{$this->type}.png";
+		$scope['icon'] = array('path' => "include/images/{$this->type}.png");
 
 		if ($this->search == null) {
 			array_unshift($results, $scope);

@@ -1,6 +1,8 @@
 <?php
 namespace OhAlfred;
 
+use OhAlfred\Exceptions\StatefulException;
+
 /* see: https://github.com/jdfwarrior/Workflows/blob/master/workflows.php */
 class OhAlfred {
 	protected $results;
@@ -33,10 +35,10 @@ class OhAlfred {
 	public function version()
 	{
 		if($this->version == null) {
-			if($_ENV["alfred_version"]) {
-				$this->version = $_ENV["alfred_version"];
-			} else {
+			if(!isset($_ENV["alfred_version"])) {
 				$this->version = "2";
+			} else {
+				$this->version = $_ENV["alfred_version"];
 			}
 		}
 
@@ -171,6 +173,17 @@ class OhAlfred {
 
 		foreach ($results as $result) {
 			$item = $result;
+
+			// Meantime checks
+			if(isset($item['valid']) && is_string($item['icon'])) {
+				throw new StatefulException("Expected array for icon, not string");
+			}
+
+			if(isset($item['valid']) && is_string($item['valid'])) {
+				$item['valid'] = $item['valid'] === 'yes';
+				throw new StatefulException("Expected boolean for validity, not string");
+			}
+
 			$output['items'][] = $item;
 		}
 
@@ -197,6 +210,10 @@ class OhAlfred {
 
 			if(!isset($result['valid']))
 				$result['valid'] = 'yes';
+
+			if(!is_string($result['valid'])) {
+				$result['valid'] = ($result['valid']) ? 'yes' : 'no';
+			}
 
 			if(!isset($result['uid']))
 				$result['uid'] = time() . "-" . $result['title'];
@@ -254,21 +271,21 @@ class OhAlfred {
 			array(
 				'title' => $titles[array_rand($titles)],
 				'subtitle' => "Something went haywire. You can continue using Spotifious.",
-				'valid' => "no",
-				'icon' => 'include/images/error.png'
+				'valid' => false,
+				'icon' => array('path' => 'include/images/error.png')
 			),
 
 			array(
 				'title' => $message,
 				'subtitle' => "Line " . $line . ", " . $file,
-				'valid' => "no",
-				'icon' => 'include/images/info.png'
+				'valid' => false,
+				'icon' => array('path' => 'include/images/info.png')
 			),
 
 			array(
 				'title' => "View log",
 				'subtitle' => "Open new Finder window with .log file.",
-				'icon' => 'include/images/folder.png',
+				'icon' => array('path' => 'include/images/folder.png'),
 				'arg' => $fdir
 			)
 		);

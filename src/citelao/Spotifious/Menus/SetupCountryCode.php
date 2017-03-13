@@ -45,7 +45,7 @@ class SetupCountryCode implements Menu {
 				'subtitle' => "Set your country to “{$country['code']}.”",
 				'arg' => 'country⟩' . $country['code'],
 				'autocomplete' => 'Country Code ⟩' . $country['name'],
-				'icon' => 'include/images/dash.png'
+				'icon' => array('path' => 'include/images/dash.png')
 			);
 
 			$results[] = $currentResult;
