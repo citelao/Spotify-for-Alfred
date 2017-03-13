@@ -8,13 +8,19 @@ use OhAlfred\OhAlfred;
 use Spotifious\Spotifious;
 require 'vendor/autoload.php';
 
-$spotifious = new Spotifious();
+$alfred = new OhAlfred();
+try{
+	$spotifious = new Spotifious($alfred);
 
-$action = $argv[1];
-$results = $spotifious->process($action);
+	$action = $argv[1];
+	$results = $spotifious->process($action);
 
-// For debugging
-// print_r($action);
-// print("\n");
+	// For debugging
+	// print_r($action);
+	// print("\n");
 
-print_r($results);
+	print_r($results);
+} catch(Exception $e) {
+	$alfred->exceptionify($e, false);
+	throw $e;
+}

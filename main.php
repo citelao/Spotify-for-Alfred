@@ -15,9 +15,15 @@ require 'vendor/autoload.php';
  **/
 
 $alfred = new OhAlfred();
-$spotifious = new Spotifious();
 
-$query = $argv[1];
-$results = $spotifious->run($query);
+set_exception_handler(array($alfred, 'exceptionify'));
+try {
+	$spotifious = new Spotifious($alfred);
 
-$alfred->alfredify($results);
+	$query = $argv[1];
+	$results = $spotifious->run($query);
+
+	$alfred->alfredify($results);
+} catch(Exception $e) {
+	$alfred->exceptionify($e);
+}

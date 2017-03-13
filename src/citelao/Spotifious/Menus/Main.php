@@ -12,7 +12,7 @@ class Main implements Menu {
 	protected $currentURL;
 	protected $currentStatus;
 
-	public function __construct($query) {
+	public function __construct($query, $alfred=null, $api=null) {
 		$current = $this->now();
 
 		$this->currentTrack             = $current[0];
@@ -23,30 +23,78 @@ class Main implements Menu {
 	}
 
 	public function output() {
-		$results[0]['title']        = "$this->currentTrack";
-		$results[0]['subtitle']     = "$this->currentAlbum by $this->currentArtist";
-		$results[0]['arg']          = "playpause⟩";
-		$results[0]['copy']			= $this->currentURL;
-		$results[0]['icon']         = $this->currentStatus;
+		$results[0] = array(
+			'title' => "$this->currentTrack",
+			'subtitle' => "$this->currentAlbum by $this->currentArtist",
+			'arg' => "playpause⟩",
+			'copy' => $this->currentURL,
+			'icon' => array(
+				'path' => $this->currentStatus
+			),
+			// 'mods' => array(
+			// 	'alt' => array(
+			// 		'subtitle' => "Browse to artist ($this->currentArtist)..."
+			// 	),
+			// 	'ctrl' => array(
+			// 		'subtitle' => "Browse to album ($this->currentAlbum)..."
+			// 	),
+			// 	'cmd' => array(
+			// 		'subtitle' => 'Queue this song'
+			// 	),
+			// )
+		);
 		
-		$results[1]['title']        = "$this->currentAlbum";
-		$results[1]['subtitle']     = "More from this album...";
-		$results[1]['autocomplete'] = "album:$this->currentAlbum"; // TODO change to albumdetail
-		$results[1]['copy'] 		= "$this->currentAlbum"; // TODO change to albumdetail
-		$results[1]['valid']        = "no";
-		$results[1]['icon']         = 'include/images/album.png';
+		$results[1] = array(
+			'title' => "$this->currentAlbum",
+			'subtitle' => "More from this album...",
+			'autocomplete' => "artist:$this->currentArtist album:$this->currentAlbum", // TODO change to albumdetail
+			'copy' 		=> "$this->currentAlbum", // TODO change to albumdetail
+			'valid' => false,
+			'icon'  => array(
+				'path' => 'include/images/album.png'
+			),
+			// 'mods' => array(
+			// 	'alt' => array(
+			// 		'subtitle' => "Browse to artist ($this->currentArtist)..."
+			// 	),
+			// 	'cmd' => array(
+			// 		'subtitle' => 'Queue this album'
+			// 	),
+			// )
+		);
 		
-		$results[2]['title']        = "$this->currentArtist";
-		$results[2]['subtitle']     = "More by this artist...";
-		$results[2]['autocomplete'] = "artist:$this->currentArtist"; // TODO change to artistdetail
-		$results[2]['copy']			= $this->currentArtist; // TODO change to artistdetail
-		$results[2]['valid']        = "no";
-		$results[2]['icon']         = 'include/images/artist.png';
+		$results[2] = array(
+			'title' => "$this->currentArtist",
+			'subtitle' => "More by this artist...",
+			'autocomplete' => "artist:$this->currentArtist", // TODO change to artistdetail
+			'copy' => $this->currentArtist, // TODO change to artistdetail
+			'valid' => false,
+			'icon'  => array('path' => 'include/images/artist.png')
+		);
 		
-		$results[3]['title']        = "Search for music...";
-		$results[3]['subtitle']     = "Begin typing to search";
-		$results[3]['valid']        = "no";
-		$results[3]['icon']         = "include/images/search.png";
+		$results[3] = array(
+			'title' => "Search for music...",
+			'subtitle' => "Begin typing to search",
+			'valid' => false,
+			'icon' => array('path' => "include/images/search.png"),
+			'mods' => array(
+				'ctrl' => array(
+					'valid' => true,
+					'subtitle' => 'Open controls...',
+					'arg' => '{"action": "spotifious", "options": { "command": "c" }}'
+				),
+				'cmd' => array(
+					'valid' => true,
+					'subtitle' => 'Open settings...',
+					'arg' => '{"action": "spotifious", "options": { "command": "s" }}'
+				),
+				'shift' => array(
+					'valid' => true,
+					'subtitle' => 'Activate Spotify',
+					'arg' => '{"action": "applescript", "options": { "application": "Spotify", "command": "activate" }}'
+				)
+			)
+		);
 
 		// Overrides for no track
 		if($this->currentTrack == "No track playing") {

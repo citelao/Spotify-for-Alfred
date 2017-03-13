@@ -5,7 +5,7 @@ use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\OhAlfred;
 use Spotifious\Menus\Menu;
 
-class DetailArtist implements Menu {
+class DetailArtist {
 	protected $alfred;
 
 	protected $currentURI;
@@ -17,8 +17,8 @@ class DetailArtist implements Menu {
 	protected $type;
 	protected $albums;
 
-	public function __construct($options) {
-		$this->alfred = new OhAlfred();
+	public function __construct($options, $alfred, $api) {
+		$this->alfred = $alfred;
 		$locale = $this->alfred->options('country');
 
 		$this->currentURI = $options['currentURI'];
@@ -58,10 +58,10 @@ class DetailArtist implements Menu {
 			$currentResult = array(
 				'title' => $current['name'],
 				'subtitle' => "Browse this {$current['type']}",
-				'valid' => 'no',
+				'valid' => false,
 				'autocomplete' => "{$this->currentURI} ⟩ {$current['uri']} ⟩ {$this->query} ⟩{$this->search}⟩",
 				'copy' => $this->currentURI,
-				'icon' => "include/images/album.png"
+				'icon' => array('path' => "include/images/album.png")
 			);
 
 			if($this->search != '' && !mb_stristr($currentResult['title'], $this->search))
@@ -75,7 +75,7 @@ class DetailArtist implements Menu {
 		$scope['arg'] = "spotify⟩activate (open location \"{$this->currentURI}\")";
 		$scope['autocomplete'] = $this->originalQuery;
 		$scope['copy'] = $this->currentURI;
-		$scope['icon'] = "include/images/{$this->type}.png";
+		$scope['icon'] = array('path' => "include/images/{$this->type}.png");
 
 		if ($this->search == null) {
 			array_unshift($results, $scope);

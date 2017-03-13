@@ -4,6 +4,7 @@ namespace Spotifious\Menus;
 use Spotifious\Menus\Menu;
 use Spotifious\Menus\Helper;
 use OhAlfred\HTTP\JsonFetcher;
+use OhAlfred\HTTP\JsonParser;
 use OhAlfred\Exceptions\StatefulException;
 use OhAlfred\OhAlfred;
 
@@ -12,21 +13,31 @@ class Search implements Menu {
 	protected $search;
 	protected $query;
 
-	public function __construct($query) {
+	public function __construct($query, $alfred, $api) {
 		$this->query = $query;
-		$this->alfred = new OhAlfred();
+		$this->alfred = $alfred;
 
 		$locale = $this->alfred->options('country');
 
-		/* Fetch and parse the search results. */
-		$urlQuery = str_replace("%3A", ":", urlencode($query));
-		$url = "https://api.spotify.com/v1/search?q=$urlQuery&type=artist,album,track";
-		if($locale != 'not-given') {
-			$url .= "&market=$locale";
+		// Use the API to fetch, if possible.
+		$json = "";
+		if($api) {
+			$options = array();
+			if($locale != 'not-given') {
+				$options['market'] = $locale;
+			}
+			$json = $api->search($query, ['artist', 'album', 'track'], $options);
+		} else {
+			/* Fetch and parse the search results. */
+			$urlQuery = urlencode($query);
+			$url = "https://api.spotify.com/v1/search?q=$urlQuery&type=artist,album,track";
+			if($locale != 'not-given') {
+				$url .= "&market=$locale";
+			}
+			
+			$fetcher = new JsonFetcher($url);
+			$json = $fetcher->run();
 		}
-		
-		$fetcher = new JsonFetcher($url);
-		$json = $fetcher->run();
 
 		// Albums do not include artist data.
 		// Grab all the album ids, and find their artists
@@ -37,11 +48,16 @@ class Search implements Menu {
 
 		if(sizeof($albumIDs) != 0)
 		{
-			$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
-			$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
-			
-			$albumFetcher = new JsonFetcher($url);
-			$albumsJson = $albumFetcher->run();
+			$albumsJson = null;
+			if($api) {
+				$albumsJson = $api->getAlbums($albumIDs);
+			} else {
+				$urlQuery = str_replace("%3A", ":", urlencode(join(',', $albumIDs)));
+				$url = "https://api.spotify.com/v1/albums?ids=$urlQuery";
+				
+				$albumFetcher = new JsonFetcher($url);
+				$albumsJson = $albumFetcher->run();
+			}
 
 			$albums = array();
 			foreach ($albumsJson->albums as $key => $value) {
@@ -111,11 +127,11 @@ class Search implements Menu {
 				}
 
 				if ($current['type'] == 'track') {
-					$valid = 'yes';
+					$valid = true;
 					$arg = "spotify⟩play track \"{$current['uri']}\"";
 					$autocomplete = '';
 				} else {
-					$valid = 'no';
+					$valid = false;
 					$arg = '';
 					$autocomplete = "{$current['uri']} ⟩ {$this->query} ⟩";
 				}
@@ -127,7 +143,7 @@ class Search implements Menu {
 				$currentResult['arg'] = $arg;
 				$currentResult['autocomplete'] = $autocomplete;
 				$currentResult['copy'] = $current['uri'];
-				$currentResult['icon'] = "include/images/{$current['type']}.png";
+				$currentResult['icon'] = array('path' => "include/images/{$current['type']}.png");
 
 				$results[] = $currentResult;
 			}
@@ -139,7 +155,7 @@ class Search implements Menu {
 			'subtitle' => "Continue this search in Spotify…",
 			'uid' => "bs-spotify-{$this->query}-more",
 			'arg' => "spotify⟩activate (open location \"spotify:search:{$this->query}\")",
-			'icon' => 'include/images/search.png'
+			'icon' => array('path' => 'include/images/search.png')
 		);
 
 		return $results;
