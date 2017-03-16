@@ -156,7 +156,7 @@ class Spotifious {
 
 	public function process($action) {
 		$api = null;
-		if(!$this->optedOut()) {
+		if($this->alfred->options('spotify_access_token') && !$this->optedOut()) {
 			$api = $this->getSpotifyApi();
 		}
 		// TODO refresh token
