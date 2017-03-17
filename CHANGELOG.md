@@ -1,5 +1,8 @@
 # Changelog #
 
+## v0.13.2.1 #
+- Fixed: Setup bug where Spotifious expects client ID before it exists
+
 ## v0.13.2 #
 - Added: Use JSON output when possible
 - Added: Exceptions appear in debugger for actions
