@@ -98,7 +98,8 @@ class Spotifious {
 					'uri' => $playlist->uri
 				);
 			}
-			// print_r($search_data);
+			$datetime = new \DateTime("now");
+			$this->alfred->options('playlists_cache_date', $datetime->format("@U"));
 			$this->alfred->options('playlists', $search_data);
 		}
 

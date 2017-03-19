@@ -113,11 +113,16 @@ class Search implements Menu {
 			$playlists = json_decode($playlists_json);
 
 			foreach ($playlists as $playlist) {
+				if(!@mb_stristr(mb_strtoupper($playlist->name), mb_strtoupper($query))) {
+					continue;
+				}
+
 				$this->search[] = array(
 					'type' => 'playlist',
 					'uri' => $playlist->uri,
 					'title' => $playlist->name,
-					'popularity' => 0
+					'author' => 'TODO',
+					'popularity' => 8
 				);
 			}
 		}
@@ -137,6 +142,8 @@ class Search implements Menu {
 					$subtitle = "$popularity Album by {$current['artist']}";
 				} elseif ($current['type'] == 'single') {
 					$subtitle = "$popularity Single by {$current['artist']}";
+				} elseif ($current['type'] == 'playlist') {
+					$subtitle = "Playlist by {$current['author']}";
 				} else {
 					$subtitle = "$popularity " . ucfirst($current['type']);
 				}

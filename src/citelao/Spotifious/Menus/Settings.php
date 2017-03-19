@@ -1,6 +1,7 @@
 <?php
 namespace Spotifious\Menus;
 
+use Spotifious\Menus\Helper;
 use Spotifious\Menus\Menu;
 use OhAlfred\OhAlfred;
 
@@ -8,6 +9,7 @@ class Settings implements Menu {
 	protected $alfred;
 
 	protected $trackNotificationsEnabled;
+	protected $playlists_cache_date;
 	protected $countryCode;
 	protected $optedOut;
 
@@ -15,6 +17,7 @@ class Settings implements Menu {
 		$this->alfred = $alfred;
 
 		$this->trackNotificationsEnabled = ($this->alfred->options('track_notifications') == 'true');
+		$this->playlists_cache_date = $this->alfred->options('playlists_cache_date');
 		$this->countryCode = $this->alfred->options('country');
 		$this->optedOut = ($this->alfred->options('spotify_app_opt_out') == 'true');
 	}
@@ -28,9 +31,17 @@ class Settings implements Menu {
 		);
 
 		$results[] = array(
-			'title' => 'Track Notifications',
+			'title' => 'Track notifications',
 			'subtitle' => "Check this if you'd like to enable track change notifications.",
 			'icon' => array('path' => $this->trackNotificationsEnabled ? 'include/images/checked.png' : 'include/images/unchecked.png'),
+			'arg' => 'togglenotifications⟩'
+		);
+
+		$last_update = Helper::human_ago($this->playlists_cache_date);
+		$results[] = array(
+			'title' => 'Update playlists cache',
+			'subtitle' => "Last updated $last_update. If your playlists are not appearing, try this.",
+			'icon' => array('path' => 'include/images/dash.png'),
 			'arg' => 'togglenotifications⟩'
 		);
 
