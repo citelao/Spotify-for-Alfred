@@ -51,7 +51,7 @@ class Setup implements Menu {
 		if($this->applicationPreviouslyLinked) {
 			$results[] = array(
 				'title' => '3. Relink your Spotify application',
-				'subtitle' => "We've added new features to Spotifious, but you need to login to your Spotify app again.",
+				'subtitle' => "We've added new features to Spotifious, but you need to login again to use them.",
 				'icon' => array('path' => $this->applicationCreated ? $this->applicationLinked ? 'include/images/checked.png' : 'include/images/unchecked.png' : 'include/images/disabled.png'),
 				'arg' => 'applink⟩',
 				'valid' => $this->applicationCreated ? true : false

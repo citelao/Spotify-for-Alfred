@@ -133,7 +133,15 @@ class OhAlfred {
 		// Uncache plist on write
 		unset($this->plists[$plist]);
 
-		return exec("defaults write '$plist' '$setting' '$value'");
+		if(!is_string($value)) {
+			$value = '"' . str_replace('"', '\"', str_replace('\"', '\\\"', json_encode($value))) . '"';
+		}
+
+		$escaped_plist = escapeshellarg($plist);
+		$escaped_setting = escapeshellarg($setting);
+		$escaped_value = escapeshellarg($value);
+		// print("defaults write $escaped_plist $escaped_setting $escaped_value");
+		return exec("defaults write $escaped_plist $escaped_setting $escaped_value");
 	}
 
 	// Read the workflow .plist file.

@@ -36,8 +36,9 @@ class Spotifious {
 			$this->alfred->options('track_notifications', 'true');
 		}
 
-		if($this->alfred->options('desired_scopes') != '') {
-			$this->alfred->options('desired_scopes', '');
+		$scopes = 'playlist-read-private';
+		if($this->alfred->options('desired_scopes') != $scopes) {
+			$this->alfred->options('desired_scopes', $scopes);
 		}
 
 		if($this->alfred->options('lookup_current_song') == '') {
@@ -85,6 +86,21 @@ class Spotifious {
 		// if expired
 			// attempt refresh
 			// if failed, prompt for relogin
+
+		// Fetch playlists on a first run...
+		if($api && $this->alfred->options('playlists') == '') {
+			$playlists = $api->getMyPlaylists();
+			$search_data = array();
+			foreach ($playlists->items as $playlist) {
+				$search_data[] = array(
+					'id' => $playlist->id,
+					'name' => $playlist->name,
+					'uri' => $playlist->uri
+				);
+			}
+			// print_r($search_data);
+			$this->alfred->options('playlists', $search_data);
+		}
 
 		if (mb_strlen($query) <= 3) {
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
@@ -336,9 +352,9 @@ class Spotifious {
 		if ($this->alfred->options('spotify_access_token_expires') < time()) {
 			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
 			$session->setRefreshToken($this->alfred->options('spotify_refresh_token'));
-			$session->refreshToken();
+			$session->refreshAccessToken();
 
-			$this->alfred->options('spotify_access_token_expires', time() + $session->getExpires());
+			$this->alfred->options('spotify_access_token_expires', time() + $session->getTokenExpiration());
 			$this->alfred->options('spotify_access_token', $session->getAccessToken());
 		}
 

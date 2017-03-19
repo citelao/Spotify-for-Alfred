@@ -107,6 +107,21 @@ class Search implements Menu {
 			}
 		}
 
+		// Add playlists to result
+		$playlists_json = $this->alfred->options('playlists');
+		if($playlists_json !== '') {
+			$playlists = json_decode($playlists_json);
+
+			foreach ($playlists as $playlist) {
+				$this->search[] = array(
+					'type' => 'playlist',
+					'uri' => $playlist->uri,
+					'title' => $playlist->name,
+					'popularity' => 0
+				);
+			}
+		}
+
 		if(!empty($this->search))
 			usort($this->search, array($this, 'popularitySort'));
 	}
@@ -127,6 +142,10 @@ class Search implements Menu {
 				}
 
 				if ($current['type'] == 'track') {
+					$valid = true;
+					$arg = "spotify⟩play track \"{$current['uri']}\"";
+					$autocomplete = '';
+				} else if($current['type'] == 'playlist') {
 					$valid = true;
 					$arg = "spotify⟩play track \"{$current['uri']}\"";
 					$autocomplete = '';
