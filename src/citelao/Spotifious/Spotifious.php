@@ -89,18 +89,7 @@ class Spotifious {
 
 		// Fetch playlists on a first run...
 		if($api && $this->alfred->options('playlists') == '') {
-			$playlists = $api->getMyPlaylists();
-			$search_data = array();
-			foreach ($playlists->items as $playlist) {
-				$search_data[] = array(
-					'id' => $playlist->id,
-					'name' => $playlist->name,
-					'uri' => $playlist->uri
-				);
-			}
-			$datetime = new \DateTime("now");
-			$this->alfred->options('playlists_cache_date', $datetime->format("@U"));
-			$this->alfred->options('playlists', $search_data);
+			$this->update_playlists_cache();
 		}
 
 		if (mb_strlen($query) <= 3) {
@@ -108,7 +97,7 @@ class Spotifious {
 				$menu = new Control($query);
 				return $menu->output();
 			} elseif(mb_strlen($query) > 0 && ($query[0] == "s" || $query[0] == "S")) {
-				$menu = new Settings($query, $this->alfred);
+				$menu = new Settings($query, $this->alfred, $api);
 				return $menu->output();
 			} else {
 				$menu = new Main($query);
@@ -239,6 +228,11 @@ class Spotifious {
 					$this->alfred->options('track_notifications', 'true');
 				}
 
+			} else if($command == 'update_playlists_cache') {
+				if($api) {
+					$this->update_playlists_cache($api);
+				}
+
 			} else if($command == 'next') {
 				$song = $this->respondingSpotifyQuery('next track');
 
@@ -366,5 +360,25 @@ class Spotifious {
 
 	protected function optedOut() {
 		return $this->alfred->options('spotify_app_opt_out') == 'true';
+	}
+
+	protected function update_playlists_cache($api) {
+		$playlists = $api->getMyPlaylists();
+		$search_data = array();
+		foreach ($playlists->items as $playlist) {
+			$search_data[] = array(
+				'id' => $playlist->id,
+				'name' => $playlist->name,
+				'uri' => $playlist->uri,
+				'owner' => (property_exists($playlist->owner, 'display_name'))
+					? $playlist->owner->display_name
+					: (property_exists($playlist->owner, 'id'))
+						? $playlist->owner->id
+						: "unkown"
+			);
+		}
+		$datetime = new \DateTime("now");
+		$this->alfred->options('playlists_cache_date', $datetime->format("@U"));
+		$this->alfred->options('playlists', $search_data);
 	}
 }

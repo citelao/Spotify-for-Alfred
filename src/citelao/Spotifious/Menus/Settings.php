@@ -7,14 +7,16 @@ use OhAlfred\OhAlfred;
 
 class Settings implements Menu {
 	protected $alfred;
+	protected $api;
 
 	protected $trackNotificationsEnabled;
 	protected $playlists_cache_date;
 	protected $countryCode;
 	protected $optedOut;
 
-	public function __construct($query, $alfred, $api=null) {
+	public function __construct($query, $alfred, $api) {
 		$this->alfred = $alfred;
+		$this->api = $api;
 
 		$this->trackNotificationsEnabled = ($this->alfred->options('track_notifications') == 'true');
 		$this->playlists_cache_date = $this->alfred->options('playlists_cache_date');
@@ -37,13 +39,15 @@ class Settings implements Menu {
 			'arg' => 'togglenotifications⟩'
 		);
 
-		$last_update = Helper::human_ago($this->playlists_cache_date);
-		$results[] = array(
-			'title' => 'Update playlists cache',
-			'subtitle' => "Last updated $last_update. If your playlists are not appearing, try this.",
-			'icon' => array('path' => 'include/images/dash.png'),
-			'arg' => 'togglenotifications⟩'
-		);
+		if($this->api) {
+			$last_update = Helper::human_ago($this->playlists_cache_date);
+			$results[] = array(
+				'title' => 'Update playlists cache',
+				'subtitle' => "Last updated $last_update. If your playlists are not appearing, try this.",
+				'icon' => array('path' => 'include/images/dash.png'),
+				'arg' => 'update_playlists_cache⟩'
+			);
+		}
 
 		$results[] = array(
 			'title' => 'Configure country code',

@@ -121,8 +121,8 @@ class Search implements Menu {
 					'type' => 'playlist',
 					'uri' => $playlist->uri,
 					'title' => $playlist->name,
-					'author' => 'TODO',
-					'popularity' => 8
+					'owner' => $playlist->owner,
+					'popularity' => 80
 				);
 			}
 		}
@@ -143,7 +143,7 @@ class Search implements Menu {
 				} elseif ($current['type'] == 'single') {
 					$subtitle = "$popularity Single by {$current['artist']}";
 				} elseif ($current['type'] == 'playlist') {
-					$subtitle = "Playlist by {$current['author']}";
+					$subtitle = "Playlist by {$current['owner']}";
 				} else {
 					$subtitle = "$popularity " . ucfirst($current['type']);
 				}
