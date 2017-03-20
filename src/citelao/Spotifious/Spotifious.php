@@ -346,10 +346,9 @@ class Spotifious {
 		// If the access token has expired :(
 		if ($this->alfred->options('spotify_access_token_expires') < time()) {
 			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
-			$session->setRefreshToken($this->alfred->options('spotify_refresh_token'));
-			$session->refreshAccessToken();
+			$session->refreshAccessToken($this->alfred->options('spotify_refresh_token'));
 
-			$this->alfred->options('spotify_access_token_expires', time() + $session->getTokenExpiration());
+			$this->alfred->options('spotify_access_token_expires', $session->getTokenExpiration());
 			$this->alfred->options('spotify_access_token', $session->getAccessToken());
 		}
 

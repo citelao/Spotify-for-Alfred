@@ -18,7 +18,7 @@ if($success) {
 	// Save the tokens
 	$alfred->options("spotify_access_token", $session->getAccessToken());
 	$alfred->options("spotify_refresh_token", $session->getRefreshToken());
-	$alfred->options("spotify_access_token_expires", time() + $session->getTokenExpiration());
+	$alfred->options("spotify_access_token_expires", $session->getTokenExpiration());
 
 	$alfred->options('registered_scopes', $alfred->options('desired_scopes'));
 }
