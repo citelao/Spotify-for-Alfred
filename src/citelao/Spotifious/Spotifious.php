@@ -281,6 +281,18 @@ class Spotifious {
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
 				$as->run();
+			} else if($command == 'respond') {
+				$song = $this->splitSpotifyResponse($splitAction[0]);
+
+				$icon = ($song['state'] == "playing") ? "▶" : "‖";
+				$this->alfred->notify(
+					$song['album'] . " — " . $song['artist'], 
+					$icon . " " . $song['title'], 
+					// $song['url'],
+					"",
+					"",
+					"",
+					$song['url']);
 			}
 
 			$v = $this->alfred->version()[0];
@@ -316,7 +328,11 @@ class Spotifious {
 		$as = new ApplicationApplescript("Spotify", $query . " \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
 		$result = $as->run();
 
-		$array = explode("✂", $result);
+		return $this->splitSpotifyResponse($resp);
+	}
+
+	protected function splitSpotifyResponse($resp) {
+		$array = explode("✂", $resp);
 		if($array[0] == "") {
 			$array[0] = "No track playing";
 			$array[1] = "No album";
@@ -344,7 +360,7 @@ class Spotifious {
 		$api = new SpotifyWebAPI();
 
 		// If the access token has expired :(
-		if ($this->alfred->options('spotify_access_token_expires') < time()) {
+		if ($this->alfred->options('spotify_access_token_expires') < time() + 60*60*3) {
 			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
 			$session->refreshAccessToken($this->alfred->options('spotify_refresh_token'));
 
