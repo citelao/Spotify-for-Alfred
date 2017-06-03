@@ -25,13 +25,8 @@ class DetailAlbum {
 		$this->originalQuery = $options['originalQuery'];
 		$this->search = $options['search'];
 
-		if($api) {
-			$artistFetcher = new JsonFetcher("https://api.spotify.com/v1/albums/{$options['id']}");
-			$json = $artistFetcher->run();
-		} else {
-			$json = $api->getAlbum($options['id']);
-		}
-		
+		$json = $api->getAlbum($options['id']);
+
 		$this->name = $json->name;
 		$this->type = $json->type;
 

@@ -26,18 +26,18 @@ class DetailArtist {
 		$this->originalQuery = $options['originalQuery'];
 		$this->search = $options['search'];
 
-		$artistFetcher = new JsonFetcher("https://api.spotify.com/v1/artists/{$options['id']}");
-		$artistJson = $artistFetcher->run();
+		$artistJson = $api->getArtist($options['id']);
+
 
 		$this->name = $artistJson->name;
 		$this->type = $artistJson->type;
 
-		$url = "https://api.spotify.com/v1/artists/{$options['id']}/albums";
 		if($locale != 'not-given') {
-			$url .= "?market=$locale";
+			$albumsJson = $api->getArtistAlbums($options['id'], [$locale]);
 		}
-		$albumFetcher = new JsonFetcher($url);
-		$albumsJson = $albumFetcher->run();
+		else {
+			$albumsJson = $api->getArtistAlbums($options['id'], []);
+		}
 
 		$this->albums = array();
 		foreach ($albumsJson->items as $key => $value) {
