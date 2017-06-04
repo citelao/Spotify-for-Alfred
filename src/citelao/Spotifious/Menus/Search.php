@@ -161,6 +161,22 @@ class Search implements Menu {
 					$autocomplete = "{$current['uri']} ⟩ {$this->query} ⟩";
 				}
 
+				// Modifiers :D
+				if($current['type'] == 'playlist') {
+					$mods = array(
+						'ctrl' => array(
+							'subtitle' => 'Play playlist immediately',
+							'valid' => true,
+							'arg' => "spotify⟩play track \"{$current['uri']}\"",
+							'autocomplete' => ''
+ 						),
+						// 'alt' => array(),
+						// 'cmd' => array(
+						// 	'subtitle' => 'Queue playlist'
+						// )
+					);
+				}
+
 				$currentResult['title']    = $current['title'];
 				$currentResult['subtitle'] = $subtitle;
 				$currentResult['uid'] = "bs-spotify-{$this->query}-{$current['type']}-{$current['title']}";
@@ -169,6 +185,9 @@ class Search implements Menu {
 				$currentResult['autocomplete'] = $autocomplete;
 				$currentResult['copy'] = $current['uri'];
 				$currentResult['icon'] = array('path' => "include/images/{$current['type']}.png");
+				if($mods) {
+					$currentResult['mods'] = $mods;
+				}
 
 				$results[] = $currentResult;
 			}
