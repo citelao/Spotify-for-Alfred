@@ -18,6 +18,9 @@ clean:
 	-rm -r dist/
 	-rm -r build/
 
+.PHONY: init
+init: vendor
+
 # https://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile
 COMPOSER_INSTALLED :=  $(shell command -v composer 2> /dev/null)
 vendor:
@@ -36,6 +39,6 @@ build.images:
 	@echo "TODO COMPILE IMAGES"
 
 .PHONY: build
-build: vendor build.intermediates build.images
+build: init build.intermediates build.images
 	mkdir dist/
 	zip -q -x '*.git*' '*include/images/psd*' '*include/screenshots*' '*.psd' -r dist/Spotifious.alfredworkflow ./

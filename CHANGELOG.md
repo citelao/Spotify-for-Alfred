@@ -3,6 +3,7 @@
 ## v0.13.3 (inprog)#
 - Added: Alfred-native hotkey activation means a huge speedboost to hotkeys
 - Added: Cache your playlists to add them to search
+- Fixed: API search now uses Authentication all the time
 - Changed: Do not source control vendor/
 
 ## v0.13.2.1 #
