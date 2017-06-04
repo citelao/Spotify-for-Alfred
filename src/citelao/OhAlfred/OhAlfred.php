@@ -72,7 +72,7 @@ class OhAlfred {
 	// Get the cache directory
 	public function cache() {
 		if($this->cache == null) {
-			if(isset($_ENV['alfred_workflow_data'])) {
+			if(isset($_ENV['alfred_workflow_cache'])) {
 				$this->cache = $_ENV['alfred_workflow_cache'] . "/";
 			} else {
 				$this->cache = $this->home() . "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/" . $this->name() . "/";

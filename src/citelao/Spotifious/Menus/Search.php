@@ -5,7 +5,6 @@ use Spotifious\Menus\Menu;
 use Spotifious\Menus\Helper;
 use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\HTTP\JsonParser;
-use OhAlfred\Exceptions\StatefulException;
 use OhAlfred\OhAlfred;
 
 class Search implements Menu {
@@ -152,10 +151,10 @@ class Search implements Menu {
 					$valid = true;
 					$arg = "spotify⟩play track \"{$current['uri']}\"";
 					$autocomplete = '';
-				} else if($current['type'] == 'playlist') {
-					$valid = true;
-					$arg = "spotify⟩play track \"{$current['uri']}\"";
-					$autocomplete = '';
+				// } else if($current['type'] == 'playlist') {
+				// 	$valid = true;
+				// 	$arg = "spotify⟩play track \"{$current['uri']}\"";
+				// 	$autocomplete = '';
 				} else {
 					$valid = false;
 					$arg = '';
