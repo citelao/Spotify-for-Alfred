@@ -35,7 +35,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -48,7 +48,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -61,7 +61,33 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>6792E8E4-6892-467C-A207-2FBF2877E3C6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6EECFF75-AE32-44F5-97CB-3AE51C7E6A22</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>695822FE-205D-4684-86EC-3F7B7E8606DC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -72,11 +98,24 @@
 		</array>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
 		<array/>
+		<key>6EECFF75-AE32-44F5-97CB-3AE51C7E6A22</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DBF28452-DD3D-4A25-AB98-89E268566DD5</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>EC859C21-FCFF-4949-B767-726A7B37DAE8</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -89,7 +128,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -102,7 +141,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -141,7 +180,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>695822FE-205D-4684-86EC-3F7B7E8606DC</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -154,7 +193,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>695822FE-205D-4684-86EC-3F7B7E8606DC</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -167,7 +206,20 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>EC859C21-FCFF-4949-B767-726A7B37DAE8</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -180,7 +232,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>6B1397DB-E737-4607-8181-27D9DFE70E2C</string>
+				<string>EC859C21-FCFF-4949-B767-726A7B37DAE8</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -213,6 +265,35 @@
 	<string>Spotifious</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string></string>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>triggerid</key>
+				<string>com.citelao.spotifious.search</string>
+				<key>triggername</key>
+				<string>Search</string>
+				<key>workflowonly</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.remote</string>
+			<key>uid</key>
+			<string>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.action.revealfile</string>
+			<key>uid</key>
+			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -265,35 +346,6 @@ php -f main.php -- "{query}"
 			<integer>2</integer>
 		</dict>
 		<dict>
-			<key>type</key>
-			<string>alfred.workflow.action.revealfile</string>
-			<key>uid</key>
-			<string>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>triggerid</key>
-				<string>com.citelao.spotifious.search</string>
-				<key>triggername</key>
-				<string>Search</string>
-				<key>workflowonly</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.remote</string>
-			<key>uid</key>
-			<string>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
 			<key>config</key>
 			<dict>
 				<key>action</key>
@@ -328,7 +380,7 @@ php -f main.php -- "{query}"
 			<key>config</key>
 			<dict>
 				<key>concurrently</key>
-				<false/>
+				<true/>
 				<key>escaping</key>
 				<integer>4</integer>
 				<key>script</key>
@@ -372,7 +424,7 @@ php -f action.php -- "{query}"
 			<key>config</key>
 			<dict>
 				<key>argument</key>
-				<string>playpause⟩output</string>
+				<string>playpause</string>
 				<key>argumenttype</key>
 				<integer>3</integer>
 				<key>triggerid</key>
@@ -392,12 +444,60 @@ php -f action.php -- "{query}"
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+	return run script "tell application \"Spotify\"" &amp; return &amp; q &amp; return &amp; "delay 0.05" &amp; return &amp; "name of current track &amp; \"✂\" &amp; album of current track &amp; \"✂\" &amp; artist of current track &amp; \"✂\" &amp; spotify url of current track &amp; \"✂\" &amp; player state" &amp; return &amp; "end tell"
+end alfred_script</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string># Add Homebrew to path for those who need :)
+export PATH="/usr/local/bin:${PATH}"
+
+php -f action.php -- "respond⟩{query}"
+
+# In case you are experiencing unsolveable issues,
+# you can generate a log file to help me. Modify the
+# first line of this script so it looks like this:
+# php -f action.php -- "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>DBF28452-DD3D-4A25-AB98-89E268566DD5</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>playpause⟩</string>
+				<string>playpause</string>
 				<key>focusedappvariable</key>
 				<false/>
 				<key>focusedappvariablename</key>
@@ -425,8 +525,27 @@ php -f action.php -- "{query}"
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>inputstring</key>
+				<string>{var:respond}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>false</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>6EECFF75-AE32-44F5-97CB-3AE51C7E6A22</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argument</key>
-				<string>next⟩output</string>
+				<string>next track</string>
 				<key>argumenttype</key>
 				<integer>3</integer>
 				<key>triggerid</key>
@@ -451,7 +570,7 @@ php -f action.php -- "{query}"
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>next⟩</string>
+				<string>next track</string>
 				<key>focusedappvariable</key>
 				<false/>
 				<key>focusedappvariablename</key>
@@ -480,7 +599,7 @@ php -f action.php -- "{query}"
 			<key>config</key>
 			<dict>
 				<key>argument</key>
-				<string>previous⟩output</string>
+				<string>previous track</string>
 				<key>argumenttype</key>
 				<integer>3</integer>
 				<key>triggerid</key>
@@ -505,7 +624,7 @@ php -f action.php -- "{query}"
 				<key>argument</key>
 				<integer>3</integer>
 				<key>argumenttext</key>
-				<string>previous⟩</string>
+				<string>previous track</string>
 				<key>focusedappvariable</key>
 				<false/>
 				<key>focusedappvariablename</key>
@@ -548,6 +667,28 @@ php -f action.php -- "{query}"
 			<string>alfred.workflow.trigger.remote</string>
 			<key>uid</key>
 			<string>B02E0659-E11A-4746-ADB7-2C2C0A8BD8BB</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>if sound volume &lt; 90 then
+	set sound volume to sound volume + 10
+else
+	set sound volume to 100
+end if</string>
+				<key>variables</key>
+				<dict>
+					<key>respond</key>
+					<string>false</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>695822FE-205D-4684-86EC-3F7B7E8606DC</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -602,6 +743,28 @@ php -f action.php -- "{query}"
 			<string>alfred.workflow.trigger.remote</string>
 			<key>uid</key>
 			<string>F1B61D14-D686-468D-9373-AB4FC3EEE3C8</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>if sound volume &gt; 10 then
+	set sound volume to sound volume - 10
+else 
+	set sound volume to 0
+end if</string>
+				<key>variables</key>
+				<dict>
+					<key>respond</key>
+					<string>false</string>
+				</dict>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.argument</string>
+			<key>uid</key>
+			<string>EC859C21-FCFF-4949-B767-726A7B37DAE8</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -686,12 +849,39 @@ This code’s license can be found in LICENSE.md</string>
 			<key>ypos</key>
 			<real>730</real>
 		</dict>
+		<key>6792E8E4-6892-467C-A207-2FBF2877E3C6</key>
+		<dict>
+			<key>note</key>
+			<string>Responding Spotify query (much faster)</string>
+			<key>xpos</key>
+			<integer>490</integer>
+			<key>ypos</key>
+			<integer>490</integer>
+		</dict>
+		<key>695822FE-205D-4684-86EC-3F7B7E8606DC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>290</integer>
+			<key>ypos</key>
+			<integer>1150</integer>
+		</dict>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
 		<dict>
+			<key>note</key>
+			<string>Action!</string>
 			<key>xpos</key>
 			<integer>500</integer>
 			<key>ypos</key>
 			<real>130</real>
+		</dict>
+		<key>6EECFF75-AE32-44F5-97CB-3AE51C7E6A22</key>
+		<dict>
+			<key>note</key>
+			<string>(only respond when we want it)</string>
+			<key>xpos</key>
+			<integer>680</integer>
+			<key>ypos</key>
+			<integer>520</integer>
 		</dict>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<dict>
@@ -755,6 +945,22 @@ This code’s license can be found in LICENSE.md</string>
 			<integer>500</integer>
 			<key>ypos</key>
 			<real>10</real>
+		</dict>
+		<key>DBF28452-DD3D-4A25-AB98-89E268566DD5</key>
+		<dict>
+			<key>note</key>
+			<string>Handle responding queries</string>
+			<key>xpos</key>
+			<integer>790</integer>
+			<key>ypos</key>
+			<integer>490</integer>
+		</dict>
+		<key>EC859C21-FCFF-4949-B767-726A7B37DAE8</key>
+		<dict>
+			<key>xpos</key>
+			<integer>290</integer>
+			<key>ypos</key>
+			<integer>1390</integer>
 		</dict>
 		<key>F1B61D14-D686-468D-9373-AB4FC3EEE3C8</key>
 		<dict>

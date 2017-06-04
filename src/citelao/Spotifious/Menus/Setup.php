@@ -15,6 +15,8 @@ class Setup implements Menu {
 	public function __construct($query, $alfred, $api=null) {
 		$this->alfred = $alfred;
 
+		$this->wasOptOut = $this->alfred->options('spotify_app_opt_out') == 'true';
+
 		$this->countryCodeConfigured = !($this->alfred->options('country') == '');
 		$this->applicationCreated = !($this->alfred->options('spotify_client_id') == '' || $this->alfred->options('spotify_secret') == '');
 		$this->applicationLinked = !($this->alfred->options('spotify_access_token') == '' || 
@@ -26,12 +28,21 @@ class Setup implements Menu {
 	}
 
 	public function output() {
-		$results[] = array(
-			'title' => 'Welcome to Spotifious!',
-			'subtitle' => 'You need to configure a few more things before you can use Spotifious.',
-			'icon' => array('path' => 'include/images/configuration.png'),
-			'valid' => false
-		);
+		if($this->wasOptOut) {
+			$results[] = array(
+				'title' => 'Sorry, but the Spotify API changed.',
+				'subtitle' => 'You must now create a Spotify application to use Spotifious.',
+				'icon' => array('path' => 'include/images/configuration.png'),
+				'valid' => false
+			);
+		} else {
+			$results[] = array(
+				'title' => 'Welcome to Spotifious!',
+				'subtitle' => 'You need to configure a few more things before you can use Spotifious.',
+				'icon' => array('path' => 'include/images/configuration.png'),
+				'valid' => false
+			);
+		}
 
 		$results[] = array(
 			'title' => '1. Set your country code',
@@ -51,7 +62,7 @@ class Setup implements Menu {
 		if($this->applicationPreviouslyLinked) {
 			$results[] = array(
 				'title' => '3. Relink your Spotify application',
-				'subtitle' => "We've added new features to Spotifious, but you need to login to your Spotify app again.",
+				'subtitle' => "We've added new features to Spotifious, but you need to login again to use them.",
 				'icon' => array('path' => $this->applicationCreated ? $this->applicationLinked ? 'include/images/checked.png' : 'include/images/unchecked.png' : 'include/images/disabled.png'),
 				'arg' => 'applink⟩',
 				'valid' => $this->applicationCreated ? true : false

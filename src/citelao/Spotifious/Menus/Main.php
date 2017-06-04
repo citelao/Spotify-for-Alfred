@@ -48,7 +48,7 @@ class Main implements Menu {
 			'title' => "$this->currentAlbum",
 			'subtitle' => "More from this album...",
 			'autocomplete' => "artist:$this->currentArtist album:$this->currentAlbum", // TODO change to albumdetail
-			'copy' 		=> "$this->currentAlbum", // TODO change to albumdetail
+			'copy' => "$this->currentAlbum", // TODO change to albumdetail
 			'valid' => false,
 			'icon'  => array(
 				'path' => 'include/images/album.png'

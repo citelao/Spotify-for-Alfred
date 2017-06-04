@@ -36,8 +36,9 @@ class Spotifious {
 			$this->alfred->options('track_notifications', 'true');
 		}
 
-		if($this->alfred->options('desired_scopes') != '') {
-			$this->alfred->options('desired_scopes', '');
+		$scopes = 'playlist-read-private';
+		if($this->alfred->options('desired_scopes') != $scopes) {
+			$this->alfred->options('desired_scopes', $scopes);
 		}
 
 		if($this->alfred->options('lookup_current_song') == '') {
@@ -49,12 +50,11 @@ class Spotifious {
 		if($this->alfred->options('country') == '' ||
 			$this->alfred->options('spotify_client_id') == '' ||
 			$this->alfred->options('spotify_secret') == '' ||
-			!$this->optedOut() && (
-				$this->alfred->options('spotify_access_token') == '' ||
-				$this->alfred->options('spotify_access_token_expires') == '' ||
-				$this->alfred->options('spotify_refresh_token') == '' ||
-				$this->alfred->options('desired_scopes') != $this->alfred->options('registered_scopes')
-			) || 
+			$this->optedOut() ||
+			$this->alfred->options('spotify_access_token') == '' ||
+			$this->alfred->options('spotify_access_token_expires') == '' ||
+			$this->alfred->options('spotify_refresh_token') == '' ||
+			$this->alfred->options('desired_scopes') != $this->alfred->options('registered_scopes')  || 
 			$this->contains($query, "Country Code ⟩")) {
 
 			// Check version first
@@ -86,12 +86,17 @@ class Spotifious {
 			// attempt refresh
 			// if failed, prompt for relogin
 
+		// Fetch playlists on a first run...
+		if($api && $this->alfred->options('playlists') == '') {
+			$this->update_playlists_cache();
+		}
+
 		if (mb_strlen($query) <= 3) {
 			if(mb_strlen($query) > 0 && ($query[0] == "c" || $query[0] == "C")) {
 				$menu = new Control($query);
 				return $menu->output();
 			} elseif(mb_strlen($query) > 0 && ($query[0] == "s" || $query[0] == "S")) {
-				$menu = new Settings($query, $this->alfred);
+				$menu = new Settings($query, $this->alfred, $api);
 				return $menu->output();
 			} else {
 				$menu = new Main($query);
@@ -166,6 +171,8 @@ class Spotifious {
 			// if failed, prompt for relogin
 
 		// Handle JSON if given
+
+		print_r("GGGG");
 		if($action[0] == "{") {
 			$json = JsonParser::parse($action);
 			$options = (isset($json->options)) 
@@ -222,6 +229,11 @@ class Spotifious {
 					$this->alfred->options('track_notifications', 'true');
 				}
 
+			} else if($command == 'update_playlists_cache') {
+				if($api) {
+					$this->update_playlists_cache($api);
+				}
+
 			} else if($command == 'next') {
 				$song = $this->respondingSpotifyQuery('next track');
 
@@ -270,6 +282,18 @@ class Spotifious {
 			} else if($command == 'spotify') {
 				$as = new ApplicationApplescript("Spotify", $splitAction[0]);
 				$as->run();
+			} else if($command == 'respond') {
+				$song = $this->splitSpotifyResponse($splitAction[0]);
+
+				$icon = ($song['state'] == "playing") ? "▶" : "‖";
+				$this->alfred->notify(
+					$song['album'] . " — " . $song['artist'], 
+					$icon . " " . $song['title'], 
+					// $song['url'],
+					"",
+					"",
+					"",
+					$song['url']);
 			}
 
 			$v = $this->alfred->version()[0];
@@ -305,7 +329,11 @@ class Spotifious {
 		$as = new ApplicationApplescript("Spotify", $query . " \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
 		$result = $as->run();
 
-		$array = explode("✂", $result);
+		return $this->splitSpotifyResponse($resp);
+	}
+
+	protected function splitSpotifyResponse($resp) {
+		$array = explode("✂", $resp);
 		if($array[0] == "") {
 			$array[0] = "No track playing";
 			$array[1] = "No album";
@@ -333,12 +361,11 @@ class Spotifious {
 		$api = new SpotifyWebAPI();
 
 		// If the access token has expired :(
-		if ($this->alfred->options('spotify_access_token_expires') < time()) {
+		if ($this->alfred->options('spotify_access_token_expires') < time() + 60*60*3) {
 			$session = new Session($this->alfred->options('spotify_client_id'), $this->alfred->options('spotify_secret'), 'http://localhost:11114/callback.php');
-			$session->setRefreshToken($this->alfred->options('spotify_refresh_token'));
-			$session->refreshToken();
+			$session->refreshAccessToken($this->alfred->options('spotify_refresh_token'));
 
-			$this->alfred->options('spotify_access_token_expires', time() + $session->getExpires());
+			$this->alfred->options('spotify_access_token_expires', $session->getTokenExpiration());
 			$this->alfred->options('spotify_access_token', $session->getAccessToken());
 		}
 
@@ -349,5 +376,25 @@ class Spotifious {
 
 	protected function optedOut() {
 		return $this->alfred->options('spotify_app_opt_out') == 'true';
+	}
+
+	protected function update_playlists_cache($api) {
+		$playlists = $api->getMyPlaylists();
+		$search_data = array();
+		foreach ($playlists->items as $playlist) {
+			$search_data[] = array(
+				'id' => $playlist->id,
+				'name' => $playlist->name,
+				'uri' => $playlist->uri,
+				'owner' => (property_exists($playlist->owner, 'display_name'))
+					? $playlist->owner->display_name
+					: (property_exists($playlist->owner, 'id'))
+						? $playlist->owner->id
+						: "unkown"
+			);
+		}
+		$datetime = new \DateTime("now");
+		$this->alfred->options('playlists_cache_date', $datetime->format("@U"));
+		$this->alfred->options('playlists', $search_data);
 	}
 }

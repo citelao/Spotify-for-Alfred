@@ -3,3 +3,6 @@
 
 # build cruft
 build/
+
+# vendor
+vendor/

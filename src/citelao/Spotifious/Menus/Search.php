@@ -5,7 +5,6 @@ use Spotifious\Menus\Menu;
 use Spotifious\Menus\Helper;
 use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\HTTP\JsonParser;
-use OhAlfred\Exceptions\StatefulException;
 use OhAlfred\OhAlfred;
 
 class Search implements Menu {
@@ -88,6 +87,7 @@ class Search implements Menu {
 
 				if ($type == 'track') {
 					$currentRaw['album'] = $value->album->name;
+					$currentRaw['album_uri'] = $value->album->uri;
 					$currentRaw['artist'] = $value->artists[0]->name;	
 				} elseif ($type == 'album') {
 					$currentRaw['artist'] = $albums[$key]['artist'];
@@ -107,6 +107,26 @@ class Search implements Menu {
 			}
 		}
 
+		// Add playlists to result
+		$playlists_json = $this->alfred->options('playlists');
+		if($playlists_json !== '') {
+			$playlists = json_decode($playlists_json);
+
+			foreach ($playlists as $playlist) {
+				if(!@mb_stristr(mb_strtoupper($playlist->name), mb_strtoupper($query))) {
+					continue;
+				}
+
+				$this->search[] = array(
+					'type' => 'playlist',
+					'uri' => $playlist->uri,
+					'title' => $playlist->name,
+					'owner' => $playlist->owner,
+					'popularity' => 80
+				);
+			}
+		}
+
 		if(!empty($this->search))
 			usort($this->search, array($this, 'popularitySort'));
 	}
@@ -122,6 +142,8 @@ class Search implements Menu {
 					$subtitle = "$popularity Album by {$current['artist']}";
 				} elseif ($current['type'] == 'single') {
 					$subtitle = "$popularity Single by {$current['artist']}";
+				} elseif ($current['type'] == 'playlist') {
+					$subtitle = "Playlist by {$current['owner']}";
 				} else {
 					$subtitle = "$popularity " . ucfirst($current['type']);
 				}
@@ -130,10 +152,42 @@ class Search implements Menu {
 					$valid = true;
 					$arg = "spotify⟩play track \"{$current['uri']}\"";
 					$autocomplete = '';
+
+					// $album_json = '{ "action":"spotifious", "command":"test" }';
+
+					$mods = array(
+						// 'alt' => array(
+						// 	'subtitle' => "Browse to artist ({$current['artist']})..."
+						// ),
+						// 'ctrl' => array(
+						// 	'subtitle' => "Browse to album ({$current['album']})...",
+						// 	'arg' => $album_json,
+						// ),
+						'shift' => array(
+							'subtitle' => 'Reveal in Spotify',
+							'arg' => "spotify⟩activate (open location \"{$current['uri']}\")"
+						)
+					);
 				} else {
 					$valid = false;
 					$arg = '';
 					$autocomplete = "{$current['uri']} ⟩ {$this->query} ⟩";
+				}
+
+				// Modifiers :D
+				if($current['type'] == 'playlist') {
+					$mods = array(
+						'ctrl' => array(
+							'subtitle' => 'Play playlist immediately',
+							'valid' => true,
+							'arg' => "spotify⟩play track \"{$current['uri']}\"",
+							'autocomplete' => ''
+ 						),
+						// 'alt' => array(),
+						// 'cmd' => array(
+						// 	'subtitle' => 'Queue playlist'
+						// )
+					);
 				}
 
 				$currentResult['title']    = $current['title'];
@@ -144,6 +198,9 @@ class Search implements Menu {
 				$currentResult['autocomplete'] = $autocomplete;
 				$currentResult['copy'] = $current['uri'];
 				$currentResult['icon'] = array('path' => "include/images/{$current['type']}.png");
+				if(isset($mods)) {
+					$currentResult['mods'] = $mods;
+				}
 
 				$results[] = $currentResult;
 			}
