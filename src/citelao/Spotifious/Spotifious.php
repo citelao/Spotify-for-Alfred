@@ -50,12 +50,11 @@ class Spotifious {
 		if($this->alfred->options('country') == '' ||
 			$this->alfred->options('spotify_client_id') == '' ||
 			$this->alfred->options('spotify_secret') == '' ||
-			!$this->optedOut() && (
-				$this->alfred->options('spotify_access_token') == '' ||
-				$this->alfred->options('spotify_access_token_expires') == '' ||
-				$this->alfred->options('spotify_refresh_token') == '' ||
-				$this->alfred->options('desired_scopes') != $this->alfred->options('registered_scopes')
-			) || 
+			$this->optedOut() ||
+			$this->alfred->options('spotify_access_token') == '' ||
+			$this->alfred->options('spotify_access_token_expires') == '' ||
+			$this->alfred->options('spotify_refresh_token') == '' ||
+			$this->alfred->options('desired_scopes') != $this->alfred->options('registered_scopes')  || 
 			$this->contains($query, "Country Code ⟩")) {
 
 			// Check version first
