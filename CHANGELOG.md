@@ -1,5 +1,10 @@
 # Changelog #
 
+## v0.13.3 (inprog)#
+- Added: Alfred-native hotkey activation means a huge speedboost to hotkeys
+- Added: Cache your playlists to add them to search
+- Changed: Do not source control vendor/
+
 ## v0.13.2.1 #
 - Fixed: Setup bug where Spotifious expects client ID before it exists
 
