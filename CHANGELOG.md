@@ -1,10 +1,12 @@
 # Changelog #
 
-## v0.13.3 (inprog)#
+## v0.13.3 #
 - Added: Alfred-native hotkey activation means a huge speedboost to hotkeys
 - Added: Cache your playlists to add them to search
 - Fixed: API search now uses Authentication all the time
 - Changed: Do not source control vendor/
+- Changed: Use a newer version of JWilsson's API.
+- Removed: Opt-out does not work with the Spotify API anymore, so it's removed
 
 ## v0.13.2.1 #
 - Fixed: Setup bug where Spotifious expects client ID before it exists
