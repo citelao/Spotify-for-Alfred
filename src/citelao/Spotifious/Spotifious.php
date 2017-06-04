@@ -171,6 +171,8 @@ class Spotifious {
 			// if failed, prompt for relogin
 
 		// Handle JSON if given
+
+		print_r("GGGG");
 		if($action[0] == "{") {
 			$json = JsonParser::parse($action);
 			$options = (isset($json->options)) 

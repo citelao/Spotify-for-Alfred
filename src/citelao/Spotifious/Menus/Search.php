@@ -87,6 +87,7 @@ class Search implements Menu {
 
 				if ($type == 'track') {
 					$currentRaw['album'] = $value->album->name;
+					$currentRaw['album_uri'] = $value->album->uri;
 					$currentRaw['artist'] = $value->artists[0]->name;	
 				} elseif ($type == 'album') {
 					$currentRaw['artist'] = $albums[$key]['artist'];
@@ -151,10 +152,22 @@ class Search implements Menu {
 					$valid = true;
 					$arg = "spotify⟩play track \"{$current['uri']}\"";
 					$autocomplete = '';
-				// } else if($current['type'] == 'playlist') {
-				// 	$valid = true;
-				// 	$arg = "spotify⟩play track \"{$current['uri']}\"";
-				// 	$autocomplete = '';
+
+					// $album_json = '{ "action":"spotifious", "command":"test" }';
+
+					$mods = array(
+						// 'alt' => array(
+						// 	'subtitle' => "Browse to artist ({$current['artist']})..."
+						// ),
+						// 'ctrl' => array(
+						// 	'subtitle' => "Browse to album ({$current['album']})...",
+						// 	'arg' => $album_json,
+						// ),
+						'shift' => array(
+							'subtitle' => 'Reveal in Spotify',
+							'arg' => "spotify⟩activate (open location \"{$current['uri']}\")"
+						)
+					);
 				} else {
 					$valid = false;
 					$arg = '';
@@ -185,7 +198,7 @@ class Search implements Menu {
 				$currentResult['autocomplete'] = $autocomplete;
 				$currentResult['copy'] = $current['uri'];
 				$currentResult['icon'] = array('path' => "include/images/{$current['type']}.png");
-				if($mods) {
+				if(isset($mods)) {
 					$currentResult['mods'] = $mods;
 				}
 
