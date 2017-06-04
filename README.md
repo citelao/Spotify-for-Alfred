@@ -98,6 +98,19 @@ A lot of people helped out on this:
 Thanks to everyone who helped, and thanks to everyone who uses my work!
 Oh, and thanks for reading this whole README. I hope you enjoy Spotifious!
 
+## Development ##
+
+You must install dependencies manually. Install 
+[Composer](https://getcomposer.org/) and then run `make init`. Then you can
+proceed with development! (if you do not want to do a global install, run
+`php composer.phar install` from this directory)
+
+Command line development for Alfred 3 is currently not working, since we 
+depend on several environment variables. Eventually, if you are developing for 
+Alfred version 3 and want to run these files from
+the command line (`php -f main.php -- "args"`), you will need to run in debug
+mode : `DEBUG=true php -f main.php -- "args"`.
+
 ## TODO ##
 
 - Allow `⎇`, `^`, and `⌘` to function as modifiers (Open in Spotify, other things?).

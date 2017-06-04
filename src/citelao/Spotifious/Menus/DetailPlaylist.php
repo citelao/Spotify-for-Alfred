@@ -1,10 +1,11 @@
 <?php
 namespace Spotifious\Menus;
 
+use OhAlfred\Exceptions\StatefulException;
 use OhAlfred\HTTP\JsonFetcher;
 use OhAlfred\OhAlfred;
 
-class DetailAlbum {
+class DetailPlaylist {
 	protected $alfred;
 
 	protected $currentURI;
@@ -25,26 +26,33 @@ class DetailAlbum {
 		$this->originalQuery = $options['originalQuery'];
 		$this->search = $options['search'];
 
+		$explodedURI = explode(":", $this->currentURI);
+		$user = $explodedURI[count($explodedURI) - 3];
+
 		if(!$api) {
-			$artistFetcher = new JsonFetcher("https://api.spotify.com/v1/albums/{$options['id']}");
-			$json = $artistFetcher->run();
+			throw new StatefulException("You should have an API at this point");
 		} else {
-			$json = $api->getAlbum($options['id']);
+			$json = $api->getUserPlaylist($user, $options['id']);
 		}
-		
+
 		$this->name = $json->name;
 		$this->type = $json->type;
 
 		$this->tracks = array();
 		foreach ($json->tracks->items as $key => $value) {
 			$this->tracks[] = array(
-				'uri' => $value->uri,
-				'name' => $value->name,
-				'type' => $value->type,
-				'number' => $value->track_number,
-				'duration' => $value->duration_ms,
-				'explicit' => ($value->explicit == 'true')
+				'uri' => $value->track->uri,
+				'name' => $value->track->name,
+				'type' => $value->track->type,
+				'number' => $key + 1,
+				'duration' => $value->track->duration_ms,
+				'explicit' => ($value->track->explicit == 'true')
 			);
+		}
+
+		if($json->tracks->total > $json->tracks->limit) {
+			$this->overflow = true;
+			$this->overflow_count = $json->tracks->total - $json->tracks->limit;
 		}
 	}
 
@@ -69,6 +77,19 @@ class DetailAlbum {
 			$results[] = $currentResult;
 		}
 
+		if($this->overflow) {
+			$overflow = array(
+				'title' => 'This is a large playlist',
+				'subtitle' => ($this->overflow_count === 1) 
+					? "1 song could not be displayed; you can view it in Spotify."
+					: "$this->overflow_count songs could not be displayed; you can view them in Spotify.",
+				'arg' => "spotify⟩activate (open location \"{$this->currentURI}\")",
+				'autocomplete' => $this->originalQuery,
+				'copy' => $this->currentURI,
+				'icon' => array('path' => "include/images/info.png")
+			);
+		}
+
 		$scope['title'] = $this->name;
 		$scope['subtitle'] = "Browse this {$this->type} in Spotify";
 		$scope['arg'] = "spotify⟩activate (open location \"{$this->currentURI}\")";
@@ -77,9 +98,15 @@ class DetailAlbum {
 		$scope['icon'] = array('path' => "include/images/{$this->type}.png");
 
 		if ($this->search == null) {
+			if($this->overflow) {
+				array_unshift($results, $overflow);
+			}
 			array_unshift($results, $scope);
 		} else {
 			array_push($results, $scope);
+			if($this->overflow) {
+				array_push($results, $overflow);
+			}
 		}
 
 		return $results;
