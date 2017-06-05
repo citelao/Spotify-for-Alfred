@@ -88,7 +88,7 @@ class Spotifious {
 
 		// Fetch playlists on a first run...
 		if($api && $this->alfred->options('playlists') == '') {
-			$this->update_playlists_cache();
+			$this->update_playlists_cache($api);
 		}
 
 		if (mb_strlen($query) <= 3) {
