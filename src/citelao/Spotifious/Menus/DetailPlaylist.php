@@ -50,6 +50,7 @@ class DetailPlaylist {
 			);
 		}
 
+		$this->overflow = false;
 		if($json->tracks->total > $json->tracks->limit) {
 			$this->overflow = true;
 			$this->overflow_count = $json->tracks->total - $json->tracks->limit;

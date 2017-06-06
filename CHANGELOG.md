@@ -1,12 +1,17 @@
 # Changelog #
 
+## v0.13.3.1 #
+- Added: there's a small install guide inside the Workflow menu
+- Fixed: Small playlists now appear correctly
+- Fixed: Playlist cache correctly on first run (thanks, @chrsblck!)
+
 ## v0.13.3 #
 - Added: Alfred-native hotkey activation means a huge speedboost to hotkeys
 - Added: Cache your playlists to add them to search
 - Fixed: API search now uses Authentication all the time
 - Changed: Do not source control vendor/
 - Changed: Use a newer version of JWilsson's API.
-- Removed: Opt-out does not work with the Spotify API anymore, so it's removed
+- Removed: Opt-out does not work with the Spotify API anymore, so it's removed (thanks @atabbott!)
 
 ## v0.13.2.1 #
 - Fixed: Setup bug where Spotifious expects client ID before it exists

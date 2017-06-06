@@ -269,6 +269,23 @@
 			<key>config</key>
 			<dict>
 				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>7986333C-6D0E-4D95-8EC9-D3AEECD2D2FA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
 				<string></string>
 				<key>argumenttype</key>
 				<integer>0</integer>
@@ -299,6 +316,8 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -423,6 +442,23 @@ php -f action.php -- "{query}"
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+	return run script "tell application \"Spotify\"" &amp; return &amp; q &amp; return &amp; "delay 0.05" &amp; return &amp; "name of current track &amp; \"✂\" &amp; album of current track &amp; \"✂\" &amp; artist of current track &amp; \"✂\" &amp; spotify url of current track &amp; \"✂\" &amp; player state" &amp; return &amp; "end tell"
+end alfred_script</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argument</key>
 				<string>playpause</string>
 				<key>argumenttype</key>
@@ -438,23 +474,6 @@ php -f action.php -- "{query}"
 			<string>alfred.workflow.trigger.remote</string>
 			<key>uid</key>
 			<string>8020A500-17C9-43BA-B17A-00D35E460EB6</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-	return run script "tell application \"Spotify\"" &amp; return &amp; q &amp; return &amp; "delay 0.05" &amp; return &amp; "name of current track &amp; \"✂\" &amp; album of current track &amp; \"✂\" &amp; artist of current track &amp; \"✂\" &amp; spotify url of current track &amp; \"✂\" &amp; player state" &amp; return &amp; "end tell"
-end alfred_script</string>
-				<key>cachescript</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>6792E8E4-6892-467C-A207-2FBF2877E3C6</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -492,6 +511,25 @@ php -f action.php -- "respond⟩{query}"
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>inputstring</key>
+				<string>{var:respond}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>false</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>6EECFF75-AE32-44F5-97CB-3AE51C7E6A22</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -521,25 +559,6 @@ php -f action.php -- "respond⟩{query}"
 			<string>7858554D-2173-462A-B03D-1078EC7059D6</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>inputstring</key>
-				<string>{var:respond}</string>
-				<key>matchcasesensitive</key>
-				<true/>
-				<key>matchmode</key>
-				<integer>1</integer>
-				<key>matchstring</key>
-				<string>false</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
-			<key>uid</key>
-			<string>6EECFF75-AE32-44F5-97CB-3AE51C7E6A22</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -833,21 +852,21 @@ This code’s license can be found in LICENSE.md</string>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>990</real>
+			<integer>1230</integer>
 		</dict>
 		<key>4BB22960-369A-4674-AF29-00CCE1603B53</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>620</real>
+			<integer>870</integer>
 		</dict>
 		<key>5610E60C-68BF-4445-BAE3-CB55DEA70D99</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>730</real>
+			<integer>980</integer>
 		</dict>
 		<key>6792E8E4-6892-467C-A207-2FBF2877E3C6</key>
 		<dict>
@@ -856,14 +875,14 @@ This code’s license can be found in LICENSE.md</string>
 			<key>xpos</key>
 			<integer>490</integer>
 			<key>ypos</key>
-			<integer>490</integer>
+			<integer>610</integer>
 		</dict>
 		<key>695822FE-205D-4684-86EC-3F7B7E8606DC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>290</integer>
+			<integer>280</integer>
 			<key>ypos</key>
-			<integer>1150</integer>
+			<integer>1410</integer>
 		</dict>
 		<key>6B1397DB-E737-4607-8181-27D9DFE70E2C</key>
 		<dict>
@@ -872,7 +891,7 @@ This code’s license can be found in LICENSE.md</string>
 			<key>xpos</key>
 			<integer>500</integer>
 			<key>ypos</key>
-			<real>130</real>
+			<integer>130</integer>
 		</dict>
 		<key>6EECFF75-AE32-44F5-97CB-3AE51C7E6A22</key>
 		<dict>
@@ -881,28 +900,47 @@ This code’s license can be found in LICENSE.md</string>
 			<key>xpos</key>
 			<integer>680</integer>
 			<key>ypos</key>
-			<integer>520</integer>
+			<integer>640</integer>
 		</dict>
 		<key>73FAFE96-4B16-4AB5-B181-229B4BB79E25</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>1470</real>
+			<integer>1740</integer>
 		</dict>
 		<key>7858554D-2173-462A-B03D-1078EC7059D6</key>
 		<dict>
+			<key>note</key>
+			<string>2. Bind remaining hotkeys...</string>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>490</real>
+			<integer>720</integer>
+		</dict>
+		<key>7986333C-6D0E-4D95-8EC9-D3AEECD2D2FA</key>
+		<dict>
+			<key>note</key>
+			<string>Setup guide!
+
+Spotifious works out of the box (just type `spotifious` in Alfred), but works best when configured with hotkeys.
+
+1. Bind the top-most hotkey (the one labeled with the `1`) to whatever you'd like to activate Spotifious.
+
+2. Bind the remaining "hotkey" items for simple, quick-access shortcuts.
+
+3. Activate Spotifious and finish the 3-step configuration.</string>
+			<key>xpos</key>
+			<integer>850</integer>
+			<key>ypos</key>
+			<integer>10</integer>
 		</dict>
 		<key>8020A500-17C9-43BA-B17A-00D35E460EB6</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>380</real>
+			<integer>610</integer>
 		</dict>
 		<key>86EAA0E6-6086-4BC4-8CE7-0673F392C77F</key>
 		<dict>
@@ -913,6 +951,8 @@ This code’s license can be found in LICENSE.md</string>
 		</dict>
 		<key>AE6160D1-56EA-4416-991E-CF12B874FFD3</key>
 		<dict>
+			<key>note</key>
+			<string>1. Bind this hotkey to activate Spotifious!</string>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
@@ -923,21 +963,21 @@ This code’s license can be found in LICENSE.md</string>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>1120</real>
+			<integer>1380</integer>
 		</dict>
 		<key>BFFC58C1-626F-4091-A0A4-61034DDD10D0</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>1230</real>
+			<integer>1490</integer>
 		</dict>
 		<key>C5E43F66-AD1D-4D8D-9E4A-D7855C8F5AE2</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>880</real>
+			<integer>1120</integer>
 		</dict>
 		<key>C8A768AF-C5D9-47A1-B499-8B0D3C844A99</key>
 		<dict>
@@ -953,32 +993,32 @@ This code’s license can be found in LICENSE.md</string>
 			<key>xpos</key>
 			<integer>790</integer>
 			<key>ypos</key>
-			<integer>490</integer>
+			<integer>610</integer>
 		</dict>
 		<key>EC859C21-FCFF-4949-B767-726A7B37DAE8</key>
 		<dict>
 			<key>xpos</key>
-			<integer>290</integer>
+			<integer>280</integer>
 			<key>ypos</key>
-			<integer>1390</integer>
+			<integer>1660</integer>
 		</dict>
 		<key>F1B61D14-D686-468D-9373-AB4FC3EEE3C8</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>1360</real>
+			<integer>1630</integer>
 		</dict>
 		<key>F4A2A879-4C5A-4532-BF35-02BAAD863581</key>
 		<dict>
 			<key>xpos</key>
 			<integer>100</integer>
 			<key>ypos</key>
-			<real>230</real>
+			<integer>270</integer>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>0.13.3</string>
+	<string>0.13.3.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/citelao/Spotify-for-Alfred</string>
 </dict>
