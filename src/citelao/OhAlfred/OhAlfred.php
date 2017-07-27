@@ -34,10 +34,10 @@ class OhAlfred {
 	public function version()
 	{
 		if($this->version == null) {
-			if(!isset($_ENV["alfred_version"])) {
+			if(!getenv("alfred_version")) {
 				$this->version = "2";
 			} else {
-				$this->version = $_ENV["alfred_version"];
+				$this->version = getenv("alfred_version");
 			}
 		}
 
@@ -72,8 +72,8 @@ class OhAlfred {
 	// Get the cache directory
 	public function cache() {
 		if($this->cache == null) {
-			if(isset($_ENV['alfred_workflow_cache'])) {
-				$this->cache = $_ENV['alfred_workflow_cache'] . "/";
+			if(getenv('alfred_workflow_cache')) {
+				$this->cache = getenv('alfred_workflow_cache') . "/";
 			} else {
 				$this->cache = $this->home() . "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/" . $this->name() . "/";
 			}
@@ -89,8 +89,8 @@ class OhAlfred {
 	// Get the storage directory
 	public function storage() {
 		if($this->storage == null) {
-			if(isset($_ENV['alfred_workflow_data'])) {
-				$this->storage = $_ENV['alfred_workflow_data'] . "/";
+			if(getenv('alfred_workflow_data')) {
+				$this->storage = getenv('alfred_workflow_data') . "/";
 			} else {
 				$this->storage = $this->home() . "/Library/Application Support/Alfred 2/Workflow Data/" . $this->name() . "/";
 			}
