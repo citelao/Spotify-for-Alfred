@@ -1,6 +1,6 @@
 # Changelog #
 
-## v0.13.3.3 #
+## v0.13.4 #
 - Fixed: Compilation albums now have an icon
 - Fixed: Can now add playlists with `\` in their titles
 - Fixed: Removed light-colored edge of some icons
