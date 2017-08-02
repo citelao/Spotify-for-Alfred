@@ -172,7 +172,7 @@ class Spotifious {
 
 		// Handle JSON if given
 
-		// print_r("GGGG");
+		print_r("GGGG");
 		if($action[0] == "{") {
 			$json = JsonParser::parse($action);
 			$options = (isset($json->options)) 
@@ -390,7 +390,7 @@ class Spotifious {
 					? $playlist->owner->display_name
 					: (property_exists($playlist->owner, 'id'))
 						? $playlist->owner->id
-						: 'unknown'
+						: "unkown"
 			);
 		}
 		$datetime = new \DateTime("now");

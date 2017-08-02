@@ -134,7 +134,7 @@ class OhAlfred {
 		unset($this->plists[$plist]);
 
 		if(!is_string($value)) {
-			$value = '"' . addslashes(json_encode($value)) . '"';
+			$value = '"' . str_replace('"', '\"', str_replace('\"', '\\\"', json_encode($value))) . '"';
 		}
 
 		$escaped_plist = escapeshellarg($plist);
