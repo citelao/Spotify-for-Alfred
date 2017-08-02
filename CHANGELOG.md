@@ -1,5 +1,9 @@
 # Changelog #
 
+## v0.13.3.3 #
+- Fixed: Can now add playlists with `\` in their titles.
+- Fixed: Removed light-colored edge of some icons
+
 ## v0.13.3.2 #
 - Fixed: Alfred variables are now more reliably passed to the workflow. Should
 	fix several people's configuration bugs.
