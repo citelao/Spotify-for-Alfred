@@ -390,7 +390,7 @@ class Spotifious {
 					? $playlist->owner->display_name
 					: (property_exists($playlist->owner, 'id'))
 						? $playlist->owner->id
-						: "unknown"
+						: 'unknown'
 			);
 		}
 		$datetime = new \DateTime("now");
