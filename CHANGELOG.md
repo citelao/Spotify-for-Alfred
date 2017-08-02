@@ -1,6 +1,7 @@
 # Changelog #
 
 ## v0.13.3.3 #
+- Fixed: Can now add playlists with `\` in their titles.
 - Fixed: Removed light-colored edge of some icons
 
 ## v0.13.3.2 #
