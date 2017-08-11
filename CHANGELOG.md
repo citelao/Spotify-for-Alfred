@@ -1,8 +1,13 @@
 # Changelog #
 
+## v0.13.4 #
+- Fixed: Compilation albums now have an icon
+- Fixed: Can now add playlists with `\` in their titles
+- Fixed: Removed light-colored edge of some icons
+
 ## v0.13.3.2 #
 - Fixed: Alfred variables are now more reliably passed to the workflow. Should
-	fix several people's configuration bugs.
+	fix several people's configuration bugs
 
 ## v0.13.3.1 #
 - Added: there's a small install guide inside the Workflow menu
