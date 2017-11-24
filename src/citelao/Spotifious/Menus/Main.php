@@ -33,7 +33,8 @@ class Main implements Menu {
 			),
 			// 'mods' => array(
 			// 	'alt' => array(
-			// 		'subtitle' => "Browse to artist ($this->currentArtist)..."
+			// 		'subtitle' => "Browse to artist ($this->currentArtist)...",
+			// 		'arg' => '{"action": "spotifious", "options": { "command": "artist:' . $this->currentArtist . '" }}'
 			// 	),
 			// 	'ctrl' => array(
 			// 		'subtitle' => "Browse to album ($this->currentAlbum)..."
@@ -86,7 +87,8 @@ class Main implements Menu {
 				'cmd' => array(
 					'valid' => true,
 					'subtitle' => 'Open settings...',
-					'arg' => '{"action": "spotifious", "options": { "command": "s" }}'
+					'arg' => '{"action": "spotifious", "options": { "command": "s" }}',
+					'icon' => array('path' => "include/images/configuration.png")
 				),
 				'shift' => array(
 					'valid' => true,
