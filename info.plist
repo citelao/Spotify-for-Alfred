@@ -28,6 +28,29 @@
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>vitoclose</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>2EA4FBDD-4717-4E37-9067-C93FE29A48F4</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>2EA4FBDD-4717-4E37-9067-C93FE29A48F4</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>605E53E5-EBF3-4D6E-A934-DA94EC49C1CF</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
 				<false/>
 			</dict>
 		</array>
@@ -316,6 +339,8 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -436,6 +461,33 @@ php -f action.php -- "{query}"
 			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
 			<string>F4A2A879-4C5A-4532-BF35-02BAAD863581</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{var:keepalive}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>1</integer>
+				<key>matchstring</key>
+				<string>true</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>2EA4FBDD-4717-4E37-9067-C93FE29A48F4</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>605E53E5-EBF3-4D6E-A934-DA94EC49C1CF</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -847,6 +899,15 @@ This code’s license can be found in LICENSE.md</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>2EA4FBDD-4717-4E37-9067-C93FE29A48F4</key>
+		<dict>
+			<key>note</key>
+			<string>(If we ask to keep the window alive, don't hide)</string>
+			<key>xpos</key>
+			<integer>520</integer>
+			<key>ypos</key>
+			<integer>290</integer>
+		</dict>
 		<key>30E2AA18-937F-4B5D-B685-7852B9717F34</key>
 		<dict>
 			<key>xpos</key>
@@ -867,6 +928,13 @@ This code’s license can be found in LICENSE.md</string>
 			<integer>100</integer>
 			<key>ypos</key>
 			<integer>980</integer>
+		</dict>
+		<key>605E53E5-EBF3-4D6E-A934-DA94EC49C1CF</key>
+		<dict>
+			<key>xpos</key>
+			<integer>630</integer>
+			<key>ypos</key>
+			<integer>290</integer>
 		</dict>
 		<key>6792E8E4-6892-467C-A207-2FBF2877E3C6</key>
 		<dict>

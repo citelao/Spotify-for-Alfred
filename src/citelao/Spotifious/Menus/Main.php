@@ -82,13 +82,19 @@ class Main implements Menu {
 				'ctrl' => array(
 					'valid' => true,
 					'subtitle' => 'Open controls...',
-					'arg' => '{"action": "spotifious", "options": { "command": "c" }}'
+					'arg' => '{"action": "spotifious", "options": { "command": "c" }}',
+					'variables' => array(
+						'keepalive' => 'true'
+					)
 				),
 				'cmd' => array(
 					'valid' => true,
 					'subtitle' => 'Open settings...',
 					'arg' => '{"action": "spotifious", "options": { "command": "s" }}',
-					'icon' => array('path' => "include/images/configuration.png")
+					'icon' => array('path' => "include/images/configuration.png"),
+					'variables' => array(
+						'keepalive' => 'true'
+					)
 				),
 				'shift' => array(
 					'valid' => true,
