@@ -111,6 +111,15 @@ Alfred version 3 and want to run these files from
 the command line (`php -f main.php -- "args"`), you will need to run in debug
 mode : `DEBUG=true php -f main.php -- "args"`.
 
+### Deployment ###
+
+1. Bump version here
+2. Update `CHANGELOG`
+3. Update `.alfredworkflow` version
+4. Update Alfred forum
+5. Update Packal
+6. Update GitHub Pages site
+
 ## TODO ##
 
 - Allow `⎇`, `^`, and `⌘` to function as modifiers (Open in Spotify, other things?).
