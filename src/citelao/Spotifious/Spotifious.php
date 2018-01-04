@@ -7,6 +7,7 @@ use SpotifyWebAPI\Session;
 use OhAlfred\OhAlfred;
 use OhAlfred\Applescript\ApplicationApplescript;
 use OhAlfred\Command\Timeout;
+use OhAlfred\Command\Command;
 use OhAlfred\Exceptions\StatefulException;
 use OhAlfred\HTTP\JsonParser;
 
@@ -45,9 +46,17 @@ class Spotifious {
 			$this->alfred->options('lookup_current_song', 'true');
 		}
 
+		if($this->alfred->options('has_installed_spotify') == '' || $this->alfred->options('has_installed_spotify') == 'false') {
+			$detector = new Command('open -Ra "Spotify"');
+			$detector->run();
+			$spotify_installed = !$detector->status();
+			$this->alfred->options('has_installed_spotify', $spotify_installed);
+		}
+
 		// Display the setup menu if the app isn't setup.
 		// Or the "options" menu if the S key is pressed
 		if($this->alfred->options('country') == '' ||
+			$this->alfred->options('has_installed_spotify') == 'false' ||
 			$this->alfred->options('spotify_client_id') == '' ||
 			$this->alfred->options('spotify_secret') == '' ||
 			$this->optedOut() ||
@@ -182,6 +191,11 @@ class Spotifious {
 			$action = null;
 			if($json->action == "applescript") {
 				$action = new Applescript($options, $this->alfred, $api);
+			} else if($json->action == "command") {
+				if(!isset($options->command)) {
+					throw new StatefulException("You have to have a command to run!");
+				}
+				$action = new Command($options->command);
 			} else if($json->action == "spotifious") {
 				$v = $this->alfred->version()[0];
 				$command = ($options->command)

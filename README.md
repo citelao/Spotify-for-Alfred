@@ -32,7 +32,7 @@ Spotifious uses Packal to make sure you always have the latest version. It gives
 
 ## Download & Install ##
 
-Latest version: [v0.13.4](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.13.4](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
+Latest version: [v0.13.5](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.13.5](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
 
 An in-depth [installation guide](http://ben.stolovitz.com/Spotify-for-Alfred/download/) is available on the Spotifious website.
 

@@ -178,7 +178,7 @@ class Search implements Menu {
 				if($current['type'] == 'playlist') {
 					$mods = array(
 						'ctrl' => array(
-							'subtitle' => 'Play playlist immediately',
+							'subtitle' => 'Play this playlist',
 							'valid' => true,
 							'arg' => "spotify⟩play track \"{$current['uri']}\"",
 							'autocomplete' => ''
@@ -187,6 +187,50 @@ class Search implements Menu {
 						// 'cmd' => array(
 						// 	'subtitle' => 'Queue playlist'
 						// )
+					);
+				} else if($current['type'] == 'artist') {
+					$mods = array(
+						'ctrl' => array(
+							'subtitle' => 'Play this artist',
+							'valid' => true,
+							'arg' => "spotify⟩play track \"{$current['uri']}\"",
+							'autocomplete' => ''
+ 						)
+ 						// 'cmd' => array( 'subtitle' => 'Queue this artist' ),
+ 						// 'shift' => array( 'subtitle' => 'Open in Spotify' )
+					);
+				} else if($current['type'] == 'album') {
+					$mods = array(
+						'ctrl' => array(
+							'subtitle' => 'Play this album',
+							'valid' => true,
+							'arg' => "spotify⟩play track \"{$current['uri']}\"",
+							'autocomplete' => ''
+ 						)
+ 						// 'cmd' => array( 'subtitle' => 'Queue this album' ),
+ 						// 'shift' => array( 'subtitle' => 'Open in Spotify' ),
+ 						// 'alt' => array('subtitle' => 'Browse to artist'),
+					);
+				} else if($current['type'] == 'single') {
+					$mods = array(
+						'ctrl' => array(
+							'subtitle' => 'Play this single',
+							'valid' => true,
+							'arg' => "spotify⟩play track \"{$current['uri']}\"",
+							'autocomplete' => ''
+ 						)
+ 						// 'cmd' => array( 'subtitle' => 'Queue this single' ),
+ 						// 'shift' => array( 'subtitle' => 'Open in Spotify' ),
+ 						// 'alt' => array('subtitle' => 'Browse to artist'),
+					);
+				} else if($current['type'] == 'track') {
+					// Unimplemented since we have no good way of changing
+					// autocomplete strings.
+					$mods = array(
+						// 'cmd' => array( 'subtitle' => 'Queue this song' ),
+						// 'shift' => array( 'subtitle' => 'Open in Spotify' ),
+						// 'alt' => array('subtitle' => 'Browse to artist'),
+						// 'ctrl' => array( 'subtitle' => 'Browse to album' ),
 					);
 				}
 
