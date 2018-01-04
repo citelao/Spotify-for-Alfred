@@ -38,7 +38,7 @@ An in-depth [installation guide](http://ben.stolovitz.com/Spotify-for-Alfred/dow
 
 1. [Download](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip)
 this repository.
-2. Open `Spotifious.alfredworkflow` by double-clicking it or dragging it into
+2. Open `Spotifious.alfredworkflow` in the `dist` folder by double-clicking it or dragging it into
 Alfred.
 3. Double-click the first thingy marked `Hotkey`.
 4. Click the textfield labeled `Hotkey` and press `^⌘⏎`.
