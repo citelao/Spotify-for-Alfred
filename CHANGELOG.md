@@ -1,5 +1,10 @@
 # Changelog #
 
+## v0.13.5 #
+- Added: Now checks for installed Spotify on startup
+- Added: New hotkeys for playing albums and artists directly from search
+- Changed: @philihp clarrified where build location is
+
 ## v0.13.4 #
 - Fixed: Compilation albums now have an icon
 - Fixed: Can now add playlists with `\` in their titles
@@ -86,7 +91,6 @@
 - Changed: prevent breakage if no track playing.
 
 ## v0.9 ##
-
 - Added: created changelog
 - Added: error reporting
 - Added: context-based searching
