@@ -1,5 +1,8 @@
 # Changelog #
 
+## v0.13.6 #
+- Fixed: Addressed a syntax error that prevented Spotify from returning properly
+
 ## v0.13.5 #
 - Added: Now checks for installed Spotify on startup
 - Added: New hotkeys for playing albums and artists directly from search
