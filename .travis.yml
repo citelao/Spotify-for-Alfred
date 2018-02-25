@@ -1,11 +1,5 @@
 language: php
-os:
-- osx
-php:
-- 5.5
-- 5.6
-- 7.0
-# Travis and OSX aren't friendS:
+# Travis and OSX aren't friends:
 # https://github.com/orls/php-spx/blob/80bcf8252502380de73ab271feb6840db29b4ab7/.travis.yml
 matrix:
   include:
@@ -13,18 +7,17 @@ matrix:
     - os: osx
       php: "5.5"
       language: generic
-      before_install:
-        - brew update && brew tap homebrew/php && brew install php55
+      env: PHPENV=php55
     - os: osx
       php: "5.6"
       language: generic
-      before_install:
-        - brew update && brew tap homebrew/php && brew install php56
+      env: PHPENV=php56
     - os: osx
       php: "7.0"
       language: generic
-      before_install:
-        - brew update && brew tap homebrew/php && brew install php70
+      env: PHPENV=php70
+before_install:
+  - ./script/travis_install.sh
 install: make clean init
 script: make build
 deploy:
