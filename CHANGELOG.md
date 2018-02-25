@@ -1,6 +1,7 @@
 # Changelog #
 
 ## v0.13.6 #
+- Added: Version checker added to buildscript so I stop shipping incorrect versions numbers.
 - Fixed: Addressed a syntax error that prevented Spotify from returning properly
 
 ## v0.13.5 #
