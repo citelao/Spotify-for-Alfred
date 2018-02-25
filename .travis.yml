@@ -17,7 +17,7 @@ matrix:
       language: generic
       env: PHPENV=php70
 before_install:
-  - sh /script/travis_install.sh
+  - sh ./script/travis_install.sh
 install: make clean init
 script: make build
 deploy:
