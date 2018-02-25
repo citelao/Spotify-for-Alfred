@@ -1,4 +1,6 @@
 language: php
+os:
+- osx
 php:
 - 5.5
 - 5.6
