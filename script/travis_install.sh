@@ -9,10 +9,13 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 	case "${PHPENV}" in 
 		php55)
 			brew install php55
+			;;
 		php56)
 			brew install php56
+			;;
 		php70)
 			brew install php70
+			;;
 	esac
 
 	# install Composer
