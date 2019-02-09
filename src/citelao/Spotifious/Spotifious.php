@@ -343,7 +343,7 @@ class Spotifious {
 		$as = new ApplicationApplescript("Spotify", $query . " \n return name of current track & \"✂\" & album of current track & \"✂\" & artist of current track & \"✂\" & spotify url of current track & \"✂\" & player state");
 		$result = $as->run();
 
-		return $this->splitSpotifyResponse($resp);
+		return $this->splitSpotifyResponse($result);
 	}
 
 	protected function splitSpotifyResponse($resp) {

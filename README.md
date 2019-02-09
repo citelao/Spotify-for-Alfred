@@ -32,7 +32,7 @@ Spotifious uses Packal to make sure you always have the latest version. It gives
 
 ## Download & Install ##
 
-Latest version: [v0.13.5](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.13.5](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
+Latest version: [v0.13.7](https://github.com/citelao/Spotify-for-Alfred/archive/master.zip) | Latest dev build: [v0.13.7](https://github.com/citelao/Spotify-for-Alfred/archive/dev.zip)
 
 An in-depth [installation guide](http://ben.stolovitz.com/Spotify-for-Alfred/download/) is available on the Spotifious website.
 
@@ -110,6 +110,15 @@ depend on several environment variables. Eventually, if you are developing for
 Alfred version 3 and want to run these files from
 the command line (`php -f main.php -- "args"`), you will need to run in debug
 mode : `DEBUG=true php -f main.php -- "args"`.
+
+### Deployment ###
+
+1. Bump version here
+2. Update `CHANGELOG`
+3. Update `.alfredworkflow` version
+4. Update Alfred forum
+5. Update Packal
+6. Update GitHub Pages site
 
 ## TODO ##
 

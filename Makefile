@@ -39,6 +39,10 @@ build.images:
 	@echo "TODO COMPILE IMAGES"
 
 .PHONY: build
-build: init build.intermediates build.images
+build: init check_version build.intermediates build.images
 	mkdir dist/
 	zip -q -x '*.git*' '*include/images/psd*' '*include/screenshots*' '*.psd' -r dist/Spotifious.alfredworkflow ./
+
+.PHONY: check_version
+check_version:
+	php script/check_version.php

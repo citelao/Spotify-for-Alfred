@@ -17,8 +17,10 @@ class OhAlfred {
 	protected $plists = array();
 
 	// Set the exception handlers
-	public function __construct() {
-		set_error_handler(array($this, 'errorify'), E_ALL);
+	public function __construct($catch_errors = true) {
+		if($catch_errors) {
+			set_error_handler(array($this, 'errorify'), E_ALL);
+		}
 	}
 
 	// Get the current workflow name.
