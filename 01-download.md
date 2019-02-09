@@ -8,7 +8,7 @@ permalink: /download/
 [Grab the latest version][latest]{: .button .button--purple target="_blank"}
 
 <div class="download-information">
-  v0.13.0 | <a href="https://github.com/citelao/Spotify-for-Alfred/releases">All versions</a> | 
+  v0.13.7 | <a href="https://github.com/citelao/Spotify-for-Alfred/releases">All versions</a> | 
   <a href="https://github.com/citelao/Spotify-for-Alfred">Source</a>
 </div>
 
