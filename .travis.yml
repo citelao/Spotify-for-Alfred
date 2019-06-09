@@ -19,7 +19,7 @@ matrix:
 before_install:
   - sh ./script/travis_install.sh
 install: make clean init
-script: make build
+script: make test build
 deploy:
   provider: releases
   api_key:
