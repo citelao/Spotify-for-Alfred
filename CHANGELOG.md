@@ -1,5 +1,8 @@
 # Changelog #
 
+## PENDING ##
+- Added: a test harness so we can automatically test Spotifious
+
 ## v0.13.7 ##
 - Fixed: Bump up the Spotify API version so Spotifious works again
 
