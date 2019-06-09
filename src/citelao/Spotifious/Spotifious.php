@@ -334,7 +334,7 @@ class Spotifious {
 
 	// TODO cite
 	protected function is_spotify_uri($item) {
-		$regex = '/^(spotify:(?:album|artist|track|user:[^:]+:playlist):[a-zA-Z0-9]+)$/x';
+		$regex = '/^(spotify:(?:album|artist|track|(?:user:[^:]+:)?playlist):[a-zA-Z0-9]+)$/x';
 
 		return preg_match($regex, $item);
 	}
