@@ -1,6 +1,6 @@
 # Changelog #
 
-## v0.13.8 (pending) ##
+## v0.13.8 ##
 - Fixed: Support new Spotify playlist syntax (without `user:` prefix).
 
 ## v0.13.7 ##
