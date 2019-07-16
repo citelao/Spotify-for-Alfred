@@ -10,6 +10,6 @@ final class SpotifiousTest extends TestCase {
         $spotifious = new Spotifious($alfred);
 
         $output = $spotifious->run('');
-        $this->assertStringContainsStringIgnoringCase('Welcome', $output[0]['title']);
+        $this->assertContains('Welcome', $output[0]['title']);
     }
 }
