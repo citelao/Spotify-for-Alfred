@@ -20,7 +20,7 @@ steps:
   displayName: 'Install PHP'
 
 - script: make test
-  displayName: 'run tests'
+  displayName: 'Run tests'
 
 - script: make build
-  displayName: 'build all'
+  displayName: 'Build all'
