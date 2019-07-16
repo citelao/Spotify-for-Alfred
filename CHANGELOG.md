@@ -1,5 +1,8 @@
 # Changelog #
 
+## v0.13.8 ##
+- Fixed: Support new Spotify playlist syntax (without `user:` prefix).
+
 ## v0.13.7 ##
 - Fixed: Bump up the Spotify API version so Spotifious works again
 
