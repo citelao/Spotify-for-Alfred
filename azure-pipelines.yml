@@ -17,6 +17,7 @@ variables:
 steps:
 - script: |
     sh script/travis_install.sh
+  displayName: 'Install PHP'
 
 - script: make test
   displayName: 'run tests'
