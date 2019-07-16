@@ -16,6 +16,8 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
 		php70)
 			brew install php70
 			;;
+		php72)
+			brew install php@7.2
 	esac
 
 	# install Composer

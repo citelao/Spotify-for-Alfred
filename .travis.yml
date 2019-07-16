@@ -16,10 +16,14 @@ matrix:
       php: "7.0"
       language: generic
       env: PHPENV=php70
+    - os: osx
+      php: "7.2"
+      language: generic
+      env: PHPENV=php72
 before_install:
   - sh ./script/travis_install.sh
 install: make clean init
-script: make build
+script: make test build
 deploy:
   provider: releases
   api_key:

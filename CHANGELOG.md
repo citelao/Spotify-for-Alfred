@@ -1,5 +1,8 @@
 # Changelog #
 
+## v0.13.9 (pending) ##
+- Added: a test harness so we can automatically test Spotifious
+
 ## v0.13.8 ##
 - Fixed: Support new Spotify playlist syntax (without `user:` prefix).
 
