@@ -400,11 +400,11 @@ class Spotifious {
 				'id' => $playlist->id,
 				'name' => $playlist->name,
 				'uri' => $playlist->uri,
-				'owner' => (property_exists($playlist->owner, 'display_name'))
-					? $playlist->owner->display_name
-					: (property_exists($playlist->owner, 'id'))
-						? $playlist->owner->id
-						: 'unknown'
+				'owner' => (
+					property_exists($playlist->owner, 'display_name')
+						? $playlist->owner->display_name
+						: property_exists($playlist->owner, 'id')
+					) ? $playlist->owner->id : 'unknown'
 			);
 		}
 		$datetime = new \DateTime("now");

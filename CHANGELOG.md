@@ -1,7 +1,13 @@
 # Changelog #
 
-## v0.13.9 (pending) ##
+## v0.13.10 (pending) ##
 - Added: a test harness so we can automatically test Spotifious
+
+## v0.13.9 ##
+- Fixed: Deprecation error thrown in newer versions of PHP for unparenthesized
+	left-associative ternary operator in `Spotifious.php`
+- Changed: Updated `spotifious.sublime-project` configuration to use relative
+	path of the workflow directory
 
 ## v0.13.8 ##
 - Fixed: Support new Spotify playlist syntax (without `user:` prefix).
