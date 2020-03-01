@@ -52,14 +52,9 @@ class OhAlfred {
 		return intval($this->version()[0]);
 	}
 
-	// Helper for Alfred 3
-	public function isAlfred3()
+	public function doesAlfredSupportJson()
 	{
-		return $this->majorVersion() === 3;
-	}
-
-	public function isAlfred3OrGreater()
-	{
+		// Alfred 3 introduced the JSON format for results.
 		return $this->majorVersion() >= 3;
 	}
 
@@ -179,7 +174,7 @@ class OhAlfred {
 			$r = $this->results;
 
 		$output = "";
-		if($this->isAlfred3OrGreater()) {
+		if($this->doesAlfredSupportJson()) {
 			$output = $this->jsonify($r);
 		} else {
 			$output = $this->xmlify($r);
