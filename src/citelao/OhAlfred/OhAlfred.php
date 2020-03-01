@@ -46,10 +46,21 @@ class OhAlfred {
 		return $this->version;
 	}
 
+	// Helper for versions
+	public function majorVersion()
+	{
+		return intval($this->version()[0]);
+	}
+
 	// Helper for Alfred 3
 	public function isAlfred3()
 	{
-		return $this->version()[0] === "3";
+		return $this->majorVersion() === 3;
+	}
+
+	public function isAlfred3OrGreater()
+	{
+		return $this->majorVersion() >= 3;
 	}
 
 	// Get the user's home directory.
@@ -168,7 +179,7 @@ class OhAlfred {
 			$r = $this->results;
 
 		$output = "";
-		if($this->isAlfred3()) {
+		if($this->isAlfred3OrGreater()) {
 			$output = $this->jsonify($r);
 		} else {
 			$output = $this->xmlify($r);
