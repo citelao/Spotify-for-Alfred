@@ -327,6 +327,11 @@
 			<integer>1</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict>
+				<key>path</key>
+				<string></string>
+			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.revealfile</string>
 			<key>uid</key>
@@ -341,6 +346,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -360,7 +367,12 @@
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string># Add Homebrew to path for those who need :)
+				<string># Show PHP installation instructions if needed.
+# TODO: conditional
+sh before_php_installed.sh
+exit
+
+# Add Homebrew to path for those who need :)
 export PATH="/usr/local/bin:${PATH}"
 
 php -f main.php -- "{query}"
@@ -387,7 +399,7 @@ php -f main.php -- "{query}"
 			<key>uid</key>
 			<string>18496AC4-EA42-444C-A906-642E38259C96</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -750,6 +762,8 @@ php -f action.php -- "respond⟩{query}"
 else
 	set sound volume to 100
 end if</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>respond</key>
@@ -826,6 +840,8 @@ end if</string>
 else 
 	set sound volume to 0
 end if</string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>respond</key>

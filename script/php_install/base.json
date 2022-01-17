@@ -1,0 +1,59 @@
+{
+    "items": [
+        {
+            "title": "Welcome to Spotifious!",
+            "subtitle": "You need to configure a few more things before you can use Spotifious.",
+            "icon": {
+                "path": "include\/images\/configuration.png"
+            },
+            "valid": false
+        },
+        {
+            "title": "1. Download & install Spotify",
+            "subtitle": "Spotifious only works with the Spotify desktop app.",
+            "icon": {
+                "path": "include/images/disabled.png"
+            },
+            "arg": {
+                "action": "command",
+                "options": {
+                    "command": "open https://www.spotify.com/us/download/mac/"
+                }
+            },
+        },
+        {
+            "title": "2. Set your country code",
+            "subtitle": "Choosing the correct country code makes sure you can play songs you select.",
+            "icon": {
+                "path": "include/images/disabled.png"
+            },
+            "autocomplete": "Country Code ⟩",
+            "valid": false
+        },
+        {
+            "title": "3. Create a Spotify application",
+            "subtitle": "Set up a Spotify application so you can search playlists!",
+            "icon": {
+                "path": "include/images/disabled.png"
+            },
+            "arg": "appsetup⟩"
+        },
+        {
+            "title": "4. Link your Spotify application",
+            "subtitle": "Connect your Spotify application to Spotifious to search your playlists.",
+            "icon": {
+                "path": "include/images/disabled.png"
+            },
+            "arg": "applink⟩",
+            "valid": false
+        },
+        {
+            "title": "You can access settings easily.",
+            "subtitle": "Type `s` from the main menu.",
+            "icon": {
+                "path": "include/images/info.png"
+            },
+            "valid": false
+        }
+    ]
+}
