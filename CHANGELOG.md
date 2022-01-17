@@ -1,7 +1,8 @@
 # Changelog #
 
 ## v0.13.10 (pending) ##
-- Added: a test harness so we can automatically test Spotifious
+- Added: A test harness so we can automatically test Spotifious
+- Fixed: Ensure we use the always use the JSON format, which is escaped properly, in new versions
 
 ## v0.13.9 ##
 - Fixed: Deprecation error thrown in newer versions of PHP for unparenthesized
