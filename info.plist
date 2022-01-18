@@ -432,15 +432,12 @@
 				<key>escaping</key>
 				<integer>4</integer>
 				<key>script</key>
-				<string># Add Homebrew to path for those who need :)
-export PATH="/usr/local/bin:${PATH}"
-
-php -f action.php -- "{query}"
+				<string>sh action.sh "{query}"
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
 # first line of this script so it looks like this:
-# php -f action.php -- "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
+# sh action.sh "{query}" | tee ~/Desktop/SpotifiousAction.log</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
