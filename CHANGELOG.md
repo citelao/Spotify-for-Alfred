@@ -1,6 +1,7 @@
 # Changelog #
 
 ## v0.13.10 (pending) ##
+- Added: PHP installation step for macOS Monterey.
 - Added: A test harness so we can automatically test Spotifious
 - Fixed: Ensure we use the always use the JSON format, which is escaped properly, in new versions
 
