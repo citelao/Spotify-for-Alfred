@@ -2,7 +2,7 @@
 export PATH="/usr/local/bin:${PATH}"
 
 # If no PHP installed, exit with no action.
-if ! command -v sphp &> /dev/null
+if ! command -v php &> /dev/null
 then
 	exit
 fi
