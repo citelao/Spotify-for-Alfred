@@ -367,20 +367,12 @@
 				<key>runningsubtext</key>
 				<string>Getting Spotifious data...</string>
 				<key>script</key>
-				<string># Show PHP installation instructions if needed.
-# TODO: conditional
-sh before_php_installed.sh
-exit
-
-# Add Homebrew to path for those who need :)
-export PATH="/usr/local/bin:${PATH}"
-
-php -f main.php -- "{query}"
+				<string>sh main.sh "{query}"
 
 # In case you are experiencing unsolveable issues,
 # you can generate a log file to help me. Modify the
 # first line of this script so it looks like this:
-# php -f main.php -- "{query}" | tee ~/Desktop/Spotifious.log</string>
+# sh main.sh "{query}" | tee ~/Desktop/Spotifious.log</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
