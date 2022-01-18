@@ -14,12 +14,7 @@
             "icon": {
                 "path": "include/images/unchecked.png"
             },
-            "arg": {
-                "action": "command",
-                "options": {
-                    "command": "open https://www.spotify.com/us/download/mac/"
-                }
-            }
+            "arg": "install_php"
         },
         {
             "title": "2. Download & install Spotify",
@@ -27,12 +22,7 @@
             "icon": {
                 "path": "include/images/disabled.png"
             },
-            "arg": {
-                "action": "command",
-                "options": {
-                    "command": "open https://www.spotify.com/us/download/mac/"
-                }
-            }
+            "valid": false
         },
         {
             "title": "3. Set your country code",
@@ -40,7 +30,6 @@
             "icon": {
                 "path": "include/images/disabled.png"
             },
-            "autocomplete": "Country Code ⟩",
             "valid": false
         },
         {
@@ -49,7 +38,7 @@
             "icon": {
                 "path": "include/images/disabled.png"
             },
-            "arg": "appsetup⟩"
+            "valid": false
         },
         {
             "title": "5. Link your Spotify application",
@@ -57,7 +46,6 @@
             "icon": {
                 "path": "include/images/disabled.png"
             },
-            "arg": "applink⟩",
             "valid": false
         },
         {
