@@ -7,4 +7,4 @@ then
 	exit
 fi
 
-php -f action.php -- $1
+php -f action.php -- "$1"
