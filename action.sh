@@ -1,5 +1,5 @@
 # Add Homebrew to path for those who need :)
-export PATH="/usr/local/bin:${PATH}"
+export PATH="/usr/local/bin:/opt/homebrew/bin:${PATH}"
 
 # If no PHP installed, exit with no action.
 if ! command -v php &> /dev/null
