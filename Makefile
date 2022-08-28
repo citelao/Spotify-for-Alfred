@@ -28,6 +28,7 @@ vendor:
 ifndef COMPOSER_INSTALLED
 	$(error Please install composer globally. https://getcomposer.org/download/)
 endif
+# TODO: actually upgrade packages and remove `--ignore-platform-req=php`
 	composer install --no-dev --ignore-platform-req=php
 
 .PHONY: vendor-dev
@@ -35,7 +36,8 @@ vendor-dev:
 ifndef COMPOSER_INSTALLED
 	$(error Please install composer globally. https://getcomposer.org/download/)
 endif
-	composer install --ignore-platform-req=php
+# TODO: actually upgrade packages and remove `--ignore-platform-req=php`
+	composer install --ignore-platform-req=php 
 
 .PHONY: build.intermediates
 build.intermediates:
