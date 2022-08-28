@@ -284,7 +284,7 @@ class OhAlfred {
 	}
 
 	// Change an error into Alfred-displayable XML
-	public function errorify($number, $message, $file, $line, $context, $should_die = true) {
+	public function errorify($number, $message, $file, $line, $context = null, $should_die = true) {
 		$titles = array('Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!');
 
 		$fdir = $this->loggifyError($number, $message, $file, $line, $context);
@@ -328,9 +328,11 @@ class OhAlfred {
 		$fcontents .= $message . "\n";
 		$fcontents .= "Line " . $line . ", " . $file . "\n\n";
 
-		$fcontents .= "## Symbols ## \n";
-		$fcontents .= print_r($context, true) . "\n";
-		$fcontents .= "\n\n";
+		if ($context) {
+			$fcontents .= "## Symbols ## \n";
+			$fcontents .= print_r($context, true) . "\n";
+			$fcontents .= "\n\n";
+		}
 
 		// Delay storing of error 'till contents are fully generated.
 		$errordir = $this->cache();

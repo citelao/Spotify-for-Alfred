@@ -88,7 +88,7 @@ class DetailAlbum {
 	protected function prettifyTime($time_ms) {
 		$secondsForm = $time_ms / 1000;
 
-		$seconds = $secondsForm % 60;
+		$seconds = ((int)$secondsForm) % 60;
 		$minutes = floor($secondsForm / 60);
 
 		$seconds_string = ($seconds < 10)

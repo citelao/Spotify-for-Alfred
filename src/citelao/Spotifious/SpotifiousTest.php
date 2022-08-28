@@ -10,6 +10,6 @@ final class SpotifiousTest extends TestCase {
         $spotifious = new Spotifious($alfred);
 
         $output = $spotifious->run('');
-        $this->assertContains('Welcome', $output[0]['title']);
+        $this->assertStringContainsString('Welcome', $output[0]['title']);
     }
 }
