@@ -20,6 +20,10 @@ matrix:
       php: "7.2"
       language: generic
       env: PHPENV=php72
+    - os: osx
+      php: "8.1.5"
+      language: generic
+      env: PHPENV=php815
 before_install:
   - sh ./script/travis_install.sh
 install: make clean init
