@@ -1,5 +1,5 @@
 .PHONY: all
-all: clean build
+all: clean test build
 
 .PHONY: help
 help:
@@ -23,11 +23,21 @@ init: vendor
 
 # https://stackoverflow.com/questions/5618615/check-if-a-program-exists-from-a-makefile
 COMPOSER_INSTALLED :=  $(shell command -v composer 2> /dev/null)
+.PHONY: vendor
 vendor:
 ifndef COMPOSER_INSTALLED
 	$(error Please install composer globally. https://getcomposer.org/download/)
 endif
-	composer install
+# TODO: actually upgrade packages and remove `--ignore-platform-req=php`
+	composer install --no-dev --ignore-platform-req=php
+
+.PHONY: vendor-dev
+vendor-dev:
+ifndef COMPOSER_INSTALLED
+	$(error Please install composer globally. https://getcomposer.org/download/)
+endif
+# TODO: actually upgrade packages and remove `--ignore-platform-req=php`
+	composer install --ignore-platform-req=php 
 
 .PHONY: build.intermediates
 build.intermediates:
@@ -46,3 +56,7 @@ build: init check_version build.intermediates build.images
 .PHONY: check_version
 check_version:
 	php script/check_version.php
+
+.PHONY: test
+test: vendor-dev
+	./vendor/bin/phpunit -c phpunit.xml

@@ -6,3 +6,6 @@ build/
 
 # vendor
 vendor/
+
+# test cache
+.phpunit.result.cache

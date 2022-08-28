@@ -46,10 +46,16 @@ class OhAlfred {
 		return $this->version;
 	}
 
-	// Helper for Alfred 3
-	public function isAlfred3()
+	// Helper for versions
+	public function majorVersion()
 	{
-		return $this->version()[0] === "3";
+		return intval($this->version()[0]);
+	}
+
+	public function doesAlfredSupportJson()
+	{
+		// Alfred 3 introduced the JSON format for results.
+		return $this->majorVersion() >= 3;
 	}
 
 	// Get the user's home directory.
@@ -168,7 +174,7 @@ class OhAlfred {
 			$r = $this->results;
 
 		$output = "";
-		if($this->isAlfred3()) {
+		if($this->doesAlfredSupportJson()) {
 			$output = $this->jsonify($r);
 		} else {
 			$output = $this->xmlify($r);
@@ -278,7 +284,7 @@ class OhAlfred {
 	}
 
 	// Change an error into Alfred-displayable XML
-	public function errorify($number, $message, $file, $line, $context, $should_die = true) {
+	public function errorify($number, $message, $file, $line, $context = null, $should_die = true) {
 		$titles = array('Aw, jeez!', 'Dagnabit!', 'Crud!', 'Whoops!', 'Oh, snap!', 'Aw, fiddlesticks!', 'Goram it!');
 
 		$fdir = $this->loggifyError($number, $message, $file, $line, $context);
@@ -322,9 +328,11 @@ class OhAlfred {
 		$fcontents .= $message . "\n";
 		$fcontents .= "Line " . $line . ", " . $file . "\n\n";
 
-		$fcontents .= "## Symbols ## \n";
-		$fcontents .= print_r($context, true) . "\n";
-		$fcontents .= "\n\n";
+		if ($context) {
+			$fcontents .= "## Symbols ## \n";
+			$fcontents .= print_r($context, true) . "\n";
+			$fcontents .= "\n\n";
+		}
 
 		// Delay storing of error 'till contents are fully generated.
 		$errordir = $this->cache();

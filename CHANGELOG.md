@@ -1,5 +1,12 @@
 # Changelog #
 
+## v0.13.10 (pending) ##
+- Added: PHP installation step for macOS Monterey.
+- Added: A test harness so we can automatically test Spotifious
+- Fixed: Ensure we use the always use the JSON format, which is escaped properly, in new versions
+- Fixed: Prevent use of deprecated variable during error handling, which broke error reports
+- Fixed: Made float => int cast explicit to avoid a warning (and a crash without the deprecated error handler fix).
+
 ## v0.13.9 ##
 - Fixed: Deprecation error thrown in newer versions of PHP for unparenthesized
 	left-associative ternary operator in `Spotifious.php`
