@@ -28,14 +28,14 @@ vendor:
 ifndef COMPOSER_INSTALLED
 	$(error Please install composer globally. https://getcomposer.org/download/)
 endif
-	composer install --no-dev
+	composer install --no-dev --ignore-platform-req=php
 
 .PHONY: vendor-dev
 vendor-dev:
 ifndef COMPOSER_INSTALLED
 	$(error Please install composer globally. https://getcomposer.org/download/)
 endif
-	composer install
+	composer install --ignore-platform-req=php
 
 .PHONY: build.intermediates
 build.intermediates:
