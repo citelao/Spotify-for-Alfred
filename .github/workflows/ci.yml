@@ -1,0 +1,21 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: macOS-10.14
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install PHP
+      run: sh script/travis_install.sh
+      env:
+        TRAVIS_OS_NAME: 'osx'
+        phpVersion: 7.2
+        phpenv: 'php72'
+    - name: Run tests
+      run: make test
+    - name: Build all
+      run: make build
