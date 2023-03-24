@@ -1,0 +1,26 @@
+# PHP
+# Test and package your PHP project.
+# Add steps that run tests, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/php
+
+trigger:
+- master
+
+pool:
+  vmImage: 'macos-10.13'
+
+variables:
+  TRAVIS_OS_NAME: 'osx'
+  phpVersion: 7.2
+  phpenv: 'php72'
+
+steps:
+- script: |
+    sh script/travis_install.sh
+  displayName: 'Install PHP'
+
+- script: make test
+  displayName: 'Run tests'
+
+- script: make build
+  displayName: 'Build all'
